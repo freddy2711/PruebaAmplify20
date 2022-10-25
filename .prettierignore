@@ -1,0 +1,10 @@
+dist
+package-lock.json
+stories
+node_modules
+.next
+.vscode
+public
+/node_modules/
+node_modules/*
+./**/*.stories

@@ -1,0 +1,42 @@
+.viewTableConten{
+    display: grid;
+    grid-template-columns: 24.4% 1fr;
+    grid-template-rows: 1fr;
+    justify-content: center;
+    align-items: center;
+
+      th{
+        background-color: #343A40;
+        color: white;
+      }
+
+      td{
+        background-color: #fcedc2;
+      }
+  }
+
+.TableNoData{
+  text-align: center;
+}
+
+.bloqueLineal{
+  height: 2px;
+  background-color: #EFF0F3;
+  width: 100%;
+}
+
+.FormatedTable{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.LinkStyle{
+  cursor: pointer;
+  color: #D24726;
+  font-weight: bold;
+    &:hover{
+      color: #666;
+    }
+}

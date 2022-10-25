@@ -1,0 +1,14 @@
+.btnAsistencia{
+  display: flex;
+  flex-direction: row;
+
+  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    input {
+      margin-left: 0 !important;
+    }
+  }
+}
