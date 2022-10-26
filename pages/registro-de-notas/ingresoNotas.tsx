@@ -248,7 +248,7 @@ console.log("semesterCode", semesterCode);
     }
 
     const reqCoup = {
-      semesterCode: semesterCode,
+      semesterCode,
       userCode: dataUser?.code,
       limitState: 1,
     }
