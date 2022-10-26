@@ -6,6 +6,6 @@ export default {
   component: Consulta,
 } as ComponentMeta<typeof Consulta>
 
-const Template: ComponentStory<typeof Consulta> = () => <Consulta />
+const Template: ComponentStory<typeof Consulta> = () => <Consulta item/>
 
 export const SoporteVirtualTd = Template.bind({})

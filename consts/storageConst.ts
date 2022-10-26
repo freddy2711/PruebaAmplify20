@@ -54,10 +54,6 @@ export const VERASI = 'verAsistencia'
 export const TIPO_CLASE = 'sTipoClase'
 export const NO_CLOSE = 'noClose'
 
-// ** CONSTANTES PARA REPORTES
-export const CLASEID_REPORTES = 'ClaseIdReporte'
-export const LST_SELECTED_COURSE = 'lstCoursesTeacher'
-
 // ** CONSTANTES PARA SESIONES ABIERTAS
 export const RECOVERSELECT = 'recoverSelect'
 
@@ -280,6 +276,10 @@ export const CB_COMPETENCE = 'cbo_competence'
 // ** CONSTANTES PARA SOPORTE VIRTUAL
 export const CONSULTA_DATA = 'CONSULTA_DATA'
 
+
+// ** CONSTANTES PARA REPORTES
+export const CLASEID_REPORTES = 'ClaseIdReporte'
+export const LST_SELECTED_COURSE = 'lstCoursesTeacher'
 
 export const convertStringToDate = (data: any) => {
   const date = new Date(data)

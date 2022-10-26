@@ -124,8 +124,7 @@ const ModalEL = ({
       // setedit(true)
 
       const obj = {
-        rdbExperienciaDocente:
-          infoeditar?.experienciaDocencia === true ? '1' : '0',
+        rdbExperienciaDocente: infoeditar?.experienciaDocencia !== undefined ? '1' : '0',
         txtEmpresa: infoeditar.empresa,
         ddlIndustria: infoeditar.Industria?.idIndustria,
         ddlInstitucionExperiencia: infoeditar?.Institucion?.iDInstitucion,
@@ -154,42 +153,42 @@ const ModalEL = ({
     e.preventDefault()
     console.log('saveNewEL')
 
-    console.log(formNEL.ddlInstitucionExperiencia)
+    console.log(formNEL?.ddlInstitucionExperiencia)
 
     const obj = {
-      IdExperienciaLaboral: formNEL.id,
-      IdPersona: info.idPersona,
-      Puesto: formNEL.txtCargo,
-      FechaInicio: formNEL.txtFechaInicioExperiencia,
-      FechaFin: formNEL.txtFechaFinExperiencia,
-      Empresa: formNEL.txtEmpresa,
+      IdExperienciaLaboral: formNEL?.id,
+      IdPersona: info?.idPersona,
+      Puesto: formNEL?.txtCargo,
+      FechaInicio: formNEL?.txtFechaInicioExperiencia,
+      FechaFin: formNEL?.txtFechaFinExperiencia,
+      Empresa: formNEL?.txtEmpresa,
       IdPais:
-        parseInt(formNEL.ddlPaisExperiencia) !== 0
-          ? parseInt(formNEL.ddlPaisExperiencia)
+        parseInt(formNEL?.ddlPaisExperiencia) !== 0
+          ? parseInt(formNEL?.ddlPaisExperiencia)
           : '',
       IdAreaPuesto:
-        parseInt(formNEL.ddlAreaPuesto) !== 0
-          ? parseInt(formNEL.ddlAreaPuesto)
+        parseInt(formNEL?.ddlIndustria) !== 0
+          ? parseInt(formNEL?.ddlIndustria)
           : '',
       IdIndustria:
-        parseInt(formNEL.ddlIndustria) !== 0
-          ? parseInt(formNEL.ddlIndustria)
+        parseInt(formNEL?.ddlIndustria) !== 0
+          ? parseInt(formNEL?.ddlIndustria)
           : '',
-      Descripcion: formNEL.txtDescripcion,
-      GenteACargo: formNEL.chkGenteACargo,
-      ManejoPresupuesto: formNEL.chkGestionaPresupuesto,
-      ExperienciaDocencia: formNEL.rdbExperienciaDocente,
-      TrabajaActualmente: formNEL.chkTrabajaActualmente,
+      Descripcion: formNEL?.txtDescripcion,
+      GenteACargo: formNEL?.chkGenteACargo,
+      ManejoPresupuesto: formNEL?.chkGestionaPresupuesto,
+      ExperienciaDocencia: formNEL?.rdbExperienciaDocente,
+      TrabajaActualmente: formNEL?.chkTrabajaActualmente,
       IdInstitucion:
-        parseInt(formNEL.ddlInstitucionExperiencia) !== 0
-          ? parseInt(formNEL.ddlInstitucionExperiencia)
+        parseInt(formNEL?.ddlInstitucionExperiencia) !== 0
+          ? parseInt(formNEL?.ddlInstitucionExperiencia)
           : '',
       IdTipoDedicacionDocente:
-        parseInt(formNEL.ddlTipoDedicacionDocente) !== 0
-          ? parseInt(formNEL.ddlTipoDedicacionDocente)
+        parseInt(formNEL?.ddlTipoDedicacionDocente) !== 0
+          ? parseInt(formNEL?.ddlTipoDedicacionDocente)
           : '',
-      NoSeEncontroInstitucion: formNEL.chkInstitucionExperiencia,
-      NombreInstitucion: formNEL.txtInstitucionExperiencia,
+      NoSeEncontroInstitucion: formNEL?.chkInstitucionExperiencia,
+      NombreInstitucion: formNEL?.txtInstitucionExperiencia,
       Activo: '1',
       audit_usuario_creacion: 'RVI',
       audit_usuario_actualizacion: '',
@@ -410,7 +409,7 @@ const ModalEL = ({
               value="1"
               className="custom-control custom-radio custom-control-inline me-3"
               onChange={(e: any) => handleChangedd(e, 'rdbExperienciaDocente')}
-              checked={formNEL.rdbExperienciaDocente === '1'}
+              checked={formNEL?.rdbExperienciaDocente === '1'}
             />
             <FormCheck
               label="No"
@@ -420,13 +419,13 @@ const ModalEL = ({
               value="0"
               className="custom-control custom-radio custom-control-inline"
               onChange={(e: any) => handleChangedd(e, 'rdbExperienciaDocente')}
-              checked={formNEL.rdbExperienciaDocente === '0'}
+              checked={formNEL?.rdbExperienciaDocente === '0'}
             />
           </div>
         </div>
 
-        {formNEL.rdbExperienciaDocente === true ||
-        formNEL.rdbExperienciaDocente === '1' ? (
+        {formNEL?.rdbExperienciaDocente === true ||
+        formNEL?.rdbExperienciaDocente === '1' ? (
           <>
             <div className="form-group row mt-3">
               <div className="col-md-4 col-12">Institución</div>
@@ -438,13 +437,13 @@ const ModalEL = ({
                   instanceId="ddlInstitucionExperiencia"
                   name="ddlInstitucionExperiencia"
                   defaultValue={defaultValor(
-                    formNEL.ddlInstitucionExperiencia,
+                    formNEL?.ddlInstitucionExperiencia,
                     cboInstitucion
                   )}
                   onChange={(e: any) =>
                     handleChangedd(e, 'ddlInstitucionExperiencia')
                   }
-                  isDisabled={formNEL.chkInstitucionExperiencia}
+                  isDisabled={formNEL?.chkInstitucionExperiencia}
                 />
               </div>
             </div>
@@ -460,7 +459,7 @@ const ModalEL = ({
                   onChange={(e: any) =>
                     handleChangedd(e, 'chkInstitucionExperiencia')
                   }
-                  defaultChecked={formNEL.chkInstitucionExperiencia}
+                  defaultChecked={formNEL?.chkInstitucionExperiencia}
                 />
               </div>
             </div>
@@ -473,7 +472,7 @@ const ModalEL = ({
                   name="txtInstitucionExperiencia"
                   classname="text-center"
                   placeholder=""
-                  value={formNEL.txtInstitucionExperiencia}
+                  value={formNEL?.txtInstitucionExperiencia}
                   onchange={(e: any) =>
                     handleChangedd(e, 'txtInstitucionExperiencia')
                   }
@@ -489,14 +488,14 @@ const ModalEL = ({
                   instanceId="ddlTipoDedicacionDocente"
                   name="ddlTipoDedicacionDocente"
                   defaultValue={defaultValor(
-                    formNEL.ddlTipoDedicacionDocente,
+                    formNEL?.ddlTipoDedicacionDocente,
                     cboTipoDedicacion
                   )}
                   onChange={(e: any) =>
                     handleChangedd(e, 'ddlTipoDedicacionDocente')
                   }
                   value={defaultValor(
-                    formNEL.ddlTipoDedicacionDocente,
+                    formNEL?.ddlTipoDedicacionDocente,
                     cboTipoDedicacion
                   )}
                 />
@@ -514,7 +513,7 @@ const ModalEL = ({
                   name="txtEmpresa"
                   classname="text-center"
                   placeholder=""
-                  value={formNEL.txtEmpresa}
+                  value={formNEL?.txtEmpresa}
                   onchange={(e: any) => handleChangedd(e, 'txtEmpresa')}
                 />
               </div>
@@ -530,12 +529,12 @@ const ModalEL = ({
               id="ddlIndustria"
               instanceId="ddlIndustria"
               name="ddlIndustria"
-              defaultValue={defaultValor(formNEL.ddlIndustria, industrias)}
+              defaultValue={defaultValor(formNEL?.ddlIndustria, industrias)}
               onChange={(e: any) => handleChangedd(e, 'ddlIndustria')}
-              value={defaultValor(formNEL.ddlIndustria, industrias)}
+              value={defaultValor(formNEL?.ddlIndustria, industrias)}
               /* isDisabled={
-                formNEL.rdbExperienciaDocente === true ||
-                formNEL.rdbExperienciaDocente === '1'
+                formNEL?.rdbExperienciaDocente === true ||
+                formNEL?.rdbExperienciaDocente === '1'
               } */
             />
           </div>
@@ -548,12 +547,12 @@ const ModalEL = ({
               id="ddlAreaPuesto"
               instanceId="ddlAreaPuesto"
               name="ddlAreaPuesto"
-              defaultValue={defaultValor(formNEL.ddlAreaPuesto, areasCargo)}
+              defaultValue={defaultValor(formNEL?.ddlIndustria, areasCargo)}
               onChange={(e: any) => handleChangedd(e, 'ddlAreaPuesto')}
-              value={defaultValor(formNEL.ddlAreaPuesto, areasCargo)}
+              value={defaultValor(formNEL?.ddlIndustria, areasCargo)}
               /* isDisabled={
-                formNEL.rdbExperienciaDocente === true ||
-                formNEL.rdbExperienciaDocente === '1'
+                formNEL?.rdbExperienciaDocente === true ||
+                formNEL?.rdbExperienciaDocente === '1'
               } */
             />
           </div>
@@ -568,7 +567,7 @@ const ModalEL = ({
               classname="text-center"
               placeholder=""
               onchange={(e: any) => handleChangedd(e, 'txtCargo')}
-              value={formNEL.txtCargo}
+              value={formNEL?.txtCargo}
             />
           </div>
         </div>
@@ -580,9 +579,9 @@ const ModalEL = ({
               id="ddlPaisExperiencia"
               instanceId="ddlPaisExperiencia"
               name="ddlPaisExperiencia"
-              defaultValue={defaultValor(formNEL.ddlPaisExperiencia, cboPais)}
+              defaultValue={defaultValor(formNEL?.ddlPaisExperiencia, cboPais)}
               onChange={(e: any) => handleChangedd(e, 'ddlPaisExperiencia')}
-              value={defaultValor(formNEL.ddlPaisExperiencia, cboPais)}
+              value={defaultValor(formNEL?.ddlPaisExperiencia, cboPais)}
             />
           </div>
         </div>
@@ -594,7 +593,7 @@ const ModalEL = ({
               type="date"
               name="txtFechaInicioExperiencia"
               classname="text-center"
-              value={parseJsonDate(formNEL.txtFechaInicioExperiencia)}
+              value={parseJsonDate(formNEL?.txtFechaInicioExperiencia)}
               onchange={(e: any) =>
                 handleChangedd(e, 'txtFechaInicioExperiencia')
               }
@@ -609,9 +608,9 @@ const ModalEL = ({
               type="date"
               name="txtFechaFinExperiencia"
               classname="text-center"
-              value={parseJsonDate(formNEL.txtFechaFinExperiencia)}
+              value={parseJsonDate(formNEL?.txtFechaFinExperiencia)}
               onchange={(e: any) => handleChangedd(e, 'txtFechaFinExperiencia')}
-              disabled={formNEL.txtFechaFinExperienciaDisabled}
+              disabled={formNEL?.txtFechaFinExperienciaDisabled}
             />
           </div>
         </div>
@@ -625,7 +624,7 @@ const ModalEL = ({
               type="checkbox"
               id="chkTrabajaActualmente"
               onChange={(e: any) => handleChangedd(e, 'chkTrabajaActualmente')}
-              checked={formNEL.chkTrabajaActualmente}
+              checked={formNEL?.chkTrabajaActualmente}
             />
           </div>
         </div>
@@ -639,7 +638,7 @@ const ModalEL = ({
               name="txtDescripcion"
               placeholder=""
               onChange={(e: any) => handleChangedd(e, 'txtDescripcion')}
-              value={formNEL.txtDescripcion}
+              value={formNEL?.txtDescripcion}
             />
           </div>
         </div>
@@ -653,7 +652,7 @@ const ModalEL = ({
               type="checkbox"
               id="chkGenteACargo"
               onChange={(e: any) => handleChangedd(e, 'chkGenteACargo')}
-              defaultChecked={formNEL.chkGenteACargo}
+              defaultChecked={formNEL?.chkGenteACargo}
             />
           </div>
         </div>
@@ -667,7 +666,7 @@ const ModalEL = ({
               type="checkbox"
               id="chkGestionaPresupuesto"
               onChange={(e: any) => handleChangedd(e, 'chkGestionaPresupuesto')}
-              defaultChecked={formNEL.chkGestionaPresupuesto}
+              defaultChecked={formNEL?.chkGestionaPresupuesto}
             />
           </div>
         </div>
