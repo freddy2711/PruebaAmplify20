@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetTeachersCorses(params[1])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetLoadedExams(params[1],params[2])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -34,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetListClassNote(params[1])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -45,7 +45,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetSemester(params[1])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -56,7 +56,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetAmountStudents(params[1],params[2],params[3])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -67,7 +67,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetControlNotes(params[1],params[2],params[3])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -78,7 +78,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetStateExams(params[1],params[2],params[3])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -89,7 +89,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           const URL = apiPath.cargaExamenes.PATH_GetActiveExam(params[1],params[2],params[3])
           const { data } = await axiosfetchPrivate(URL)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)
@@ -114,7 +114,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   
         try {
           const { data } = await axiosfetchPrivateUpload.post(URL, fileObj)
-          const URL_UPLOAD = data.url
+          const URL_UPLOAD = data?.url
           res.status(200).json(URL_UPLOAD)
         } catch (error) {
           console.log(error)
@@ -126,7 +126,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const URL = apiPath.cargaExamenes.PATH_PostTeacherInserExam
         try {
           const { data } = await axiosfetchPrivate.post(URL, item)
-          const result = data.detail
+          const result = data?.detail
           res.status(200).json(result)
         } catch (error) {
           console.log(error)

@@ -111,6 +111,7 @@
     "@types/react-datepicker": "^4.4.2",
     "@types/react-draft-wysiwyg": "^1.13.4",
     "@types/react-router-dom": "^5.3.3",
+    "@types/react-select": "^5.0.1",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
