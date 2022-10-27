@@ -1,4 +1,3 @@
-// import Header from './../UI/organisms/header/Header'
 import Footer from './../UI/organisms/footer/Footer'
 import Navigation from './../UI/molecules/navigation/Navigation'
 import { Fragment, ReactNode, useEffect, useState } from 'react'
