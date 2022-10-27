@@ -53,7 +53,7 @@ const index = ({ children }: Props) => {
     message: '',
   })
   const dateNow = convertStringToDate(new Date())
-   const cookie = useCookies([''])
+  const cookie = useCookies([''])
   const callApiLogin = async (codeUser: any) => {
     const semesterTemp: any = await apiLogin.TokenCoupling(codeUser)
     if (semesterTemp.length !== 0) {
@@ -67,12 +67,12 @@ const index = ({ children }: Props) => {
 
   const callApiLoginValid = async () => {
     let codeteacher = get(USER_SESSION)
-    // console.log('codeteacher', codeteacher)
-    if (codeteacher === null) {
-       const token: any = await apiLogin.logintokenValid(cookie)
-      //const rs = await apiLogin.loginDataUser('RVI')
-       const rs = await apiLogin.loginDataUser(token?.user)
-      set(DUENO_SESSION, 'RVI')
+    console.log('codeteacher', codeteacher)
+    if (codeteacher === null || codeteacher === undefined) {
+      const token: any = await apiLogin.logintokenValid(cookie)
+      // const rs = await apiLogin.loginDataUser('RVI')
+      const rs = await apiLogin.loginDataUser(token?.user)
+      set(DUENO_SESSION, token?.user)
       set(USER_SESSION, rs[0]?.codeUser)
       codeteacher = rs[0]?.codeUser
     }
