@@ -12,7 +12,7 @@ import { apiPath } from '../../../consts/path'
 type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params }:any = req.query
+  const { params }: any = req.query
 
   switch (params[0]) {
     case 'list': {
@@ -227,16 +227,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
     case 'deletes': {
       const URL = apiPath.competence.PATH_Delete
-			try {
-				const obj = {
-					"competenceId": params[1]
-				}
-				
-				const { data } = await axiosfetchPrivate.put(URL, obj)
-				const result = data.detail
-				
+      try {
+        const obj = {
+          competenceId: params[1],
+        }
+
+        const { data } = await axiosfetchPrivate.put(URL, obj)
+        const result = data.detail
+
         res.status(200).json(result)
-				
       } catch (error) {
         console.log(error)
       }

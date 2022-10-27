@@ -22,10 +22,10 @@ import {
   OBTENER_TIPO_ADJUNTO,
   LOADEXTRA_ESTUDIOS,
   LOADEXTRA_ESTUDIOS_END,
-	LOADEXTRA_IDIOMAS,
-	LOADEXTRA_IDIOMAS_END,
-	LOADEXTRA_ADJUNTO,
-	LOADEXTRA_ADJUNTO_END
+  LOADEXTRA_IDIOMAS,
+  LOADEXTRA_IDIOMAS_END,
+  LOADEXTRA_ADJUNTO,
+  LOADEXTRA_ADJUNTO_END,
 } from '../types'
 
 type Action = {
@@ -211,28 +211,28 @@ export default function (state: any = initialState, action: Action) {
         loadingExtraEstudios: true,
         loading: false,
       }
-		case LOADEXTRA_IDIOMAS:
-			return {
-				...state,
-				loadingExtraIdiomas: false,
-			}
-		case LOADEXTRA_IDIOMAS_END:
-			return {
-				...state,
-				loadingExtraIdiomas: true,
-				loading: false,
-			}
-		case LOADEXTRA_ADJUNTO:
-			return {
-				...state,
-				loadingExtraAdjunto: false,
-			}
-		case LOADEXTRA_ADJUNTO_END:
-			return {
-				...state,
-				loadingExtraAdjunto: true,
-				loading: false,
-			}
+    case LOADEXTRA_IDIOMAS:
+      return {
+        ...state,
+        loadingExtraIdiomas: false,
+      }
+    case LOADEXTRA_IDIOMAS_END:
+      return {
+        ...state,
+        loadingExtraIdiomas: true,
+        loading: false,
+      }
+    case LOADEXTRA_ADJUNTO:
+      return {
+        ...state,
+        loadingExtraAdjunto: false,
+      }
+    case LOADEXTRA_ADJUNTO_END:
+      return {
+        ...state,
+        loadingExtraAdjunto: true,
+        loading: false,
+      }
     default:
       return state
   }

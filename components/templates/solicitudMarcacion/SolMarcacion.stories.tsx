@@ -8,7 +8,7 @@ const defaultStyle = {
 }
 
 storiesOf('Templates/SolicitudMarcacion', module)
-  .addDecorator((Story:any) => (
+  .addDecorator((Story: any) => (
     <div style={{ height: '600px' }}>
       <div
         className={styles.header}

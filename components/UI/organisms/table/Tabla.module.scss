@@ -1,26 +1,25 @@
-.default{
+.default {
   line-height: normal;
 }
 
-.tablaDefault{
+.tablaDefault {
   & > * {
     text-align: center;
     vertical-align: middle !important;
   }
 }
 
-.tablaRA{
+.tablaRA {
   margin-bottom: 1rem;
   & > * {
     text-align: left !important;
   }
-		&>tbody>tr>td {
-			max-width: 50%;
-			width: 50%;
-		}
-	
-		&>thead>tr>th {
-			text-align: center !important;
-		}
-}
+  & > tbody > tr > td {
+    max-width: 50%;
+    width: 50%;
+  }
 
+  & > thead > tr > th {
+    text-align: center !important;
+  }
+}

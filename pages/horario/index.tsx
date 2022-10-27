@@ -61,7 +61,7 @@ const Horario = () => {
   const dateTimeNow = `${convertStringToDate(
     new Date()
   )} ${convertStringToDateTime(new Date())}`
-  useEffect(() => {    
+  useEffect(() => {
     const obj = {
       teacherCode: dataUser?.code,
       isEpec: 0,

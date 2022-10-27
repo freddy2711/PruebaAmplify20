@@ -85,32 +85,19 @@ storiesOf('Templates/recuperar/editar', module)
 
         <div className={styles.tabla}> tabla </div>
 
-        <div className={styles.blocFormValidateRow} >
-          label / label
-        </div>
+        <div className={styles.blocFormValidateRow}>label / label</div>
 
-        <div className={styles.blocFormValidateRow} >
-          text / date
-        </div>
+        <div className={styles.blocFormValidateRow}>text / date</div>
 
-        <div className={styles.blocFormValidateRowTable} >
-          Table
-        </div>
+        <div className={styles.blocFormValidateRowTable}>Table</div>
 
-        <div className={styles.blocFormValidateRow} >
-          select / text
-        </div>
+        <div className={styles.blocFormValidateRow}>select / text</div>
 
         <div>
-            <b>
-            checkbox
-            </b>
+          <b>checkbox</b>
         </div>
 
-        <div className={styles.botonesAlign} >
-          Buttons
-        </div>
-
+        <div className={styles.botonesAlign}>Buttons</div>
       </div>
     </div>
   ))

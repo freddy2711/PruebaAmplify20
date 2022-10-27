@@ -48,8 +48,8 @@ const RegistroAsistencia = () => {
 
   const fetchControl = async (obj: any) => {
     const resp = await apiRegister.ByControl(obj)
-    resp[0]?.SedCode === undefined ? setTAsisten(true):setTAsisten(false)
-    resp[0]?.SedCode === undefined ? setVAsisten(true):setVAsisten(false)
+    resp[0]?.SedCode === undefined ? setTAsisten(true) : setTAsisten(false)
+    resp[0]?.SedCode === undefined ? setVAsisten(true) : setVAsisten(false)
     setControlTeacher(resp)
   }
 

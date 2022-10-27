@@ -1,13 +1,13 @@
 import { Form } from 'react-bootstrap'
 import Button from '../../atoms/button/Button'
 
-export interface Props{
-  btnOnclick?:any
-  onChange?:any
-  onclickcheck?:any
+export interface Props {
+  btnOnclick?: any
+  onChange?: any
+  onclickcheck?: any
 }
 
-const RecuperarButtons = ({btnOnclick,onChange,onclickcheck}:Props) => {
+const RecuperarButtons = ({ btnOnclick, onChange, onclickcheck }: Props) => {
   return (
     <>
       <Button

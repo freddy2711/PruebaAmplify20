@@ -11,13 +11,13 @@ type Props = {
   onchange?: any
   disabled?: boolean
   placeholder?: string
-  defaultValue?:string
-  style?:CSSProperties
-  min?:any
-  max?:any
-  value?:any
-  readOnly?:any
-  onClick?:any
+  defaultValue?: string
+  style?: CSSProperties
+  min?: any
+  max?: any
+  value?: any
+  readOnly?: any
+  onClick?: any
 }
 
 const Input = ({
@@ -34,7 +34,7 @@ const Input = ({
   max,
   value,
   readOnly,
-  onClick
+  onClick,
 }: Props) => {
   const classprops: string = classNames(
     'form-control',

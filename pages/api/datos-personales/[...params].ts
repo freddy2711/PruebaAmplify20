@@ -94,80 +94,76 @@ const translateEstudy = (datos: any) => {
 
 const translateConos = (datos: any) => {
   const arr = datos.map((item: any) => ({
-
-			idPersonaConocimiento: item.KnowledgePersonId,
-      nombreConocimiento: item.KnowledgeName,
-      nivelConocimiento: item.KnowledgeLevel,
-      activo: item.Active === 'True',
-      audit_usuario_creacion: item.audit_user_creation,
-      audit_fecha_creacion: item.audit_date_creation,
-      esCertificado: item.IsCertificate === 'True'
-
-	}))
+    idPersonaConocimiento: item.KnowledgePersonId,
+    nombreConocimiento: item.KnowledgeName,
+    nivelConocimiento: item.KnowledgeLevel,
+    activo: item.Active === 'True',
+    audit_usuario_creacion: item.audit_user_creation,
+    audit_fecha_creacion: item.audit_date_creation,
+    esCertificado: item.IsCertificate === 'True',
+  }))
 
   return arr
 }
 
 const translateIdiomas = (datos: any) => {
   const arr = datos.map((item: any) => ({
-		idPersonaIdioma: item.IdPersoneLanguage,
-		Idioma: {
-			idIdioma: item.IdLanguage,
-			nombreIdioma: item.NameLanguage,
-			audit_fecha_creacion: '0001-01-01T00:00:00'
-		},
-		nivelIdiomaOral: item.LevelLanguageOral,
-		nivelIdiomaEscrito: item.LevelLanguageWritten,
-		activo: item.Active === 'True',
-		audit_usuario_creacion: item.AuditUserCreate,
-		audit_fecha_creacion: item.AuditDateCreate,
-		esCertificado: item.sCertified === 'True',
-		noSeEncontroIdioma: item.NoseIFindLanguage === 'True'
-	}))
+    idPersonaIdioma: item.IdPersoneLanguage,
+    Idioma: {
+      idIdioma: item.IdLanguage,
+      nombreIdioma: item.NameLanguage,
+      audit_fecha_creacion: '0001-01-01T00:00:00',
+    },
+    nivelIdiomaOral: item.LevelLanguageOral,
+    nivelIdiomaEscrito: item.LevelLanguageWritten,
+    activo: item.Active === 'True',
+    audit_usuario_creacion: item.AuditUserCreate,
+    audit_fecha_creacion: item.AuditDateCreate,
+    esCertificado: item.sCertified === 'True',
+    noSeEncontroIdioma: item.NoseIFindLanguage === 'True',
+  }))
 
   return arr
 }
 
 const translateRefLab = (datos: any) => {
   const arr = datos.map((item: any) => ({
-		idReferenciaLaboral: item.JobReferenceId,
-		empresa: item.Company,
-		cargoreferencia: item.ReferenceCharge,
-		contacto: item.Contact,
-		correo: item.Mail,
-		relacion: item.Relationship,
-		telefono: item.Phone,
-		celular1: item.Cell1,
-		celular2: item.Cell2,
-		activo: item.Active === 'True',
-		audit_usuario_creacion: item.auditUserCreation,
-		audit_fecha_creacion: item.auditDateCreation
-	}))
+    idReferenciaLaboral: item.JobReferenceId,
+    empresa: item.Company,
+    cargoreferencia: item.ReferenceCharge,
+    contacto: item.Contact,
+    correo: item.Mail,
+    relacion: item.Relationship,
+    telefono: item.Phone,
+    celular1: item.Cell1,
+    celular2: item.Cell2,
+    activo: item.Active === 'True',
+    audit_usuario_creacion: item.auditUserCreation,
+    audit_fecha_creacion: item.auditDateCreation,
+  }))
 
   return arr
 }
 
 const translateAdjuntos = (datos: any) => {
   const arr = datos.map((item: any) => ({
-		idPersonaAdjunto: item.IdPersonAttach,
-		nombreAdjunto: item.NameAttach,
-		extensionAdjunto: item.ExtenAttach,
-		descripcionAdjunto: item.DescriptionAttach,
-		activo: item.Active === 'True',
-		audit_usuario_creacion: item.UsuarioCreate,
-		audit_fecha_creacion: item.DateCreate,
-		audit_usuario_actualizacion: item.UsuarioCreate,
-		audit_fecha_actualizacion: item.DateUpdate
-	}))
+    idPersonaAdjunto: item.IdPersonAttach,
+    nombreAdjunto: item.NameAttach,
+    extensionAdjunto: item.ExtenAttach,
+    descripcionAdjunto: item.DescriptionAttach,
+    activo: item.Active === 'True',
+    audit_usuario_creacion: item.UsuarioCreate,
+    audit_fecha_creacion: item.DateCreate,
+    audit_usuario_actualizacion: item.UsuarioCreate,
+    audit_fecha_actualizacion: item.DateUpdate,
+  }))
   return arr
 }
 
-
-
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params }:any = req.query
+  const { params }: any = req.query
 
-  console.log('PARAMS_',params)
+  console.log('PARAMS_', params)
 
   switch (params[0]) {
     case 'personaObtener': {
@@ -564,7 +560,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
       try {
         const { data } = await axiosfetchPrivateWSCV.post(URL, item)
-        console.log('personaAdjuntoGuardar____',data.detail)
+        console.log('personaAdjuntoGuardar____', data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
         console.log(error)
@@ -588,18 +584,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       break
     }
-		case 'downloadFile': {
-			try {
-				const URL = apiPath.datosPersonales.PATH_Download
-				const { data } = await axiosfetchPrivateWSCV.post(URL, { nameFile: params[1]})
-				console.log(data.detail)
-				res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-		
-			break
-		}
+    case 'downloadFile': {
+      try {
+        const URL = apiPath.datosPersonales.PATH_Download
+        const { data } = await axiosfetchPrivateWSCV.post(URL, {
+          nameFile: params[1],
+        })
+        console.log(data.detail)
+        res.status(200).json(data.detail)
+      } catch (error) {
+        console.log(error)
+      }
+
+      break
+    }
     case 'confirmacionGuardar': {
       const item = req.body
       const URL = apiPath.datosPersonales.PATH_Confirmacion

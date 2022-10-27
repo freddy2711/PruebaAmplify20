@@ -74,9 +74,7 @@ storiesOf('Templates/disponibilidadHorario', module)
 
         <hr />
 
-       <div>
-        
-       </div>
+        <div></div>
 
         <div
           className={styles.botones}
@@ -84,8 +82,6 @@ storiesOf('Templates/disponibilidadHorario', module)
         >
           Btn
         </div>
-
-        
       </div>
     </div>
   ))

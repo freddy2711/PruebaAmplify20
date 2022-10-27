@@ -31,7 +31,7 @@ const Navigation = ({ menu = menuDefault }: Props) => {
                     <NavDropdown.Item
                       key={index}
                       href={item.link}
-                      target={item.target === false ? undefined : "_blank" }
+                      target={item.target === false ? undefined : '_blank'}
                     >
                       {item.label}
                     </NavDropdown.Item>
@@ -41,7 +41,7 @@ const Navigation = ({ menu = menuDefault }: Props) => {
                 <Nav.Link
                   key={index}
                   href={item.link}
-                  target={item.target === false ? undefined : "_blank" }
+                  target={item.target === false ? undefined : '_blank'}
                 >
                   {item.label}
                 </Nav.Link>

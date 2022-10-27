@@ -37,7 +37,7 @@ const Button = ({
 
   return (
     <button
-		  name={name}
+      name={name}
       type={type}
       className={classprops}
       onClick={onclick}

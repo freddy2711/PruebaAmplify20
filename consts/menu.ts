@@ -1,4 +1,3 @@
-
 // import { get } from 'local-storage'
 // import { SET_DATA_DOCENTE } from './storageConst'
 // const dataUser: any = get(SET_DATA_DOCENTE)
@@ -84,7 +83,7 @@ export const menuDefault = [
         link: '/logs-creacion',
         child: [],
         target: false,
-      }
+      },
     ],
   },
   {
@@ -108,7 +107,7 @@ export const menuDefault = [
         link: '/tutorias',
         child: [],
         target: false,
-      }
+      },
     ],
   },
   {
@@ -162,7 +161,7 @@ export const menuDefault = [
         link: 'https://upn.u-planner.com/app/suite/inicio',
         child: [],
         target: true,
-      }
+      },
     ],
   },
   {
@@ -192,7 +191,7 @@ export const menuDefault = [
         link: '/evaluacion-docente',
         child: [],
         target: false,
-      }
+      },
     ],
     target: false,
   },

@@ -12,8 +12,8 @@ export interface Props {
   onChange?: any
   disabled?: boolean
   children: ReactNode
-  defaultValue?:any
-  onClick?:any
+  defaultValue?: any
+  onClick?: any
 }
 
 const Select = ({

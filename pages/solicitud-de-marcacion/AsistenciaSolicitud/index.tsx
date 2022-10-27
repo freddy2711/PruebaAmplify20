@@ -81,12 +81,11 @@ const AsistenciaSolicitud = ({ ip }: any) => {
   }
 
   useEffect(() => {
-		setloading(true)
-		
-		if (noClose === 1) { 
-			setMotivo('Regularizar marcación de clase abierta')
-		}
-		 
+    setloading(true)
+
+    if (noClose === 1) {
+      setMotivo('Regularizar marcación de clase abierta')
+    }
 
     const consultaApi = async () => {
       if (get(CLASS_SELECTED_SOL_MARCACION) !== null) {

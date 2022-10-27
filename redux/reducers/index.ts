@@ -6,7 +6,7 @@ import EditarInfoReducer from './EditarInfoReducer'
 
 export default combineReducers({
   infoGeneral: InfoGeneralReducer,
-	infoExtra: InfoExtraReducer,
-	infoGuardar: guardarReducer,
-	infoEditar: EditarInfoReducer
+  infoExtra: InfoExtraReducer,
+  infoGuardar: guardarReducer,
+  infoEditar: EditarInfoReducer,
 })

@@ -249,31 +249,38 @@ export const apiPath = {
     PATH_EvaluadorEvaluado: (idPersona: string) =>
       `/assessment/evaluator/evaluated/${idPersona}/2/True`,
     PATH_PersonaGuardar: `/person/person`,
-		PATH_Institucion: (idPais: any = '0') => `/person/institution/${idPais}/true`,
-		PATH_Industria: `/person/industry/true`,
+    PATH_Institucion: (idPais: any = '0') =>
+      `/person/institution/${idPais}/true`,
+    PATH_Industria: `/person/industry/true`,
     PATH_AreaPuesto: `/person/position/area/true`,
     PATH_TipoDedicacionDocente: `/person/type/teacher/dictation/True`,
-    PATH_ExperienciaLaboral: (idPersona: string) => `/experience/work/experience/${idPersona}/True`,
+    PATH_ExperienciaLaboral: (idPersona: string) =>
+      `/experience/work/experience/${idPersona}/True`,
     PATH_ExperienciaLaboralGuardar: `/experience/work/experience`,
     PATH_ClasificacionCarrera: `/knowledge/classification/race`,
     PATH_NivelAcademico: `/knowledge/academic/level`,
     PATH_EstadoEstudio: `/studies/state/study`,
     PATH_Estudio: (idPersona: string) => `/studies/studies/${idPersona}/True`,
-		PATH_EstudioGuardar: `/studies/study`,
-		PATH_PersonaConocimientoObtener: (idPersona: string) => `/knowledge/person/${idPersona}/True`,
+    PATH_EstudioGuardar: `/studies/study`,
+    PATH_PersonaConocimientoObtener: (idPersona: string) =>
+      `/knowledge/person/${idPersona}/True`,
     PATH_PersonaConocimiento: `/knowledge/person/knowledge`,
     PATH_Idioma: `/studies/language/true`,
-		PATH_PersonaIdioma: (idPersona: string) => `/person/idiom/${idPersona}/True`,
-		PATH_PersonaIdiomaGuardar: `/knowledge/person/idiom`,
-		PATH_ReferenciaLaboral: (idPersona: string) => `/experience/work/reference/${idPersona}/True`,
-		PATH_ReferenciaLaboralGuardar: `/experience/work/reference`,
+    PATH_PersonaIdioma: (idPersona: string) =>
+      `/person/idiom/${idPersona}/True`,
+    PATH_PersonaIdiomaGuardar: `/knowledge/person/idiom`,
+    PATH_ReferenciaLaboral: (idPersona: string) =>
+      `/experience/work/reference/${idPersona}/True`,
+    PATH_ReferenciaLaboralGuardar: `/experience/work/reference`,
     PATH_TipoAdjunto: `/person/type/attached/True/null/null`,
-    PATH_PersonaAdjunto: (idPersona: string) => `/person/attach/${idPersona}/True`,
+    PATH_PersonaAdjunto: (idPersona: string) =>
+      `/person/attach/${idPersona}/True`,
     PATH_PersonaAdjuntoGuardar: `/person/person/attached`,
-    PATH_PersonaAdjuntoDescargar: (idPersona: string, id: string) => `/person/attached${idPersona}/${id}`,
+    PATH_PersonaAdjuntoDescargar: (idPersona: string, id: string) =>
+      `/person/attached${idPersona}/${id}`,
     PATH_Confirmacion: `/person/curriculumn`,
-		PATH_Download: `/person/url/download/file`
-	},
+    PATH_Download: `/person/url/download/file`,
+  },
   reportesAcademicos: {
     PATH_GetTeacherCourses: (teacherCode: any) =>
       `/ClassSchedule/teachers/${teacherCode}/courses/recuperation`,
@@ -296,42 +303,54 @@ export const apiPath = {
     PATH_GetTokenGenerate: (userCode: any, semesterCode: any) =>
       `/token/DS/${userCode}/user/${semesterCode}/semester`,
   },
-  reportesEvaluacion:{
-    PATH_GetResultTeacherEvaluation:(teacherCode:any) => `/teacher/result/evaluation/${teacherCode}`,
-    PATH_GetDocumentsAWSS3:(periodo:any,name:any) => `/Utility/Document/AWSS3/${periodo}/${name}`,
-    PATH_GetDownloadDocumentsAWSS3: `/Utility/Document/download`
+  reportesEvaluacion: {
+    PATH_GetResultTeacherEvaluation: (teacherCode: any) =>
+      `/teacher/result/evaluation/${teacherCode}`,
+    PATH_GetDocumentsAWSS3: (periodo: any, name: any) =>
+      `/Utility/Document/AWSS3/${periodo}/${name}`,
+    PATH_GetDownloadDocumentsAWSS3: `/Utility/Document/download`,
   },
-  reporteTutorias:{
-    PATH_GetTutoriasTeacher:(traCode:any) => `/teacher/tutorials/${traCode}`,
-    PATH_GetTeacherNotesStudentTutoring:(clasCode:any,semCode:any) => `/teacher/notes/student/${clasCode}/tutoring/${semCode}`,
-    PATH_GetNotesStudentTutoring:(codAlu:any) => `/notes/notes/student/${codAlu}/tutoring`,
-    PATH_GetEmployeeLogin:(userName:any)=> `/teacher/login/user/${userName}`
+  reporteTutorias: {
+    PATH_GetTutoriasTeacher: (traCode: any) => `/teacher/tutorials/${traCode}`,
+    PATH_GetTeacherNotesStudentTutoring: (clasCode: any, semCode: any) =>
+      `/teacher/notes/student/${clasCode}/tutoring/${semCode}`,
+    PATH_GetNotesStudentTutoring: (codAlu: any) =>
+      `/notes/notes/student/${codAlu}/tutoring`,
+    PATH_GetEmployeeLogin: (userName: any) => `/teacher/login/user/${userName}`,
   },
-  cargaExamenes:{
+  cargaExamenes: {
     PATH_GetTeachersCorses: (UserID: string) =>
-    `/ClassSchedule/teachers/${UserID}/courses/recuperation`,
-    PATH_GetLoadedExams: (codeTeacher:any,classCode:any) => `/teacher/loaded/${codeTeacher}/exams/${classCode}`,
-    PATH_GetListClassNote: (classCode:any) => `/notes/class/${classCode}`,
-    PATH_GetSemester: (classCode:any) => `/notes/semester/class/${classCode}`,
-    PATH_GetAmountStudents: (semesterId:any,noteId:any,ClassCode:any) => `/teacher/amount/students/${semesterId}/${noteId}/enrolled/${ClassCode}`,
-    PATH_GetControlNotes: (semesterCode:any,notaCode:any,classCode:any) => `/notes/control/semester/${semesterCode}/note/${notaCode}/class/${classCode}`,
-    PATH_GetStateExams: (codeTeacher:any,noteId:any,ClassCode:any) => `/teacher/state/exam/${codeTeacher}/${noteId}/${ClassCode}`,
-    PATH_GetActiveExam: (codeTeacher:any,noteId:any,ClassCode:any) => `/teacher/active/exams/${codeTeacher}/${noteId}/${ClassCode}`,
-    PATH_PostTeacherInserExam: `teacher/insert/burden/exam`
+      `/ClassSchedule/teachers/${UserID}/courses/recuperation`,
+    PATH_GetLoadedExams: (codeTeacher: any, classCode: any) =>
+      `/teacher/loaded/${codeTeacher}/exams/${classCode}`,
+    PATH_GetListClassNote: (classCode: any) => `/notes/class/${classCode}`,
+    PATH_GetSemester: (classCode: any) => `/notes/semester/class/${classCode}`,
+    PATH_GetAmountStudents: (semesterId: any, noteId: any, ClassCode: any) =>
+      `/teacher/amount/students/${semesterId}/${noteId}/enrolled/${ClassCode}`,
+    PATH_GetControlNotes: (semesterCode: any, notaCode: any, classCode: any) =>
+      `/notes/control/semester/${semesterCode}/note/${notaCode}/class/${classCode}`,
+    PATH_GetStateExams: (codeTeacher: any, noteId: any, ClassCode: any) =>
+      `/teacher/state/exam/${codeTeacher}/${noteId}/${ClassCode}`,
+    PATH_GetActiveExam: (codeTeacher: any, noteId: any, ClassCode: any) =>
+      `/teacher/active/exams/${codeTeacher}/${noteId}/${ClassCode}`,
+    PATH_PostTeacherInserExam: `teacher/insert/burden/exam`,
   },
-  disponibilidadHorario:{
-    PATH_GetHeadquartersBanners : (exclude:any) => `/Utility/headquarters/banners/info/${exclude}`,
-    PATH_GetSemesterUnitBusinessCode:(CodeHeadquarters:any) => `/teacher/semester/unit/business/code/${CodeHeadquarters}`,
-    PATH_GetTeacherAvailability:(action:any,user:any,day:any) => `/teacher/teacher/availability/${action}/${user}/${day}`,
-    PATH_PostCrudAvailability: `teacher/teacher/availability/crud`
+  disponibilidadHorario: {
+    PATH_GetHeadquartersBanners: (exclude: any) =>
+      `/Utility/headquarters/banners/info/${exclude}`,
+    PATH_GetSemesterUnitBusinessCode: (CodeHeadquarters: any) =>
+      `/teacher/semester/unit/business/code/${CodeHeadquarters}`,
+    PATH_GetTeacherAvailability: (action: any, user: any, day: any) =>
+      `/teacher/teacher/availability/${action}/${user}/${day}`,
+    PATH_PostCrudAvailability: `teacher/teacher/availability/crud`,
   },
-  documentosManuales:{
+  documentosManuales: {
     PATH_GetDocumentsTeacher: `/Utility/documents/teacher`,
     PATH_GetDownloadDocumentsAWSS3: `/Utility/Document/download`,
-    PATH_GetManualsTeacher: `/Utility/manuals/teacher`
+    PATH_GetManualsTeacher: `/Utility/manuals/teacher`,
   },
-  evaluacionDocente:{
-    PATH_GetAssessmentTeacher:`/Utility/assessment/teacher`,
+  evaluacionDocente: {
+    PATH_GetAssessmentTeacher: `/Utility/assessment/teacher`,
     PATH_GetDownloadDocumentsAWSS3: `/Utility/Document/download`,
   },
   descansoTeacher: {
@@ -355,17 +374,22 @@ export const apiPath = {
     PATH_Post_SaveTempTableWorkerTeacher: '/WorkerTeacher/SaveTemple',
     PATH_Post_RegisterRequestsWorkerTeacher: '/WorkerTeacher/state',
   },
-	soporteVirtual: {
-		PATH_docenteConsulta: (teacherCode: string) => `/TeacherAttendance/Queries/teachers/${teacherCode}`,
-		PATH_tipos: (type:string, action:string) => `/TeacherAttendance/teachers/SubType/${type}/${action}`,
-		PATH_INSERT: `/TeacherAttendance/teachers/Query/`,
-		PATH_GETFILE: (studentCode: string, assesor: string) => `/TeacherAttendance/FileContact/${studentCode}/teachers/${assesor}/`,
-		PATH_HISTORY: (teacherCode: string, idQuery: string) => `/TeacherAttendance/Queries/teachers/${teacherCode}/History/${idQuery}`,
-		PATH_download: `common/download`,
-		PATH_REQUEST: `/TeacherAttendance/Queries/teachers/CSE`,
-		PATH_GETANEXOS: (teacherCode:string ,studentCode:string) => `/TeacherAttendance/Queries/teachers/${studentCode}/History/Anexos/${teacherCode}`,
-		PATH_INSERT_IMG: `/teacher/insert/query/cse/annexes`,
-		PATH_DELETE_AWS: `/Utility/delete/file/s3`,
-		PATH_CLEAN: `/teacher/clean/annexes/queries/cse`
-	}
+  soporteVirtual: {
+    PATH_docenteConsulta: (teacherCode: string) =>
+      `/TeacherAttendance/Queries/teachers/${teacherCode}`,
+    PATH_tipos: (type: string, action: string) =>
+      `/TeacherAttendance/teachers/SubType/${type}/${action}`,
+    PATH_INSERT: `/TeacherAttendance/teachers/Query/`,
+    PATH_GETFILE: (studentCode: string, assesor: string) =>
+      `/TeacherAttendance/FileContact/${studentCode}/teachers/${assesor}/`,
+    PATH_HISTORY: (teacherCode: string, idQuery: string) =>
+      `/TeacherAttendance/Queries/teachers/${teacherCode}/History/${idQuery}`,
+    PATH_download: `common/download`,
+    PATH_REQUEST: `/TeacherAttendance/Queries/teachers/CSE`,
+    PATH_GETANEXOS: (teacherCode: string, studentCode: string) =>
+      `/TeacherAttendance/Queries/teachers/${studentCode}/History/Anexos/${teacherCode}`,
+    PATH_INSERT_IMG: `/teacher/insert/query/cse/annexes`,
+    PATH_DELETE_AWS: `/Utility/delete/file/s3`,
+    PATH_CLEAN: `/teacher/clean/annexes/queries/cse`,
+  },
 }

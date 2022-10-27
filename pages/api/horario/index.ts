@@ -12,7 +12,7 @@ const API = {
     } catch (error) {
       // console.log(error)
     }
-  }
+  },
 }
 
 export default API

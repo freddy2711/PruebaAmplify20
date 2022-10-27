@@ -7,7 +7,10 @@ const defaultStyle = {
   borderRadius: '2px',
 }
 
-storiesOf('Templates/reports/AcademicReports/CompetenciesReport/CompetenciesReport', module)
+storiesOf(
+  'Templates/reports/AcademicReports/CompetenciesReport/CompetenciesReport',
+  module
+)
   .addDecorator((Story) => (
     <div style={{ height: '600px' }}>
       <div
@@ -76,14 +79,12 @@ storiesOf('Templates/reports/AcademicReports/CompetenciesReport/CompetenciesRepo
 
         <div className={styles.tabla}> tabla</div>
 
-       
-        
         <div className={styles.viewContenListBtns}>
-                <div className={styles.botones}> botones </div>
-                <div className={styles.viewListConten}>
-                    <div>label</div>
-                    <div>list</div>
-                </div>
+          <div className={styles.botones}> botones </div>
+          <div className={styles.viewListConten}>
+            <div>label</div>
+            <div>list</div>
+          </div>
         </div>
 
         <div className={styles.tabla}> tabla dinamica </div>

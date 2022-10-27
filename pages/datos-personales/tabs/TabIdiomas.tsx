@@ -10,9 +10,7 @@ import Swal from 'sweetalert2'
 
 import { deleteIdiomas } from './../../../redux/actions/infoGeneralAction'
 
-import {
-  EditFormIdiomas,
-} from './../../../redux/actions/editarActions'
+import { EditFormIdiomas } from './../../../redux/actions/editarActions'
 import ModalIdiomas from '../modals/ModalIdiomas'
 
 const TabIdiomas = () => {
@@ -22,7 +20,7 @@ const TabIdiomas = () => {
     (state: any) => state?.infoGeneral?.infoGeneral?.Idiomas
   )
 
-	const editForm = (datos: any) => dispatch<any>(EditFormIdiomas(datos))
+  const editForm = (datos: any) => dispatch<any>(EditFormIdiomas(datos))
   const deleteidiomas = (datos: any) => dispatch<any>(deleteIdiomas(datos))
   const [modalShowIdiomas, setModalShowIdiomas] = useState(false)
 
@@ -46,13 +44,13 @@ const TabIdiomas = () => {
           (item: any) => item.idPersonaIdioma === id
         )
         todelete[0].activo = '0'
-				todelete[0].IdPersona = info?.idPersona
+        todelete[0].IdPersona = info?.idPersona
         await deleteidiomas(todelete[0])
       }
     })
   }
 
-	const handleEditar = (id: string) => {
+  const handleEditar = (id: string) => {
     console.log('__IdEditar__', id)
     const exper = info.Idiomas.filter(
       (item: any) => item.idPersonaIdioma === id
@@ -104,7 +102,9 @@ const TabIdiomas = () => {
                           type="button"
                           variant="secondary"
                           classname="btn-sm me-2"
-													onclick={(e: any) => handleEditar(item.idPersonaIdioma)}
+                          onclick={(e: any) =>
+                            handleEditar(item.idPersonaIdioma)
+                          }
                         >
                           Editar
                         </Button>
@@ -124,10 +124,10 @@ const TabIdiomas = () => {
             : null}
         </List>
       </Form>
-			<ModalIdiomas 
-			  modalShowIdiomas={modalShowIdiomas} 
-				setModalShowIdiomas={setModalShowIdiomas}
-			/>
+      <ModalIdiomas
+        modalShowIdiomas={modalShowIdiomas}
+        setModalShowIdiomas={setModalShowIdiomas}
+      />
     </>
   )
 }

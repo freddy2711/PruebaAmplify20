@@ -10,8 +10,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (params[0]) {
     case 'control': {
       const URL = `${apiPath.register.PATH_GetControlClass}${params[1]}/${params[2]}`
-      console.log("URL", URL);
-      
+      console.log('URL', URL)
+
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail

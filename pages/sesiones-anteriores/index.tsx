@@ -8,10 +8,19 @@ import Swal from 'sweetalert2'
 import Button from '../../components/UI/atoms/button/Button'
 import moment from 'moment'
 import Select from '../../components/UI/atoms/select/Select'
-import { remove, set,get } from 'local-storage'
-import { ASISTENCIA, CONTROL_CLASE_ID, DESABLEDSESSIONACLOSE, LST_COURSES_TEACHER, RECUPERACION_ID, SEMESTERID, SET_TEACHERCODE, TIPO_DOCENTE } from '../../consts/storageConst'
+import { remove, set, get } from 'local-storage'
+import {
+  ASISTENCIA,
+  CONTROL_CLASE_ID,
+  DESABLEDSESSIONACLOSE,
+  LST_COURSES_TEACHER,
+  RECUPERACION_ID,
+  SEMESTERID,
+  SET_TEACHERCODE,
+  TIPO_DOCENTE,
+} from '../../consts/storageConst'
 import Router from 'next/router'
-import {apiPreviousSessions} from './../api'
+import { apiPreviousSessions } from './../api'
 
 const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
   ssr: false,
@@ -25,31 +34,38 @@ const TableDinamic = dynamic(
 )
 
 type Selected = {
-  ClaCodigo: string;
-  CurNombre: string;
-};
+  ClaCodigo: string
+  CurNombre: string
+}
 
 type PeriodPayDate = {
-  dateIni: string;
-  dateEnd: string;
-};
+  dateIni: string
+  dateEnd: string
+}
 
 type CoursesBySelected = {
-  TipoDoc:string;
+  TipoDoc: string
 }
 
 const index = () => {
   const [dataListCourses, setDataListCourses] = useState([])
   const [dataListSessions, setListSessions] = useState([])
   const [dataPeriodPayment, setdataPeriodPayment] = useState([])
-  const [dataSelected, setDataSelected] = useState<Selected>({ClaCodigo: '', CurNombre: '',});
-  const [PeriodDate, setPeriodDate] = useState<PeriodPayDate>({dateIni: '', dateEnd: '',});
+  const [dataSelected, setDataSelected] = useState<Selected>({
+    ClaCodigo: '',
+    CurNombre: '',
+  })
+  const [PeriodDate, setPeriodDate] = useState<PeriodPayDate>({
+    dateIni: '',
+    dateEnd: '',
+  })
   const [Loading, setloading] = useState(false)
-  const [ViewSessions,setViewSessions] = useState(false)
-  const [CoursesByTeacherSelected,setCoursesByTeacherSelected] = useState<CoursesBySelected>({TipoDoc:''})
-  const UserID = get(SET_TEACHERCODE) === null ? "N00011153" : get(SET_TEACHERCODE) 
+  const [ViewSessions, setViewSessions] = useState(false)
+  const [CoursesByTeacherSelected, setCoursesByTeacherSelected] =
+    useState<CoursesBySelected>({ TipoDoc: '' })
+  const UserID =
+    get(SET_TEACHERCODE) === null ? 'N00011153' : get(SET_TEACHERCODE)
 
- 
   const COLUMNS_COURSES_TEACHER = [
     { label: 'Seleccionar clase', field: 'select', sort: 'asc' },
     { label: 'Semestre', field: 'SemCodigo', sort: 'asc' },
@@ -60,7 +76,6 @@ const index = () => {
     { label: 'Nombre del curso', field: 'CurNombre', sort: 'asc' },
     { label: 'Carrera', field: 'CarNombre', sort: 'asc' },
   ]
-
 
   const COLUMNS_SESIONS_CLASS = [
     { label: 'Asistencias', field: 'select', sort: 'asc' },
@@ -75,33 +90,45 @@ const index = () => {
   ]
 
   // Colums
-  
+
   const consultaApi = async () => {
-      const result: any = await apiPreviousSessions.listCoursesByTeacher(UserID)
-      formatedDataCoursesByTeacher(result, setDataListCourses)
-      return result
+    const result: any = await apiPreviousSessions.listCoursesByTeacher(UserID)
+    formatedDataCoursesByTeacher(result, setDataListCourses)
+    return result
   }
 
   const GetPeriodPayment = async () => {
     const obj = {
-      action : "get_periodopago",
-      idPeriodPay:"0"
+      action: 'get_periodopago',
+      idPeriodPay: '0',
     }
-      const result: any = await apiPreviousSessions.listPeriodPayment(obj.action,obj.idPeriodPay)
-      setdataPeriodPayment(result);
-      return result
+    const result: any = await apiPreviousSessions.listPeriodPayment(
+      obj.action,
+      obj.idPeriodPay
+    )
+    setdataPeriodPayment(result)
+    return result
   }
 
   const GetperiodPayDateApi = async () => {
-      const result:any = await apiPreviousSessions.listPeriodPayDate()
-      setPeriodDate({dateIni:result.dateIni,dateEnd:result.dateEnd})
-      return result
+    const result: any = await apiPreviousSessions.listPeriodPayDate()
+    setPeriodDate({ dateIni: result.dateIni, dateEnd: result.dateEnd })
+    return result
   }
 
-  const GetSessionsApi = async (classCode:any,accion:any,paymentPeriodId:any,StateMessage:any) => {
+  const GetSessionsApi = async (
+    classCode: any,
+    accion: any,
+    paymentPeriodId: any,
+    StateMessage: any
+  ) => {
     setloading(true)
-    const result: any = await apiPreviousSessions.listSessionsByClass(classCode,accion,paymentPeriodId)
-    PreviousSessionValidator(result,classCode,StateMessage)
+    const result: any = await apiPreviousSessions.listSessionsByClass(
+      classCode,
+      accion,
+      paymentPeriodId
+    )
+    PreviousSessionValidator(result, classCode, StateMessage)
     setloading(false)
   }
 
@@ -124,7 +151,7 @@ const index = () => {
     setstate(rows)
   }
 
-  const formatedDataSessionsByClass= (obj: any, setstate: any) => {
+  const formatedDataSessionsByClass = (obj: any, setstate: any) => {
     const items = obj.map((item: any) => {
       const ControlFecha = new Date(item.ControlFecha)
       const ControlInicio = new Date(item.ControlInicio)
@@ -152,30 +179,36 @@ const index = () => {
 
   // Formater
 
-  const ValidateOpennedSession = async (lstData:any) => {
+  const ValidateOpennedSession = async (lstData: any) => {
     setloading(true)
-    const result: any = await apiPreviousSessions.OpennedSession(lstData.ControlId)
+    const result: any = await apiPreviousSessions.OpennedSession(
+      lstData.ControlId
+    )
     if (result.Status) set(ASISTENCIA, 1)
     else set(ASISTENCIA, 0)
-    set(CONTROL_CLASE_ID,lstData.ControlId)
-    set(RECUPERACION_ID,0)
-    set(TIPO_DOCENTE,CoursesByTeacherSelected.TipoDoc)
+    set(CONTROL_CLASE_ID, lstData.ControlId)
+    set(RECUPERACION_ID, 0)
+    set(TIPO_DOCENTE, CoursesByTeacherSelected.TipoDoc)
     setloading(false)
     Router.push('/asistencia/resumen-asistencia')
   }
 
   // validate
 
-  const PreviousSessionValidator = async (Rows:any,classCode: any,StateMessage:any) =>{
-    if(Rows.length === 0){
-      ViewMessage(classCode,StateMessage)
+  const PreviousSessionValidator = async (
+    Rows: any,
+    classCode: any,
+    StateMessage: any
+  ) => {
+    if (Rows.length === 0) {
+      ViewMessage(classCode, StateMessage)
       setListSessions([])
-    }else{
-      setViewSessions(true);
+    } else {
+      setViewSessions(true)
       formatedDataSessionsByClass(Rows, setListSessions)
     }
   }
-  
+
   const PreviousView = async () => {
     setloading(true)
     remove(LST_COURSES_TEACHER)
@@ -184,8 +217,8 @@ const index = () => {
     setloading(false)
   }
 
-  const ViewMessage = (classCode: any,StateMessage: any) => {
-    switch(StateMessage){
+  const ViewMessage = (classCode: any, StateMessage: any) => {
+    switch (StateMessage) {
       case 0:
         return Swal.fire({
           title: 'Portal de Docentes',
@@ -214,7 +247,7 @@ const index = () => {
           confirmButtonText: 'OK',
         })
       default:
-        break;
+        break
     }
   }
 
@@ -222,35 +255,31 @@ const index = () => {
 
   const handleClickRowCoursesByTeacher = (e: any, item: any) => {
     e.preventDefault()
-    set(SEMESTERID,item.SemCodigo)
-    set(DESABLEDSESSIONACLOSE,true)
-    setCoursesByTeacherSelected({TipoDoc:item.TipoDoc})
-    GetSessionsApi(item.ClaCodigo,'get_todasclases',null,0)
-    setDataSelected({ClaCodigo:item.ClaCodigo,CurNombre:item.CurNombre}) 
+    set(SEMESTERID, item.SemCodigo)
+    set(DESABLEDSESSIONACLOSE, true)
+    setCoursesByTeacherSelected({ TipoDoc: item.TipoDoc })
+    GetSessionsApi(item.ClaCodigo, 'get_todasclases', null, 0)
+    setDataSelected({ ClaCodigo: item.ClaCodigo, CurNombre: item.CurNombre })
   }
 
   const handleClickRowSessionsByClass = (e: any, item: any) => {
     e.preventDefault()
-    item.ControlId = item.ControlId === "" ? 0 : item.ControlId
-    if(parseInt(item.ControlId) === 0) ViewMessage(0,2)
+    item.ControlId = item.ControlId === '' ? 0 : item.ControlId
+    if (parseInt(item.ControlId) === 0) ViewMessage(0, 2)
     else ValidateOpennedSession(item)
   }
 
   const handleSelectedChange = (e: any) => {
-    if(e.target.value === "0"){
-      GetSessionsApi(dataSelected.ClaCodigo,'get_todasclases',-1,2)
-    }else{
-      GetSessionsApi(dataSelected.ClaCodigo,'get_fechapago',e.target.value,1)
+    if (e.target.value === '0') {
+      GetSessionsApi(dataSelected.ClaCodigo, 'get_todasclases', -1, 2)
+    } else {
+      GetSessionsApi(dataSelected.ClaCodigo, 'get_fechapago', e.target.value, 1)
     }
   }
 
   // metodos
 
-
- 
-
   useEffect(() => {
-
     const Load = async () => {
       setloading(true)
       await consultaApi()
@@ -262,10 +291,9 @@ const index = () => {
     Load()
   }, [])
 
-
   return (
     <div className={styles.contenido}>
-       <Loader loading={Loading} />
+      <Loader loading={Loading} />
       <div className={styles.content}>
         <div className={styles.titulo}>
           <Label classname="text-warning h5 mt-3 mb-3">
@@ -281,74 +309,79 @@ const index = () => {
           >
             <p className="mb-0">
               <b>Nota:</b> &nbsp;
-              {
-                ViewSessions === false ? "Seleccione una clase para ver sus sesiones programadas." : "Seleccione una sesión clase para ver sus integrantes."
-              }
-              
+              {ViewSessions === false
+                ? 'Seleccione una clase para ver sus sesiones programadas.'
+                : 'Seleccione una sesión clase para ver sus integrantes.'}
             </p>
           </Alerta>
         </div>
-          {
-            ViewSessions === false ? (
-                <> 
-                  <hr />
-                  <div className={styles.tabla}>
-                      <TableDinamic
-                        columns={COLUMNS_COURSES_TEACHER}
-                        listData={dataListCourses} />
-                  </div>
-                  <div>
-                    <small>
-                      <strong>Tipo docente: (P)</strong> Principal / <strong>(S)</strong>{' '}
-                      Sustituto / <strong>(A)</strong> Auxiliar
-                    </small>
-                  </div>
-                </>
-            ) : (
-                <>
-                  <div className={styles.botones}>
-                    <Button
-                        type="button"
-                        classname="mb-3"
-                        variant="secondary"
-                        onclick={PreviousView}
-                        >
-                          Regresar
-                    </Button>
-                  </div>
+        {ViewSessions === false ? (
+          <>
+            <hr />
+            <div className={styles.tabla}>
+              <TableDinamic
+                columns={COLUMNS_COURSES_TEACHER}
+                listData={dataListCourses}
+              />
+            </div>
+            <div>
+              <small>
+                <strong>Tipo docente: (P)</strong> Principal /{' '}
+                <strong>(S)</strong> Sustituto / <strong>(A)</strong> Auxiliar
+              </small>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.botones}>
+              <Button
+                type="button"
+                classname="mb-3"
+                variant="secondary"
+                onclick={PreviousView}
+              >
+                Regresar
+              </Button>
+            </div>
 
-                  <div className="row mb-3">
-                    <span  className="col-sm-12 col-md-6 d-block d-md-inline"><strong>Sesión:</strong> CLASE {dataSelected.ClaCodigo} - {dataSelected.CurNombre}.</span>
-                    <span  className="col-sm-12 col-md-6 d-block d-md-inline"><strong>Periodo de Pago:</strong> Del {PeriodDate.dateIni} al {PeriodDate.dateEnd}</span>
-                  </div>
-                  <div className="col-sm-12 col-md-2">
-            
-                    <Select
-                      id="formato"
-                      classname="secondary"
-                      name="formato"
-                      onChange={handleSelectedChange}
+            <div className="row mb-3">
+              <span className="col-sm-12 col-md-6 d-block d-md-inline">
+                <strong>Sesión:</strong> CLASE {dataSelected.ClaCodigo} -{' '}
+                {dataSelected.CurNombre}.
+              </span>
+              <span className="col-sm-12 col-md-6 d-block d-md-inline">
+                <strong>Periodo de Pago:</strong> Del {PeriodDate.dateIni} al{' '}
+                {PeriodDate.dateEnd}
+              </span>
+            </div>
+            <div className="col-sm-12 col-md-2">
+              <Select
+                id="formato"
+                classname="secondary"
+                name="formato"
+                onChange={handleSelectedChange}
+              >
+                <option value={0}>Todas mis sesiones</option>
+                {dataPeriodPayment.map((x: any, r: any) => {
+                  return (
+                    <option
+                      key={r + 1}
+                      value={x?.idPeriodPay}
                     >
-                      <option value={0}>Todas mis sesiones</option>
-                      {
-                        dataPeriodPayment.map((x:any,r:any) => {
-                          return(
-                          <option key={r+1} value={x?.idPeriodPay}>{x?.datePay}</option>
-                          )
-                        })
-                      }
-                  
-                      
-                    </Select>
-                  </div>
-                  <div className={styles.tabla}>
-                      <TableDinamic
-                        columns={COLUMNS_SESIONS_CLASS}
-                        listData={dataListSessions} />
-                  </div>
-                </>
-            )
-          }
+                      {x?.datePay}
+                    </option>
+                  )
+                })}
+              </Select>
+            </div>
+            <div className={styles.tabla}>
+              <TableDinamic
+                columns={COLUMNS_SESIONS_CLASS}
+                listData={dataListSessions}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
@@ -356,7 +389,3 @@ const index = () => {
 
 index.title = 'Sesiones Anteriores - Portal Docentes'
 export default index
-
-
-
-

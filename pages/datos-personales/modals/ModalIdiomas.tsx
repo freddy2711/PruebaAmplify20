@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 import AsyncSelect from 'react-select'
 import Modals from './../../../components/UI/atoms/modal/Modal'
@@ -9,22 +8,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { saveIdiomasAction } from './../../../redux/actions/infoGeneralAction'
 
 const defaultValor = (id: string, arr: any) => {
-  const ar = arr.filter((item: any) => item.value.toLocaleUpperCase() === id.toLocaleUpperCase())
+  const ar = arr.filter(
+    (item: any) => item.value.toLocaleUpperCase() === id.toLocaleUpperCase()
+  )
   return ar.length > 0 ? ar[0] : arr[0]
 }
 
-const ModalIdiomas = ({modalShowIdiomas, setModalShowIdiomas}: any) => {
-	const dispatch = useDispatch()
-	const info = useSelector((state: any) => state?.infoGeneral?.infoGeneral)
-	const infoextra = useSelector((state: any) => state?.infoExtra?.infoExtra)
-	const infoeditar = useSelector(
-    (state: any) => state?.infoEditar?.editIdioma
-  )
-	const loadingextraidiomas = useSelector(
+const ModalIdiomas = ({ modalShowIdiomas, setModalShowIdiomas }: any) => {
+  const dispatch = useDispatch()
+  const info = useSelector((state: any) => state?.infoGeneral?.infoGeneral)
+  const infoextra = useSelector((state: any) => state?.infoExtra?.infoExtra)
+  const infoeditar = useSelector((state: any) => state?.infoEditar?.editIdioma)
+  const loadingextraidiomas = useSelector(
     (state: any) => state?.infoExtra?.loadingExtraIdiomas
   )
 
-	useEffect(() => {
+  useEffect(() => {
     const getCombos = async () => {
       if (infoextra.paises) {
         const idiomas = infoextra?.idiomas.map((item: any) => ({
@@ -43,85 +42,80 @@ const ModalIdiomas = ({modalShowIdiomas, setModalShowIdiomas}: any) => {
     }
   }, [loadingextraidiomas])
 
-	const saveidiomasaction = (datos: any) =>
-	dispatch<any>(saveIdiomasAction(datos))
-	
-	const initialFormIdioma = {
-		ddlNivelOral: '0',
-		ddlNivelEscrito: '0',
-		ddlIdioma: '0',
-		id: null
+  const saveidiomasaction = (datos: any) =>
+    dispatch<any>(saveIdiomasAction(datos))
+
+  const initialFormIdioma = {
+    ddlNivelOral: '0',
+    ddlNivelEscrito: '0',
+    ddlIdioma: '0',
+    id: null,
   }
-	const [formIdioma, setFormIdioma] = useState<any>(initialFormIdioma)
+  const [formIdioma, setFormIdioma] = useState<any>(initialFormIdioma)
 
-	const { 
-		ddlNivelOral,
-		ddlNivelEscrito,
-		ddlIdioma,
-		id 
-	} = formIdioma
+  const { ddlNivelOral, ddlNivelEscrito, ddlIdioma, id } = formIdioma
 
-	const initIdiomas = [{ value: '0', label: '-- Seleccionar Idioma --' }]
-	const [CboddlIdioma, setCboddlIdioma] = useState(initIdiomas)
+  const initIdiomas = [{ value: '0', label: '-- Seleccionar Idioma --' }]
+  const [CboddlIdioma, setCboddlIdioma] = useState(initIdiomas)
 
-	const CboddlNivelOral = [
-		{ label: 'Básico', value: 'Básico' },
-		{ label: 'Intermedio', value: 'Intermedio' },
-		{ label: 'Avanzado', value: 'Avanzado' },
-		{ label: 'Nativo', value: 'Nativo' },
-	]
+  const CboddlNivelOral = [
+    { label: 'Básico', value: 'Básico' },
+    { label: 'Intermedio', value: 'Intermedio' },
+    { label: 'Avanzado', value: 'Avanzado' },
+    { label: 'Nativo', value: 'Nativo' },
+  ]
 
-	const CboddlNivelEscrito = [
-		{ label: 'Básico', value: 'Básico' },
-		{ label: 'Intermedio', value: 'Intermedio' },
-		{ label: 'Avanzado', value: 'Avanzado' },
-		{ label: 'Nativo', value: 'Nativo' },
-	]
+  const CboddlNivelEscrito = [
+    { label: 'Básico', value: 'Básico' },
+    { label: 'Intermedio', value: 'Intermedio' },
+    { label: 'Avanzado', value: 'Avanzado' },
+    { label: 'Nativo', value: 'Nativo' },
+  ]
 
-	const saveIdiomaHandle = async (e: any) => {
+  const saveIdiomaHandle = async (e: any) => {
     e.preventDefault()
     console.log('saveNewEL')
 
-    const obj =  {
-			"IdPersonaIdioma": id,
-			"IdPersona": info.idPersona,
-			"IdIdioma" : ddlIdioma,
-			"NivelIdiomaOral" : ddlNivelOral,
-			"NivelIdiomaEscrito" : ddlNivelEscrito,
-			"Activo" :"1",
-			"EsCertificado" :"0",
-			"NoSeEncontroIdioma" :"0",
-			"NombreIdioma" :"",
-			"audit_usuario_creacion" :"RVI",
-			"audit_usuario_actualizacion" :""
-	}
+    const obj = {
+      IdPersonaIdioma: id,
+      IdPersona: info.idPersona,
+      IdIdioma: ddlIdioma,
+      NivelIdiomaOral: ddlNivelOral,
+      NivelIdiomaEscrito: ddlNivelEscrito,
+      Activo: '1',
+      EsCertificado: '0',
+      NoSeEncontroIdioma: '0',
+      NombreIdioma: '',
+      audit_usuario_creacion: 'RVI',
+      audit_usuario_actualizacion: '',
+    }
 
-		await saveidiomasaction(obj)
+    await saveidiomasaction(obj)
 
     setModalShowIdiomas(false)
     setFormIdioma(initialFormIdioma)
-	}
+  }
 
-	useEffect(() => {
+  useEffect(() => {
     if (Object.keys(infoeditar).length !== 0) {
       // setedit(true)
 
       const obj = {
-				ddlNivelOral: infoeditar?.nivelIdiomaOral,
-				ddlNivelEscrito: infoeditar?.nivelIdiomaEscrito,
-				ddlIdioma: infoeditar?.Idioma.idIdioma,
-				id: infoeditar?.idPersonaIdioma,
+        ddlNivelOral: infoeditar?.nivelIdiomaOral,
+        ddlNivelEscrito: infoeditar?.nivelIdiomaEscrito,
+        ddlIdioma: infoeditar?.Idioma.idIdioma,
+        id: infoeditar?.idPersonaIdioma,
       }
 
-			console.log(obj);
+      console.log(obj)
 
       setFormIdioma(obj)
     }
   }, [infoeditar])
 
-	const handleChange = async (e: any, id: string) => {
+  const handleChange = async (e: any, id: string) => {
     switch (id) {
-			default: {
+      default: {
         console.log(e)
         const { value } = e
         setFormIdioma({
@@ -130,17 +124,17 @@ const ModalIdiomas = ({modalShowIdiomas, setModalShowIdiomas}: any) => {
         })
         break
       }
-		}
-	}
+    }
+  }
 
-	return (
-		<Modals
-        size="lg"
-        show={modalShowIdiomas}
-        onHide={() => setModalShowIdiomas(false)}
-        titulo={'Idiomas'}
-      >
-				{loadingextraidiomas === true ? (
+  return (
+    <Modals
+      size="lg"
+      show={modalShowIdiomas}
+      onHide={() => setModalShowIdiomas(false)}
+      titulo={'Idiomas'}
+    >
+      {loadingextraidiomas === true ? (
         <Form
           id="addIdiomas"
           onsubmit={(e: any) => saveIdiomaHandle(e)}
@@ -154,8 +148,8 @@ const ModalIdiomas = ({modalShowIdiomas, setModalShowIdiomas}: any) => {
                 instanceId="ddlIdioma"
                 name="ddlIdioma"
                 defaultValue={defaultValor(ddlIdioma, CboddlIdioma)}
-								value={defaultValor(ddlIdioma, CboddlIdioma)}
-								onChange={(e: any) => handleChange(e, 'ddlIdioma')}
+                value={defaultValor(ddlIdioma, CboddlIdioma)}
+                onChange={(e: any) => handleChange(e, 'ddlIdioma')}
               />
             </div>
           </div>
@@ -169,8 +163,8 @@ const ModalIdiomas = ({modalShowIdiomas, setModalShowIdiomas}: any) => {
                 instanceId="ddlNivelEscrito"
                 name="ddlNivelEscrito"
                 defaultValue={defaultValor(ddlNivelEscrito, CboddlNivelEscrito)}
-								value={defaultValor(ddlNivelEscrito, CboddlNivelEscrito)}
-								onChange={(e: any) => handleChange(e, 'ddlNivelEscrito')}
+                value={defaultValor(ddlNivelEscrito, CboddlNivelEscrito)}
+                onChange={(e: any) => handleChange(e, 'ddlNivelEscrito')}
               />
             </div>
           </div>
@@ -184,8 +178,8 @@ const ModalIdiomas = ({modalShowIdiomas, setModalShowIdiomas}: any) => {
                 instanceId="ddlNivelOral"
                 name="ddlNivelOral"
                 defaultValue={defaultValor(ddlNivelOral, CboddlNivelOral)}
-								value={defaultValor(ddlNivelOral, CboddlNivelOral)}
-								onChange={(e: any) => handleChange(e, 'ddlNivelOral')}
+                value={defaultValor(ddlNivelOral, CboddlNivelOral)}
+                onChange={(e: any) => handleChange(e, 'ddlNivelOral')}
               />
             </div>
           </div>
@@ -199,11 +193,12 @@ const ModalIdiomas = ({modalShowIdiomas, setModalShowIdiomas}: any) => {
               Guardar
             </Button>
           </div>
-        </Form>) : (
+        </Form>
+      ) : (
         'Cargando...'
       )}
-      </Modals>
-	)
+    </Modals>
+  )
 }
 
 export default ModalIdiomas

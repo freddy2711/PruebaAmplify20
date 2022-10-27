@@ -23,7 +23,6 @@ import apiDatosPersonales from './datos-personales'
 import apiSoporteVirtual from './soporte-virtual'
 import apiLogin from './login'
 
-
 // import apiReembolso from "./reembolso/index";
 // import apiInsertDocument from "./tramites/insertdocuments";
 
@@ -50,7 +49,7 @@ export {
   apiDocumentosManuales,
   apiEvaluacionDocente,
   apiDatosPersonales,
-	apiSoporteVirtual,
+  apiSoporteVirtual,
   // apiReembolso,
   apiLogin,
   // apiInsertDocument,

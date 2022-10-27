@@ -68,7 +68,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'semesterControl': {
-      const URL = apiPath.Notes.PATH_GetNoteSemesterControl(params[1], params[2], params[3])
+      const URL = apiPath.Notes.PATH_GetNoteSemesterControl(
+        params[1],
+        params[2],
+        params[3]
+      )
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail
@@ -160,9 +164,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         res.status(500).json({ error })
       }
       break
-    }    
+    }
     case 'detail': {
-      const URL = apiPath.Notes.PATH_GetNoteDetail(params[1],params[2])
+      const URL = apiPath.Notes.PATH_GetNoteDetail(params[1], params[2])
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail

@@ -7,7 +7,10 @@ const defaultStyle = {
   borderRadius: '2px',
 }
 
-storiesOf('Templates/cargaExamenes/resumen-examenes/enviar-examenes/EnviarExamenes', module)
+storiesOf(
+  'Templates/cargaExamenes/resumen-examenes/enviar-examenes/EnviarExamenes',
+  module
+)
   .addDecorator((Story) => (
     <div style={{ height: '600px' }}>
       <div
@@ -95,15 +98,10 @@ storiesOf('Templates/cargaExamenes/resumen-examenes/enviar-examenes/EnviarExamen
           conten
         </div>
 
-
-        
-
         <div className={styles.botones}>
           <div>boton</div>
           <div>boton</div>
         </div>
-
-        
       </div>
     </div>
   ))

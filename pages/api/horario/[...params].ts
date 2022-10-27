@@ -6,10 +6,12 @@ type Data = {}
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params } = req.query
 
-
   switch (params[0]) {
     case 'shedule': {
-      const URL = apiPath.horario.PATH_GetIfTheClassIsOffCampus(params[1],params[2])
+      const URL = apiPath.horario.PATH_GetIfTheClassIsOffCampus(
+        params[1],
+        params[2]
+      )
       console.log('URL', URL)
       try {
         const { data } = await axiosfetchPrivate(URL)

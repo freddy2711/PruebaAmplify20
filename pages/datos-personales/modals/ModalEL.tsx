@@ -124,7 +124,8 @@ const ModalEL = ({
       // setedit(true)
 
       const obj = {
-        rdbExperienciaDocente: infoeditar?.experienciaDocencia !== undefined ? '1' : '0',
+        rdbExperienciaDocente:
+          infoeditar?.experienciaDocencia !== undefined ? '1' : '0',
         txtEmpresa: infoeditar.empresa,
         ddlIndustria: infoeditar.Industria?.idIndustria,
         ddlInstitucionExperiencia: infoeditar?.Institucion?.iDInstitucion,

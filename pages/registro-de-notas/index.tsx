@@ -53,7 +53,6 @@ const IngresoNotas = () => {
   )} ${convertStringToDateTime(new Date())}`
 
   useEffect(() => {
-
     remove(SET_NOTES_SELECT)
     fetchTeacherCurse(dataUser?.code)
     console.log('dataUser', dataUser)

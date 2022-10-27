@@ -1,22 +1,22 @@
-.headerContent{
+.headerContent {
   box-sizing: border-box;
 }
 
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1140px !important;
   flex-direction: column;
 
-  img{
+  img {
     display: none;
   }
 
-  @media  (min-width: 768px) {
+  @media (min-width: 768px) {
     flex-direction: row;
 
-    img{
+    img {
       display: block;
     }
   }

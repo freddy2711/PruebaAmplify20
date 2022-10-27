@@ -28,8 +28,8 @@ import {
   CONTROL_CLASE_FECHA,
   CONTROL_CLASE_FECHAHORA_INICIO,
   CONTROL_CLASE_FECHAHORA_FIN,
-	SET_TEACHERCODE,
-	NO_CLOSE
+  SET_TEACHERCODE,
+  NO_CLOSE,
 } from './../../consts/storageConst'
 
 const TableDinamic = dynamic(
@@ -82,7 +82,7 @@ const SolicitudMarcacion = () => {
         set(CONTROL_CLASE_ESTADO, 'A')
         set(CONTROL_CLASE_FECHAHORA_INICIO, item.FechahoursIni)
         set(CONTROL_CLASE_FECHAHORA_FIN, item.FechahoursEnd)
-				set(NO_CLOSE, 1)
+        set(NO_CLOSE, 1)
         break
       /*       case 'pending':
         break */

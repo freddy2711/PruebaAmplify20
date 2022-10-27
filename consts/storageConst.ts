@@ -272,10 +272,8 @@ export const SET_FECHA_ORIGEN = '12/30/1899'
 export const CLASS_SELECTED_EC = 'claseSeleccionadaEc'
 export const CB_COMPETENCE = 'cbo_competence'
 
-
 // ** CONSTANTES PARA SOPORTE VIRTUAL
 export const CONSULTA_DATA = 'CONSULTA_DATA'
-
 
 // ** CONSTANTES PARA REPORTES
 export const CLASEID_REPORTES = 'ClaseIdReporte'
@@ -322,7 +320,7 @@ export const timeDiffCalc = (dateNow: any, dateFuture: any) => {
 }
 
 export const convertStringToDateTime = (data: any) => {
-  const date = new Date(data)  
+  const date = new Date(data)
   return date.toLocaleTimeString()
 }
 export const eventToken = (data: any, options: any) => {
@@ -435,7 +433,6 @@ export const objToken = async () => {
     return SERVER_INFO
   }
 }
-
 
 // ** CONSTANTES DE CARGA DE EXÁMENES
 export const SET_DATAS_SELEC_COURSES_TEACHER_CE = 'SelectCoursesTeacher_CE'

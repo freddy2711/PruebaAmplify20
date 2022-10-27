@@ -1,4 +1,4 @@
-import classNames from "classnames"
+import classNames from 'classnames'
 
 export const extractClass = (
   styles: { [key: string]: string },

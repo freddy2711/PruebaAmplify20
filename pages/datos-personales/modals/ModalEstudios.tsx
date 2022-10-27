@@ -29,9 +29,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
   const dispatch = useDispatch()
   const info = useSelector((state: any) => state?.infoGeneral?.infoGeneral)
   const infoextra = useSelector((state: any) => state?.infoExtra?.infoExtra)
-  const infoeditar = useSelector(
-    (state: any) => state?.infoEditar?.editEstudio
-  )
+  const infoeditar = useSelector((state: any) => state?.infoEditar?.editEstudio)
 
   const loadingextraestudios = useSelector(
     (state: any) => state?.infoExtra?.loadingExtraEstudios
@@ -103,21 +101,22 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
       // setedit(true)
 
       const obj = {
-				txtNombreEstudio: infoeditar?.nombreEstudio,
-				ddlPaisEstudio: infoeditar?.Pais.idPais,
-				ddlInstitucion: infoeditar?.Institucion.idInstitucion,
-				chkInstitucion: infoeditar?.noSeEncontroInstitucion,
-				txtInstitucion: infoeditar?.codigoClasificacionCarrera,
-				ddlClasificacionCarrera: infoeditar?.ClasificacionCarrera.codigoClasificacionCarrera,
-				ddlNivelAcademico: infoeditar?.NivelAcademico.idNivelAcademico,
-				ddlEstadoEstudio: infoeditar?.EstadoEstudio.idEstadoEstudio,
-				txtFechaInicio: infoeditar?.fechaInicio,
-				txtFechaFin: infoeditar?.fechaFin,
-				chkEstudiaActualmente: infoeditar?.estudiaActualmente,
-				id: infoeditar?.idEstudio,
+        txtNombreEstudio: infoeditar?.nombreEstudio,
+        ddlPaisEstudio: infoeditar?.Pais.idPais,
+        ddlInstitucion: infoeditar?.Institucion.idInstitucion,
+        chkInstitucion: infoeditar?.noSeEncontroInstitucion,
+        txtInstitucion: infoeditar?.codigoClasificacionCarrera,
+        ddlClasificacionCarrera:
+          infoeditar?.ClasificacionCarrera.codigoClasificacionCarrera,
+        ddlNivelAcademico: infoeditar?.NivelAcademico.idNivelAcademico,
+        ddlEstadoEstudio: infoeditar?.EstadoEstudio.idEstadoEstudio,
+        txtFechaInicio: infoeditar?.fechaInicio,
+        txtFechaFin: infoeditar?.fechaFin,
+        chkEstudiaActualmente: infoeditar?.estudiaActualmente,
+        id: infoeditar?.idEstudio,
       }
 
-			console.log(obj);
+      console.log(obj)
 
       setFormEstudios(obj)
     }
@@ -296,7 +295,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
                 name="ddlPaisEstudio"
                 defaultValue={defaultValor(ddlPaisEstudio, cboPais)}
                 onChange={(e: any) => handleChange(e, 'ddlPaisEstudio')}
-								value={defaultValor(ddlPaisEstudio, cboPais)}
+                value={defaultValor(ddlPaisEstudio, cboPais)}
               />
             </div>
           </div>
@@ -312,7 +311,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
                 isLoading={cboLoading}
                 onChange={(e: any) => handleChange(e, 'ddlInstitucion')}
                 isDisabled={cboLoading || chkInstitucion}
-								value={defaultValor(ddlInstitucion, cboInstPais)}
+                value={defaultValor(ddlInstitucion, cboInstPais)}
               />
             </div>
           </div>
@@ -376,10 +375,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
                 onChange={(e: any) =>
                   handleChange(e, 'ddlClasificacionCarrera')
                 }
-								value={defaultValor(
-                  ddlClasificacionCarrera,
-                  areasEstudio
-                )}
+                value={defaultValor(ddlClasificacionCarrera, areasEstudio)}
               />
             </div>
           </div>
@@ -393,7 +389,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
                 name="ddlNivelAcademico"
                 defaultValue={defaultValor(ddlNivelAcademico, cboNivelAca)}
                 onChange={(e: any) => handleChange(e, 'ddlNivelAcademico')}
-								value={defaultValor(ddlNivelAcademico, cboNivelAca)}
+                value={defaultValor(ddlNivelAcademico, cboNivelAca)}
               />
             </div>
           </div>
@@ -407,7 +403,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
                 name="ddlEstadoEstudio"
                 defaultValue={defaultValor(ddlEstadoEstudio, cboEstado)}
                 onChange={(e: any) => handleChange(e, 'ddlEstadoEstudio')}
-								value={defaultValor(ddlEstadoEstudio, cboEstado)}
+                value={defaultValor(ddlEstadoEstudio, cboEstado)}
               />
             </div>
           </div>

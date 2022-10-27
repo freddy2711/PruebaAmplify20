@@ -1,100 +1,104 @@
-import { axiosfetchPrivate, axiosfetchPrivateEmail, axiosfetchPrivateUpload } from '../../../config/axios'
+import {
+  axiosfetchPrivate,
+  axiosfetchPrivateEmail,
+  axiosfetchPrivateUpload,
+} from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from './../../../consts/path'
 
 type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params }:any = req.query
+  const { params }: any = req.query
 
-  console.log('PARAMS_',params)
+  console.log('PARAMS_', params)
 
-  switch (params[0]) { 
-		case 'fileAsesor' : {
-			const URL = apiPath.soporteVirtual.PATH_GETFILE(params[1],params[2])
-			try {
-				const { data } = await axiosfetchPrivate(URL)
+  switch (params[0]) {
+    case 'fileAsesor': {
+      const URL = apiPath.soporteVirtual.PATH_GETFILE(params[1], params[2])
+      try {
+        const { data } = await axiosfetchPrivate(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-			break
-		}
-		case 'tipocse' : {
-			const URL = apiPath.soporteVirtual.PATH_tipos(params[1],params[2])
-			try {
-				const { data } = await axiosfetchPrivate(URL)
+      } catch (error) {
+        console.log(error)
+      }
+      break
+    }
+    case 'tipocse': {
+      const URL = apiPath.soporteVirtual.PATH_tipos(params[1], params[2])
+      try {
+        const { data } = await axiosfetchPrivate(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-			break
-		}
-		case 'insertConsulta' : {
-			const item = req.body
-			const URL = apiPath.soporteVirtual.PATH_INSERT
-			console.log('LOG_INSERT_ITEM__',item)
+      } catch (error) {
+        console.log(error)
+      }
+      break
+    }
+    case 'insertConsulta': {
+      const item = req.body
+      const URL = apiPath.soporteVirtual.PATH_INSERT
+      console.log('LOG_INSERT_ITEM__', item)
 
-			try {
-				const { data } = await axiosfetchPrivate.post(URL, item)
+      try {
+        const { data } = await axiosfetchPrivate.post(URL, item)
         console.log('response', data)
         res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-			break
-		}
-		case 'consulta' : {
-			const URL = apiPath.soporteVirtual.PATH_docenteConsulta(params[1])
-			try {
-				const { data } = await axiosfetchPrivate(URL)
+      } catch (error) {
+        console.log(error)
+      }
+      break
+    }
+    case 'consulta': {
+      const URL = apiPath.soporteVirtual.PATH_docenteConsulta(params[1])
+      try {
+        const { data } = await axiosfetchPrivate(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-			break
-		}
-		case 'apiAnexos' : {
-			const URL = apiPath.soporteVirtual.PATH_GETANEXOS(params[1],params[2])
-			try {
-				const { data } = await axiosfetchPrivate(URL)
+      } catch (error) {
+        console.log(error)
+      }
+      break
+    }
+    case 'apiAnexos': {
+      const URL = apiPath.soporteVirtual.PATH_GETANEXOS(params[1], params[2])
+      try {
+        const { data } = await axiosfetchPrivate(URL)
         console.log('historyAnexos', data)
         res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-			break
-		}
-		case 'docenteConsulta' : {
-			const URL = apiPath.soporteVirtual.PATH_HISTORY(params[1],params[2])
-			try {
-				const { data } = await axiosfetchPrivate(URL)
+      } catch (error) {
+        console.log(error)
+      }
+      break
+    }
+    case 'docenteConsulta': {
+      const URL = apiPath.soporteVirtual.PATH_HISTORY(params[1], params[2])
+      try {
+        const { data } = await axiosfetchPrivate(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-			break
-		}
-		case 'requestConsulta' : {
-			const item = req.body
-			const URL = apiPath.soporteVirtual.PATH_REQUEST
-			console.log('ITEEEEM____PARAMS_REQS',item)
-			try {
-				const { data } = await axiosfetchPrivate.post(URL, item)
+      } catch (error) {
+        console.log(error)
+      }
+      break
+    }
+    case 'requestConsulta': {
+      const item = req.body
+      const URL = apiPath.soporteVirtual.PATH_REQUEST
+      console.log('ITEEEEM____PARAMS_REQS', item)
+      try {
+        const { data } = await axiosfetchPrivate.post(URL, item)
         console.log('response', data)
         res.status(200).json(data.detail)
-			} catch (error) {
-				console.log(error)
-			}
-			break
-		}
-		case 'email': {
+      } catch (error) {
+        console.log(error)
+      }
+      break
+    }
+    case 'email': {
       const emailJson = req.body
-			console.log(req.body)
+      console.log(req.body)
       try {
         const resp = await axiosfetchPrivateEmail.post(`/`, emailJson)
 
@@ -107,11 +111,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
       break
     }
-		case 'upload': {
+    case 'upload': {
       const item = req.body
 
       const { nameS3, usuario, type, tipo } = item
-			console.log('tipo_', type)
+      console.log('tipo_', type)
       const fileObj = {
         idtramite: '0',
         usuario,
@@ -137,55 +141,55 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       break
     }
-		case 'download': {
-			const item = req.body
-			const URL = apiPath.soporteVirtual.PATH_download
-			try {
+    case 'download': {
+      const item = req.body
+      const URL = apiPath.soporteVirtual.PATH_download
+      try {
         const resp = await axiosfetchPrivateUpload.post(URL, item)
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
         console.log(error)
       }
-			break
-		}
-		case 'insertImg': {
-			const item = req.body
-			const URL = apiPath.soporteVirtual.PATH_INSERT_IMG
-			try {
+      break
+    }
+    case 'insertImg': {
+      const item = req.body
+      const URL = apiPath.soporteVirtual.PATH_INSERT_IMG
+      try {
         const resp = await axiosfetchPrivate.post(URL, item)
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
         console.log(error)
       }
-			break
-		}
-		case 'cleanAnexo': {
-			const item = req.body
-			const URL = apiPath.soporteVirtual.PATH_CLEAN
-			try {
+      break
+    }
+    case 'cleanAnexo': {
+      const item = req.body
+      const URL = apiPath.soporteVirtual.PATH_CLEAN
+      try {
         const resp = await axiosfetchPrivate.post(URL, item)
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
         console.log(error)
       }
-			break
-		}
-		case 'deleteImgAws': {
-			const item = req.body
-			const URL = apiPath.soporteVirtual.PATH_DELETE_AWS
-			try {
+      break
+    }
+    case 'deleteImgAws': {
+      const item = req.body
+      const URL = apiPath.soporteVirtual.PATH_DELETE_AWS
+      try {
         const resp = await axiosfetchPrivate.post(URL, item)
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
         console.log(error)
       }
-			break
-		}
-	}
+      break
+    }
+  }
 }
 
 export default handler

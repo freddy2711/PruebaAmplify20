@@ -82,8 +82,7 @@ const DescansoDocente = () => {
 
   useEffect(() => {
     ValidService()
-    console.log("value", value);
-    
+    console.log('value', value)
   }, [])
 
   const techSemesterThursday = async (dataDescanso: any) => {

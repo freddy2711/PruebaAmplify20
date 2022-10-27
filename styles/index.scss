@@ -10,8 +10,8 @@ $orange: #ff7a3e !default;
 $yellow: #fdba30 !default;
 
 $colors: (
-  "lucuma": $lucuma,
-  "magenta": $magenta,
+  'lucuma': $lucuma,
+  'magenta': $magenta,
 );
 
 $primary: $lucuma !default;
@@ -25,47 +25,47 @@ $info: $cyan !default;
 
 /* Define fonts */
 @font-face {
-  font-family: "Sharp Grotesk Bold";
+  font-family: 'Sharp Grotesk Bold';
   font-style: normal;
   font-weight: normal;
-  src: url("https://cdn.upn.edu.pe/fonts/SharpGrotesk/SharpGrotesk-Bold15.woff2")
-    format("woff2");
+  src: url('https://cdn.upn.edu.pe/fonts/SharpGrotesk/SharpGrotesk-Bold15.woff2')
+    format('woff2');
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Sharp Grotesk Semi Bold";
+  font-family: 'Sharp Grotesk Semi Bold';
   font-style: normal;
   font-weight: normal;
-  src: url("https://cdn.upn.edu.pe/fonts/SharpGrotesk/SharpGrotesk-SemiBold15.woff2")
-    format("woff2");
+  src: url('https://cdn.upn.edu.pe/fonts/SharpGrotesk/SharpGrotesk-SemiBold15.woff2')
+    format('woff2');
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Sharp Grotesk Book";
+  font-family: 'Sharp Grotesk Book';
   font-style: normal;
   font-weight: normal;
-  src: url("https://cdn.upn.edu.pe/fonts/SharpGrotesk/SharpGrotesk-Book15.woff2")
-    format("woff2");
+  src: url('https://cdn.upn.edu.pe/fonts/SharpGrotesk/SharpGrotesk-Book15.woff2')
+    format('woff2');
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Telegraf Regular";
+  font-family: 'Telegraf Regular';
   font-style: normal;
   font-weight: normal;
-  src: url("https://cdn.upn.edu.pe/fonts/Telegraf/Telegraf-Regular.woff2")
-    format("woff2");
+  src: url('https://cdn.upn.edu.pe/fonts/Telegraf/Telegraf-Regular.woff2')
+    format('woff2');
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Telegraf Ultra Bold";
+  font-family: 'Telegraf Ultra Bold';
   font-style: normal;
   font-weight: normal;
-  src: url("https://cdn.upn.edu.pe/fonts/Telegraf/Telegraf-UltraBold.woff2")
-    format("woff2");
+  src: url('https://cdn.upn.edu.pe/fonts/Telegraf/Telegraf-UltraBold.woff2')
+    format('woff2');
   font-display: swap;
 }
 
@@ -73,8 +73,8 @@ $info: $cyan !default;
 /* Las tipografías Telegraf siempre se usarán en minúsculas. */
 /* Los elementos h1,h2,h3,h4,h5 están usando Sharp Grotesk Bold */
 
-$font-family-sans-serif: "Telegraf Regular", Sans-serif !default;
-$headings-font-family: "Sharp Grotesk Bold", Sans-serif !default;
+$font-family-sans-serif: 'Telegraf Regular', Sans-serif !default;
+$headings-font-family: 'Sharp Grotesk Bold', Sans-serif !default;
 $headings-font-weight: 400 !default;
 
 h1,
@@ -97,7 +97,7 @@ h6,
 /* Then add additional custom code here */
 
 button.btn {
-  font-family: "Telegraf Ultra Bold", sans-serif;
+  font-family: 'Telegraf Ultra Bold', sans-serif;
 }
 
 //
@@ -111,7 +111,7 @@ $accent-color: $primary !default;
   accent-color: $accent-color;
 }
 
-.table-responsive thead{
+.table-responsive thead {
   text-align: center;
   vertical-align: middle;
 }
@@ -130,28 +130,28 @@ $accent-color: $primary !default;
   border-radius: 0px !important;
   border: 0px !important;
 }
-.ajs-ok{  
+.ajs-ok {
   color: #212529 !important;
   background-color: #ffc107 !important;
   border-color: #ffc107 !important;
-  float: right ;
+  float: right;
 }
-.ajs-ok:hover{  
+.ajs-ok:hover {
   color: #464646 !important;
   background-color: #eeba1f !important;
   border-color: #ffc107 !important;
 }
-.ajs-cancel{  
+.ajs-cancel {
   color: #fff !important;
   background-color: #212529 !important;
   border-color: #ffc107 !important;
 }
-.ajs-cancel:hover{    
+.ajs-cancel:hover {
   color: #fff !important;
   background-color: #464646 !important;
   border-color: #ffc107 !important;
 }
-.ajs-footer{
+.ajs-footer {
   height: 70px !important;
 }
 .ajs-button:hover {
@@ -167,83 +167,92 @@ $accent-color: $primary !default;
 /* END MODAL ALERTAS */
 
 .editor .ql-editor {
-	min-height:200px;
+  min-height: 200px;
 }
 
 /* CHAT STYLES */
-.chat{
-	display: flex;
-	width: 100%;
-	height: 100%;
-	flex-direction: column;
+.chat {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
 }
 
-.chat-one-docente, .chat-one-asesor {
-	width: 100%;
-	display: block;
-	margin-bottom: 5px!important;
+.chat-one-docente,
+.chat-one-asesor {
+  width: 100%;
+  display: block;
+  margin-bottom: 5px !important;
 }
 .chat-one {
-	width: 100%;
-	display: block;
-	margin-bottom: 5px;
-	float: left;
-	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  width: 100%;
+  display: block;
+  margin-bottom: 5px;
+  float: left;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
 }
-.chat-one-docente .img-chat, .chat-one-asesor .img-chat {
-	width: 10%;
-	text-align: center;
+.chat-one-docente .img-chat,
+.chat-one-asesor .img-chat {
+  width: 10%;
+  text-align: center;
 }
-.chat-one-docente .img-chat, .chat-one-docente .msg-chat {
-	float: left;
+.chat-one-docente .img-chat,
+.chat-one-docente .msg-chat {
+  float: left;
 }
-.chat-one-docente .img-chat img, .chat-one-asesor .img-chat img {
-	border-radius: 50%;
-	border: 1px solid #ccc;
-	max-height: 45px;
-	width: 45px;
+.chat-one-docente .img-chat img,
+.chat-one-asesor .img-chat img {
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  max-height: 45px;
+  width: 45px;
 }
-.chat-one-docente .msg-chat, .chat-one-asesor .msg-chat {
-	width: 90%;
-	line-height: 1.2;
-	letter-spacing: 1px;
+.chat-one-docente .msg-chat,
+.chat-one-asesor .msg-chat {
+  width: 90%;
+  line-height: 1.2;
+  letter-spacing: 1px;
 }
-.chat-one-docente .img-chat, .chat-one-docente .msg-chat {
-	float: left;
+.chat-one-docente .img-chat,
+.chat-one-docente .msg-chat {
+  float: left;
 }
 .chat-one-docente .msg-chat .msg-chat-content {
-	width: 80%;
-	background: #ebebeb;
-	border-radius: 5px;
-	padding: 5px 10px 10px 10px;
+  width: 80%;
+  background: #ebebeb;
+  border-radius: 5px;
+  padding: 5px 10px 10px 10px;
 }
 .chat-one-docente .msg-chat .msg-chat-content img {
-	max-width: 250px;
+  max-width: 250px;
 }
 .msg-chat-content .container-attachment {
-	border: none;
-	display: flex;
-	margin-top: 15px;
+  border: none;
+  display: flex;
+  margin-top: 15px;
 }
 .msg-chat-content img {
-	border: 1px solid #c3c3c3;
-	padding: 3px;
-	background: #fff;
+  border: 1px solid #c3c3c3;
+  padding: 3px;
+  background: #fff;
 }
 .msg-chat-content {
-	font-size:14px;
+  font-size: 14px;
 }
 .msg-chat-content p,
 .msg-chat-content ul {
-	margin-bottom:0px;
+  margin-bottom: 0px;
 }
 
-.chat-one-asesor .img-chat, .chat-one-asesor .msg-chat {
-	float: right;
+.chat-one-asesor .img-chat,
+.chat-one-asesor .msg-chat {
+  float: right;
 }
 .chat-one-asesor .msg-chat {
-	float: right;
+  float: right;
 }
 .chat-one-asesor .msg-chat .body-list-load-file-msg li a {
-	color: #f5f5f5!important;
+  color: #f5f5f5 !important;
 }

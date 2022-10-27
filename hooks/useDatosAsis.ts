@@ -1,19 +1,13 @@
-
 const useDatosAsis = (datos: any, valor: string, idAlum: string) => {
-
   const newDatosMod = datos.map((item: any) => {
-
-    if(item.AluCodigo === idAlum){
-        item.Asistencia = valor
+    if (item.AluCodigo === idAlum) {
+      item.Asistencia = valor
     }
 
     return item
   })
 
-
-  return (
-    newDatosMod
-  )
+  return newDatosMod
 }
 
 export default useDatosAsis

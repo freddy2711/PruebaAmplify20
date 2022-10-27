@@ -88,7 +88,7 @@ const IngresoNotas = () => {
   const dataNotes: any = get(SET_NOTES_SELECT)
   const semesterCode: any = get(SET_SEMESTERCODE)
   const dateNow = convertStringToDate(new Date())
-console.log("semesterCode", semesterCode);
+  console.log('semesterCode', semesterCode)
 
   const dateTimeNow = `${convertStringToDate(
     new Date()
@@ -96,8 +96,8 @@ console.log("semesterCode", semesterCode);
   selectNote = get(SET_NOTES_SELECT)
   const ip = '::1'
   useEffect(() => {
-    console.log("dateTimeNow", dateTimeNow);
-    
+    console.log('dateTimeNow', dateTimeNow)
+
     setloading(true)
     const obj = {
       ip,

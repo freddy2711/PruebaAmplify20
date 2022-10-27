@@ -33,28 +33,28 @@ import {
   SAVE_ESTUDIO,
   END_SAVE,
   SAVE_ESTUDIO_ERROR,
-	LOAD_CONOCIMIENTOS,
-	OBTENER_CONOCIMIENTOS,
-	SAVE_CONOCIMIENTO,
-	END_SAVE_CONOCIMIENTO,
-	SAVE_CONOCIMIENTO_ERROR,
-	LOAD_IDIOMAS,
-	OBTENER_IDIOMAS_SAVE,
-	SAVE_IDIOMAS,
-	END_SAVE_IDIOMAS,
-	SAVE_IDIOMAS_ERROR,
-	LOAD_REFLAB,
-	OBTENER_REFLAB_SAVE,
-	SAVE_REFLAB,
-	END_SAVE_REFLAB,
-	SAVE_REFLAB_ERROR,
-	CARGAR_PROGRESO,
-	CARGAR_PROGRESO_ERROR,
-	LOAD_ADJUNTO,
-	OBTENER_ADJUNTO_SAVE,
-	SAVE_ADJUNTO,
-	END_SAVE_ADJUNTO,
-	SAVE_ADJUNTO_ERROR,
+  LOAD_CONOCIMIENTOS,
+  OBTENER_CONOCIMIENTOS,
+  SAVE_CONOCIMIENTO,
+  END_SAVE_CONOCIMIENTO,
+  SAVE_CONOCIMIENTO_ERROR,
+  LOAD_IDIOMAS,
+  OBTENER_IDIOMAS_SAVE,
+  SAVE_IDIOMAS,
+  END_SAVE_IDIOMAS,
+  SAVE_IDIOMAS_ERROR,
+  LOAD_REFLAB,
+  OBTENER_REFLAB_SAVE,
+  SAVE_REFLAB,
+  END_SAVE_REFLAB,
+  SAVE_REFLAB_ERROR,
+  CARGAR_PROGRESO,
+  CARGAR_PROGRESO_ERROR,
+  LOAD_ADJUNTO,
+  OBTENER_ADJUNTO_SAVE,
+  SAVE_ADJUNTO,
+  END_SAVE_ADJUNTO,
+  SAVE_ADJUNTO_ERROR,
 } from '../types'
 
 // cada reducer tiene su propio state
@@ -65,18 +65,18 @@ type Action = {
 
 const initialState = {
   infoGeneral: {},
-	progress: {},
+  progress: {},
   error: null,
   loading: false,
 }
 
 export default function (state: any = initialState, action: Action) {
   switch (action.type) {
-		case CARGAR_PROGRESO:
-			return {
-				...state,
-					progress: action.payload
-			}
+    case CARGAR_PROGRESO:
+      return {
+        ...state,
+        progress: action.payload,
+      }
     case INIT_SAVE_CONTACT:
     case CARGAR_INFO_GENERAL:
     case LOADSAVE:
@@ -123,10 +123,10 @@ export default function (state: any = initialState, action: Action) {
     case LOAD_DELETE_REFLAB:
     case LOAD_DELETE_DOCS:
     case LOAD_ESTUDIOS:
-		case LOAD_CONOCIMIENTOS: 
-		case LOAD_IDIOMAS: 
-		case LOAD_REFLAB:
-		case LOAD_ADJUNTO:
+    case LOAD_CONOCIMIENTOS:
+    case LOAD_IDIOMAS:
+    case LOAD_REFLAB:
+    case LOAD_ADJUNTO:
       return {
         ...state,
         loading: true,
@@ -138,11 +138,11 @@ export default function (state: any = initialState, action: Action) {
     case DELETE_REFLAB_ERROR:
     case DELETE_DOCS_ERROR:
     case SAVE_ESTUDIO_ERROR:
-		case SAVE_CONOCIMIENTO_ERROR:
-		case SAVE_IDIOMAS_ERROR:
-		case SAVE_REFLAB_ERROR:
-		case CARGAR_PROGRESO_ERROR:
-		case SAVE_ADJUNTO_ERROR:
+    case SAVE_CONOCIMIENTO_ERROR:
+    case SAVE_IDIOMAS_ERROR:
+    case SAVE_REFLAB_ERROR:
+    case CARGAR_PROGRESO_ERROR:
+    case SAVE_ADJUNTO_ERROR:
       return {
         ...state,
         error: action.payload,
@@ -230,10 +230,10 @@ export default function (state: any = initialState, action: Action) {
         },
       }
     }
-		case SAVE_ADJUNTO:
-		case SAVE_REFLAB:
-		case SAVE_IDIOMAS:
-		case SAVE_CONOCIMIENTO: 
+    case SAVE_ADJUNTO:
+    case SAVE_REFLAB:
+    case SAVE_IDIOMAS:
+    case SAVE_CONOCIMIENTO:
     case SAVE_ESTUDIO:
     case SAVE_EXPERIENCIA_LABORAL:
       return {
@@ -247,7 +247,7 @@ export default function (state: any = initialState, action: Action) {
           ],
         }, */
       }
-		case END_SAVE_CONOCIMIENTO:
+    case END_SAVE_CONOCIMIENTO:
     case ENDSAVE: {
       return {
         ...state,
@@ -272,45 +272,45 @@ export default function (state: any = initialState, action: Action) {
           Estudios: [...Object.values(action.payload)],
         },
       }
-		case OBTENER_IDIOMAS_SAVE:
-			return {
-				...state,
-				loading: true,
-				infoGeneral: {
-					...state.infoGeneral,
-					Idiomas: [...Object.values(action.payload)],
-				},
-			}
-		case OBTENER_REFLAB_SAVE:
-			return {
-				...state,
-				loading: true,
-				infoGeneral: {
-					...state.infoGeneral,
-					ReferenciasLaborales: [...Object.values(action.payload)],
-				},
-			}
-		case OBTENER_ADJUNTO_SAVE:
-			return {
-				...state,
-				loading: true,
-				infoGeneral: {
-					...state.infoGeneral,
-					Adjuntos: [...Object.values(action.payload)],
-				},
-			}
-		case OBTENER_CONOCIMIENTOS:
-			return {
-				...state,
-				loading: true,
-				infoGeneral: {
-					...state.infoGeneral,
-					Conocimientos: [...Object.values(action.payload)],
-				},
-			}
-		case END_SAVE_ADJUNTO:
-		case END_SAVE_REFLAB:
-		case END_SAVE_IDIOMAS:
+    case OBTENER_IDIOMAS_SAVE:
+      return {
+        ...state,
+        loading: true,
+        infoGeneral: {
+          ...state.infoGeneral,
+          Idiomas: [...Object.values(action.payload)],
+        },
+      }
+    case OBTENER_REFLAB_SAVE:
+      return {
+        ...state,
+        loading: true,
+        infoGeneral: {
+          ...state.infoGeneral,
+          ReferenciasLaborales: [...Object.values(action.payload)],
+        },
+      }
+    case OBTENER_ADJUNTO_SAVE:
+      return {
+        ...state,
+        loading: true,
+        infoGeneral: {
+          ...state.infoGeneral,
+          Adjuntos: [...Object.values(action.payload)],
+        },
+      }
+    case OBTENER_CONOCIMIENTOS:
+      return {
+        ...state,
+        loading: true,
+        infoGeneral: {
+          ...state.infoGeneral,
+          Conocimientos: [...Object.values(action.payload)],
+        },
+      }
+    case END_SAVE_ADJUNTO:
+    case END_SAVE_REFLAB:
+    case END_SAVE_IDIOMAS:
     case END_SAVE: {
       return {
         ...state,

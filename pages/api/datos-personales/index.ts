@@ -56,7 +56,6 @@ const API = {
     }
   },
   personaGuardar: async (Item: any) => {
-
     try {
       const URL = `/datos-personales/personaGuardar`
       const result = await axiosfetchPublic.post(URL, Item)
@@ -266,7 +265,7 @@ const API = {
     try {
       const URL = `/datos-personales/personaAdjuntoGuardar`
       const result = await axiosfetchPublic.post(URL, item)
-			console.log(result)
+      console.log(result)
       return result
     } catch (error) {
       console.log(error)
@@ -282,7 +281,6 @@ const API = {
     }
   },
   confirmacionGuardar: async (item: any) => {
-
     try {
       const URL = `/datos-personales/confirmacionGuardar`
       const result = await axiosfetchPublic.post(URL, item)
@@ -291,16 +289,15 @@ const API = {
       console.log(error)
     }
   },
-	downloadFile: async (name: any) => {
-		try {
-			const URL = `/datos-personales/downloadFile/${name}`
-			const result = await axiosfetchPublic(URL)
+  downloadFile: async (name: any) => {
+    try {
+      const URL = `/datos-personales/downloadFile/${name}`
+      const result = await axiosfetchPublic(URL)
       return result
-		} catch (error) {
-			console.log(error)
-		}
-	}
-  
+    } catch (error) {
+      console.log(error)
+    }
+  },
 }
 
 export default API

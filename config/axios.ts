@@ -33,10 +33,9 @@ export const axiosfetchPrivateWSCV = axios.create({
   baseURL: `${process.env.BACKEND_URL_WSCV}`,
   headers: {
     'x-api-key': `${process.env.BACKEND_APIKEY_WSCV}`,
-    'Content-Type': 'application/json' 
-  }
+    'Content-Type': 'application/json',
+  },
 })
-
 
 /* export const axiosfetchPrivateWSCV = axios.create({
   baseURL: `${'http://localhost:3619'}`,
@@ -45,7 +44,6 @@ export const axiosfetchPrivateWSCV = axios.create({
     'Content-Type': 'application/json' 
   } 
 }) */
-
 
 export const axiosfetchPrivateEmail = axios.create({
   baseURL: `${process.env.URL_SERVICE_EMAIL}`,

@@ -159,7 +159,7 @@ const index = ({ ip }: any) => {
     },
   }
 
-	let CompetenciaIdVAR: any
+  let CompetenciaIdVAR: any
 
   const [modalData, setModalData] = useState(initModalData)
 

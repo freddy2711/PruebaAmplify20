@@ -7,7 +7,10 @@ const defaultStyle = {
   borderRadius: '2px',
 }
 
-storiesOf('Templates/reports/TeacherEvaluationReport/ReporteEvaluacionDocente', module)
+storiesOf(
+  'Templates/reports/TeacherEvaluationReport/ReporteEvaluacionDocente',
+  module
+)
   .addDecorator((Story) => (
     <div style={{ height: '600px' }}>
       <div
@@ -73,8 +76,6 @@ storiesOf('Templates/reports/TeacherEvaluationReport/ReporteEvaluacionDocente', 
         </div>
 
         <hr />
-
-       
 
         <div>
           <small>

@@ -87,12 +87,7 @@ storiesOf('Templates/cargaExamenes/resumen-examenes/resumenExamenes', module)
           Table
         </div>
 
-
-        
-
         <div className={styles.tabla}> table </div>
-
-        
       </div>
     </div>
   ))

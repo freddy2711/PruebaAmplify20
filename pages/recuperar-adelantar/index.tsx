@@ -8,7 +8,7 @@ import moment from 'moment'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import dynamic from 'next/dynamic'
 import Router from 'next/router'
-import {set} from 'local-storage'
+import { set } from 'local-storage'
 import { LST_RECOVERY_SELECTED } from '../../consts/storageConst'
 
 const TableDinamic = dynamic(
@@ -39,11 +39,14 @@ const Recuperar = () => {
     { label: 'Estado', field: 'RecEstado', sort: 'asc' },
   ]
 
-  const GetApiRecovery = async (teacherCode:any,pend:any) => {
+  const GetApiRecovery = async (teacherCode: any, pend: any) => {
     try {
       setloading(true)
-      const ListRecovery: any = await apiRecuperarAdelantar.listGetRecovery(teacherCode,pend)
-      formatedDataRecovery(ListRecovery,setdataListRecovery)
+      const ListRecovery: any = await apiRecuperarAdelantar.listGetRecovery(
+        teacherCode,
+        pend
+      )
+      formatedDataRecovery(ListRecovery, setdataListRecovery)
       setloading(false)
     } catch (error) {
       console.log(error)
@@ -51,42 +54,45 @@ const Recuperar = () => {
     }
   }
 
-  const formatedDataRecovery= (obj: any, setstate: any) => {
+  const formatedDataRecovery = (obj: any, setstate: any) => {
     const items = obj.map((item: any) => {
       const RecFechaPerdida = new Date(item.RecFechaPerdida)
-      let RecFechaRecuperacion:any = item.RecFechaRecuperacion
+      let RecFechaRecuperacion: any = item.RecFechaRecuperacion
       RecFechaRecuperacion = RecFechaRecuperacion.split('-')
-      item.RecFechaRecuperacion = RecFechaRecuperacion[0] + "-" + RecFechaRecuperacion[1] + "-" + RecFechaRecuperacion[2]
+      item.RecFechaRecuperacion =
+        RecFechaRecuperacion[0] +
+        '-' +
+        RecFechaRecuperacion[1] +
+        '-' +
+        RecFechaRecuperacion[2]
       item.RecFechaPerdida = moment(RecFechaPerdida).format('DD-MM-YYYY')
       return item
     })
 
-    const rows = items.map((item: any,index: number) => ({
+    const rows = items.map((item: any, index: number) => ({
       ...item,
       select: (
         <a
-        key={index}
-        rel="noreferrer"
-        className="text-decoration-none text-center w-100 d-block"
-        style={{cursor:'pointer'}}
-        onClick={() => RowSeletec(item)}
-      >
-        Editar
-      </a>
+          key={index}
+          rel="noreferrer"
+          className="text-decoration-none text-center w-100 d-block"
+          style={{ cursor: 'pointer' }}
+          onClick={() => RowSeletec(item)}
+        >
+          Editar
+        </a>
       ),
     }))
     setstate(rows)
   }
 
   const getdata = () => {
-    if(Clicked === false)
-    GetApiRecovery(teacherCode,"1")
-    else
-    GetApiRecovery(teacherCode,pend)
+    if (Clicked === false) GetApiRecovery(teacherCode, '1')
+    else GetApiRecovery(teacherCode, pend)
   }
 
-  const RowSeletec = (Data:any) => {
-    set(LST_RECOVERY_SELECTED,JSON.stringify(Data))
+  const RowSeletec = (Data: any) => {
+    set(LST_RECOVERY_SELECTED, JSON.stringify(Data))
     Router.push('/recuperar-adelantar/editar-recupera')
   }
 
@@ -94,13 +100,12 @@ const Recuperar = () => {
     Router.push('/recuperar-adelantar/resumen-recupera')
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     const Load = async () => {
-      await GetApiRecovery(teacherCode,pend)
+      await GetApiRecovery(teacherCode, pend)
     }
     Load()
-  },[])
-
+  }, [])
 
   return (
     <div className={styles.contenido}>
@@ -115,7 +120,11 @@ const Recuperar = () => {
         <hr />
 
         <div className={styles.botones}>
-          <RecuperarButtons btnOnclick={BTNAddNew} onChange={() => setClicked(!Clicked)} onclickcheck={getdata}/>
+          <RecuperarButtons
+            btnOnclick={BTNAddNew}
+            onChange={() => setClicked(!Clicked)}
+            onclickcheck={getdata}
+          />
         </div>
 
         <hr />
@@ -123,7 +132,8 @@ const Recuperar = () => {
         <div className={styles.tabla}>
           <TableDinamic
             columns={COLUMNS_RECOVERY}
-            listData={dataListRecovery} />
+            listData={dataListRecovery}
+          />
         </div>
 
         <div>
@@ -145,5 +155,3 @@ const Recuperar = () => {
 
 Recuperar.title = 'Recuperar/Adelantar clases - Portal Docentes'
 export default Recuperar
-
-

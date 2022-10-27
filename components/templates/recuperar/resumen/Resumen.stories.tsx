@@ -92,36 +92,21 @@ storiesOf('Templates/recuperar/resumen', module)
           Alerta
         </div>
 
-        <div className={styles.blockRadioButton} >
-          RadioButton
-        </div>
+        <div className={styles.blockRadioButton}>RadioButton</div>
 
-        <div className={styles.blocFormValidateRow} >
-          select / date Picker
-        </div>
+        <div className={styles.blocFormValidateRow}>select / date Picker</div>
 
-        <div className={styles.blocFormValidateRowTable} >
-          Table
-        </div>
+        <div className={styles.blocFormValidateRowTable}>Table</div>
 
-        <div className={styles.blocFormValidateRow} >
-          select / text
-        </div>
+        <div className={styles.blocFormValidateRow}>select / text</div>
 
-        <div className={styles.blocFormValidateRow} >
-          select / texarea
-        </div>
+        <div className={styles.blocFormValidateRow}>select / texarea</div>
 
         <div>
-            <b>
-            checkbox
-            </b>
+          <b>checkbox</b>
         </div>
 
-        <div className={styles.botonesAlign} >
-          Buttons
-        </div>
-
+        <div className={styles.botonesAlign}>Buttons</div>
       </div>
     </div>
   ))

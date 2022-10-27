@@ -37,41 +37,41 @@ import {
   SAVE_ESTUDIO,
   END_SAVE,
   SAVE_ESTUDIO_ERROR,
-	LOAD_CONOCIMIENTOS,
-	OBTENER_CONOCIMIENTOS,
-	SAVE_CONOCIMIENTO,
-	END_SAVE_CONOCIMIENTO,
-	SAVE_CONOCIMIENTO_ERROR,
-	LOAD_IDIOMAS,
-	OBTENER_IDIOMAS_SAVE,
-	SAVE_IDIOMAS,
-	END_SAVE_IDIOMAS,
-	SAVE_IDIOMAS_ERROR,
-	LOAD_REFLAB,
-	OBTENER_REFLAB_SAVE,
-	SAVE_REFLAB,
-	END_SAVE_REFLAB,
-	SAVE_REFLAB_ERROR,
-	CARGAR_PROGRESO,
-	LOAD_ADJUNTO,
-	OBTENER_ADJUNTO_SAVE,
-	SAVE_ADJUNTO,
-	END_SAVE_ADJUNTO,
-	SAVE_ADJUNTO_ERROR,
-	// CARGAR_PROGRESO_ERROR
+  LOAD_CONOCIMIENTOS,
+  OBTENER_CONOCIMIENTOS,
+  SAVE_CONOCIMIENTO,
+  END_SAVE_CONOCIMIENTO,
+  SAVE_CONOCIMIENTO_ERROR,
+  LOAD_IDIOMAS,
+  OBTENER_IDIOMAS_SAVE,
+  SAVE_IDIOMAS,
+  END_SAVE_IDIOMAS,
+  SAVE_IDIOMAS_ERROR,
+  LOAD_REFLAB,
+  OBTENER_REFLAB_SAVE,
+  SAVE_REFLAB,
+  END_SAVE_REFLAB,
+  SAVE_REFLAB_ERROR,
+  CARGAR_PROGRESO,
+  LOAD_ADJUNTO,
+  OBTENER_ADJUNTO_SAVE,
+  SAVE_ADJUNTO,
+  END_SAVE_ADJUNTO,
+  SAVE_ADJUNTO_ERROR,
+  // CARGAR_PROGRESO_ERROR
 } from '../types'
 
-export function loadProgress(id: any){
-	return async (dispatch: any) => {
-		try {
-			const { data }: any = await apiDatosPersonales.EvaluadorEvaluado(id)
-			console.log(data.detail)
-			dispatch(cargarProgreso(data.detail))
-		} catch (error) {
-			console.log(error);
-			dispatch(cargarDataError(true))
-		}
-	}
+export function loadProgress(id: any) {
+  return async (dispatch: any) => {
+    try {
+      const { data }: any = await apiDatosPersonales.EvaluadorEvaluado(id)
+      console.log(data.detail)
+      dispatch(cargarProgreso(data.detail))
+    } catch (error) {
+      console.log(error)
+      dispatch(cargarDataError(true))
+    }
+  }
 }
 // cargar info
 export function loadInfoGeneral(datos: any) {
@@ -81,14 +81,15 @@ export function loadInfoGeneral(datos: any) {
     try {
       const { data }: any = await apiDatosPersonales.personaObtener(datos.user)
       console.log(data)
-			
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(data.idPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
+
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        data.idPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
 
       dispatch(cargarDataExito(data))
-
     } catch (error) {
       console.log(error)
       dispatch(cargarDataError(true))
@@ -104,11 +105,12 @@ export function saveContacto(datos: any) {
       const resp: any = await apiDatosPersonales.personaGuardar(datos)
       console.log(resp.data)
       if (resp.data.status === true) {
-
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.idPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
+        const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+          datos.idPersona
+        )
+        const progreso = eva.data[0]
+        console.log(progreso)
+        dispatch(cargarProgreso(progreso))
 
         dispatch(saveContactExito(datos))
 
@@ -185,10 +187,12 @@ export function saveExpLab(datos: any) {
       dispatch(saveExpLabExito())
       dispatch(endSave(false))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
       // return respuesta
     } catch (error) {
       console.log(error)
@@ -232,11 +236,12 @@ export function saveEstudiosAction(datos: any) {
       dispatch(saveEstudio())
       dispatch(endSaveEstudio(false))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(saveEstudioError(true))
@@ -272,18 +277,21 @@ export function saveIdiomasAction(datos: any) {
         })
       }
 
-      const { data }: any = await apiDatosPersonales.personaIdioma(datos.IdPersona)
+      const { data }: any = await apiDatosPersonales.personaIdioma(
+        datos.IdPersona
+      )
       console.log(Object.values(data))
       dispatch(getObtenerIdiomasPersona(Object.values(data)))
 
       dispatch(saveIdioma())
       dispatch(endSaveIdioma(false))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(saveIdiomaError(true))
@@ -319,17 +327,20 @@ export function saveAdjuntoAction(datos: any) {
         })
       }
 
-      const { data }: any = await apiDatosPersonales.personaAdjunto(datos.IdPersona)
+      const { data }: any = await apiDatosPersonales.personaAdjunto(
+        datos.IdPersona
+      )
       console.log(Object.values(data))
       dispatch(getObtenerAdjuntoPersona(Object.values(data)))
 
       dispatch(saveAdjunto())
       dispatch(endSaveAdjunto(false))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			dispatch(cargarProgreso(progreso))
-
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(saveAdjuntoError(true))
@@ -366,17 +377,21 @@ export function saveRefLabAction(datos: any) {
         })
       }
 
-      const { data }: any = await apiDatosPersonales.referenciaLaboral(datos.IdPersona)
+      const { data }: any = await apiDatosPersonales.referenciaLaboral(
+        datos.IdPersona
+      )
       console.log(Object.values(data))
       dispatch(getObtenerRefLabPersona(Object.values(data)))
 
       dispatch(saveRefLab())
       dispatch(endSaveRefLab(false))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(saveRefLabError(true))
@@ -389,7 +404,9 @@ export function saveConoAction(datos: any) {
     dispatch(LoadSaveCono(true))
 
     try {
-      const resp: any = await apiDatosPersonales.personaConocimientoGuardar(datos)
+      const resp: any = await apiDatosPersonales.personaConocimientoGuardar(
+        datos
+      )
       console.log(resp.data)
       const status = resp.data.status
       if (status === true) {
@@ -412,24 +429,27 @@ export function saveConoAction(datos: any) {
         })
       }
 
-      const { data }: any = await apiDatosPersonales.personaConocimientoObtener(datos.IdPersona)
+      const { data }: any = await apiDatosPersonales.personaConocimientoObtener(
+        datos.IdPersona
+      )
       console.log(Object.values(data))
       dispatch(getObtenerConos(Object.values(data)))
 
       dispatch(saveCono())
       dispatch(endSaveCono(false))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(saveConoError(true))
     }
   }
 }
-
 
 export function deleteExpLab(datos: any) {
   return async (dispatch: any) => {
@@ -462,13 +482,14 @@ export function deleteExpLab(datos: any) {
       }
 
       dispatch(deleteExpLabExito(datos.idExperienciaLaboral))
-			
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-    
-		} catch (error) {
+
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
+    } catch (error) {
       console.log(error)
       dispatch(deleteExpLabError(true))
     }
@@ -505,11 +526,12 @@ export function deleteEstudio(datos: any) {
 
       dispatch(deleteEstudioAction(datos.idEstudio))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(deleteEstudioError(true))
@@ -549,11 +571,12 @@ export function deleteConocimiento(datos: any) {
 
       dispatch(deleteConocimientoAction(datos.idPersonaConocimiento))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(deleteConocimientoError(true))
@@ -591,12 +614,12 @@ export function deleteIdiomas(datos: any) {
 
       dispatch(deleteIdiomaAction(datos.idPersonaIdioma))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-
-
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(deleteIdiomaError(true))
@@ -634,11 +657,12 @@ export function deleteRefLab(datos: any) {
 
       dispatch(deleteRefLabAction(datos.idPersonaIdioma))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(deleteRefLabError(true))
@@ -676,11 +700,12 @@ export function deleteDocs(datos: any) {
 
       dispatch(deleteDocsAction(datos.idPersonaIdioma))
 
-			const eva: any = await apiDatosPersonales.EvaluadorEvaluado(datos.IdPersona)
-			const progreso = eva.data[0]
-			console.log(progreso)
-			dispatch(cargarProgreso(progreso))
-			
+      const eva: any = await apiDatosPersonales.EvaluadorEvaluado(
+        datos.IdPersona
+      )
+      const progreso = eva.data[0]
+      console.log(progreso)
+      dispatch(cargarProgreso(progreso))
     } catch (error) {
       console.log(error)
       dispatch(deleteDocsError(true))
@@ -863,7 +888,7 @@ const getObtenerIdiomasPersona = (payload: any) => ({
   payload,
 })
 
-// 
+//
 const getObtenerRefLabPersona = (payload: any) => ({
   type: OBTENER_REFLAB_SAVE,
   payload,
@@ -874,7 +899,6 @@ const getObtenerConos = (payload: any) => ({
   payload,
 })
 
-
 const saveEstudio = () => ({
   type: SAVE_ESTUDIO,
 })
@@ -883,7 +907,7 @@ const saveIdioma = () => ({
   type: SAVE_IDIOMAS,
 })
 
-// 
+//
 const saveRefLab = () => ({
   type: SAVE_REFLAB,
 })
@@ -891,7 +915,6 @@ const saveRefLab = () => ({
 const saveCono = () => ({
   type: SAVE_CONOCIMIENTO,
 })
-
 
 const endSaveEstudio = (payload: any) => ({
   type: END_SAVE,

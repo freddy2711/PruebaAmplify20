@@ -7,7 +7,7 @@ type Data = {}
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params } = req.query
 
-	switch (params[0]) {
+  switch (params[0]) {
     case 'delegateList': {
       const URL = apiPath.delegado.PATH_delegateList(params[1])
       try {

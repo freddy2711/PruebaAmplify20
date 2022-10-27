@@ -80,7 +80,6 @@ storiesOf('Templates/SoporteVirtual', module)
         <hr />
 
         <div className={styles.tabla}> tabla </div>
-
       </div>
     </div>
   ))

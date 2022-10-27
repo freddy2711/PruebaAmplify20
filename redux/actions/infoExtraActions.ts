@@ -25,11 +25,11 @@ import {
   OBTENER_TIPO_ADJUNTO,
   LOADEXTRA_ESTUDIOS,
   LOADEXTRA_ESTUDIOS_END,
-	LOADEXTRA_IDIOMAS,
-	LOADEXTRA_IDIOMAS_END,
-	LOADEXTRA_ADJUNTO,
-	LOADEXTRA_ADJUNTO_END
-	// OBTENER_ADJUNTO,
+  LOADEXTRA_IDIOMAS,
+  LOADEXTRA_IDIOMAS_END,
+  LOADEXTRA_ADJUNTO,
+  LOADEXTRA_ADJUNTO_END,
+  // OBTENER_ADJUNTO,
 } from '../types'
 
 export function loadInfoExtra() {
@@ -93,11 +93,10 @@ export function loadInfoExtraIdiomas() {
     dispatch(LoadexIdiomas())
 
     try {
-			const respIdiomas: any = await apiDatosPersonales.idioma()
+      const respIdiomas: any = await apiDatosPersonales.idioma()
       dispatch(getIdiomas(respIdiomas.data))
-			dispatch(LoadexIdiomasEnd())
-
-		} catch (error) {
+      dispatch(LoadexIdiomasEnd())
+    } catch (error) {
       console.log(error)
       dispatch(LoadError(true))
       return false
@@ -110,11 +109,10 @@ export function loadInfoExtraAdjunto() {
     dispatch(LoadexAjunto())
 
     try {
-			const respTipoAdjunto: any = await apiDatosPersonales.tipoAdjunto()
+      const respTipoAdjunto: any = await apiDatosPersonales.tipoAdjunto()
       dispatch(getTipoAdjunto(respTipoAdjunto.data))
-			dispatch(LoadexAdjuntoEnd())
-
-		} catch (error) {
+      dispatch(LoadexAdjuntoEnd())
+    } catch (error) {
       console.log(error)
       dispatch(LoadError(true))
       return false

@@ -2,9 +2,9 @@ import { storiesOf } from '@storybook/react'
 import styles from './EvaluacionDocente.module.scss'
 
 const defaultStyle = {
-    outline: '1px solid #bebec2',
-    backgroundColor: '#f0f1f5',
-    borderRadius: '2px',
+  outline: '1px solid #bebec2',
+  backgroundColor: '#f0f1f5',
+  borderRadius: '2px',
 }
 
 storiesOf('Templates/evaluacionDocente', module)
@@ -74,9 +74,7 @@ storiesOf('Templates/evaluacionDocente', module)
 
         <hr />
 
-        <div>
-            conte
-        </div>
+        <div>conte</div>
 
         <div
           className={styles.titulo}
@@ -87,9 +85,7 @@ storiesOf('Templates/evaluacionDocente', module)
 
         <hr />
 
-        <div>
-            conte
-        </div>
+        <div>conte</div>
 
         <div
           className={styles.titulo}
@@ -100,9 +96,7 @@ storiesOf('Templates/evaluacionDocente', module)
 
         <hr />
 
-        <div>
-            conte
-        </div>
+        <div>conte</div>
 
         <div
           className={styles.titulo}
@@ -113,10 +107,7 @@ storiesOf('Templates/evaluacionDocente', module)
 
         <hr />
 
-        <div>
-            conte
-        </div>
-
+        <div>conte</div>
       </div>
     </div>
   ))

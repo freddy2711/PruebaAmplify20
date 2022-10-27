@@ -10,12 +10,9 @@ import ItemList from './../../../components/UI/atoms/ItemList/ItemList'
 import moment from 'moment'
 import Swal from 'sweetalert2'
 
-import {
-  EditForm,
-} from './../../../redux/actions/editarActions'
+import { EditForm } from './../../../redux/actions/editarActions'
 
 import { deleteExpLab } from './../../../redux/actions/infoGeneralAction'
-
 
 const parseJsonDate = (datein: any) => {
   return moment(datein).format('DD/MM/YYYY')
@@ -30,14 +27,13 @@ const TabExperienciaLaboral = () => {
   const expes = useSelector(
     (state: any) => state?.infoGeneral?.infoGeneral?.ExperienciasLaborales
   )
-	// const infoextra = useSelector((state: any) => state?.infoExtra?.infoExtra)
+  // const infoextra = useSelector((state: any) => state?.infoExtra?.infoExtra)
 
   const editForm = (datos: any) => dispatch<any>(EditForm(datos))
 
-
   const [modalShow, setModalShow] = useState(false)
 
-	const initial: any = {
+  const initial: any = {
     rdbExperienciaDocente: '',
     txtEmpresa: '',
     ddlIndustria: '0',
@@ -64,8 +60,8 @@ const TabExperienciaLaboral = () => {
   let totalExpProfesional = 0
 
   const handleModalEL = async (ok: boolean) => {
-		setModalShow(ok)
-		setFormNEL(initial)
+    setModalShow(ok)
+    setFormNEL(initial)
   }
 
   const handleEditar = (id: string) => {
@@ -135,12 +131,11 @@ const TabExperienciaLaboral = () => {
         )
         todelete[0].activo = '0'
         todelete[0].IdPersona = info?.idPersona
-				// info
+        // info
         await deleteexplab(todelete[0])
       }
     })
   }
-	
 
   return (
     <>
@@ -268,9 +263,9 @@ const TabExperienciaLaboral = () => {
       <ModalEl
         modalShow={modalShow}
         setModalShow={setModalShow}
-				formNEL = {formNEL}
-				setFormNEL = {setFormNEL}
-				initial={initial}
+        formNEL={formNEL}
+        setFormNEL={setFormNEL}
+        initial={initial}
       />
     </>
   )

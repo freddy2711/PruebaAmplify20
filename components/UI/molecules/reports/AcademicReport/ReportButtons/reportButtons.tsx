@@ -15,12 +15,15 @@ const reportButtons = (props: any) => {
     }
     setSelectOption(e.target.value)
   }
-  
+
   return (
     <div>
       <Form>
         <div className="row">
-          <div style={ props.width !== null ? {width:props.width} : undefined} className="col-sm-12 col-md-2">
+          <div
+            style={props.width !== null ? { width: props.width } : undefined}
+            className="col-sm-12 col-md-2"
+          >
             <Select
               id="formato"
               classname="primary"
@@ -33,8 +36,10 @@ const reportButtons = (props: any) => {
             </Select>
           </div>
 
-          
-          <div className="col-sm-12 col-md-2" style={{display:'flex',gap:'10%'}}>
+          <div
+            className="col-sm-12 col-md-2"
+            style={{ display: 'flex', gap: '10%' }}
+          >
             {selectOption === '1' ? (
               <ExportCSV
                 data={props.data}
@@ -59,8 +64,8 @@ const reportButtons = (props: any) => {
                 Exportar
               </Button>
             )}
-            
-             <Button
+
+            <Button
               type="button"
               variant="primary"
               disabled={false}

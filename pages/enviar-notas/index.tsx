@@ -47,8 +47,8 @@ const EnviarNotas = () => {
   const [listCourse, setlistCourse] = useState([])
 
   useEffect(() => {
-    console.log("dataUser", dataUser);
-    
+    console.log('dataUser', dataUser)
+
     remove(SET_NOTES_SELECT)
     fecthNotesSendClass(dataUser?.code)
   }, [])

@@ -9,59 +9,70 @@ import { Fragment, useEffect, useState } from 'react'
 import { apiReportesAcademicos } from '../api'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import Swal from 'sweetalert2'
-import {set} from 'local-storage'
-import { CLASEID_REPORTES, LST_SELECTED_COURSE } from '../../consts/storageConst'
+import { set } from 'local-storage'
+import {
+  CLASEID_REPORTES,
+  LST_SELECTED_COURSE,
+} from '../../consts/storageConst'
 import Router from 'next/router'
 
 const index = () => {
-
   const [Loading, setloading] = useState(false)
-  const [TeacherCoursesData,setTeacherCoursesData] = useState<any>([])
-  const [TeacherTutoriaData,setTeacherTutoriaData] = useState<any>([])
-  const [ViewPanelTutoria,setViewPanelTutoria] = useState(false)
-  const [ViewPanelCourses,setViewPanelCourses] = useState(true)
-  const [active, setActive] = useState();
+  const [TeacherCoursesData, setTeacherCoursesData] = useState<any>([])
+  const [TeacherTutoriaData, setTeacherTutoriaData] = useState<any>([])
+  const [ViewPanelTutoria, setViewPanelTutoria] = useState(false)
+  const [ViewPanelCourses, setViewPanelCourses] = useState(true)
+  const [active, setActive] = useState()
   const teacherCodeVal = 'N00011885'
 
   const ApiTeacherCorses = async () => {
-    const response = await apiReportesAcademicos.listCourseTeacher(teacherCodeVal);
+    const response = await apiReportesAcademicos.listCourseTeacher(
+      teacherCodeVal
+    )
     setTeacherCoursesData(response)
     return response
   }
 
   const ApiTeacherTutoria = async () => {
-    const response = await apiReportesAcademicos.listTutoria(teacherCodeVal);
+    const response = await apiReportesAcademicos.listTutoria(teacherCodeVal)
     setTeacherTutoriaData(response)
     return response
   }
 
   // apis
 
-  const ValidateLoad = (CountCorses:number,Counttutorships:number) => {
-    if(CountCorses === 0 && Counttutorships === 0){
+  const ValidateLoad = (CountCorses: number, Counttutorships: number) => {
+    if (CountCorses === 0 && Counttutorships === 0) {
       ViewMessage(0)
       setViewPanelTutoria(false)
       setViewPanelCourses(false)
-    }
-    else if(CountCorses === 0 && Counttutorships > 0){
+    } else if (CountCorses === 0 && Counttutorships > 0) {
       setViewPanelTutoria(true)
       setViewPanelCourses(false)
-    }
-    else if(CountCorses > 0 && Counttutorships === 0){
+    } else if (CountCorses > 0 && Counttutorships === 0) {
       setViewPanelTutoria(false)
       setViewPanelCourses(true)
     }
-
   }
 
   // validate
 
-  const lstTeacherCourses = () => (
-    Object.entries(TeacherCoursesData).map(([key, x]:any) => {
-      return(
+  const lstTeacherCourses = () =>
+    Object.entries(TeacherCoursesData).map(([key, x]: any) => {
+      return (
         <Fragment key={Math.random()}>
-          <tr key={key} onClick={() => setActiveRow(key)} className={key === active ? styles.ClickTabla : undefined }>
-            <td onClick={()=>SendData(x)} className={styles.ClickText} key={Math.random()}>Selecionar</td>
+          <tr
+            key={key}
+            onClick={() => setActiveRow(key)}
+            className={key === active ? styles.ClickTabla : undefined}
+          >
+            <td
+              onClick={() => SendData(x)}
+              className={styles.ClickText}
+              key={Math.random()}
+            >
+              Selecionar
+            </td>
             <td key={Math.random()}>{x.SedCodigo}</td>
             <td key={Math.random()}>{x.SedCodigo}</td>
             <td key={Math.random()}>{x.ClaCodigo}</td>
@@ -71,18 +82,27 @@ const index = () => {
             <td key={Math.random()}>{x.CarNombre}</td>
             <td key={Math.random()}>{x.AplicaCompetencia}</td>
           </tr>
-        {key === active ? bloqueLinks(x):null}
+          {key === active ? bloqueLinks(x) : null}
         </Fragment>
       )
     })
-  )
 
-  const lstTutoria = () => (
-    Object.entries(TeacherTutoriaData).map(([key, x]:any) => {
-      return(
+  const lstTutoria = () =>
+    Object.entries(TeacherTutoriaData).map(([key, x]: any) => {
+      return (
         <Fragment key={Math.random()}>
-          <tr key={key} onClick={() => setActiveRow(key)} className={key === active ? styles.ClickTabla : undefined }>
-            <td onClick={()=>SendData(x)} className={styles.ClickText} key={Math.random()}>Selecionar</td>
+          <tr
+            key={key}
+            onClick={() => setActiveRow(key)}
+            className={key === active ? styles.ClickTabla : undefined}
+          >
+            <td
+              onClick={() => SendData(x)}
+              className={styles.ClickText}
+              key={Math.random()}
+            >
+              Selecionar
+            </td>
             <td key={Math.random()}>{x.SedCodigo}</td>
             <td key={Math.random()}>{x.SedCodigo}</td>
             <td key={Math.random()}>{x.ClaCodigo}</td>
@@ -90,113 +110,138 @@ const index = () => {
             <td key={Math.random()}>{x.CurNombre}</td>
             <td key={Math.random()}>{x.CarNombre}</td>
           </tr>
-        {key === active ? bloqueLinks(x):null}
+          {key === active ? bloqueLinks(x) : null}
         </Fragment>
       )
     })
-  )
 
-  const SendData = (item:any) => {
-    set(LST_SELECTED_COURSE,JSON.stringify(item))
+  const SendData = (item: any) => {
+    set(LST_SELECTED_COURSE, JSON.stringify(item))
   }
 
-  const bloqueLinks = (Data:any) => (
+  const bloqueLinks = (Data: any) => (
     <tr key={Math.random()}>
       <td colSpan={8}>
         <div>
-        <a onClick={() => ReportAsiste(Data)} className={styles.ClickTextEnlace} key={Math.random()} href="#">Reporte de asistencia</a>
-        <a onClick={() => ReportNotas(Data)} className={styles.ClickTextEnlace} key={Math.random()} href="#">Reporte de notas</a>
-        <a onClick={() => ReportResultEsta(Data)} className={styles.ClickTextEnlace} key={Math.random()} href="#">Clases: Resultados y Estadísticas</a>
-        <a onClick={() => ReportCompetencias(Data)} className={styles.ClickTextEnlace} key={Math.random()} href="#">Reporte de evaluación de competencias</a>
+          <a
+            onClick={() => ReportAsiste(Data)}
+            className={styles.ClickTextEnlace}
+            key={Math.random()}
+            href="#"
+          >
+            Reporte de asistencia
+          </a>
+          <a
+            onClick={() => ReportNotas(Data)}
+            className={styles.ClickTextEnlace}
+            key={Math.random()}
+            href="#"
+          >
+            Reporte de notas
+          </a>
+          <a
+            onClick={() => ReportResultEsta(Data)}
+            className={styles.ClickTextEnlace}
+            key={Math.random()}
+            href="#"
+          >
+            Clases: Resultados y Estadísticas
+          </a>
+          <a
+            onClick={() => ReportCompetencias(Data)}
+            className={styles.ClickTextEnlace}
+            key={Math.random()}
+            href="#"
+          >
+            Reporte de evaluación de competencias
+          </a>
         </div>
       </td>
     </tr>
   )
 
-  const ViewMessage = (IdMessage:number) => {
-    switch(IdMessage){
-    case 0:
+  const ViewMessage = (IdMessage: number) => {
+    switch (IdMessage) {
+      case 0:
         return Swal.fire({
-        title: 'Portal de Docentes',
-        text: `No se encontraron clases asignadas`,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK',
+          title: 'Portal de Docentes',
+          text: `No se encontraron clases asignadas`,
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
         })
-    case 1:
-      return Swal.fire({
-      title: 'Portal de Docentes',
-      text: `Seleccione una clase`,
-      icon: 'warning',
-      showCancelButton: false,
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'OK',
-      })
-    default:
-        break;
+      case 1:
+        return Swal.fire({
+          title: 'Portal de Docentes',
+          text: `Seleccione una clase`,
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
+        })
+      default:
+        break
     }
   }
 
-  const setActiveRow = (id:any) => {
-    setActive(id);
-  };
+  const setActiveRow = (id: any) => {
+    setActive(id)
+  }
 
-  const ReportAsiste = (data:any) => {
-    if(data.ClaCodigo === ""){
+  const ReportAsiste = (data: any) => {
+    if (data.ClaCodigo === '') {
       ViewMessage(1)
-    }else{
-      set(CLASEID_REPORTES,data.ClaCodigo)
+    } else {
+      set(CLASEID_REPORTES, data.ClaCodigo)
     }
     Router.push('/reportes-academicos/ReporteAsistencia')
   }
 
-  const ReportNotas = (data:any) => {
-    if(data.ClaCodigo === ""){
+  const ReportNotas = (data: any) => {
+    if (data.ClaCodigo === '') {
       ViewMessage(1)
-    }else{
-      set(CLASEID_REPORTES,data.ClaCodigo)
+    } else {
+      set(CLASEID_REPORTES, data.ClaCodigo)
     }
     Router.push('/reportes-academicos/ReporteNotas')
   }
 
-  const ReportResultEsta = (data:any) => {
-    if(data.ClaCodigo === ""){
+  const ReportResultEsta = (data: any) => {
+    if (data.ClaCodigo === '') {
       ViewMessage(1)
-    }else{
-      set(CLASEID_REPORTES,data.ClaCodigo)
+    } else {
+      set(CLASEID_REPORTES, data.ClaCodigo)
     }
     Router.push('/reportes-academicos/ReporteEstadisticas')
   }
 
-  const ReportCompetencias = (data:any) => {
-    if(data.ClaCodigo === ""){
+  const ReportCompetencias = (data: any) => {
+    if (data.ClaCodigo === '') {
       ViewMessage(1)
-    }else{
-      set(CLASEID_REPORTES,data.ClaCodigo)
+    } else {
+      set(CLASEID_REPORTES, data.ClaCodigo)
     }
     Router.push('/reportes-academicos/ReporteCompetencias')
   }
 
-    // funciones
+  // funciones
 
+  useEffect(() => {
+    const Load = async () => {
+      setloading(true)
+      const CountCorses = await ApiTeacherCorses()
+      const CountTutorships = await ApiTeacherTutoria()
+      ValidateLoad(CountCorses.length, CountTutorships.length)
+      setloading(false)
+    }
 
-
-useEffect(()=> {
-  const Load = async () => {
-    setloading(true)
-    const CountCorses = await ApiTeacherCorses()
-    const CountTutorships = await ApiTeacherTutoria()
-    ValidateLoad(CountCorses.length,CountTutorships.length)
-    setloading(false)
-  }
-  
-  Load()
-},[])
+    Load()
+  }, [])
 
   return (
     <div className={styles.contenido}>
-       <Loader loading={Loading} />
+      <Loader loading={Loading} />
       <div className={styles.content}>
         <div className={styles.titulo}>
           <Label classname="text-warning h5 mt-3 mb-3">Reportes</Label>
@@ -218,10 +263,9 @@ useEffect(()=> {
 
         <hr />
 
-        {
-          ViewPanelCourses === true ?(
-            <>
-              <div className={styles.tabla}>
+        {ViewPanelCourses === true ? (
+          <>
+            <div className={styles.tabla}>
               <Tabla>
                 <Thead>
                   <th scope="col">Seleccionar clase</th>
@@ -235,59 +279,53 @@ useEffect(()=> {
                   <th scope="col">Aplica Evaluación de Competencias</th>
                 </Thead>
                 <Tbody>
-                  {
-                    TeacherCoursesData.length > 0 ? lstTeacherCourses()
-                    :  (
-                      <tr key={Math.random()}>
-                        <td key={Math.random()}>vacio</td>
-                      </tr>
-                    )
-                  }        
+                  {TeacherCoursesData.length > 0 ? (
+                    lstTeacherCourses()
+                  ) : (
+                    <tr key={Math.random()}>
+                      <td key={Math.random()}>vacio</td>
+                    </tr>
+                  )}
                 </Tbody>
               </Tabla>
             </div>
 
             <br />
-            </>
-          ):null
-        }
-        
-        {
-          ViewPanelTutoria === true ? (
-            <>
-              <div className={styles.titulo}>
-                      <Label classname="text-warning h5 mt-3 mb-3">
-                        Clases asignadas por tutoría
-                      </Label>
-              </div>
+          </>
+        ) : null}
 
-              <div className={styles.tabla}>
-                <Tabla>
-                  <Thead>
-                    <th scope="col">Seleccionar clase</th>
-                    <th scope="col">Semestre</th>
-                    <th scope="col">Sede</th>
-                    <th scope="col">Clase</th>
-                    <th scope="col">Cód. curso</th>
-                    <th scope="col">Nombre del curso</th>
-                    <th scope="col">Carrera</th>
-                  </Thead>
-                  <Tbody>
-                    {
-                      TeacherTutoriaData.length > 0 ? lstTutoria()
-                      :  (
-                        <tr key={Math.random()}>
-                          <td key={Math.random()}>vacio</td>
-                        </tr>
-                      )
-                    }      
-                  </Tbody>
-                </Tabla>
-              </div>
-            </>
-          ) : null
-        }
-        
+        {ViewPanelTutoria === true ? (
+          <>
+            <div className={styles.titulo}>
+              <Label classname="text-warning h5 mt-3 mb-3">
+                Clases asignadas por tutoría
+              </Label>
+            </div>
+
+            <div className={styles.tabla}>
+              <Tabla>
+                <Thead>
+                  <th scope="col">Seleccionar clase</th>
+                  <th scope="col">Semestre</th>
+                  <th scope="col">Sede</th>
+                  <th scope="col">Clase</th>
+                  <th scope="col">Cód. curso</th>
+                  <th scope="col">Nombre del curso</th>
+                  <th scope="col">Carrera</th>
+                </Thead>
+                <Tbody>
+                  {TeacherTutoriaData.length > 0 ? (
+                    lstTutoria()
+                  ) : (
+                    <tr key={Math.random()}>
+                      <td key={Math.random()}>vacio</td>
+                    </tr>
+                  )}
+                </Tbody>
+              </Tabla>
+            </div>
+          </>
+        ) : null}
 
         <div>
           <small>

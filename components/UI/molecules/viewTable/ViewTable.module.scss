@@ -1,42 +1,42 @@
-.viewTableConten{
-    display: grid;
-    grid-template-columns: 24.4% 1fr;
-    grid-template-rows: 1fr;
-    justify-content: center;
-    align-items: center;
+.viewTableConten {
+  display: grid;
+  grid-template-columns: 24.4% 1fr;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  align-items: center;
 
-      th{
-        background-color: #343A40;
-        color: white;
-      }
-
-      td{
-        background-color: #fcedc2;
-      }
+  th {
+    background-color: #343a40;
+    color: white;
   }
 
-.TableNoData{
+  td {
+    background-color: #fcedc2;
+  }
+}
+
+.TableNoData {
   text-align: center;
 }
 
-.bloqueLineal{
+.bloqueLineal {
   height: 2px;
-  background-color: #EFF0F3;
+  background-color: #eff0f3;
   width: 100%;
 }
 
-.FormatedTable{
+.FormatedTable {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.LinkStyle{
+.LinkStyle {
   cursor: pointer;
-  color: #D24726;
+  color: #d24726;
   font-weight: bold;
-    &:hover{
-      color: #666;
-    }
+  &:hover {
+    color: #666;
+  }
 }

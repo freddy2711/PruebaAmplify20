@@ -11,7 +11,6 @@ import useCheckDelegate from '../../hooks/useCheckDelegate'
 import { apiDelegado } from './../../pages/api'
 import { get, set } from 'local-storage'
 
-
 import {
   SET_TEACHERCODE,
   TEACHERCODE,
@@ -40,7 +39,7 @@ const Delegado = ({ data }: any) => {
   const { delegados, setdelegados } = useCheckDelegate()
   const [elegido, setElegido] = useState<string>('')
 
-	useEffect(() => {
+  useEffect(() => {
     set(TEACHERCODE, SET_TEACHERCODE)
     set(DUENO_SESSION, 'RVI')
 

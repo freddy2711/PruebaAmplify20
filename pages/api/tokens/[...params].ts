@@ -10,8 +10,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (params[0]) {
     case 'control': {
       const URL = `${apiPath.register.PATH_GetControlClass}${params[1]}/${params[2]}`
-      console.log("URL", URL);
-      
+      console.log('URL', URL)
+
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail
@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
     case 'teacher': {
       const URL = apiPath.tokens.PATH_PostTokenTeacher(params[1])
-      
+
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail
@@ -34,8 +34,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'coupling': {
-      const URL = apiPath.tokens.PATH_PostTokenCoupling(params[1],params[2],params[3])
-      
+      const URL = apiPath.tokens.PATH_PostTokenCoupling(
+        params[1],
+        params[2],
+        params[3]
+      )
+
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail

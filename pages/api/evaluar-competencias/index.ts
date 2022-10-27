@@ -99,11 +99,11 @@ const API = {
     } catch (error) {
       console.log(error)
     }
-	},
-	deletes: async (competenciaId: string) => {
+  },
+  deletes: async (competenciaId: string) => {
     try {
-			const URL = `/evaluar-competencias/deletes/${competenciaId}`
-			console.log(URL)
+      const URL = `/evaluar-competencias/deletes/${competenciaId}`
+      console.log(URL)
       const resp = await axiosfetchPublic(URL)
       return resp.data
     } catch (error) {

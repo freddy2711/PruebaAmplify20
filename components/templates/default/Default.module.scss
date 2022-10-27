@@ -1,56 +1,55 @@
-.default{
+.default {
   min-height: 100vh;
 }
 
-.header{
+.header {
   width: 100%;
   display: block;
   min-height: 86px;
-  
-  .content{
+
+  .content {
     max-width: 1140px;
     margin: 0 auto;
     width: 100%;
-  
-    .title{
+
+    .title {
       width: 100%;
       display: block;
     }
-  
-    .headerContent{
+
+    .headerContent {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-direction: column;
       height: 100%;
-      
+
       @media screen and (min-width: 768px) {
         flex-direction: row;
       }
-    
-      div{
+
+      div {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 86px;
-       
-          &:first-of-type{
-            display: none;
-            @media screen and (min-width: 768px) {
-              display: block;
-            }
-          }
 
+        &:first-of-type {
+          display: none;
+          @media screen and (min-width: 768px) {
+            display: block;
+          }
+        }
       }
-    }  
+    }
   }
 
-  .navbr{
+  .navbr {
     width: 100%;
     height: 100%;
-    
-    .content{
+
+    .content {
       max-width: 1140px;
       margin: 0 auto;
       width: 100%;
@@ -58,32 +57,31 @@
       min-height: 56px;
     }
   }
-
 }
 
-.contenido{
-  min-height: calc( 100vh - 243px);
-  .content{
+.contenido {
+  min-height: calc(100vh - 243px);
+  .content {
     max-width: 1140px;
     margin: 0 auto;
     width: 100%;
     min-height: 500px;
 
-    .titulo{
+    .titulo {
       min-height: 56px;
       display: flex;
       align-items: center;
     }
-  
-    hr{
+
+    hr {
       margin: 0 0 1rem;
       width: 100%;
-      border-top: 1px solid rgba(0,0,0,.1);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
       height: 0;
       overflow: visible;
     }
 
-    .alertContent{
+    .alertContent {
       width: 100%;
       min-height: 78px;
       height: 100%;
@@ -92,45 +90,42 @@
       align-items: center;
     }
 
-    .contentButonTitle{
+    .contentButonTitle {
       display: flex;
       flex-direction: column;
 
-      &>div{
+      & > div {
         width: 100%;
         text-align: center;
         min-height: 38px;
         height: 100%;
 
-        &:first-of-type{
+        &:first-of-type {
           margin-bottom: 1rem;
         }
 
-        &:last-child{
+        &:last-child {
           text-align: left;
           margin-bottom: 1rem;
         }
       }
-
     }
 
-    .tablas{
+    .tablas {
       min-height: 162px;
     }
 
-    .comment{
+    .comment {
       min-height: 162px;
-
     }
-
   }
 }
 
-.footer{
+.footer {
   width: 100%;
-  .content{
+  .content {
     min-height: 81px;
-    .contentFooter{
+    .contentFooter {
       height: 100%;
       display: flex;
       justify-content: center;

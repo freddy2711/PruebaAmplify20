@@ -10,28 +10,27 @@ import Swal from 'sweetalert2'
 
 import { deleteConocimiento } from './../../../redux/actions/infoGeneralAction'
 
-import {
-  EditFormCono,
-} from './../../../redux/actions/editarActions'
+import { EditFormCono } from './../../../redux/actions/editarActions'
 
 import ModalConociminetos from '../modals/ModalConociminetos'
 
 const TabConocimientos = () => {
-	const dispatch = useDispatch()
-	const info = useSelector((state: any) => state?.infoGeneral?.infoGeneral)
-	const conos = useSelector(
+  const dispatch = useDispatch()
+  const info = useSelector((state: any) => state?.infoGeneral?.infoGeneral)
+  const conos = useSelector(
     (state: any) => state?.infoGeneral?.infoGeneral?.Conocimientos
   )
 
-	const editForm = (datos: any) => dispatch<any>(EditFormCono(datos))
-	const deleteconocimiento = (datos: any) => dispatch<any>(deleteConocimiento(datos))
-	const [modalShowConocimientos, setModalShowConocimientos] = useState(false)
+  const editForm = (datos: any) => dispatch<any>(EditFormCono(datos))
+  const deleteconocimiento = (datos: any) =>
+    dispatch<any>(deleteConocimiento(datos))
+  const [modalShowConocimientos, setModalShowConocimientos] = useState(false)
 
-	const handleModalConocimientos = (ok: boolean) => {
+  const handleModalConocimientos = (ok: boolean) => {
     setModalShowConocimientos(ok)
   }
 
-	const eliminar = async (id: string) => {
+  const eliminar = async (id: string) => {
     Swal.fire({
       title: 'Conocicmientos',
       text: '¿Está seguro que desea eliminar estos datos?',
@@ -47,13 +46,13 @@ const TabConocimientos = () => {
           (item: any) => item.idPersonaConocimiento === id
         )
         todelete[0].activo = '0'
-				todelete[0].IdPersona = info?.idPersona
+        todelete[0].IdPersona = info?.idPersona
         await deleteconocimiento(todelete[0])
       }
     })
   }
 
-	const handleEditar = (id: string) => {
+  const handleEditar = (id: string) => {
     console.log('__IdEditar__', id)
     const exper = info.Conocimientos.filter(
       (item: any) => item.idPersonaConocimiento === id
@@ -64,71 +63,71 @@ const TabConocimientos = () => {
     setModalShowConocimientos(true)
   }
 
-	return (
-		<>
-			<Form id="px-3 py-3">
-                  <div className="form-group row mb-3">
-                    <div className="col-sm-3">
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        classname="btn-sm"
-                        onclick={() => handleModalConocimientos(true)}
-                      >
-                        Agregar
-                      </Button>
-                    </div>
-                  </div>
+  return (
+    <>
+      <Form id="px-3 py-3">
+        <div className="form-group row mb-3">
+          <div className="col-sm-3">
+            <Button
+              type="button"
+              variant="secondary"
+              classname="btn-sm"
+              onclick={() => handleModalConocimientos(true)}
+            >
+              Agregar
+            </Button>
+          </div>
+        </div>
 
-                  <List classname="mb-3">
-                    {info.Conocimientos && info.Conocimientos.length > 0
-                      ? info.Conocimientos.map((item: any, index: number) => {
-                          return (
-                            item.activo && (
-                              <ItemList
-                                key={index}
-                                classname="row d-flex py-3 px-0 mx-0"
-                              >
-                                <div className="col-12 col-md-6">
-                                  <p className="mb-1">
-                                    <b>{item.nombreConocimiento}</b>
-                                  </p>
-                                  <p className="mb-1">
-                                    {item.nivelConocimiento}
-                                  </p>
-                                  <span className="d-none"></span>
-                                </div>
-                                <div className="col-12 col-md-6 text-end">
-                                  <Button
-                                    type="button"
-                                    variant="secondary"
-                                    classname="btn-sm me-2"
-																		onclick={(e: any) => handleEditar(item.idPersonaConocimiento)}
-                                  >
-                                    Editar
-                                  </Button>
-                                  <Button
-                                    type="button"
-                                    variant="danger"
-                                    classname="btn-sm"
-																		onclick={() => eliminar(item.idPersonaConocimiento)}
-                                  >
-                                    Eliminar
-                                  </Button>
-                                </div>
-                              </ItemList>
-                            )
-                          )
-                        })
-                      : null}
-                  </List>
-                </Form>
-								<ModalConociminetos 
-									modalShowConocimientos={modalShowConocimientos}
-									setModalShowConocimientos={setModalShowConocimientos}
-								/>
-		</>
-	)
+        <List classname="mb-3">
+          {info.Conocimientos && info.Conocimientos.length > 0
+            ? info.Conocimientos.map((item: any, index: number) => {
+                return (
+                  item.activo && (
+                    <ItemList
+                      key={index}
+                      classname="row d-flex py-3 px-0 mx-0"
+                    >
+                      <div className="col-12 col-md-6">
+                        <p className="mb-1">
+                          <b>{item.nombreConocimiento}</b>
+                        </p>
+                        <p className="mb-1">{item.nivelConocimiento}</p>
+                        <span className="d-none"></span>
+                      </div>
+                      <div className="col-12 col-md-6 text-end">
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          classname="btn-sm me-2"
+                          onclick={(e: any) =>
+                            handleEditar(item.idPersonaConocimiento)
+                          }
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="danger"
+                          classname="btn-sm"
+                          onclick={() => eliminar(item.idPersonaConocimiento)}
+                        >
+                          Eliminar
+                        </Button>
+                      </div>
+                    </ItemList>
+                  )
+                )
+              })
+            : null}
+        </List>
+      </Form>
+      <ModalConociminetos
+        modalShowConocimientos={modalShowConocimientos}
+        setModalShowConocimientos={setModalShowConocimientos}
+      />
+    </>
+  )
 }
 
 export default TabConocimientos

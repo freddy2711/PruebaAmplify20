@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -24,10 +20,7 @@
         "name": "typescript-plugin-css-modules"
       }
     ],
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
-    ],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "incremental": true
   },
   "include": [
@@ -37,10 +30,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages",
-    "pages/api/**/*.ts"
-, "config"  ],
-  "exclude": [
-    "node_modules",
-		".next"
-  ]
+    "pages/api/**/*.ts",
+    "config"
+  ],
+  "exclude": ["node_modules", ".next"]
 }

@@ -2,8 +2,13 @@ import { Form } from 'react-bootstrap'
 import styles from './BotonesAsistencia.module.scss'
 import useDatosAsis from './../../../../hooks/useDatosAsis'
 
-const BotonesAsistencia = ({ idAlu,  datos, setDatos, defaultCheck, disabledbtn }: any) => {
-
+const BotonesAsistencia = ({
+  idAlu,
+  datos,
+  setDatos,
+  defaultCheck,
+  disabledbtn,
+}: any) => {
   const onChecked = (e: any) => {
     const valor = e.target.value
     console.log(valor)
@@ -20,7 +25,7 @@ const BotonesAsistencia = ({ idAlu,  datos, setDatos, defaultCheck, disabledbtn 
         name={idAlu}
         value={'A'}
         onChange={(e) => onChecked(e)}
-        defaultChecked={ defaultCheck === 'A' }
+        defaultChecked={defaultCheck === 'A'}
         disabled={disabledbtn}
       />
 
@@ -31,7 +36,7 @@ const BotonesAsistencia = ({ idAlu,  datos, setDatos, defaultCheck, disabledbtn 
         name={idAlu}
         value={'T'}
         onChange={(e) => onChecked(e)}
-        defaultChecked={ defaultCheck === 'T' }
+        defaultChecked={defaultCheck === 'T'}
         disabled={disabledbtn}
       />
 
@@ -42,7 +47,7 @@ const BotonesAsistencia = ({ idAlu,  datos, setDatos, defaultCheck, disabledbtn 
         name={idAlu}
         value={'F'}
         onChange={(e) => onChecked(e)}
-        defaultChecked={ defaultCheck === 'F' }
+        defaultChecked={defaultCheck === 'F'}
         disabled={disabledbtn}
       />
       <Form.Check
@@ -52,7 +57,7 @@ const BotonesAsistencia = ({ idAlu,  datos, setDatos, defaultCheck, disabledbtn 
         name={idAlu}
         value={'N'}
         onChange={(e) => onChecked(e)}
-        defaultChecked={ defaultCheck === 'N' }
+        defaultChecked={defaultCheck === 'N'}
         disabled={disabledbtn}
       />
     </div>

@@ -11,9 +11,7 @@ import Swal from 'sweetalert2'
 
 import { deleteEstudio } from './../../../redux/actions/infoGeneralAction'
 
-import {
-  EditFormEstudio,
-} from './../../../redux/actions/editarActions'
+import { EditFormEstudio } from './../../../redux/actions/editarActions'
 
 const TabEstudios = () => {
   const dispatch = useDispatch()
@@ -28,7 +26,7 @@ const TabEstudios = () => {
 
   const deleteestudio = (datos: any) => dispatch<any>(deleteEstudio(datos))
 
-	const editForm = (datos: any) => dispatch<any>(EditFormEstudio(datos))
+  const editForm = (datos: any) => dispatch<any>(EditFormEstudio(datos))
   const [modalShowEstudio, setModalShowEstudio] = useState(false)
 
   const handleModalEstudio = (ok: boolean) => {
@@ -49,7 +47,7 @@ const TabEstudios = () => {
       if (result.isConfirmed) {
         const todelete = estu.filter((item: any) => item.idEstudio === id)
         todelete[0].activo = '0'
-				todelete[0].IdPersona = info?.idPersona
+        todelete[0].IdPersona = info?.idPersona
         await deleteestudio(todelete[0])
       }
     })
@@ -57,9 +55,7 @@ const TabEstudios = () => {
 
   const handleEditar = (id: string) => {
     console.log('__IdEditar__', id)
-    const exper = info.Estudios.filter(
-      (item: any) => item.idEstudio === id
-    )
+    const exper = info.Estudios.filter((item: any) => item.idEstudio === id)
     const expe = exper[0]
     console.log(expe)
     editForm(expe)

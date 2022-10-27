@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         } else {
           res.status(500).json({ error: 'failed to load data' })
         }
-      } catch (error) {        
+      } catch (error) {
         res.status(500).json({ error })
       }
       break
