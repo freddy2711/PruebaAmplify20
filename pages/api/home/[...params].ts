@@ -5,7 +5,7 @@ import { apiPath } from '../../../consts/path'
 type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params } = req.query
+  const { params }: any = req.query
   switch (params[0]) {
     case 'shedule': {
       const URL = apiPath.home.PATH_GetTeachingTimeReport(params[1])

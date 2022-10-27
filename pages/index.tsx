@@ -35,13 +35,13 @@ import {
   SET_RECOVER_SELECT,
   SET_DT_ASISTENCE,
   TIPO_ASISTENCIA,
-  DUENO_SESSION,
   REGASI,
   renderizaImageBase64,
   CLASE_ID,
   callErrorValid,
   convertStringToDay,
   RECUPERATION_ID,
+  USER_SESSION,
 } from './../consts/storageConst'
 
 // import { useCookies } from 'react-cookie'
@@ -196,7 +196,6 @@ const Index = () => {
     }
     set(SET_SEMESTERCODE, semesterTemp[0]?.semesterCode)
     set(SET_DATA_DOCENTE, dataUser2[0])
-    set(DUENO_SESSION, dataUserTemp.userName)
     setDataTemp(data)
     if (competence.length > 0) {
       getAlert({
@@ -233,21 +232,28 @@ const Index = () => {
   //   callApiLogin(codeUser, day)
   // }
 
-  const callApiLoginValid2 = async () => {
-    const codeteacher = get(DUENO_SESSION)
-    callApiLogin(codeteacher, day)
+  const callApiLoginSeccion = () => {
+    const codeteacher = get(USER_SESSION)
+    setTimeout(async () => {
+      // console.log('DUENO_SESSION', codeteacher)
+      if (codeteacher === undefined) {
+        return callApiLoginSeccion()
+      } else if (codeteacher === null) {
+        return callApiLoginSeccion()
+      } else {
+        return callApiLogin(codeteacher, day)
+      }
+    }, 2000)
   }
   useEffect(() => {
     renderizaImageBase64(
-      'https://upn-repositorio-public.s3.amazonaws.com/logos/png/logo-upn-sin-fondo.png',
+      process.env.NEXT_PUBLIC_VERSION_LOGO,
       450,
       197,
       'imgBase64'
     )
 
-    setTimeout(() => {
-      callApiLoginValid2()
-    }, 2000)
+    callApiLoginSeccion()
 
     remove(SET_DATA_DOCENTE)
 

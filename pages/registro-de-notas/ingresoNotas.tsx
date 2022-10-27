@@ -88,16 +88,12 @@ const IngresoNotas = () => {
   const dataNotes: any = get(SET_NOTES_SELECT)
   const semesterCode: any = get(SET_SEMESTERCODE)
   const dateNow = convertStringToDate(new Date())
-  console.log('semesterCode', semesterCode)
-
-  const dateTimeNow = `${convertStringToDate(
-    new Date()
-  )} ${convertStringToDateTime(new Date())}`
+  // const dateTimeNow = `${convertStringToDate(
+  //   new Date()
+  // )} ${convertStringToDateTime(new Date())}`
   selectNote = get(SET_NOTES_SELECT)
   const ip = '::1'
   useEffect(() => {
-    console.log('dateTimeNow', dateTimeNow)
-
     setloading(true)
     const obj = {
       ip,
@@ -136,9 +132,9 @@ const IngresoNotas = () => {
     ValidaEmail(dataUser.code, token)
   }
   const ValidaEmail = async (userCode: any, token: number) => {
-    let emailUPN = await fetchTokenEmail(userCode)
+    const emailUPN = await fetchTokenEmail(userCode)
     if (emailUPN.includes('@upn.pe') || emailUPN.includes('@upn.edu.pe')) {
-      emailUPN = 'javierdj22@gmail.com'
+      // emailUPN = 'javierdj22@gmail.com'
       const msj = `<center><p>${token}</p></center>`
       const emailJson = {
         EmailList: [emailUPN],
@@ -565,7 +561,6 @@ const IngresoNotas = () => {
             </div>
           </Alerta>
         </div>
-
         <div className={styles.rowButtons}>
           <ViewInput
             disabled={false}
@@ -608,9 +603,7 @@ const IngresoNotas = () => {
             })}
           </Select>
         </div>
-
         <hr />
-
         <div
           className={styles.tablaRA}
           style={{ display: showTableStatic }}

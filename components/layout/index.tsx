@@ -10,10 +10,10 @@ import {
   convertStringToDate,
   DUENO_SESSION,
   eventToken,
-  NAME_SESSION,
   options,
+  USER_SESSION,
 } from '../../consts/storageConst'
-import { set } from 'local-storage'
+import { get, set } from 'local-storage'
 // import { useCookies } from 'react-cookie'
 
 const Header = dynamic(() => import('./../UI/organisms/header/Header'), {
@@ -66,12 +66,17 @@ const index = ({ children }: Props) => {
   }
 
   const callApiLoginValid = async () => {
-    // const token: any = await apiLogin.logintokenValid(cookie)
-    const rs = await apiLogin.loginDataUser('RVI')
-    // const rs = await apiLogin.loginDataUser(token?.user)
-    set(NAME_SESSION, 'RVI')
-    set(DUENO_SESSION, rs[0]?.codeUser)
-    return callApiLogin(rs[0]?.codeUser)
+    let codeteacher = get(USER_SESSION)
+    // console.log('codeteacher', codeteacher)
+    if (codeteacher === null) {
+      // const token: any = await apiLogin.logintokenValid(cookie)
+      const rs = await apiLogin.loginDataUser('RVI')
+      // const rs = await apiLogin.loginDataUser(token?.user)
+      set(DUENO_SESSION, 'RVI')
+      set(USER_SESSION, rs[0]?.codeUser)
+      codeteacher = rs[0]?.codeUser
+    }
+    return callApiLogin(codeteacher)
   }
 
   const obj = { keyA: 0 }
