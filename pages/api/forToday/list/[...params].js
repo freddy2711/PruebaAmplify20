@@ -1,7 +1,7 @@
 import { axiosfetchPrivate } from '../../../../config/axios'
 
 export default async function handler(req, res) {
-  const { params } = req.query
+  const { params }:any = req.query
 
   console.log(params)
 
