@@ -106,11 +106,8 @@ const index = () => {
           </Button>
         </div>
 
-        <div
-          className={styles.tablaRA}
-          style={{ textAlign: 'left' }}
-        >
-          <Tabla classname={styles.tablaRA}>
+        <div style={{ textAlign: 'left' }}>
+          <Tabla>
             <Thead>
               <th
                 scope="col"

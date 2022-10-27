@@ -333,7 +333,7 @@ const index = () => {
           </>
         ) : (
           <>
-            <div className={styles.botones}>
+            <div>
               <Button
                 type="button"
                 classname="mb-3"

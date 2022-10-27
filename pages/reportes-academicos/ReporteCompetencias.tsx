@@ -327,7 +327,6 @@ const ReporteCompetencias = () => {
         </Modal>
         <div className={styles.tablaDetalle}>
           <Tabla classname="tablaRA">
-            <Thead></Thead>
             <Tbody>
               <tr>
                 <td style={{ fontWeight: 'bold' }}>DATOS DE LA CLASE</td>

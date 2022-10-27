@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params }:any = req.query
+  const { params }: any = req.query
 
   console.log(params)
 

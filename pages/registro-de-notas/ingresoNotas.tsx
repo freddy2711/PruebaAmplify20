@@ -605,7 +605,6 @@ const IngresoNotas = () => {
         </div>
         <hr />
         <div
-          className={styles.tablaRA}
           style={{ display: showTableStatic }}
         >
           <Tabla>
@@ -619,7 +618,7 @@ const IngresoNotas = () => {
             </Thead>
             {selectNote?.SedCodigo === undefined ? (
               <Tbody>
-                <tr className={styles.tBodyCenter}>
+                <tr>
                   No se encontro Registro . . .
                 </tr>
               </Tbody>
@@ -662,7 +661,6 @@ const IngresoNotas = () => {
           </Tabla>
         </div>
         <div
-          className={styles.tablaRA}
           style={{ display: showTableDinami }}
         >
           <TableDinamic

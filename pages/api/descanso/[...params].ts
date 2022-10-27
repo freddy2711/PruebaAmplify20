@@ -7,7 +7,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
   switch (params[0]) {
     case 'sustitutory': {
-      const URL = apiPath.descansoTeacher.PATH_GetSemesterSustitutory(params[1], params[2])
+      const URL = apiPath.descansoTeacher.PATH_GetSemesterSustitutory(
+        params[1],
+        params[2]
+      )
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail
@@ -22,7 +25,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'tuesday': {
-      const URL = apiPath.descansoTeacher.PATH_GetSemesterTuesday(params[1], params[2])
+      const URL = apiPath.descansoTeacher.PATH_GetSemesterTuesday(
+        params[1],
+        params[2]
+      )
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail
@@ -69,9 +75,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         res.status(500).json({ error })
       }
       break
-    }    
+    }
     case 'worker': {
-      const URL = apiPath.descansoTeacher.PATH_GetRequestWorker(params[1],params[2])
+      const URL = apiPath.descansoTeacher.PATH_GetRequestWorker(
+        params[1],
+        params[2]
+      )
       try {
         const { data } = await axiosfetchPrivate(URL)
         const result = data.detail
@@ -134,7 +143,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
     case 'register': {
       const Request = req.body
-      const URL = apiPath.descansoTeacher.PATH_Post_RegisterRequestsWorkerTeacher
+      const URL =
+        apiPath.descansoTeacher.PATH_Post_RegisterRequestsWorkerTeacher
       try {
         const { data } = await axiosfetchPrivate.post(URL, Request)
         const result = data.detail

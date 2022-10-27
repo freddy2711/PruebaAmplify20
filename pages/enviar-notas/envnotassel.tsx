@@ -373,7 +373,6 @@ const EnviarNotas = (props: any) => {
 
         <div className={styles.tabla}>
           <div
-            className={styles.tablaRA}
             style={{ display: showTableStatic }}
           >
             <Tabla>
@@ -387,7 +386,7 @@ const EnviarNotas = (props: any) => {
               </Thead>
               {dataSelect?.sedeCode === undefined ? (
                 <Tbody>
-                  <tr className={styles.tBodyCenter}>
+                  <tr>
                     No se encontro Registro . . .
                   </tr>
                 </Tbody>
@@ -457,7 +456,7 @@ const EnviarNotas = (props: any) => {
                 </div>
               </Alerta>
 
-              <div className={styles.tablaRA}>
+              <div>
                 <TableDinamic
                   columns={COLUMNS}
                   listData={listData}

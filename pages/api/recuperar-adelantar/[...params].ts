@@ -8,7 +8,7 @@ import { apiPath } from '../../../consts/path'
 type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params }:any = req.query
+  const { params }: any = req.query
 
   switch (params[0]) {
     case 'list': {
@@ -113,12 +113,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         if (data.errorMessage) {
           res.status(200).json({ message: data.errorMessage, state: false })
         } else {
-          res
-            .status(200)
-            .json({
-              message: 'Se registró correctamente la recuperación de clase.',
-              state: true,
-            })
+          res.status(200).json({
+            message: 'Se registró correctamente la recuperación de clase.',
+            state: true,
+          })
         }
       } catch (error) {
         console.log(error)
@@ -147,12 +145,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         if (data.errorMessage) {
           res.status(200).json({ message: data.errorMessage, state: false })
         } else {
-          res
-            .status(200)
-            .json({
-              message: 'Se actualizó correctamente la recuperación de clase.',
-              state: true,
-            })
+          res.status(200).json({
+            message: 'Se actualizó correctamente la recuperación de clase.',
+            state: true,
+          })
         }
       } catch (error) {
         console.log(error)

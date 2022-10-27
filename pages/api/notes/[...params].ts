@@ -5,7 +5,7 @@ type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
-  
+
   switch (params[0]) {
     case 'exist': {
       const URL = apiPath.Notes.PATH_GetNoteExistClass(params[1])
