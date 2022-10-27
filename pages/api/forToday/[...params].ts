@@ -1,6 +1,8 @@
-import { axiosfetchPrivate } from './../../../config/axios'
+import { axiosfetchPrivate } from '../../../config/axios'
+import type { NextApiRequest, NextApiResponse } from 'next'
+type Data = {}
 
-export default async function handler(req, res) {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }:any = req.query
 
   console.log(params)
