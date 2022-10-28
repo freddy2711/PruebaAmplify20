@@ -1,4 +1,5 @@
-import Auth from '@aws-amplify/auth'
+// import Auth from '@aws-amplify/auth'
+import { Auth } from 'aws-amplify'
 import NextStorage from 'amplify-auth-next-storage'
 
 export function configurePool(ctx) {
