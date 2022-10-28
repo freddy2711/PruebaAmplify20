@@ -3,14 +3,18 @@ import NextStorage from 'amplify-auth-next-storage'
 
 export function configurePool(ctx) {
   Auth.configure({
-    region: 'us-east-1',
-    userPoolId: 'us-east-1_xxxxx',
-    userPoolWebClientId: 'xxxxxxxxxxxxxxx',
+    // region: 'us-east-1',
+    // userPoolId: 'us-east-1_xxxxx',
+    // userPoolWebClientId: 'xxxxxxxxxxxxxxx',
+    mandatorySignIn: false,
     storage: new NextStorage(ctx, {
-      domain: 'http://localhost:53041',
+      domain: 'localhost',
       expires: 365,
       path: '/',
-      secure: true,
+      secure: false,
     }),
   })
+  Auth.currentUserInfo().then((currentUser) =>
+    console.log('currentUser', currentUser)
+  )
 }

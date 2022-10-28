@@ -79,6 +79,8 @@ const index = ({ children }: Props) => {
 
   const obj = { keyA: 0 }
   useEffect(() => {
+    console.log("cookie", cookie);
+    
     callApiLoginValid()
   }, [obj.keyA])
   return (
