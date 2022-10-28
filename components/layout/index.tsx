@@ -68,8 +68,7 @@ const index = ({ children }: Props) => {
     let codeteacher = get(USER_SESSION)
     console.log('codeteacher', codeteacher)
     if (codeteacher === null || codeteacher === undefined) {
-      const token: any = await apiLogin.logintokenValid(cookie)
-      // const rs = await apiLogin.loginDataUser('RVI')
+      const token: any = await apiLogin.logintokenValid(cookie)      
       const rs = await apiLogin.loginDataUser(token?.user)
       set(DUENO_SESSION, token?.user)
       set(USER_SESSION, rs[0]?.codeUser)

@@ -7,7 +7,7 @@ export function configurePool(ctx) {
     userPoolId: 'us-east-1_xxxxx',
     userPoolWebClientId: 'xxxxxxxxxxxxxxx',
     storage: new NextStorage(ctx, {
-      domain: '.yourdomain.com',
+      domain: 'http://localhost:53041',
       expires: 365,
       path: '/',
       secure: true,

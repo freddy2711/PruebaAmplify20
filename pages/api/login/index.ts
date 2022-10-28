@@ -87,7 +87,6 @@ const API = {
         withCredentials: true,
       }
       const URL: any = process.env.NEXT_PUBLIC_TOKEN_API_LOCAL
-      // const URL = `/login/token/${Cookie}`
       const result: any = await axios(URL, config)
       if (result.status !== 200) {
         console.log('status', result?.status)
