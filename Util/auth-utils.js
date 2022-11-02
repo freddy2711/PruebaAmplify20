@@ -9,10 +9,10 @@ export function configurePool(ctx) {
     // userPoolWebClientId: 'xxxxxxxxxxxxxxx',
     mandatorySignIn: false,
     storage: new NextStorage(ctx, {
-      domain: 'localhost',
+      domain: 'localhost:3000',
       expires: 365,
       path: '/',
-      secure: false,
+      secure: true,
     }),
   })
   Auth.currentUserInfo().then((currentUser) =>
