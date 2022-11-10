@@ -456,10 +456,14 @@ const index = () => {
           showCancelButton: false,
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK',
-        })
+        }).then(async (result) => {
+			
+					if (result.isConfirmed) {
+						setloading(false)
+						window.location.href = '/soporte-virtual'
+					}
+				})
 
-        setloading(false)
-        window.location.href = '/soporte-virtual'
       }
     } catch (error) {
       console.log(error)

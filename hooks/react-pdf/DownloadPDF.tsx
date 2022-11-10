@@ -31,10 +31,10 @@ const GeneratePdf = async ({
 
   const image = new Image()
   image.src = RouteImage
-  // const pageWidth = doc.internal.pageSize.getWidth()
-  // doc.addImage(image, 'png', 10, 15, 80, 35)
-  console.log('img', image)
-  doc.text('UPN', _X, _Y)
+  const pageWidth = doc.internal.pageSize.getWidth()
+  doc.addImage(image, 'png', 10, 15, 80, 35)
+  // console.log('img', image)
+  // doc.text('UPN', _X, _Y)
 
   doc.setFontSize(14)
 
@@ -158,21 +158,6 @@ const GeneratePdf = async ({
 
   doc.text(Docente, _X, _Y)
 
-  // PRUEBA
-
-  // console.log(RouteImage)
-
-  // const img = new Image();
-  // const RutaImg = 'https://intranet.upn.edu.pe/arturo/images/logo_upn2.png'
-  // // img.src = RutaImg
-
-  // doc.addImage(img, 'png', 10, 78, 12, 15)
-  // toDataURL(RutaImg, function (dataURL:any){
-  //      console.log(dataURL)
-  //   })
-
-  // PRUEBA
-
   doc.line(15, 65, 195, 65)
   autoTable(doc, {
     head,
@@ -191,34 +176,9 @@ const GeneratePdf = async ({
     },
   })
 
-  // RouteImage
-
-  //  const image = new Image();
-
-  // const base64 = Buffer.from("https://intranet.upn.edu.pe/arturo/images/logo_upn2.png").toString('base64');
-  // const base64 = btoa("https://intranet.upn.edu.pe/arturo/images/logo_upn2.png");
-  // const imgData = "data:image/png;base64," + base64;
-  // image.src = imgData
-
-  // const img = getBase64Image('https://uploads.sitepoint.com/wp-content/uploads/2015/12/1450377118cors3.png',doc)
-  // doc.addImage(imgData , 'png', 5, 5, 40, 10);
-
   doc.save(name)
 }
 
-// const getBase64Image = (url:any,doc:any) => {
-//     const img = new Image();
-//     img.setAttribute('crossOrigin', 'anonymous');
-//     img.onload = () => {
-//       const canvas = document.createElement("canvas");
-//       canvas.width = img.width;
-//       canvas.height = img.height;
-//       const ctx:any = canvas.getContext("2d");
-//       ctx.drawImage(img, 0, 0);
-//       const dataURL = canvas.toDataURL("image/png");
-//       doc.addImage(dataURL , 'png', 5, 5, 40, 10);
-//     }
-//     img.src = url
-//   }
+
 
 export default GeneratePdf

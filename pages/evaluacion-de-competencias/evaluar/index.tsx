@@ -15,6 +15,7 @@ import Router from 'next/router'
 import dynamic from 'next/dynamic'
 import { v4 as uuidv4 } from 'uuid'
 import Swal from 'sweetalert2'
+import { catchingErrorFront } from './../../../helpers/helpers'
 import {
   CLASS_SELECTED_EC,
   CB_COMPETENCE,
@@ -229,9 +230,9 @@ const index = ({ ip }: any) => {
       const resp1 = await apiCompetence.listCompetences(
         Accion1,
         competenciaId,
-        '',
-        '',
-        ''
+        'null',
+        'null',
+        'null'
       )
 
       const newResp1: any = await Promise.all(
@@ -556,16 +557,40 @@ const index = ({ ip }: any) => {
   }
 
   const deletes = async (id: string) => {
-    setloading(true)
+    
 
     try {
-      const resp = await apiCompetence.deletes(id)
-      console.log(resp)
-      if (resp === 1) {
-        await getListAdj(CompetenciaIdVAR, details.ClaCodigo)
-      }
+
+			Swal.fire({
+				title: 'Portal de Docentes',
+				text: `Estas seguro de eliminar el adjunto?`,
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: 'Si',
+				cancelButtonText: 'No',
+			}).then(async (result) => {
+		
+				if (result.isConfirmed) {
+					setloading(true)
+					const resp = await apiCompetence.deletes(id)
+					console.log(resp)
+					if (resp === 1) {
+						await getListAdj(CompetenciaIdVAR, details.ClaCodigo)
+					}
+
+					Swal.fire(
+						'Eliminado!',
+						'El adjunto ha sido eliminado.',
+						'success'
+					)
+
+					setloading(false)
+				}
+			})
+
     } catch (error) {
-      console.log(error)
+      catchingErrorFront(error)
     }
 
     setloading(false)
@@ -579,8 +604,6 @@ const index = ({ ip }: any) => {
         download(item)
         break
       case 'btn_delete':
-        console.log(name)
-        console.log(item)
         deletes(item.CompetenceId)
         break
       case 'btn_see':
@@ -751,10 +774,24 @@ const index = ({ ip }: any) => {
         comment: formData.comment,
       }
 
-      console.log('__[_xmldata_]__', item)
+      await apiCompetence.registerNotesCompetence(item)
+      
+			Swal.fire({
+				title: 'Portal de Docentes',
+				text: `Se registro Correctamente`,
+				icon: 'success',
+				showCancelButton: false,
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: 'OK',
+			}).then((result) => {
+				console.log(result)
+				if (result.isConfirmed) {
+						// console.log('confirmed!!!')
+						window.location.reload()
+				}
+			})
 
-      const resp = await apiCompetence.registerNotesCompetence(item)
-      console.log(resp)
+
     } catch (error) {
       console.log(error)
     }

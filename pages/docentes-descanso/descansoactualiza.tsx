@@ -54,7 +54,7 @@ const DescansoDocente = () => {
       week: '',
     },
   ]
-  const [Loading, setloading] = useState(true)
+  const [Loading, setloading] = useState(false)
   const [modalShow, setModalShow] = useState(false)
   const [disableGuardar, setDisableGuardar] = useState(false)
   const [semesterSustitutory, setSemesterSustitutory] = useState(objGeneric)
@@ -82,21 +82,22 @@ const DescansoDocente = () => {
 
   useEffect(() => {
     ValidService()
-    console.log('value', value)
+    // console.log('value', value)
   }, [])
 
   const techSemesterThursday = async (dataDescanso: any) => {
     return await apiDescanso.SemesterThursday(dataDescanso)
   }
-
+  
   const btnGuardar = async () => {
     setloading(true)
+    // console.log('btnGuardar', dataDescanso)
+    // console.log('semesterSustitutory', semesterSustitutory)
+    // console.log('semesterTuesday', semesterTuesday)
+    // console.log('semesterThursday', semesterThursday)
     const rs = await apiDescanso.RegisterRequestsWorkerTeacher(dataDescanso)
     if (callErrorValid(rs, setloading) === undefined) return
-    console.log('RegisterRequestsWorkerTeacher', rs)
-    console.log('semesterSustitutory', semesterSustitutory)
-    console.log('semesterTuesday', semesterTuesday)
-    console.log('semesterThursday', semesterThursday)
+    setloading(true)
     let objSolicitud: any = {}
     dataWorker.forEach((worker: any) => {
       objSolicitud = {
@@ -109,10 +110,18 @@ const DescansoDocente = () => {
         const obj = { code: thursday.id, newDate: thursday.start }
         apiDescanso.UpdateDateWorker(obj)
       })
-      // docenteDescansoBC.ActualizarFecha(jueves.start, jueves.id)
     } else if (rs.registerId === 2) {
       semesterThursday.forEach((thursday) => {
-        const obj = { code: thursday.id, newDate: thursday.start }
+        const obj = {
+          code: thursday.id,
+          title: thursday.title,
+          start: thursday.start,
+          end: thursday.end,
+          codeTecher: dataDescanso.codeTeacher,
+          semesterId: dataDescanso.idSemester,
+          state: thursday.state,
+        }
+        console.log('semesterThursdaySAVE', obj)
         apiDescanso.SaveTempTableWorkerTeacher(obj)
       })
       getAlert({
@@ -254,7 +263,6 @@ const DescansoDocente = () => {
           },
         ]
       })
-    setloading(false)
     /* END Sustitutory */
     return listData || []
   }

@@ -143,9 +143,10 @@ const index = () => {
           Router.push('/')
           break
       }
-    }
+    }else{
+			listarAsistencia(controlClaseId)
+		}
 
-    listarAsistencia(controlClaseId)
 
     setDatos([])
   }, [])

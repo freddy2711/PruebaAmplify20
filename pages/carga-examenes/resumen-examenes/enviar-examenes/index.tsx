@@ -111,6 +111,7 @@ const index = () => {
     btnUploadFile: true,
     lstNotes: false,
   })
+  const  [ViewInputExams,setViewInputExams] = useState(false)
   const DataSelect: any = JSON.parse(get(SET_DATAS_SELEC_COURSES_TEACHER_CE))
   const UserID =
     get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
@@ -309,7 +310,6 @@ const index = () => {
   }
 
   const returClick = () => {
-    // remove(SET_DATAS_SELEC_COURSES_TEACHER_CE)
     Router.push('/carga-examenes/resumen-examenes')
   }
 
@@ -1909,7 +1909,7 @@ const index = () => {
         }).then((result: any) => {
           if (!result.isConfirmed) {
             setloading(true)
-            window.location.reload()
+            Cancel()
             setloading(false)
           }
         })
@@ -1963,11 +1963,33 @@ const index = () => {
     }
   }
 
+  const Cancel = async () => {
+    console.log("cancelar")
+    setViewInputExams(false)
+      setDataClassNote([])
+      const result = await ApiClassNote()
+      setDataClassNote(result)
+      setDateLimit('')
+      setViewInputExams(true)
+      setStartDate(null)
+      setSeleTypeExam('1')
+    setcontrolsDisabled({
+      lstTypeExam: true,
+      quantityPrint: true,
+      datePrint: true,
+      quantityNumber: true,
+      fileUpload: true,
+      btnUploadFile: true,
+      lstNotes: false
+    })
+  }
+
   // functions
 
   useEffect(() => {
     const Load = async () => {
       setloading(true)
+      setViewInputExams(true)
       setDataCoursesByTeacher(DataSelect)
       const result = await ApiClassNote()
       setDataClassNote(result)
@@ -2062,11 +2084,18 @@ const index = () => {
             subtitle={`Recuerde que la cantidad maxima a imprimir es de: ${NumberOfStudents}`}
             id={''}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            {
+              ViewInputExams === true ? (
+                <>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </>
+              ) : null
+            }
+           
           </ViewList>
           <ViewList
             style={{ marginBottom: '2%' }}
@@ -2130,7 +2159,7 @@ const index = () => {
               type="button"
               classname={styles.styleBtn}
               variant="secondary"
-              // onclick={returClick}
+              onclick={Cancel}
             >
               Cancelar
             </Button>

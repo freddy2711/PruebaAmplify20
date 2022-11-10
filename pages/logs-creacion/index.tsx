@@ -28,7 +28,7 @@ const LogsCreacion = () => {
   const UserCode =
     get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
   const SemesterCode =
-    get(SET_SEMESTERCODE) === null ? '2022-1' : get(SET_SEMESTERCODE)
+    get(SET_SEMESTERCODE) === null || get(SET_SEMESTERCODE) === '' ? '2022-1' : get(SET_SEMESTERCODE)
 
   const COLUMNS_RECOVERY = [
     { label: 'Fecha Solicitud', field: 'DateSolicitud', sort: 'asc' },
@@ -120,6 +120,7 @@ const LogsCreacion = () => {
       )
       setlistTokenActive(TokenActiveData[0])
       const TokenGeneratData = await ApilistTokenGenerat(UserCode, SemesterCode)
+      console.log("TokenGeneratData",TokenGeneratData)
       if (TokenGeneratData.length !== 0)
         FormatedTokenGeneratData(TokenGeneratData, setlistTokenGenerat)
       else ViewMessage(0)

@@ -17,6 +17,7 @@ import {
   CLASEID_REPORTES,
   LST_SELECTED_COURSE,
   SET_DATA_DOCENTE,
+  SET_IMG_BASE64,
 } from '../../consts/storageConst'
 import GeneratePdf from '../../hooks/react-pdf/DownloadPDF'
 import { apiReportesAcademicos } from '../api'
@@ -71,6 +72,7 @@ const ReporteCompetencias = () => {
   const ClassCode = get(CLASEID_REPORTES)
   const nameXLS = `RptEvaluación_${TeacherCoursesData.ClaCodigo}.csv`
   const DocenteSection: any = get(SET_DATA_DOCENTE)
+  const imgBase64: any = get(SET_IMG_BASE64)
 
   const ApiCompetenceGeneralByClass = async (classCode: any) => {
     const response = await apiReportesAcademicos.listCompetenceGeneralByClass(
@@ -84,13 +86,6 @@ const ReporteCompetencias = () => {
     return response
   }
 
-  const APILogo = async (classCode: any, parameterCode: any) => {
-    const response = await apiReportesAcademicos.listDetailClass(
-      classCode,
-      parameterCode
-    )
-    return response
-  }
 
   const ApiCompetenceSchedule = async (classId: any, noteId: any) => {
     const response = await apiReportesAcademicos.listCompetenceSchedule(
@@ -256,7 +251,6 @@ const ReporteCompetencias = () => {
 
   const CallReportPDF = async () => {
     setloading(true)
-    const LogoUrl = await APILogo(TeacherCoursesData.ClaCodigo, 'LOGOUPN')
     const obj = {
       head: COLUMNS_PDF,
       body: FormData(GeneralData),
@@ -269,7 +263,7 @@ const ReporteCompetencias = () => {
         ', ' +
         DocenteSection.name,
       NameRepote: 'evaluación de competencias',
-      RouteImage: LogoUrl[0].ParameterValue,
+      RouteImage: imgBase64,
     }
     GeneratePdf(obj)
     setloading(false)
@@ -302,6 +296,10 @@ const ReporteCompetencias = () => {
 
   return (
     <div className={styles.contenido}>
+       <input
+        id="imgBase64"
+        type="hidden"
+      />
       <Loader loading={Loading} />
       <div className={styles.content}>
         <div className={styles.titulo}>

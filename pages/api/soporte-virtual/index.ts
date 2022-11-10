@@ -1,5 +1,6 @@
 import axiosfetchPublic from '../../../config/axios'
 import axios from 'axios'
+import { catchingErrorApi } from '../../../helpers/helpers'
 
 const API: any = {
   fileAsesor: async (studentCode: string, assesor: string) => {
@@ -8,7 +9,7 @@ const API: any = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   tipocse: async (type: string, action: string) => {
@@ -17,7 +18,7 @@ const API: any = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   insertConsulta: async (item: any) => {
@@ -26,7 +27,7 @@ const API: any = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   consulta: async (teacherCode: string) => {
@@ -35,7 +36,7 @@ const API: any = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   apiAnexos: async (teacherCode: string, studentCode: string) => {
@@ -44,7 +45,7 @@ const API: any = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   docenteConsulta: async (teacherCode: string, idQuery: string) => {
@@ -53,7 +54,7 @@ const API: any = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   requestConsulta: async (
@@ -74,7 +75,7 @@ const API: any = {
       console.log('requestConsulta_', result)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   email: async (emailJson: any) => {
@@ -83,7 +84,7 @@ const API: any = {
       const result = await axiosfetchPublic.post(URL, { emailJson })
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   upload: async (item: any) => {
@@ -103,7 +104,7 @@ const API: any = {
       console.log('RESP_PUT_', resp.status)
       return resp.status
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   download: async (fileName: string) => {
@@ -118,7 +119,7 @@ const API: any = {
       const { data } = await axiosfetchPublic.post(URL, obj)
       return data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   insertImg: async (
@@ -143,7 +144,7 @@ const API: any = {
       const { data } = await axiosfetchPublic.post(URL, obj)
       return data.detail
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   cleanAnexo: async (AluCode: string, nameAws: string, Adviser: string) => {
@@ -158,7 +159,7 @@ const API: any = {
       const { data } = await axiosfetchPublic.post(URL, obj)
       return data.detail
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   deleteImgAws: async (filename: string) => {
@@ -170,7 +171,7 @@ const API: any = {
       const { data } = await axiosfetchPublic.post(URL, obj)
       return data.detail
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
 }

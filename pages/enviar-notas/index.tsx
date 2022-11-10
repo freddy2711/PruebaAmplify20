@@ -66,6 +66,8 @@ const EnviarNotas = () => {
   }
 
   const linkRedirect = async (row: any) => {
+    console.log("row", row);
+    
     set(SET_NOTES_SELECT, row)
     Router.push('./enviar-notas/envnotassel')
   }

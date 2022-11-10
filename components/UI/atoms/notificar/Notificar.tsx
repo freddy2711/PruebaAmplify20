@@ -20,7 +20,7 @@ const Notificar = ({ state, message }: Props) => {
         animationIn: ['animate__animated', 'animate__fadeIn'],
         animationOut: ['animate__animated', 'animate__fadeOut'],
         dismiss: {
-          duration: 35000,
+          duration: 10000,
           onScreen: true,
         },
       })

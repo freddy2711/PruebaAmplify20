@@ -1,8 +1,11 @@
+import { AxiosInstance } from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { axiosfetchPrivate } from '../../../config/axios'
+import { axiosCreate } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
+import { objecApi } from '../../../consts/storageConst'
 
 type Data = {}
+const Utility = objecApi.Utility
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
@@ -10,8 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (params[0]) {
     case 'DocumentsTeacher':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Utility)
         const URL = apiPath.documentosManuales.PATH_GetDocumentsTeacher
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -20,9 +24,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'DownloadDocumentsAWSS3':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Utility)
         const { obj } = req.body
         const URL = apiPath.documentosManuales.PATH_GetDownloadDocumentsAWSS3
-        const { data } = await axiosfetchPrivate.post(URL, obj)
+        const { data } = await apiCall.post(URL, obj)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -31,8 +36,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'ManualsTeacher':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Utility)
         const URL = apiPath.documentosManuales.PATH_GetManualsTeacher
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {

@@ -5,7 +5,7 @@ const axiosfetchPublic = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  // timeout: 2000,
+  timeout: 20000,
 })
 
 export default axiosfetchPublic
@@ -20,13 +20,14 @@ export default axiosfetchPublic
 // });
 // export default axiosfetchPrivate2;
 
-export const axiosfetchPrivate = axios.create({
-  baseURL: `${process.env.BACKEND_URL}`,
+export const axiosCreate = ({URL,KEY}:any) => axios.create({
+  baseURL: `${URL}`,
   headers: {
-    'x-api-key': `${process.env.BACKEND_APIKEY}`,
+    'x-api-key': `${KEY}`,
     'Content-Type': 'application/json',
-    // timeout: 5000,
+    // 
   },
+	timeout: 20000,
 })
 
 export const axiosfetchPrivateWSCV = axios.create({
@@ -36,14 +37,6 @@ export const axiosfetchPrivateWSCV = axios.create({
     'Content-Type': 'application/json',
   },
 })
-
-/* export const axiosfetchPrivateWSCV = axios.create({
-  baseURL: `${'http://localhost:3619'}`,
-/*   headers: {
-    'x-api-key': `${process.env.BACKEND_APIKEY_WSCV}`,
-    'Content-Type': 'application/json' 
-  } 
-}) */
 
 export const axiosfetchPrivateEmail = axios.create({
   baseURL: `${process.env.URL_SERVICE_EMAIL}`,

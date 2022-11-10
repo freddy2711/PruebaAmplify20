@@ -1,5 +1,6 @@
 import axiosfetchPublic from '../../../config/axios'
 import axios from 'axios'
+import { catchingErrorApi } from '../../../helpers/helpers'
 
 const API = {
   list: async (teacherCode: string) => {
@@ -8,7 +9,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   comp_by_class: async (classCode: string) => {
@@ -17,7 +18,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   competencePlanilla: async (classCode: string, competenciaId: string) => {
@@ -26,7 +27,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   conductasList: async (competenciaId: string) => {
@@ -35,7 +36,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   listTipo: async (classCode: string) => {
@@ -44,7 +45,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   guardarConducta: async (CompetenceAtachmentId: string, conductId: string) => {
@@ -56,7 +57,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   guardarAdjunto: async (item: any) => {
@@ -67,7 +68,7 @@ const API = {
       console.log('SAVEINDEX__', result)
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   upload: async (item: any) => {
@@ -87,7 +88,7 @@ const API = {
 
       return resp.status
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   download: async (item: any) => {
@@ -97,7 +98,7 @@ const API = {
 
       return resp.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   deletes: async (competenciaId: string) => {
@@ -107,7 +108,7 @@ const API = {
       const resp = await axiosfetchPublic(URL)
       return resp.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   listAdjunto: async (competenceid: string, classCode: string) => {
@@ -116,7 +117,7 @@ const API = {
       const { data } = await axiosfetchPublic(URL)
       return data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   AttachConducts: async (competenceAttachId: string) => {
@@ -125,7 +126,7 @@ const API = {
       const { data } = await axiosfetchPublic(URL)
       return data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   listCompetences: async (
@@ -140,7 +141,7 @@ const API = {
       const { data } = await axiosfetchPublic(URL)
       return data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   getEscalaCompetencia: async (competenciaId: string) => {
@@ -149,7 +150,7 @@ const API = {
       const { data } = await axiosfetchPublic(URL)
       return data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   retro: async (AlucompetenciaId: string) => {
@@ -158,16 +159,16 @@ const API = {
       const { data } = await axiosfetchPublic(URL)
       return data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   registerNotesCompetence: async (item: any) => {
     try {
-      const URL = `/evaluar-competencias/registerNotesCompetence/`
+      const URL = `/evaluar-competencias/registerNotesCompetence`
       const { data } = await axiosfetchPublic.post(URL, item)
       return data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
 }

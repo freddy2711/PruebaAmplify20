@@ -13,7 +13,6 @@ import {
   SET_TEACHERCODE,
 } from '../../../consts/storageConst'
 import { get, remove } from 'local-storage'
-import Router from 'next/router'
 
 const TableDinamic = dynamic(
   () => import('../../../components/UI/molecules/tableDinamic/Table'),
@@ -42,7 +41,6 @@ const index = () => {
   ]
 
   const LoadedExamsApi = async () => {
-    console.log('Valores', UserID, DataSelect.ClaCodigo)
     const result: any = await apiCargaExamenes.listLoadedExams(
       UserID,
       DataSelect.ClaCodigo
@@ -51,13 +49,12 @@ const index = () => {
   }
 
   const returClick = () => {
-    remove(SET_DATAS_SELEC_COURSES_TEACHER_CE)
-    // Router.push("/carga-examenes")
     window.location.href = `/carga-examenes`
+    remove(SET_DATAS_SELEC_COURSES_TEACHER_CE)
   }
 
   const nextClick = () => {
-    Router.push('/carga-examenes/resumen-examenes/enviar-examenes')
+    window.location.href = `/carga-examenes/resumen-examenes/enviar-examenes`
   }
 
   useEffect(() => {
@@ -66,7 +63,6 @@ const index = () => {
       setDataCoursesByTeacher(DataSelect)
       const result = await LoadedExamsApi()
       setDataLoadedExams(result)
-      console.log('result', result)
       setloading(false)
     }
 

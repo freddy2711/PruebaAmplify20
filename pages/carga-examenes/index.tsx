@@ -74,7 +74,9 @@ const index = () => {
       ViewMessage(1)
     } else {
       set(SET_DATAS_SELEC_COURSES_TEACHER_CE, JSON.stringify(item))
-      Router.push('/carga-examenes/resumen-examenes')
+      // Router.push('/carga-examenes/resumen-examenes')
+      window.location.href = `/carga-examenes/resumen-examenes`
+      // window.history.go(1)
     }
   }
 

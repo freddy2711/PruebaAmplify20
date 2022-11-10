@@ -48,12 +48,12 @@ export const menuDefault = [
         child: [],
         target: false,
       },
-      {
+      /* {
         label: 'Asistencia',
         link: '/asistencia',
         child: [],
         target: false,
-      },
+      }, */
     ],
   },
   {
@@ -84,6 +84,18 @@ export const menuDefault = [
         child: [],
         target: false,
       },
+			{
+        label: 'Solicitud de modificacion de notas',
+        link: '/solicitud-de-modificacion',
+        child: [],
+        target: false,
+      },
+			{
+        label: 'Lista de solicitudes de modificacion de notas',
+        link: '/solicitud-de-modificacion/lista-solicitudes',
+        child: [],
+        target: false,
+      },
     ],
   },
   {
@@ -91,8 +103,8 @@ export const menuDefault = [
     link: '#',
     child: [
       {
-        label: 'Docentes Descanso',
-        link: '/docentes-descanso',
+        label: 'Reportes Académicos',
+        link: '/reportes-academicos',
         child: [],
         target: false,
       },
@@ -170,15 +182,15 @@ export const menuDefault = [
     child: [
       {
         label: 'Modelo educativo',
-        link: '/modelo-educativo',
+        link: 'https://intranetcert.upn.edu.pe/academico/Secure/ModeloEduc.aspx',
         child: [],
-        target: false,
+        target: true,
       },
       {
         label: 'Reglamentos',
-        link: '/reglamentos',
+        link: 'https://www.upn.edu.pe/transparencia/reglamentos',
         child: [],
-        target: false,
+        target: true,
       },
       {
         label: 'Documentos / Manuales',

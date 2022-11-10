@@ -95,6 +95,23 @@
       margin-bottom: 1rem;
     }
 
+		.tablaRA {
+      margin-bottom: 1rem;
+      & > * {
+        text-align: left !important;
+      }
+    }
+
+		.botones {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 2rem 0;
+      div {
+        margin: 0 10px;
+      }
+    }
+
     .tabla {
       margin-bottom: 1rem;
       & * {

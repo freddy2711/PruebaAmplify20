@@ -12,7 +12,6 @@ import { set, remove, get } from 'local-storage'
 import {
   SET_SEMESTERCODE,
   convertStringToDate,
-  
   convertStringToDateTime,
   timeDiffCalc,
   AddMin,
@@ -43,6 +42,7 @@ import {
   convertStringToDay,
   RECUPERATION_ID,
   USER_SESSION,
+  SET_IMG_BASE64,
 } from './../consts/storageConst'
 
 // import { useCookies } from 'react-cookie'

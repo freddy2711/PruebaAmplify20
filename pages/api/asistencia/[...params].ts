@@ -1,11 +1,15 @@
 import {
-  axiosfetchPrivate,
+  axiosCreate,
   axiosfetchPrivateEmail,
 } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from './../../../consts/path'
+import { objecApi } from '../../../consts/storageConst'
+import { AxiosInstance } from 'axios'
 
 type Data = {}
+
+const { TeacherAttendance, Attendance, Teacher, ClassShedule } = objecApi
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
@@ -16,11 +20,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const URL = apiPath.asistencia.PATH_GetAttendanceSummarySession(
           params[1]
         )
-        const { data } = await axiosfetchPrivate(URL)
+
+				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall(URL)
         const result = data.detail[0]
         res.status(200).json(result)
       } catch (error) {
         console.log(error)
+				
       }
       break
     }
@@ -30,7 +37,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1],
           params[2]
         )
-        const { data } = await axiosfetchPrivate(URL)
+				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -44,10 +52,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1],
           params[2]
         )
-        const { data } = await axiosfetchPrivate(URL)
-
+				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const { data } = await apiCall(URL)
         const { detail } = data
-
         res.status(200).json(detail[0].ParameterState)
       } catch (error) {
         console.log(error)
@@ -57,8 +64,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'listarAsistencia': {
       try {
         const URL = apiPath.asistencia.PATH_GetPayrollAssistance(params[1])
-        const resp = await axiosfetchPrivate(URL)
-        console.log('listaAsist', resp)
+				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const resp = await apiCall(URL)
         res.status(200).json(resp.data.detail)
       } catch (error) {
         console.log(error)
@@ -69,10 +76,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
         const item = req.body
 
-        console.log(item)
         // PATH_InsertRequestAttendance
         const URL = apiPath.asistencia.PATH_InsertRequestAttendance
-        const resp: any = await axiosfetchPrivate.post(URL, item)
+				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const resp: any = await apiCall.post(URL, item)
 
         res.status(200).json(resp?.data.status)
       } catch (error) {
@@ -86,8 +93,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const item = req.body
 
         const URL = apiPath.asistencia.PATH_PostRecordAttendance
-        const resp: any = await axiosfetchPrivate.post(URL, item)
-        console.log('REGISTRA_ASISTENCIA', resp?.data.detail)
+				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const resp: any = await apiCall.post(URL, item)
         res.status(200).json(resp?.data.detail.Status)
       } catch (error) {
         console.log(error)
@@ -99,10 +106,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
         const item = req.body
         const URL = apiPath.asistencia.PATH_UpdateStateRecovery
-        const resp = await axiosfetchPrivate.post(URL, item)
-
-        console.log('actualizaRecuperacionEstado__', resp.data.detail)
-
+				const apiCall:AxiosInstance = axiosCreate(Attendance)
+        const resp = await apiCall.post(URL, item)
         res.status(200).json(resp.data.detail)
       } catch (error) {
         console.log(error)
@@ -120,9 +125,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           username: params[2],
         }
 
-        const resp = await axiosfetchPrivate.post(URL, obj)
-
-        console.log('terminaSesion__', resp.data.detail)
+				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const resp = await apiCall.post(URL, obj)
 
         res.status(200).json(resp.data.detail)
       } catch (error) {
@@ -141,10 +145,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           user: params[2],
           observation: params[3],
         }
-
-        const resp = await axiosfetchPrivate.put(URL, obj)
-
-        console.log('terminaSesionSolicitud__', resp.data.detail)
+				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const resp = await apiCall.put(URL, obj)
 
         res.status(200).json(resp.data.detail)
       } catch (error) {
@@ -158,10 +160,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const item = req.body
 
         const URL = apiPath.asistencia.PATH_PostAttendanceIsOnCheckDate
-
-        const { data } = await axiosfetchPrivate.post(URL, item)
-
-        console.log('AsistenciaEnFechasControl__', data.detail)
+				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall.post(URL, item)
 
         res.status(200).json(data.detail)
       } catch (error) {
@@ -173,10 +173,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'puedeCerrar': {
       try {
         const URL = apiPath.asistencia.PATH_cantCloseRequest(params[1])
-
-        const resp = await axiosfetchPrivate(URL)
-
-        console.log('puedeCerrar__', resp.data.detail)
+				const apiCall:AxiosInstance = axiosCreate(Attendance)
+        const resp = await apiCall(URL)
 
         res.status(200).json(resp.data.detail)
       } catch (error) {
@@ -189,8 +187,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const emailJson = req.body
       try {
         const resp = await axiosfetchPrivateEmail.post(`/`, emailJson)
-
-        console.log(resp.data.Status)
 
         res.status(200).json(resp.data.Status)
       } catch (error) {
@@ -206,8 +202,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1],
           params[2]
         )
-
-        const resp = await axiosfetchPrivate(URL)
+				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const resp = await apiCall(URL)
 
         res.status(200).json(resp.data.detail)
       } catch (error) {
@@ -220,8 +216,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
         // PATH_TeacherLogin
         const URL = apiPath.asistencia.PATH_TeacherLogin(params[1])
-        const resp = await axiosfetchPrivate(URL)
-
+				const apiCall:AxiosInstance = axiosCreate(Teacher)
+        const resp = await apiCall(URL)
         res.status(200).json(resp.data.detail[0])
       } catch (error) {
         console.log(error)

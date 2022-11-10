@@ -1,4 +1,5 @@
 import axiosfetchPublic from '../../../config/axios'
+import { catchingErrorApi } from '../../../helpers/helpers'
 
 const API = {
   listSesionesSolicitud: async (teacherCode: string) => {
@@ -7,16 +8,16 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   detailClass: async (item: any) => {
     try {
-      const URL = `/solicitud-de-marcacion/detailClass/`
+      const URL = `/solicitud-de-marcacion/detailClass`
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   cheAsisAlum: async (
@@ -24,23 +25,22 @@ const API = {
     ctrlClassId: string,
     fecha: string
   ) => {
-    console.log('-----AQUIII-----')
 
     try {
       const URL = `/solicitud-de-marcacion/chequeAsisAlum/${aula}/${ctrlClassId}/${fecha}`
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   getSesionesDocenteSolicitarValidar: async (item: any) => {
     try {
-      const URL = `/solicitud-de-marcacion/getSesionesDocenteSolicitarValidar/`
+      const URL = `/solicitud-de-marcacion/getSesionesDocenteSolicitarValidar`
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   sesionesAsistenciaSolicitarValidar: async (
@@ -52,7 +52,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   actualizaSesionAbiertaSolicitud: async (item: any) => {
@@ -61,7 +61,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   endSesion: async (
@@ -74,7 +74,7 @@ const API = {
     return result
   },
   insertar: async (item: any) => {
-    const URL = `/solicitud-de-marcacion/insertar/`
+    const URL = `/solicitud-de-marcacion/insertar`
     const result = await axiosfetchPublic.post(URL, item)
     return result
   },

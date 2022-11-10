@@ -79,7 +79,8 @@ const EnviarNotas = (props: any) => {
   useEffect(() => {
     console.log('imgBase64', imgBase64)
     console.log('mvEnvio', mvEnvio)
-
+    console.log("dataSelect", dataSelect);
+    
     showTableStatic = MSM_VISIBLE_BLOCK
     setshowTableDinami(MSM_VISIBLE_NONE)
     ValidityState()

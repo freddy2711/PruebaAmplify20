@@ -473,7 +473,7 @@ const index = () => {
 
       const emailResp = result.data
 
-      if (emailResp === 'OK' || emailResp === '200') {
+      if (emailResp === 'OK' || emailResp === '200' || emailResp === 'NOK') {
         Swal.fire({
           title: 'Portal de Docentes',
           text: `La consulta fue registrada correctamente.`,
@@ -481,11 +481,15 @@ const index = () => {
           showCancelButton: false,
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK',
-        })
+        }).then(async (result) => {
+			
+					if (result.isConfirmed) {
+						setFormConsulta(initForm)
+						setloading(false)
+						window.location.href = '/soporte-virtual'
+					}
+				})
 
-        setFormConsulta(initForm)
-        setloading(false)
-        window.location.href = '/soporte-virtual'
       }
     } catch (error) {
       console.log(error)

@@ -1,4 +1,5 @@
 import axiosfetchPublic from '../../../config/axios'
+import { catchingErrorApi } from '../../../helpers/helpers'
 
 const API = {
   listInit: async (teacherCode: string) => {
@@ -7,7 +8,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      // console.log(error)
+      catchingErrorApi(error)
     }
   },
   listByClass: async (classCode: string) => {
@@ -16,7 +17,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      // console.log(error)
+      catchingErrorApi(error)
     }
   },
   createDelegate: async (classCode: string, xmlData: string) => {
@@ -25,7 +26,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, { classCode, xmlData })
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   deleteDelegate: async (classCode: string, xmlData: string) => {
@@ -34,7 +35,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, { classCode, xmlData })
       return result.data
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
 }

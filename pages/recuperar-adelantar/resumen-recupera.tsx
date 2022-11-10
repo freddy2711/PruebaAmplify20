@@ -35,7 +35,7 @@ type Selected = {
   SedCodigo: string
   ClaMetodoEducativo: string
   coruseId: string
-  carId: string
+  CarCodigo: string
   sede: string
   dateLost: string
   CodSol: string
@@ -87,7 +87,7 @@ const resumen = () => {
       SedCodigo: '',
       ClaMetodoEducativo: '',
       coruseId: '',
-      carId: '',
+      CarCodigo: '',
       sede: '',
       dateLost: '',
       CodSol: '',
@@ -290,6 +290,7 @@ const resumen = () => {
   ) => {
     try {
       setloading(true)
+
       const dataSchedule = {
         classCode,
         teacherCode,
@@ -371,6 +372,15 @@ const resumen = () => {
     }
   }
 
+  const getUsuariosByProceso = async (carrCode: any, sedeCode: any) => {
+    try {
+      const status = await apiRecuperarAdelantar.GetProcessUser(carrCode,sedeCode)
+      return status
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // apis fin
 
   const formatDate = (fecha: string, key: number) => {
@@ -418,6 +428,24 @@ const resumen = () => {
           DateFormater[0] +
           'T00:00:00'
         dateConvert = new Date(DateFormater)
+        break
+      }
+      case 6: {
+        if (fecha.indexOf('-') > -1) {
+          fecha = fecha.slice(0, fecha.indexOf('-')).trim()
+          let DateFormater: any = fecha.split('/')
+         
+          const DayForm = parseInt(DateFormater[0]) - 1
+          const resultDay = DayForm >= 10 ? DayForm : "0" + DayForm.toString()
+          DateFormater =
+            DateFormater[2]  +
+            '-' +
+            DateFormater[1] +
+            '-' +
+            resultDay.toString() +
+            'T00:00:00'
+          dateConvert = new Date(DateFormater)
+        }
         break
       }
       default:
@@ -525,8 +553,8 @@ const resumen = () => {
     let codAula: string = ' '
     let valor = 0
 
-    if (TeacherCoursesSelected.ClaTipo !== '') {
-      if (TeacherCoursesSelected.ClaTipo === 'RM') {
+    if (TeacherCoursesSelected.ClaMetodoEducativo !== '') {
+      if (TeacherCoursesSelected.ClaMetodoEducativo === 'RM') {
         aula = ''
         codAula = '0'
       } else {
@@ -603,8 +631,6 @@ const resumen = () => {
       valor = 1
     }
 
-    console.log('error', DateSelectedItem)
-    console.log(SendDate(fechaclase), SendDate(fecharequerida))
     if (valor === 0)
       return PostTeacherAttendanceRecoverys(
         clase,
@@ -711,12 +737,12 @@ const resumen = () => {
     if (key === 1) {
       AlterText(key)
       ValidateActiveBtnChcked(key)
-      setbtnActive('R') // por revisar
+      setbtnActive('R') 
       await GetApiClassDate('get_fechasperdidas')
     } else {
       AlterText(key)
       ValidateActiveBtnChcked(key)
-      setbtnActive('A') // por revisar
+      setbtnActive('A') 
       await GetApiClassDate('get_fechasadelantadas')
     }
 
@@ -771,7 +797,6 @@ const resumen = () => {
 
   const cleanComponents = () => {
     setClassDate([])
-    setDateSelectedItem('')
     setMissedClassDate('')
     setInputDateEmty(false)
     setviewCalculatedTime('')
@@ -1034,121 +1059,122 @@ const resumen = () => {
 
   const EnviaEmail = async () => {
     const drDocente = await GetTeacherUser(User)
+    
+    if(drDocente != undefined){
+      const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
+      const curso = TeacherCoursesSelected.coruseId
+      const clase = TeacherCoursesSelected.ClaCodigo
+      const carrera = TeacherCoursesSelected.CarCodigo
+      const sede = TeacherCoursesSelected.SedCodigo
 
-    const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
+      const fechaclase = new Date(TeacherCoursesSelected.dateLost)
+      const fecharequerida = new Date(DateSelectedItem)
+      let tipo = ''
 
-    const curso = TeacherCoursesSelected.coruseId
-    const clase = TeacherCoursesSelected.ClaCodigo
-    const carrera = TeacherCoursesSelected.carId
-    const sede = TeacherCoursesSelected.sede
-
-    const fechaclase = new Date(TeacherCoursesSelected.dateLost)
-    const fecharequerida = new Date(DateSelectedItem)
-    let tipo = ''
-
-    if (fecharequerida < fechaclase) {
-      tipo = 'A'
-    } else {
-      tipo = 'R'
-    }
-
-    const tipoDescripcion = tipo === 'A' ? 'adelanto' : 'recuperación'
-
-    let horaRecuperacion: any
-    const DataSelected: any = LaboratoriesList.find(
-      (x: any) => x.HorInicioDesc === SelectedHour
-    )
-    const horcodigo = DataSelected.HorCodigo
-    if (LaboratoriesList.length > 0) {
-      const foundRows: any = LaboratoriesList.find(
-        (x: any) => x.HorCodigo === horcodigo
-      )
-      if (foundRows.length > 0) {
-        const dtTime = new Date(foundRows.HorFinal)
-        horaRecuperacion = dtTime
+      if (fecharequerida < fechaclase) {
+        tipo = 'A'
+      } else {
+        tipo = 'R'
       }
-    }
 
-    let msgEnd, msg2End
-    if (TeacherCoursesSelected.ClaTipo !== '') {
-      if (TeacherCoursesSelected.ClaTipo === 'RM') {
-        msgEnd = `Aula: Remoto/Virtual`
-        msg2End = `Aula: Remoto/Virtual`
+      const tipoDescripcion = tipo === 'A' ? 'adelanto' : 'recuperación'
+
+      let horaRecuperacion: any
+      const DataSelected: any = LaboratoriesList.find(
+        (x: any) => x.HorInicioDesc === SelectedHour
+      )
+      const horcodigo = DataSelected.HorCodigo
+      if (LaboratoriesList.length > 0) {
+        const foundRows: any = LaboratoriesList.find(
+          (x: any) => x.HorCodigo === horcodigo
+        )
+        if (foundRows.length > 0) {
+          const dtTime = new Date(foundRows.HorFinal)
+          horaRecuperacion = dtTime
+        }
+      }
+
+      let msgEnd, msg2End
+      if (TeacherCoursesSelected.ClaTipo !== '') {
+        if (TeacherCoursesSelected.ClaTipo === 'RM') {
+          msgEnd = `Aula: Remoto/Virtual`
+          msg2End = `Aula: Remoto/Virtual`
+        } else {
+          msgEnd = `Aula: ${AulaSelected}`
+          msg2End = `Aula: ${AulaSelected}`
+        }
       } else {
         msgEnd = `Aula: ${AulaSelected}`
         msg2End = `Aula: ${AulaSelected}`
       }
-    } else {
-      msgEnd = `Aula: ${AulaSelected}`
-      msg2End = `Aula: ${AulaSelected}`
+
+      const msg = ` <div>
+          <p>Estimado docente: ${nombre}</p>
+          <br/>
+          <p>Su clase ${curso} - ${clase}  ha sido SOLICITADA</p>
+          <br/>
+          <p>Fecha de ${tipoDescripcion}: ${DateSelectedItem}</p>
+          <br/>
+          <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
+          <br/>
+          <p>${msgEnd}</p>
+          </div>`
+
+      const msg2 = ` <div>
+          <p>El docente: ${nombre}</p>
+          <br/>
+          <p>Ha RE-PROGRAMADO la clase ${curso} - ${clase}</p>
+          <br/>
+          <p>Fecha de ${tipoDescripcion}: ${DateSelectedItem}</p>
+          <br/>
+          <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
+          <br/>
+          <p>${msg2End}</p>
+          </div>`
+
+      const ClassTeachers = await GetClassTeachers(clase)
+      const codigoDocprin = ClassTeachers.TeacherCode
+      const teacher = await GetTeacher(teacherCodeVal)
+      const email = teacher.email
+
+      const lstEmailDocente = []
+      lstEmailDocente.push(email)
+      if (codigoDocprin !== TeacherCoursesSelected.CodSol) {
+        const drdocenteprincipal = await GetTeacher(codigoDocprin)
+        const emailPri = drdocenteprincipal.email
+        lstEmailDocente.push(emailPri)
+      }
+
+      const emailJson = {
+        ListDestinatarios: lstEmailDocente,
+        DisplayName: 'UPN Docentes',
+        Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
+        Body: msg,
+        IsHtml: false,
+        ListResponderA: lstEmailDocente,
+        TipoNotificacion: '1',
+        EncolarEnvio: true,
+      }
+
+      const status = await SendMail(emailJson)
+
+      const lstEmailUsuarioAlerta:any = []
+      const dt_usucfg:any = await getUsuariosByProceso(carrera, sede)
+      dt_usucfg.map((x:any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
+
+      const emailJsonUsuarios = {
+          "ListDestinatarios" : lstEmailUsuarioAlerta,
+          "DisplayName" : "UPN Docentes",
+          "Asunto" : `Portal Docentes - ${tipoDescripcion}  de clase`,
+          "Body" : msg2,
+          "IsHtml" : false,
+          "ListResponderA":email,
+          "TipoNotificacion":"1",
+          "EncolarEnvio":true
+      }
+
+      const statusUsuarios = await SendMail(emailJsonUsuarios)
     }
-
-    const msg = ` <div>
-        <p>Estimado docente: ${nombre}</p>
-        <br/>
-        <p>Su clase ${curso} - ${clase}  ha sido SOLICITADA</p>
-        <br/>
-        <p>Fecha de ${tipoDescripcion}: ${DateSelectedItem}</p>
-        <br/>
-        <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
-        <br/>
-        <p>${msgEnd}</p>
-        </div>`
-
-    const msg2 = ` <div>
-        <p>El docente: ${nombre}</p>
-        <br/>
-        <p>Ha RE-PROGRAMADO la clase ${curso} - ${clase}</p>
-        <br/>
-        <p>Fecha de ${tipoDescripcion}: ${DateSelectedItem}</p>
-        <br/>
-        <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
-        <br/>
-        <p>${msg2End}</p>
-        </div>`
-
-    const ClassTeachers = await GetClassTeachers(clase)
-    const codigoDocprin = ClassTeachers.TeacherCode
-    const teacher = await GetTeacher(teacherCodeVal)
-    const email = teacher.email
-
-    const lstEmailDocente = []
-    lstEmailDocente.push(email)
-    if (codigoDocprin !== TeacherCoursesSelected.CodSol) {
-      const drdocenteprincipal = await GetTeacher(codigoDocprin)
-      const emailPri = drdocenteprincipal.email
-      lstEmailDocente.push(emailPri)
-    }
-
-    const emailJson = {
-      ListDestinatarios: lstEmailDocente,
-      DisplayName: 'UPN Docentes',
-      Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
-      Body: msg,
-      IsHtml: false,
-      ListResponderA: lstEmailDocente,
-      TipoNotificacion: '1',
-      EncolarEnvio: true,
-    }
-
-    const status = await SendMail(emailJson)
-
-    // const lstEmailUsuarioAlerta:any = []
-    // const dt_usucfg = getUsuariosByProceso("2", carrera, sede)
-    // dt_usucfg.map((x:any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
-
-    // const emailJsonUsuarios = {
-    //     "ListDestinatarios" : lstEmailUsuarioAlerta,
-    //     "DisplayName" : "UPN Docentes",
-    //     "Asunto" : `Portal Docentes - ${tipoDescripcion}  de clase`,
-    //     "Body" : msg2,
-    //     "IsHtml" : false,
-    //     "ListResponderA":email,
-    //     "TipoNotificacion":"1",
-    //     "EncolarEnvio":true
-    // }
-
-    // const statusUsuarios = await SendMail(emailJsonUsuarios)
   }
 
   const SendMail = async (input: any) => {
@@ -1164,6 +1190,13 @@ const resumen = () => {
     }
 
     return await SenEmail(input)
+  }
+
+  const DateA = () => {
+    
+    const fechaclase: Date = formatDate(MissedClassDate, 6)
+    const DateMaxConvert = moment(new Date(fechaclase)).format('YYYY-MM-DD')
+    return DateMaxConvert
   }
 
   // funciones
@@ -1289,7 +1322,7 @@ const resumen = () => {
                     Onchange={ValidaDateOnchangeText}
                     min={DateValidate === true ? DateMin() : ''}
                     onClick={() => setDateValidate(true)}
-                    max={DateValidate === true ? DateMax() : ''}
+                    max={btnActive === 'A' ? DateA() : DateValidate === true ? DateMax() : '' }
                   />
 
                   {InputDateEmty === true ? (

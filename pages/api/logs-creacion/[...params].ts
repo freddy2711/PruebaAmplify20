@@ -1,8 +1,11 @@
+import { AxiosInstance } from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { axiosfetchPrivate } from '../../../config/axios'
+import { axiosCreate } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
+import { objecApi } from '../../../consts/storageConst'
 
 type Data = {}
+const Token = objecApi.Token
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
@@ -10,12 +13,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (params[0]) {
     case 'listTokenActive':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Token)
         const URL = apiPath.LogsTokenNotes.PATH_GetTokenActive(
           params[1],
           params[2],
           params[3]
         )
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -24,11 +28,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listTokenGenerate':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Token)
         const URL = apiPath.LogsTokenNotes.PATH_GetTokenGenerate(
           params[1],
           params[2]
         )
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {

@@ -1,8 +1,14 @@
+import { AxiosInstance } from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { axiosfetchPrivate } from '../../../config/axios'
+import { axiosCreate} from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
+import { objecApi } from '../../../consts/storageConst'
 
 type Data = {}
+const Attendance = objecApi.Attendance
+const ClassShedule = objecApi.ClassShedule
+const Competence = objecApi.Competence
+const Note = objecApi.Note
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
@@ -10,8 +16,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (params[0]) {
     case 'list':
       try {
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const URL = apiPath.reportesAcademicos.PATH_GetTeacherCourses(params[1])
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -20,8 +27,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listTutoria':
       try {
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const URL = apiPath.reportesAcademicos.PATH_GetTeacherTutoria(params[1])
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -30,10 +38,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listClassAttendance':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Attendance)
         const URL = apiPath.reportesAcademicos.PATH_GetClassAttendance(
           params[1]
         )
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -42,8 +51,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listNotes':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Note)
         const URL = apiPath.reportesAcademicos.PATH_GetNotes(params[1])
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -52,9 +62,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listClassStatistics':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Note)
         const { obj } = req.body
         const URL = apiPath.reportesAcademicos.PATH_PostClassStatistics
-        const { data } = await axiosfetchPrivate.post(URL, obj)
+        const { data } = await apiCall.post(URL, obj)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -63,10 +74,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listCompetenceGeneralByClass':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const URL = apiPath.reportesAcademicos.PATH_GetCompetenceGeneralByClass(
           params[1]
         )
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -75,11 +87,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listCompetenceSchedule':
       try {
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const URL = apiPath.reportesAcademicos.PATH_GetCompetenceSchedule(
           params[1],
           params[2]
         )
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
@@ -88,11 +101,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     case 'listDetailClass':
       try {
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const URL = apiPath.reportesAcademicos.PATH_GetDetailClass(
           params[1],
           params[2]
         )
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {

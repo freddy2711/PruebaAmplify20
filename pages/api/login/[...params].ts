@@ -1,18 +1,24 @@
-import { axiosfetchPrivate } from '../../../config/axios'
+import { axiosCreate } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from '../../../consts/path'
-import axios from 'axios'
+import { objecApi } from '../../../consts/storageConst'
+import axios, { AxiosInstance } from 'axios'
 
 type Data = {}
+const Teacher = objecApi.Teacher
+const ClassShedule = objecApi.ClassShedule
+const Competence = objecApi.Competence
+const Token = objecApi.Token
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
 
   switch (params[0]) {
     case 'session': {
+      const apiCall: AxiosInstance = axiosCreate(ClassShedule)
       const URL = apiPath.home.PATH_GetScheduleSession(params[1], params[2])
       try {
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         if (result !== undefined) {
           res.status(200).json(result)
@@ -25,12 +31,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'requeperation': {
+      const apiCall: AxiosInstance = axiosCreate(ClassShedule)
       const URL = apiPath.home.PATH_GetScheduleRequeperation(
         params[1],
         params[2]
       )
       try {
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         if (result !== undefined) {
           res.status(200).json(result)
@@ -43,9 +50,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'competence': {
+      const apiCall: AxiosInstance = axiosCreate(Competence)
       const URL = `${apiPath.home.PATH_GetPendingTeachingCompetence}${params[1]}`
       try {
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         if (result !== undefined) {
           res.status(200).json(result)
@@ -58,9 +66,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'usuario': {
+      const apiCall: AxiosInstance = axiosCreate(Teacher)
       const URL = `${apiPath.home.PATH_GetDatosUsuario}${params[1]}`
       try {
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         if (result !== undefined) {
           res.status(200).json(result)
@@ -73,9 +82,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'coupling': {
+      const apiCall: AxiosInstance = axiosCreate(Token)
       const URL = apiPath.home.PATH_GetCouplingSession(params[1])
       try {
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
+
         const result = data.detail
         if (result !== undefined) {
           res.status(200).json(result)
@@ -88,9 +99,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       break
     }
     case 'valida': {
+      const apiCall: AxiosInstance = axiosCreate(Teacher)
       const URL = apiPath.home.PATH_GetValidaData(params[1])
+
       try {
-        const { data } = await axiosfetchPrivate(URL)
+        const { data } = await apiCall(URL)
         const result = data.detail
         if (result !== undefined) {
           res.status(200).json(result)
@@ -114,9 +127,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const URL: any = process.env.NEXT_PUBLIC_TOKEN_API
       try {
         const { data } = await axios(URL, config)
-        console.log('Cookie', JSON.stringify(params[1]))
         const result = data.detail
-        console.log('result', data)
 
         if (result !== undefined) {
           res.status(200).json(result)
@@ -131,8 +142,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'put': {
       const Request = req.body
       const URL = apiPath.home.PATH_PutLog
+      const apiCall: AxiosInstance = axiosCreate(Teacher)
       try {
-        const { data } = await axiosfetchPrivate.put(URL, Request)
+        const { data } = await apiCall.put(URL, Request)
         const result = data.detail
         if (result !== undefined) {
           res.status(200).json(result)

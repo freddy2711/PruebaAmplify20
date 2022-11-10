@@ -57,6 +57,7 @@ const DescansoDocente = () => {
 
     const obj2: any = {
       codeTeacher: rs3[0].codeTeacher,
+      codeSemester: rs3[0].idSemester,
       idSemester: rs3[0].idSemester,
       datetramit: dateNow,
     }

@@ -72,10 +72,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
   })
 
   const formatHora = (valor: string) => {
-    console.log('valor', valor)
+    
     const dateSplit = valor.split('T')
     const date = `${dateSplit[0]} ${dateSplit[1]}`
-    console.log(date)
+
     const hora = moment(date, 'YYYY-MM-DDTHH:mm:ss').format('HH:mm')
     return hora
   }
@@ -98,9 +98,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
 
           const datos = data.detail
 
-          console.log(item)
-          console.log(datos)
-
           datos[0].hoursIni = formatHora(datos[0].hoursIni)
           datos[0].hoursEnd = formatHora(datos[0].hoursEnd)
 
@@ -112,12 +109,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
       }
     }
 
-    consultaApi()
-
     const validaciones = async () => {
-      const obj: any = get(CLASS_SELECTED_SOL_MARCACION)
+			const obj: any = get(CLASS_SELECTED_SOL_MARCACION)
       const item = JSON.parse(obj)
-
+			
       const ctlClassIDLocal = get(CONTROL_CLASE_ID)
 
       const ControlClaseID: any =
@@ -251,7 +246,13 @@ const AsistenciaSolicitud = ({ ip }: any) => {
       setloading(false)
     }
 
-    validaciones()
+		
+		const fun = async() =>{
+			await consultaApi()
+			await validaciones()
+		}
+
+		fun()
   }, [])
 
   const btnFin = async (ControlClaseID: string, ClaCode: string) => {
@@ -265,7 +266,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
 
   const handleTomarAsistencia = async () => {
     setloading(true)
-    console.log('handleTomarAsistencia')
 
     set(TIPO_ASISTENCIA, REGSOL)
 
@@ -313,8 +313,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
       finish: hoursEnd.replace('T', ' '),
     }
 
-    console.log(item)
-
     let dataGSDSV
 
     try {
@@ -322,10 +320,8 @@ const AsistenciaSolicitud = ({ ip }: any) => {
         item
       )
 
-      console.log(resp)
-
       dataGSDSV = resp.data
-      console.log('dataGSDSV', dataGSDSV)
+
     } catch (error) {
       console.log(error)
     }
@@ -342,8 +338,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           ControlClaseID,
           ClaCode
         )
-
-        console.log(resp.data.detail)
 
         const rows = resp.data.detail
 
@@ -364,7 +358,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
               item
             )
 
-            console.log(resp)
           } catch (error) {
             console.log(error)
           }
@@ -377,7 +370,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
               '1'
             )
 
-            console.log(resp)
+     
           } catch (error) {
             console.log(error)
           }
@@ -388,7 +381,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           Router.push('/solicitud-de-marcacion')
         } else {
           // actualizaSesionAbierta_Solicitud
-          console.log('NO PERMITE --- else row == 0')
 
           try {
             const item = {
@@ -404,13 +396,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
             const resp = await apiSolicitud.actualizaSesionAbiertaSolicitud(
               item
             )
-            console.log(resp)
+    
           } catch (error) {
             console.log(error)
           }
-
-          // if() permitir cerrar sesion sin asistencia estudiante
-          // termina la sesion pa_TERMINA_SESION_SOLICITUD
 
           let PemitirCerrarSesionSinAsistenciaEstudiante
 
@@ -432,12 +421,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
                 DUENO,
                 '1'
               )
-              console.log(resp)
+       
             } catch (error) {
               console.log(error)
             }
-
-            // enviaSolicitud()
 
             set(VALIDAR, '1')
 
@@ -461,10 +448,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
         console.log(error)
       }
 
-      console.log(
-        '---PemitirCerrarSesionSinAsistenciaEstudiante---',
-        PemitirCerrarSesionSinAsistenciaEstudiante
-      )
 
       if (parseInt(PemitirCerrarSesionSinAsistenciaEstudiante) === 1) {
         // TODO: getInsertaSesion_Solicitud
@@ -485,15 +468,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
             ip,
           }
 
-          console.log('----iteeeeem-insertar------------', item)
-
           const resp = await apiSolicitud.insertar(item)
-
-          console.log('---- response de insertar ----', resp)
 
           set(CONTROL_CLASE_ID, resp)
 
-          console.log(resp)
         } catch (error) {
           console.log(error)
         }
@@ -518,13 +496,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
             ip,
           }
 
-          console.log('---- iteeem insert  ----', item)
-
           const resp = await apiSolicitud.insertar(item)
 
           set(CONTROL_CLASE_ID, resp.data)
 
-          console.log(resp)
         } catch (error) {
           console.log(error)
         }
@@ -713,7 +688,6 @@ AsistenciaSolicitud.title = 'Registro de asistencia - Portal Docentes'
 export default AsistenciaSolicitud
 
 export async function getServerSideProps({ req }: any) {
-  console.log(req.headers)
   const ip = req.headers['x-real-ip'] || req.connection.remoteAddress
 
   return {

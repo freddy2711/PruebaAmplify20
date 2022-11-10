@@ -1,3 +1,4 @@
+// import Header from './../UI/organisms/header/Header'
 import Footer from './../UI/organisms/footer/Footer'
 import Navigation from './../UI/molecules/navigation/Navigation'
 import { Fragment, ReactNode, useEffect, useState } from 'react'
@@ -13,7 +14,7 @@ import {
   USER_SESSION,
 } from '../../consts/storageConst'
 import { get, set } from 'local-storage'
-import { useCookies } from 'react-cookie'
+// import { useCookies } from 'react-cookie'
 
 const Header = dynamic(() => import('./../UI/organisms/header/Header'), {
   ssr: false,
@@ -52,7 +53,7 @@ const index = ({ children }: Props) => {
     message: '',
   })
   const dateNow = convertStringToDate(new Date())
-  const cookie = useCookies([''])
+  // const cookie = useCookies([''])
   const callApiLogin = async (codeUser: any) => {
     const semesterTemp: any = await apiLogin.TokenCoupling(codeUser)
     if (semesterTemp.length !== 0) {
@@ -66,11 +67,11 @@ const index = ({ children }: Props) => {
 
   const callApiLoginValid = async () => {
     let codeteacher = get(USER_SESSION)
-    console.log('codeteacher', codeteacher)
-    if (codeteacher === null || codeteacher === undefined) {
-      const token: any = await apiLogin.logintokenValid(cookie)      
-      const rs = await apiLogin.loginDataUser(token?.user)
-      set(DUENO_SESSION, token?.user)
+    if (codeteacher === null || codeteacher === "undefined") {
+      // const token: any = await apiLogin.logintokenValid(cookie)
+      const rs = await apiLogin.loginDataUser('RVI')      
+      // const rs = await apiLogin.loginDataUser(token?.user)
+      set(DUENO_SESSION, 'RVI')
       set(USER_SESSION, rs[0]?.codeUser)
       codeteacher = rs[0]?.codeUser
     }
@@ -79,8 +80,6 @@ const index = ({ children }: Props) => {
 
   const obj = { keyA: 0 }
   useEffect(() => {
-    console.log("cookie", cookie);
-    
     callApiLoginValid()
   }, [obj.keyA])
   return (

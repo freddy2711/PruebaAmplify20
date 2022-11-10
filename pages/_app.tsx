@@ -2,12 +2,10 @@ import Head from 'next/head'
 import { AppProps } from 'next/app'
 import '../styles/index.scss'
 import Layout from './../components/layout'
-import { configurePool } from '../Util/auth-utils';
 import { Provider } from 'react-redux'
 import store from './../redux/store'
 
 function MyApp({ Component, pageProps }: AppProps | any) {
-  configurePool();
   return (
     <Provider store={store}>
       <Head>

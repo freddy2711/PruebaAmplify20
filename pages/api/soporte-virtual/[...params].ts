@@ -1,12 +1,17 @@
 import {
-  axiosfetchPrivate,
+  axiosCreate,
   axiosfetchPrivateEmail,
   axiosfetchPrivateUpload,
 } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from './../../../consts/path'
+import { objecApi } from '../../../consts/storageConst'
+import { AxiosInstance } from 'axios'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
+
+const { TeacherAttendance, Teacher, Utility } = objecApi
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
@@ -17,82 +22,88 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'fileAsesor': {
       const URL = apiPath.soporteVirtual.PATH_GETFILE(params[1], params[2])
       try {
-        const { data } = await axiosfetchPrivate(URL)
+				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV001')
       }
       break
     }
     case 'tipocse': {
       const URL = apiPath.soporteVirtual.PATH_tipos(params[1], params[2])
       try {
-        const { data } = await axiosfetchPrivate(URL)
+				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV002')
       }
       break
     }
     case 'insertConsulta': {
       const item = req.body
       const URL = apiPath.soporteVirtual.PATH_INSERT
-      console.log('LOG_INSERT_ITEM__', item)
 
       try {
-        const { data } = await axiosfetchPrivate.post(URL, item)
+				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall.post(URL, item)
         console.log('response', data)
         res.status(200).json(data.detail)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV003')
       }
       break
     }
     case 'consulta': {
       const URL = apiPath.soporteVirtual.PATH_docenteConsulta(params[1])
       try {
-        const { data } = await axiosfetchPrivate(URL)
+				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV004')
       }
       break
     }
     case 'apiAnexos': {
       const URL = apiPath.soporteVirtual.PATH_GETANEXOS(params[1], params[2])
       try {
-        const { data } = await axiosfetchPrivate(URL)
+				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall(URL)
         console.log('historyAnexos', data)
         res.status(200).json(data.detail)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV005')
       }
       break
     }
     case 'docenteConsulta': {
       const URL = apiPath.soporteVirtual.PATH_HISTORY(params[1], params[2])
       try {
-        const { data } = await axiosfetchPrivate(URL)
+				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall(URL)
         console.log('response', data)
         res.status(200).json(data.detail)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV006')
       }
       break
     }
     case 'requestConsulta': {
       const item = req.body
       const URL = apiPath.soporteVirtual.PATH_REQUEST
-      console.log('ITEEEEM____PARAMS_REQS', item)
+
       try {
-        const { data } = await axiosfetchPrivate.post(URL, item)
+				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const { data } = await apiCall.post(URL, item)
         console.log('response', data)
         res.status(200).json(data.detail)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV007')
       }
       break
     }
@@ -106,7 +117,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         res.status(200).json(resp.data.Status)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV008')
       }
 
       break
@@ -115,7 +126,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const item = req.body
 
       const { nameS3, usuario, type, tipo } = item
-      console.log('tipo_', type)
+
       const fileObj = {
         idtramite: '0',
         usuario,
@@ -137,7 +148,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         res.status(200).json(URL_UPLOAD)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV009')
       }
       break
     }
@@ -149,7 +160,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV010')
       }
       break
     }
@@ -157,11 +168,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const item = req.body
       const URL = apiPath.soporteVirtual.PATH_INSERT_IMG
       try {
-        const resp = await axiosfetchPrivate.post(URL, item)
+				
+				const apiCall: AxiosInstance = axiosCreate(Teacher)
+        const resp = await apiCall.post(URL, item)
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV011')
       }
       break
     }
@@ -169,11 +182,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const item = req.body
       const URL = apiPath.soporteVirtual.PATH_CLEAN
       try {
-        const resp = await axiosfetchPrivate.post(URL, item)
+				const apiCall: AxiosInstance = axiosCreate(Teacher)
+        const resp = await apiCall.post(URL, item)
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV012')
       }
       break
     }
@@ -181,11 +195,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const item = req.body
       const URL = apiPath.soporteVirtual.PATH_DELETE_AWS
       try {
-        const resp = await axiosfetchPrivate.post(URL, item)
+
+				const apiCall: AxiosInstance = axiosCreate(Utility)
+        const resp = await apiCall.post(URL, item)
         console.log(resp.data)
         res.status(200).json(resp.data)
       } catch (error) {
-        console.log(error)
+        genError(res,error,'SV013')
       }
       break
     }

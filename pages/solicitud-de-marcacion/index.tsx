@@ -31,6 +31,7 @@ import {
   SET_TEACHERCODE,
   NO_CLOSE,
 } from './../../consts/storageConst'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -107,7 +108,6 @@ const SolicitudMarcacion = () => {
   }
 
   const formatedData = (obj: any, setstate: any, tipo: string) => {
-    console.log(obj)
 
     let items = obj.map((item: any) => {
       const dateSplit = item.hoursIni.split('T')
@@ -159,18 +159,20 @@ const SolicitudMarcacion = () => {
         )
 
         const { noinit, noClose, pending } = respApi.data
+				
+				if(respApi.data === undefined){
+					throw new  Error('Error de data')
+				} 
 
         set(LIST_SESION_SOL, JSON.stringify(respApi.data))
-
-        console.log('NOINIT', noinit)
 
         formatedData(noinit, setDatosNoInit, 'noinit')
         formatedData(noClose, setDatosNoClose, 'noClose')
         formatedData(pending, setDatosPendientes, 'pending')
 
         setloading(false)
-      } catch (error) {
-        console.log(error)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
         setloading(false)
       }
     }
@@ -194,7 +196,7 @@ const SolicitudMarcacion = () => {
   ]
 
   const COLUMNS_PENDIENTES = [
-    { label: 'Seleccionar clase', field: 'select', sort: 'asc' },
+    // { label: 'Seleccionar clase', field: 'select', sort: 'asc' },
     { label: 'Sede', field: 'SedCode', sort: 'asc' },
     { label: 'Semestre', field: 'SemCode', sort: 'asc' },
     { label: 'Clase', field: 'ClaCode', sort: 'asc' },

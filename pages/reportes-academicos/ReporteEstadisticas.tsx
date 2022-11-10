@@ -11,6 +11,7 @@ import {
   CLASEID_REPORTES,
   LST_SELECTED_COURSE,
   SET_DATA_DOCENTE,
+  SET_IMG_BASE64,
 } from '../../consts/storageConst'
 import GeneratePdf from '../../hooks/react-pdf/DownloadPDF'
 import { apiReportesAcademicos } from '../api'
@@ -62,6 +63,7 @@ const ReporteEstadisticas = () => {
   const userId = 'N00011885'
   const nameXLS = `RptClases_${TeacherCoursesData.ClaCodigo}.csv`
   const DocenteSection: any = get(SET_DATA_DOCENTE)
+  const imgBase64: any = get(SET_IMG_BASE64)
 
   const COLUMNS_CLASSSTATISTICS = [
     { label: 'Sede', field: 'Sedode', sort: 'asc' },
@@ -199,17 +201,9 @@ const ReporteEstadisticas = () => {
     return response
   }
 
-  const APILogo = async (classCode: any, parameterCode: any) => {
-    const response = await apiReportesAcademicos.listDetailClass(
-      classCode,
-      parameterCode
-    )
-    return response
-  }
 
   const CallReportPDF = async () => {
     setloading(true)
-    const LogoUrl = await APILogo(TeacherCoursesData.ClaCodigo, 'LOGOUPN')
     const obj = {
       head: COLUMNS_PDF,
       body: FormData(ClassStatisticsData),
@@ -222,7 +216,7 @@ const ReporteEstadisticas = () => {
         ', ' +
         DocenteSection.name,
       NameRepote: 'Clases: Resultados y Estadísticas',
-      RouteImage: LogoUrl[0].ParameterValue,
+      RouteImage: imgBase64,
     }
     GeneratePdf(obj)
     setloading(false)
@@ -262,6 +256,10 @@ const ReporteEstadisticas = () => {
   return (
     <div>
       <div className={styles.contenido}>
+      <input
+        id="imgBase64"
+        type="hidden"
+      />
         <Loader loading={Loading} />
         <div className={styles.content}>
           <div className={styles.titulo}>

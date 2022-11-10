@@ -146,7 +146,7 @@ export const MSM_GENERA_TOKEN = 'Generación de Token para cambio de Notas!'
 
 // ** CONSTANTES PARA OCULTAR Y MOSTRAR CORREO
 export const MSM_VISIBLE_NONE = 'none'
-export const SET_IMG_BASE64 = ''
+export const SET_IMG_BASE64 = 'ImgBase64'
 export const MSM_VISIBLE_BLOCK = 'block'
 // ** CONSTANTES PARA HOME SECCIONES
 export const ACCESO_MARC_CLAS_DOC = `ACCESO_MARC_CLAS_DOC`
@@ -265,7 +265,7 @@ export const setBodyEmail = (message: any) => {
   </td></tr>
   </table>`
 }
-export const SET_SEMESTERCODE = ''
+export const SET_SEMESTERCODE = 'SemesterCode'
 export const SET_FECHA_ORIGEN = '12/30/1899'
 
 // ** CONSTANTES EVALUACION DE COMPETENCIAS
@@ -436,3 +436,42 @@ export const objToken = async () => {
 
 // ** CONSTANTES DE CARGA DE EXÁMENES
 export const SET_DATAS_SELEC_COURSES_TEACHER_CE = 'SelectCoursesTeacher_CE'
+
+export const objecApi = {
+  Teacher : {
+    URL: process.env.BACKEND_URL_TEACHER,
+    KEY:`${process.env.BACKEND_APIKEY_TEACHER}`
+  },
+  WorkerTeacher : {
+    URL:`${process.env.BACKEND_URL_WORKERTEACHER}`,
+    KEY:`${process.env.BACKEND_APIKEY_WORKERTEACHER}`,
+  },
+  Utility:{
+    URL:`${process.env.BACKEND_URL_UTILITY}`,
+    KEY:`${process.env.BACKEND_APIKEY_UTILITY}`,
+  },
+  Competence:{
+    URL:`${process.env.BACKEND_URL_COMPETENCE}`,
+    KEY:`${process.env.BACKEND_APIKEY_COMPETENCE}`,
+  },
+  TeacherAttendance : {
+    URL:`${process.env.BACKEND_URL_TEACHERATTENDANCE}`,
+    KEY:`${process.env.BACKEND_APIKEY_TEACHERATTENDANCE}`,
+  },
+  Note:{
+    URL:`${process.env.BACKEND_URL_NOTE}`,
+    KEY:`${process.env.BACKEND_APIKEY_NOTE}`,
+  },
+  Attendance:{
+    URL:`${process.env.BACKEND_URL_ATTENDANCE}`,
+    KEY:`${process.env.BACKEND_APIKEY_ATTENDANCE}`,
+  },
+  ClassShedule:{
+    URL:`${process.env.BACKEND_URL_CLASSSHEDULE}`,
+    KEY:`${process.env.BACKEND_APIKEY_CLASSSHEDULE}`,
+  },
+  Token:{
+    URL:`${process.env.BACKEND_URL_TOKEN}`,
+    KEY:`${process.env.BACKEND_APIKEY_TOKEN}`
+  }
+}

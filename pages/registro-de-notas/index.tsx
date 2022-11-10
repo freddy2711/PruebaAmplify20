@@ -117,8 +117,8 @@ const IngresoNotas = () => {
     ) {
       const msj = `<center><p><img src=' ${result?.setupInfo?.QrCodeSetupImageUrl}'></p> ${result?.setupInfo?.ManualEntryKey}</center>`
       const emailJson = {
-        EmailList: [respEmail],
-        // EmailList: ['javierdj22@gmail.com'],
+        // EmailList: [respEmail],
+        EmailList: ['javierdj22@gmail.com'],
         DisplayName: 'UPN Docentes',
         Subject: 'Generación de Token para cambio de Notas!',
         IsHtml: true,

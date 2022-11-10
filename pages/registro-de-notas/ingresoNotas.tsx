@@ -33,6 +33,7 @@ import {
   MSM_SELECCIONADO_VIRTUAL,
   MSM_REGISTRO_OK,
   convertStringToDateTime,
+  DUENO_SESSION,
 } from '../../consts/storageConst'
 
 const Thead = dynamic(
@@ -87,6 +88,7 @@ const IngresoNotas = () => {
   const dataUser: any = get(SET_DATA_DOCENTE)
   const dataNotes: any = get(SET_NOTES_SELECT)
   const semesterCode: any = get(SET_SEMESTERCODE)
+  const dueñoSession: any = get(DUENO_SESSION)
   const dateNow = convertStringToDate(new Date())
   // const dateTimeNow = `${convertStringToDate(
   //   new Date()
@@ -97,14 +99,14 @@ const IngresoNotas = () => {
     setloading(true)
     const obj = {
       ip,
-      user: dataUser.userName,
+      user: dueñoSession,
     }
     fetchNotesValidate(obj)
     ClaCodigo = dataNotes?.ClaCodigo
     fetchTokenClass(ClaCodigo)
-    if (ClaCodigo === undefined && ClaCodigo === null) {
-      Router.push('./registro-de-notas')
-    }
+    // if (ClaCodigo === undefined && ClaCodigo === null) {
+    //   Router.push('./registro-de-notas')
+    // }
     validNotesExist(ClaCodigo)
     const dtGenerarToken: any = fetchTokenTecher(dataUser.code)
     // console.log('fetchTokenTecher', dtGenerarToken)
@@ -131,10 +133,11 @@ const IngresoNotas = () => {
     fetchTokenInsertState(reqst)
     ValidaEmail(dataUser.code, token)
   }
+
   const ValidaEmail = async (userCode: any, token: number) => {
-    const emailUPN = await fetchTokenEmail(userCode)
+    let emailUPN = await fetchTokenEmail(userCode)
     if (emailUPN.includes('@upn.pe') || emailUPN.includes('@upn.edu.pe')) {
-      // emailUPN = 'javierdj22@gmail.com'
+      emailUPN = 'javierdj22@gmail.com'
       const msj = `<center><p>${token}</p></center>`
       const emailJson = {
         EmailList: [emailUPN],
@@ -199,6 +202,7 @@ const IngresoNotas = () => {
       })
     }
   }
+
   const SendValidarToken = async () => {
     setloading(true)
     const typeToken = 'TokenPortal'
@@ -209,8 +213,8 @@ const IngresoNotas = () => {
       state: '',
       typeToken,
     }
-
-    if (enviarTokenPortal !== 1) {
+    
+    if (enviarTokenPortal  === 1) {
       const valid = {
         token: tokenDinamic,
         userCode: dataUser?.code,
@@ -267,7 +271,8 @@ const IngresoNotas = () => {
       fechahora: dateTimeNow,
       token: tokenDinamic,
     }
-
+    console.log("fetchTokenGoogleValidate", req);
+    
     const pinCorrecto = await fetchTokenGoogleValidate(req)
     setloading(false)
     if (pinCorrecto) {
@@ -521,10 +526,13 @@ const IngresoNotas = () => {
   }
 
   const fetchNotesValidate = async (obj: any) => {
+    console.log("fetchNotesValidate", obj);
     const resp = await apiNotes.notesValidate(obj)
-    if (resp?.result === 0) {
-      Router.push('./Logout')
-    }
+    console.log("notesValidate", resp);
+    
+    // if (resp?.result === 0) {
+    //   Router.push('./Logout')
+    // }
   }
 
   const fetchTokenValidate = async (obj: any) => {

@@ -10,6 +10,7 @@ import {
   CLASEID_REPORTES,
   LST_SELECTED_COURSE,
   SET_DATA_DOCENTE,
+  SET_IMG_BASE64,
 } from '../../consts/storageConst'
 import ReportButtons from '../../components/UI/molecules/reports/AcademicReport/ReportButtons/reportButtons'
 import Router from 'next/router'
@@ -65,6 +66,7 @@ const ReporteNotas = () => {
   const ClassCode = get(CLASEID_REPORTES)
   const DocenteSection: any = get(SET_DATA_DOCENTE)
   const nameXLS = `RptNotas_${TeacherCoursesData.ClaCodigo}.csv`
+  const imgBase64: any = get(SET_IMG_BASE64)
 
   const COLUMNS_NOTES = [
     { label: 'Código', field: 'AluCod', sort: 'asc' },
@@ -139,14 +141,6 @@ const ReporteNotas = () => {
     return response
   }
 
-  const APILogo = async (classCode: any, parameterCode: any) => {
-    const response = await apiReportesAcademicos.listDetailClass(
-      classCode,
-      parameterCode
-    )
-    return response
-  }
-
   const ToReturn = () => {
     remove(CLASEID_REPORTES)
     remove(LST_SELECTED_COURSE)
@@ -204,7 +198,6 @@ const ReporteNotas = () => {
 
   const CallReportPDF = async () => {
     setloading(true)
-    const LogoUrl = await APILogo(TeacherCoursesData.ClaCodigo, 'LOGOUPN')
     const obj = {
       head: COLUMNS_PDF,
       body: FormData(NotesData),
@@ -217,7 +210,7 @@ const ReporteNotas = () => {
         ', ' +
         DocenteSection.name,
       NameRepote: 'Notas',
-      RouteImage: LogoUrl[0].ParameterValue,
+      RouteImage: imgBase64,
     }
     GeneratePdf(obj)
     setloading(false)
@@ -250,6 +243,10 @@ const ReporteNotas = () => {
 
   return (
     <div className={styles.contenido}>
+          <input
+        id="imgBase64"
+        type="hidden"
+      />
       <Loader loading={Loading} />
       <div className={styles.content}>
         <div className={styles.titulo}>

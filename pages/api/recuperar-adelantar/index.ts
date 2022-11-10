@@ -157,6 +157,11 @@ const API = {
     const result: any = await axiosfetchPublic(URL)
     return result.data
   },
+  GetProcessUser: async (carrCode: any, sedeCode: any) => {
+    const URL = `/recuperar-adelantar/GetProcessUser/${carrCode}/${sedeCode}`
+    const result: any = await axiosfetchPublic(URL)
+    return result.data
+  },
 }
 
 export default API

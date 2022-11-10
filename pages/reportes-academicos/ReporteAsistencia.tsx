@@ -117,10 +117,6 @@ const ReporteAsistencia = () => {
     return response
   }
 
-  //   const APILogo = async (classCode:any,parameterCode:any) => {
-  //     const response = await apiReportesAcademicos.listDetailClass(classCode,parameterCode);
-  //     return response
-  // }
 
   const ToReturn = () => {
     remove(CLASEID_REPORTES)
@@ -171,8 +167,7 @@ const ReporteAsistencia = () => {
 
   const CallReportPDF = async () => {
     setloading(true)
-    console.log('route', imgBase64)
-    // const LogoUrl = await APILogo(TeacherCoursesData.ClaCodigo,"LOGOUPN")
+    
     const obj = {
       head: COLUMNS_PDF,
       body: FormData(ClassAttendanceData),

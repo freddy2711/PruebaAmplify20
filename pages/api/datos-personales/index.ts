@@ -1,4 +1,5 @@
 import axiosfetchPublic from '../../../config/axios'
+import { catchingErrorApi } from '../../../helpers/helpers'
 
 const API = {
   personaObtener: async (user: any) => {
@@ -7,7 +8,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   pais: async () => {
@@ -16,7 +17,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   estadoCivil: async () => {
@@ -25,7 +26,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   tipoDocumento: async () => {
@@ -34,7 +35,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   Ubigeo: async () => {
@@ -43,7 +44,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   EvaluadorEvaluado: async (idPersona: string) => {
@@ -52,7 +53,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaGuardar: async (Item: any) => {
@@ -61,7 +62,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, Item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   Institucion: async (idPais: any = '0') => {
@@ -70,7 +71,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   Industria: async () => {
@@ -79,7 +80,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   AreaPuesto: async () => {
@@ -88,7 +89,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   tipoDedicacionDocente: async () => {
@@ -97,7 +98,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   experienciaLaboralObtener: async (idPersona: string) => {
@@ -106,7 +107,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   experienciaLaboralGuardar: async (item: any) => {
@@ -115,7 +116,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   clasificacionCarrera: async () => {
@@ -124,7 +125,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   nivelAcademico: async () => {
@@ -133,7 +134,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   estadoEstudio: async () => {
@@ -142,7 +143,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   estudio: async (idPersona: string) => {
@@ -151,7 +152,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   estudioGuardar: async (item: any) => {
@@ -160,7 +161,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaConocimientoObtener: async (idPersona: string) => {
@@ -169,7 +170,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaConocimientoGuardar: async (item: any) => {
@@ -178,7 +179,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   idioma: async () => {
@@ -187,7 +188,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaIdioma: async (idPersona: string) => {
@@ -196,7 +197,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaIdiomaGuardar: async (item: any) => {
@@ -222,7 +223,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   referenciaLaboral: async (idPersona: string) => {
@@ -231,7 +232,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   referenciaLaboralGuardar: async (item: any) => {
@@ -240,7 +241,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   tipoAdjunto: async () => {
@@ -249,7 +250,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaAdjunto: async (idPersona: string) => {
@@ -258,7 +259,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaAdjuntoGuardar: async (item: any) => {
@@ -268,7 +269,7 @@ const API = {
       console.log(result)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   personaAdjuntoDownload: async (idPersona: string, id: string) => {
@@ -277,7 +278,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   confirmacionGuardar: async (item: any) => {
@@ -286,7 +287,7 @@ const API = {
       const result = await axiosfetchPublic.post(URL, item)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
   downloadFile: async (name: any) => {
@@ -295,7 +296,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      console.log(error)
+      catchingErrorApi(error)
     }
   },
 }

@@ -393,6 +393,15 @@ const EditarRecupera = () => {
     }
   }
 
+  const getUsuariosByProceso = async (carrCode: any, sedeCode: any) => {
+    try {
+      const status = await apiRecuperarAdelantar.GetProcessUser(carrCode,sedeCode)
+      return status
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // Fin de apis
 
   const ValidationDateText = (_fecharecupera: Date, _fechaperdida: Date) => {
@@ -864,7 +873,7 @@ const EditarRecupera = () => {
       case 6:
         return Swal.fire({
           title: 'Portal de Docentes',
-          text: `Las solicitudes con estado programado no se pueden anular`,
+          text: `Las solicitudes con estado programado, no se pueden anular`,
           icon: 'warning',
           showCancelButton: false,
           confirmButtonColor: '#3085d6',
@@ -918,202 +927,208 @@ const EditarRecupera = () => {
 
   const EnviaEmailAnulacion = async () => {
     const drDocente = await GetTeacherUser(User)
-    const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
+    if(drDocente != undefined){
+      const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
 
-    const curso = DataRecuperation.coruseId
-    const clase = ScheduleSessions.ClaCodigo
-    const carrera = DataRecuperation.carId
-    const sede = DataRecuperation.sede
+      const curso = DataRecuperation.coruseId
+      const clase = ScheduleSessions.ClaCodigo
+      const carrera = DataRecuperation.carId
+      const sede = DataRecuperation.sede
 
-    const fechaclase = new Date(DataRecuperation.dateLost)
-    const fecharequerida = new Date(DateSelected)
-    let tipo = ''
+      const fechaclase = new Date(DataRecuperation.dateLost)
+      const fecharequerida = new Date(DateSelected)
+      let tipo = ''
 
-    if (fecharequerida < fechaclase) {
-      tipo = 'A'
-    } else {
-      tipo = 'R'
+      if (fecharequerida < fechaclase) {
+        tipo = 'A'
+      } else {
+        tipo = 'R'
+      }
+
+      const tipoDescripcion = tipo === 'A' ? 'adelanto' : 'recuperación'
+
+      const msg = `La solicitud de ${tipoDescripcion} de la clase ${curso} - ${clase} ha sido ANULADA`
+
+      const ClassTeachers = await GetClassTeachers(clase)
+      const codigoDocprin = ClassTeachers.TeacherCode
+      const teacher = await GetTeacher(lstSelected.CodSol)
+      const email = teacher.email
+      const lstEmailDocente = []
+      lstEmailDocente.push(email)
+      if (codigoDocprin !== lstSelected.CodSol) {
+        const drdocenteprincipal = await GetTeacher(codigoDocprin)
+        const emailPri = drdocenteprincipal.email
+        lstEmailDocente.push(emailPri)
+      }
+
+      const emailJson = {
+        ListDestinatarios: lstEmailDocente,
+        DisplayName: 'UPN Docentes',
+        Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
+        Body: msg,
+        IsHtml: false,
+        ListResponderA: lstEmailDocente,
+        TipoNotificacion: '1',
+        EncolarEnvio: true,
+      }
+
+      const status = await SendMail(emailJson)
+
+      const lstEmailDirectores: any = []
+      const dtDircar: [] = await GetRateCampusCode(carrera, sede)
+      dtDircar.map((x: any) => lstEmailDirectores.push(x.emailUPN))
+
+      const emailJsonDirectores = {
+        ListDestinatarios: lstEmailDirectores,
+        DisplayName: 'UPN Docentes',
+        Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
+        Body: msg,
+        IsHtml: false,
+        ListResponderA: email,
+        TipoNotificacion: '1',
+        EncolarEnvio: true,
+      }
+
+      const statusDirectores = await SendMail(emailJsonDirectores)
+
+      const lstEmailUsuarioAlerta:any = []
+      const dt_usucfg:any = await getUsuariosByProceso(carrera, sede)
+      console.log("dt_usucfg",dt_usucfg)
+      dt_usucfg.map((x:any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
+      const emailJsonUsuarios = {
+          "ListDestinatarios" : lstEmailUsuarioAlerta,
+          "DisplayName" : "UPN Docentes",
+          "Asunto" : `Portal Docentes - ${tipoDescripcion}  de clase`,
+          "Body" : msg,
+          "IsHtml" : false,
+          "ListResponderA":email,
+          "TipoNotificacion":"1",
+          "EncolarEnvio":true
+      }
+
+      const statusUsuarios = await SendMail(emailJsonUsuarios)
     }
-
-    const tipoDescripcion = tipo === 'A' ? 'adelanto' : 'recuperación'
-
-    const msg = `La solicitud de ${tipoDescripcion} de la clase ${curso} - ${clase} ha sido ANULADA`
-
-    const ClassTeachers = await GetClassTeachers(clase)
-    const codigoDocprin = ClassTeachers.TeacherCode
-    const teacher = await GetTeacher(lstSelected.CodSol)
-    const email = teacher.email
-    const lstEmailDocente = []
-    lstEmailDocente.push(email)
-    if (codigoDocprin !== lstSelected.CodSol) {
-      const drdocenteprincipal = await GetTeacher(codigoDocprin)
-      const emailPri = drdocenteprincipal.email
-      lstEmailDocente.push(emailPri)
-    }
-
-    const emailJson = {
-      ListDestinatarios: lstEmailDocente,
-      DisplayName: 'UPN Docentes',
-      Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
-      Body: msg,
-      IsHtml: false,
-      ListResponderA: lstEmailDocente,
-      TipoNotificacion: '1',
-      EncolarEnvio: true,
-    }
-
-    const status = await SendMail(emailJson)
-
-    const lstEmailDirectores: any = []
-    const dtDircar: [] = await GetRateCampusCode(carrera, sede)
-    dtDircar.map((x: any) => lstEmailDirectores.push(x.emailUPN))
-
-    const emailJsonDirectores = {
-      ListDestinatarios: lstEmailDirectores,
-      DisplayName: 'UPN Docentes',
-      Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
-      Body: msg,
-      IsHtml: false,
-      ListResponderA: email,
-      TipoNotificacion: '1',
-      EncolarEnvio: true,
-    }
-
-    const statusDirectores = await SendMail(emailJsonDirectores)
-
-    // const lstEmailUsuarioAlerta:any = []
-    // const dt_usucfg = getUsuariosByProceso("2", carrera, sede)
-    // dt_usucfg.map((x:any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
-    // const emailJsonUsuarios = {
-    //     "ListDestinatarios" : lstEmailUsuarioAlerta,
-    //     "DisplayName" : "UPN Docentes",
-    //     "Asunto" : `Portal Docentes - ${tipoDescripcion}  de clase`,
-    //     "Body" : msg,
-    //     "IsHtml" : false,
-    //     "ListResponderA":email,
-    //     "TipoNotificacion":"1",
-    //     "EncolarEnvio":true
-    // }
-
-    // const statusUsuarios = await SendMail(emailJsonUsuarios)
   }
 
   const EnviaEmailEdicion = async () => {
     const drDocente = await GetTeacherUser(User)
-    const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
-    const curso = DataRecuperation.coruseId
-    const clase = ScheduleSessions.ClaCodigo
-    const carrera = DataRecuperation.carId
-    const nroHoras = ScheduleSessions.NroHoras
-    const sede = DataRecuperation.sede
+    if(drDocente != undefined){
+      const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
+      const curso = DataRecuperation.coruseId
+      const clase = ScheduleSessions.ClaCodigo
+      const carrera = DataRecuperation.carId
+      const nroHoras = ScheduleSessions.NroHoras
+      const sede = DataRecuperation.sede
 
-    const fechaclase = new Date(DataRecuperation.dateLost)
-    const fecharequerida = new Date(DateSelected)
-    let tipo = ''
+      const fechaclase = new Date(DataRecuperation.dateLost)
+      const fecharequerida = new Date(DateSelected)
+      let tipo = ''
 
-    if (fecharequerida < fechaclase) {
-      tipo = 'A'
-    } else {
-      tipo = 'R'
-    }
-
-    const tipoDescripcion = tipo === 'A' ? 'adelanto' : 'recuperación'
-
-    let horaRecuperacion: any
-    const DataSelected: any = LaboratoriesList.find(
-      (x: any) => x.HorInicioDesc === SelectedHour
-    )
-    const horcodigo = DataSelected.HorCodigo
-    if (LaboratoriesList.length > 0) {
-      const foundRows: any = LaboratoriesList.find(
-        (x: any) => x.HorCodigo === horcodigo
-      )
-      if (foundRows.length > 0) {
-        const dtTime = new Date(foundRows.HorFinal)
-        horaRecuperacion = dtTime
+      if (fecharequerida < fechaclase) {
+        tipo = 'A'
+      } else {
+        tipo = 'R'
       }
-    }
 
-    let msgEnd, msg2End
-    if (lstSelected.ClaMetodoEducativo !== '') {
-      if (lstSelected.ClaMetodoEducativo === 'RM') {
-        msgEnd = `Aula: Remoto/Virtual`
-        msg2End = `Aula: Remoto/Virtual`
+      const tipoDescripcion = tipo === 'A' ? 'adelanto' : 'recuperación'
+
+      let horaRecuperacion: any
+      const DataSelected: any = LaboratoriesList.find(
+        (x: any) => x.HorInicioDesc === SelectedHour
+      )
+      const horcodigo = DataSelected.HorCodigo
+      if (LaboratoriesList.length > 0) {
+        const foundRows: any = LaboratoriesList.find(
+          (x: any) => x.HorCodigo === horcodigo
+        )
+        if (foundRows.length > 0) {
+          const dtTime = new Date(foundRows.HorFinal)
+          horaRecuperacion = dtTime
+        }
+      }
+
+      let msgEnd, msg2End
+      if (lstSelected.ClaMetodoEducativo !== '') {
+        if (lstSelected.ClaMetodoEducativo === 'RM') {
+          msgEnd = `Aula: Remoto/Virtual`
+          msg2End = `Aula: Remoto/Virtual`
+        } else {
+          msgEnd = `Aula: ${AulaSelected}`
+          msg2End = `Aula: ${AulaSelected}`
+        }
       } else {
         msgEnd = `Aula: ${AulaSelected}`
         msg2End = `Aula: ${AulaSelected}`
       }
-    } else {
-      msgEnd = `Aula: ${AulaSelected}`
-      msg2End = `Aula: ${AulaSelected}`
+
+      const msg = ` <div>
+          <p>Estimado docente: ${nombre}</p>
+          <br/>
+          <p>Su clase ${curso} - ${clase}  ha sido RE-PROGRAMADA</p>
+          <br/>
+          <p>Fecha de ${tipoDescripcion}: ${DateSelected}</p>
+          <br/>
+          <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
+          <br/>
+          <p>${msgEnd}</p>
+          </div>`
+
+      const msg2 = ` <div>
+          <p>El docente: ${nombre}</p>
+          <br/>
+          <p>Ha RE-PROGRAMADO la clase ${curso} - ${clase}</p>
+          <br/>
+          <p>Fecha de ${tipoDescripcion}: ${DateSelected}</p>
+          <br/>
+          <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
+          <br/>
+          <p>${msg2End}</p>
+          </div>`
+
+      const ClassTeachers = await GetClassTeachers(clase)
+      const codigoDocprin = ClassTeachers.TeacherCode
+      const teacher = await GetTeacher(lstSelected.CodSol)
+      const email = teacher.email
+
+      const lstEmailDocente = []
+      lstEmailDocente.push(email)
+      if (codigoDocprin !== lstSelected.CodSol) {
+        const drdocenteprincipal = await GetTeacher(codigoDocprin)
+        const emailPri = drdocenteprincipal.email
+        lstEmailDocente.push(emailPri)
+      }
+
+      const emailJson = {
+        ListDestinatarios: lstEmailDocente,
+        DisplayName: 'UPN Docentes',
+        Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
+        Body: msg,
+        IsHtml: false,
+        ListResponderA: lstEmailDocente,
+        TipoNotificacion: '1',
+        EncolarEnvio: true,
+      }
+
+      const status = await SendMail(emailJson)
+
+      const lstEmailUsuarioAlerta:any = []
+      const dt_usucfg:any = await getUsuariosByProceso(carrera, sede)
+      console.log("dt_usucfg",dt_usucfg)
+      dt_usucfg.map((x:any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
+
+      const emailJsonUsuarios = {
+          "ListDestinatarios" : lstEmailUsuarioAlerta,
+          "DisplayName" : "UPN Docentes",
+          "Asunto" : `Portal Docentes - ${tipoDescripcion}  de clase`,
+          "Body" : msg2,
+          "IsHtml" : false,
+          "ListResponderA":email,
+          "TipoNotificacion":"1",
+          "EncolarEnvio":true
+      }
+
+      const statusUsuarios = await SendMail(emailJsonUsuarios)
     }
-
-    const msg = ` <div>
-        <p>Estimado docente: ${nombre}</p>
-        <br/>
-        <p>Su clase ${curso} - ${clase}  ha sido RE-PROGRAMADA</p>
-        <br/>
-        <p>Fecha de ${tipoDescripcion}: ${DateSelected}</p>
-        <br/>
-        <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
-        <br/>
-        <p>${msgEnd}</p>
-        </div>`
-
-    const msg2 = ` <div>
-        <p>El docente: ${nombre}</p>
-        <br/>
-        <p>Ha RE-PROGRAMADO la clase ${curso} - ${clase}</p>
-        <br/>
-        <p>Fecha de ${tipoDescripcion}: ${DateSelected}</p>
-        <br/>
-        <p>Hora de ${tipoDescripcion}: ${horaRecuperacion}</p>
-        <br/>
-        <p>${msg2End}</p>
-        </div>`
-
-    const ClassTeachers = await GetClassTeachers(clase)
-    const codigoDocprin = ClassTeachers.TeacherCode
-    const teacher = await GetTeacher(lstSelected.CodSol)
-    const email = teacher.email
-
-    const lstEmailDocente = []
-    lstEmailDocente.push(email)
-    if (codigoDocprin !== lstSelected.CodSol) {
-      const drdocenteprincipal = await GetTeacher(codigoDocprin)
-      const emailPri = drdocenteprincipal.email
-      lstEmailDocente.push(emailPri)
-    }
-
-    const emailJson = {
-      ListDestinatarios: lstEmailDocente,
-      DisplayName: 'UPN Docentes',
-      Asunto: `Portal Docentes - ${tipoDescripcion}  de clase`,
-      Body: msg,
-      IsHtml: false,
-      ListResponderA: lstEmailDocente,
-      TipoNotificacion: '1',
-      EncolarEnvio: true,
-    }
-
-    const status = await SendMail(emailJson)
-
-    // const lstEmailUsuarioAlerta:any = []
-    // const dt_usucfg = getUsuariosByProceso("2", carrera, sede)
-    // dt_usucfg.map((x:any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
-
-    // const emailJsonUsuarios = {
-    //     "ListDestinatarios" : lstEmailUsuarioAlerta,
-    //     "DisplayName" : "UPN Docentes",
-    //     "Asunto" : `Portal Docentes - ${tipoDescripcion}  de clase`,
-    //     "Body" : msg2,
-    //     "IsHtml" : false,
-    //     "ListResponderA":email,
-    //     "TipoNotificacion":"1",
-    //     "EncolarEnvio":true
-    // }
-
-    // const statusUsuarios = await SendMail(emailJsonUsuarios)
   }
 
   const SendMail = async (input: any) => {

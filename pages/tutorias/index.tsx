@@ -195,7 +195,6 @@ const index = () => {
       else formatedData(result, setTutoriasData)
 
       const user = await ApiEmployeeLogin(DUENOSESSION)
-      console.log('user', user)
       setLoading(false)
     }
     Load()

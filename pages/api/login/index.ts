@@ -74,7 +74,7 @@ const API = {
       const result: any = await axiosfetchPublic(URL)
       if (result.status === true) {
         console.log('status', result?.status)
-      }
+      }      
       return result.data
     } catch (err) {
       const error = await ErrorMessageClient(err, false)
@@ -86,7 +86,8 @@ const API = {
       const config = {
         withCredentials: true,
       }
-      const URL: any = process.env.NEXT_PUBLIC_TOKEN_API_LOCAL
+      const URL: any = process.env.NEXT_PUBLIC_TOKEN_API
+      // const URL = `/login/token/${Cookie}`
       const result: any = await axios(URL, config)
       if (result.status !== 200) {
         console.log('status', result?.status)
