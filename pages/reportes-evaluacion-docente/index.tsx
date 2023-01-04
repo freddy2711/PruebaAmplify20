@@ -2,18 +2,17 @@
 /* eslint-disable array-callback-return */
 import { get } from 'local-storage'
 import { useEffect, useState } from 'react'
-import styles from '../../components/templates/reports/Report.module.scss'
+import styles from '../../components/templates/reportes/Reportes.module.scss'
 import Label from '../../components/UI/atoms/label/Label'
-import { SET_TEACHERCODE } from '../../consts/storageConst'
+import { USER_SESSION } from '../../consts/storageConst'
 import { apiReportTeacherEvaluation } from '../api'
 import Loader from '../../components/UI/atoms/loader/Loader'
-import Swal from 'sweetalert2'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const index = () => {
   const [Loading, setLoading] = useState(false)
   const [ReportData, setReportData] = useState<any>([])
-  const UserCode =
-    get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
+  const UserCode = get(USER_SESSION)
 
   const ApiResultTeacherEvaluation = async (UserCode: any) => {
     const response =
@@ -27,18 +26,30 @@ const index = () => {
   }
 
   const ApiDocumentAWSS3 = async (periodo: any, name: any) => {
-    const response = await apiReportTeacherEvaluation.lsttDocumentsAWSS3(
-      periodo,
-      name
-    )
-    return response
+    try {
+      const response = await apiReportTeacherEvaluation.lsttDocumentsAWSS3(
+        periodo,
+        name
+      )
+      return response
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setLoading(false)
+    }
+   
   }
 
   const ApiDownloadAWSS3 = async (rutaUrl: any) => {
-    const response = await apiReportTeacherEvaluation.DownloadDocumentsAWSS3(
-      rutaUrl
-    )
-    return response
+    try {
+      const response = await apiReportTeacherEvaluation.DownloadDocumentsAWSS3(
+        rutaUrl
+      )
+      return response
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setLoading(false)
+    }
+    
   }
 
   // api
@@ -154,7 +165,6 @@ const index = () => {
           })
         )
         const filterrow = DataRow.filter((x: any) => x !== undefined)
-        console.log('DataRow', filterrow)
         DataCenter.push({ titulo, filterrow })
       })
     )
@@ -162,28 +172,20 @@ const index = () => {
     return DataCenter
   }
 
-  const ViewMessage = (StateMessage: any) => {
-    switch (StateMessage) {
-      case 0:
-        return Swal.fire({
-          title: 'Portal de Docentes',
-          text: `Porfavor espere un momento mientras los reportes terminan de cargar.`,
-          icon: 'warning',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK',
-        })
-      default:
-        break
-    }
-  }
+
 
   useEffect(() => {
     const Load = async () => {
       setLoading(true)
-      const result = await ApiResultTeacherEvaluation(UserCode)
-      const sedeData = await ApiResultSede()
-      await ValidateListData(result, sedeData)
+      try {
+        const result = await ApiResultTeacherEvaluation(UserCode)
+        const sedeData = await ApiResultSede()
+        await ValidateListData(result, sedeData)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setLoading(false)
+      }
+    
       setLoading(false)
     }
 

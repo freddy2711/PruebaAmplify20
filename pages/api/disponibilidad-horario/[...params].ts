@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { axiosCreate } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const Utility = objecApi.Utility
@@ -22,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'DH001')
       }
       break
     case 'SemesterUnitBusinessCode':
@@ -36,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'DH002')
       }
       break
     case 'TeacherAvailability':
@@ -51,7 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'DH003')
       }
       break
     case 'CrudAvailability':
@@ -63,7 +64,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'DH004')
       }
       break
     default:

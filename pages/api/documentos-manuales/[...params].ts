@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { axiosCreate } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const Utility = objecApi.Utility
@@ -19,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'DM001')
       }
       break
     case 'DownloadDocumentsAWSS3':
@@ -31,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'DM002')
       }
       break
     case 'ManualsTeacher':
@@ -42,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'DM003')
       }
       break
     default:

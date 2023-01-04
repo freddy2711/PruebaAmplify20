@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
+import { get } from 'local-storage'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import styles from '../../components/templates/disponibilidadHorario/DisponibilidadHorario.module.scss'
@@ -10,6 +11,8 @@ import Select from '../../components/UI/atoms/select/Select'
 import Tbody from '../../components/UI/molecules/table/tbody/Tbody'
 import Thead from '../../components/UI/molecules/table/thead/Thead'
 import Tabla from '../../components/UI/organisms/table/Tabla'
+import { USER_SESSION } from '../../consts/storageConst'
+import { catchingErrorFront } from '../../helpers/helpers'
 import { apiDisponibilidadHorario } from '../api'
 
 const index = () => {
@@ -18,69 +21,77 @@ const index = () => {
     []
   )
   const [Loading, setloading] = useState(false)
-  const [SelectItemMonday, setSelectItemMonday] = useState(true)
-  const [SelectItemMondayHour2, setSelectItemMondayHour2] = useState(true)
-  const [SelectItemMondayHour3, setSelectItemMondayHour3] = useState(true)
-  const [SelectItemMondayHour4, setSelectItemMondayHour4] = useState(true)
-  const [SelectItemMondayHour5, setSelectItemMondayHour5] = useState(true)
-  const [SelectItemMondayHour6, setSelectItemMondayHour6] = useState(true)
-  const [SelectItemMondayHour7, setSelectItemMondayHour7] = useState(true)
-  const [SelectItemMondayHour8, setSelectItemMondayHour8] = useState(true)
-  const [SelectItemMondayHour9, setSelectItemMondayHour9] = useState(true)
-  const [SelectItemTuesday, setSelectItemTuesday] = useState(true)
-  const [SelectItemTuesdayHour2, setSelectItemTuesdayHour2] = useState(true)
-  const [SelectItemTuesdayHour3, setSelectItemTuesdayHour3] = useState(true)
-  const [SelectItemTuesdayHour4, setSelectItemTuesdayHour4] = useState(true)
-  const [SelectItemTuesdayHour5, setSelectItemTuesdayHour5] = useState(true)
-  const [SelectItemTuesdayHour6, setSelectItemTuesdayHour6] = useState(true)
-  const [SelectItemTuesdayHour7, setSelectItemTuesdayHour7] = useState(true)
-  const [SelectItemTuesdayHour8, setSelectItemTuesdayHour8] = useState(true)
-  const [SelectItemTuesdayHour9, setSelectItemTuesdayHour9] = useState(true)
-  const [SelectItemWednesday, setSelectItemWednesday] = useState(true)
-  const [SelectItemWednesdayHour2, setSelectItemWednesdayHour2] = useState(true)
-  const [SelectItemWednesdayHour3, setSelectItemWednesdayHour3] = useState(true)
-  const [SelectItemWednesdayHour4, setSelectItemWednesdayHour4] = useState(true)
-  const [SelectItemWednesdayHour5, setSelectItemWednesdayHour5] = useState(true)
-  const [SelectItemWednesdayHour6, setSelectItemWednesdayHour6] = useState(true)
-  const [SelectItemWednesdayHour7, setSelectItemWednesdayHour7] = useState(true)
-  const [SelectItemWednesdayHour8, setSelectItemWednesdayHour8] = useState(true)
-  const [SelectItemWednesdayHour9, setSelectItemWednesdayHour9] = useState(true)
-  const [SelectItemThursday, setSelectItemThursday] = useState(true)
-  const [SelectItemThursdayHour2, setSelectItemThursdayHour2] = useState(true)
-  const [SelectItemThursdayHour3, setSelectItemThursdayHour3] = useState(true)
-  const [SelectItemThursdayHour4, setSelectItemThursdayHour4] = useState(true)
-  const [SelectItemThursdayHour5, setSelectItemThursdayHour5] = useState(true)
-  const [SelectItemThursdayHour6, setSelectItemThursdayHour6] = useState(true)
-  const [SelectItemThursdayHour7, setSelectItemThursdayHour7] = useState(true)
-  const [SelectItemThursdayHour8, setSelectItemThursdayHour8] = useState(true)
-  const [SelectItemThursdayHour9, setSelectItemThursdayHour9] = useState(true)
-  const [SelectItemFriday, setSelectItemFriday] = useState(true)
-  const [SelectItemFridayHour2, setSelectItemFridayHour2] = useState(true)
-  const [SelectItemFridayHour3, setSelectItemFridayHour3] = useState(true)
-  const [SelectItemFridayHour4, setSelectItemFridayHour4] = useState(true)
-  const [SelectItemFridayHour5, setSelectItemFridayHour5] = useState(true)
-  const [SelectItemFridayHour6, setSelectItemFridayHour6] = useState(true)
-  const [SelectItemFridayHour7, setSelectItemFridayHour7] = useState(true)
-  const [SelectItemFridayHour8, setSelectItemFridayHour8] = useState(true)
-  const [SelectItemFridayHour9, setSelectItemFridayHour9] = useState(true)
-  const [SelectItemSaturday, setSelectItemSaturday] = useState(true)
-  const [SelectItemSaturdayHour2, setSelectItemSaturdayHour2] = useState(true)
-  const [SelectItemSaturdayHour3, setSelectItemSaturdayHour3] = useState(true)
-  const [SelectItemSaturdayHour4, setSelectItemSaturdayHour4] = useState(true)
-  const [SelectItemSaturdayHour5, setSelectItemSaturdayHour5] = useState(true)
-  const [SelectItemSaturdayHour6, setSelectItemSaturdayHour6] = useState(true)
-  const [SelectItemSaturdayHour7, setSelectItemSaturdayHour7] = useState(true)
-  const [SelectItemSaturdayHour8, setSelectItemSaturdayHour8] = useState(true)
-  const [SelectItemSaturdayHour9, setSelectItemSaturdayHour9] = useState(true)
-  const [SelectItemSunday, setSelectItemSunday] = useState(true)
-  const [SelectItemSundayHour2, setSelectItemSundayHour2] = useState(true)
-  const [SelectItemSundayHour3, setSelectItemSundayHour3] = useState(true)
-  const [SelectItemSundayHour4, setSelectItemSundayHour4] = useState(true)
-  const [SelectItemSundayHour5, setSelectItemSundayHour5] = useState(true)
-  const [SelectItemSundayHour6, setSelectItemSundayHour6] = useState(true)
-  const [SelectItemSundayHour7, setSelectItemSundayHour7] = useState(true)
-  const [SelectItemSundayHour8, setSelectItemSundayHour8] = useState(true)
-  const [SelectItemSundayHour9, setSelectItemSundayHour9] = useState(true)
+
+  const [SelectItemMondayA, setSelectItemMondayA] = useState(true)
+  const [SelectItemMondayHourB, setSelectItemMondayHourB] = useState(true)
+  const [SelectItemMondayHourC, setSelectItemMondayHourC] = useState(true)
+  const [SelectItemMondayHourD, setSelectItemMondayHourD] = useState(true)
+  const [SelectItemMondayHourE, setSelectItemMondayHourE] = useState(true)
+  const [SelectItemMondayHourF, setSelectItemMondayHourF] = useState(true)
+  const [SelectItemMondayHourG, setSelectItemMondayHourG] = useState(true)
+  const [SelectItemMondayHourH, setSelectItemMondayHourH] = useState(true)
+  const [SelectItemMondayHourI, setSelectItemMondayHourI] = useState(true)
+
+  const [SelectItemTuesdayA, setSelectItemTuesdayA] = useState(true)
+  const [SelectItemTuesdayHourB, setSelectItemTuesdayHourB] = useState(true)
+  const [SelectItemTuesdayHourC, setSelectItemTuesdayHourC] = useState(true)
+  const [SelectItemTuesdayHourD, setSelectItemTuesdayHourD] = useState(true)
+  const [SelectItemTuesdayHourE, setSelectItemTuesdayHourE] = useState(true)
+  const [SelectItemTuesdayHourF, setSelectItemTuesdayHourF] = useState(true)
+  const [SelectItemTuesdayHourG, setSelectItemTuesdayHourG] = useState(true)
+  const [SelectItemTuesdayHourH, setSelectItemTuesdayHourH] = useState(true)
+  const [SelectItemTuesdayHourI, setSelectItemTuesdayHourI] = useState(true)
+
+  const [SelectItemWednesdayA, setSelectItemWednesdayA] = useState(true)
+  const [SelectItemWednesdayHourB, setSelectItemWednesdayHourB] = useState(true)
+  const [SelectItemWednesdayHourC, setSelectItemWednesdayHourC] = useState(true)
+  const [SelectItemWednesdayHourD, setSelectItemWednesdayHourD] = useState(true)
+  const [SelectItemWednesdayHourE, setSelectItemWednesdayHourE] = useState(true)
+  const [SelectItemWednesdayHourF, setSelectItemWednesdayHourF] = useState(true)
+  const [SelectItemWednesdayHourG, setSelectItemWednesdayHourG] = useState(true)
+  const [SelectItemWednesdayHourH, setSelectItemWednesdayHourH] = useState(true)
+  const [SelectItemWednesdayHourI, setSelectItemWednesdayHourI] = useState(true)
+
+  const [SelectItemThursdayA, setSelectItemThursdayA] = useState(true)
+  const [SelectItemThursdayHourB, setSelectItemThursdayHourB] = useState(true)
+  const [SelectItemThursdayHourC, setSelectItemThursdayHourC] = useState(true)
+  const [SelectItemThursdayHourD, setSelectItemThursdayHourD] = useState(true)
+  const [SelectItemThursdayHourE, setSelectItemThursdayHourE] = useState(true)
+  const [SelectItemThursdayHourF, setSelectItemThursdayHourF] = useState(true)
+  const [SelectItemThursdayHourG, setSelectItemThursdayHourG] = useState(true)
+  const [SelectItemThursdayHourH, setSelectItemThursdayHourH] = useState(true)
+  const [SelectItemThursdayHourI, setSelectItemThursdayHourI] = useState(true)
+
+  const [SelectItemFridayA, setSelectItemFridayA] = useState(true)
+  const [SelectItemFridayHourB, setSelectItemFridayHourB] = useState(true)
+  const [SelectItemFridayHourC, setSelectItemFridayHourC] = useState(true)
+  const [SelectItemFridayHourD, setSelectItemFridayHourD] = useState(true)
+  const [SelectItemFridayHourE, setSelectItemFridayHourE] = useState(true)
+  const [SelectItemFridayHourF, setSelectItemFridayHourF] = useState(true)
+  const [SelectItemFridayHourG, setSelectItemFridayHourG] = useState(true)
+  const [SelectItemFridayHourH, setSelectItemFridayHourH] = useState(true)
+  const [SelectItemFridayHourI, setSelectItemFridayHourI] = useState(true)
+
+  const [SelectItemSaturdayA, setSelectItemSaturdayA] = useState(true)
+  const [SelectItemSaturdayHourB, setSelectItemSaturdayHourB] = useState(true)
+  const [SelectItemSaturdayHourC, setSelectItemSaturdayHourC] = useState(true)
+  const [SelectItemSaturdayHourD, setSelectItemSaturdayHourD] = useState(true)
+  const [SelectItemSaturdayHourE, setSelectItemSaturdayHourE] = useState(true)
+  const [SelectItemSaturdayHourF, setSelectItemSaturdayHourF] = useState(true)
+  const [SelectItemSaturdayHourG, setSelectItemSaturdayHourG] = useState(true)
+  const [SelectItemSaturdayHourH, setSelectItemSaturdayHourH] = useState(true)
+  const [SelectItemSaturdayHourI, setSelectItemSaturdayHourI] = useState(true)
+
+  const [SelectItemSundayA, setSelectItemSundayA] = useState(true)
+  const [SelectItemSundayHourB, setSelectItemSundayHourB] = useState(true)
+  const [SelectItemSundayHourC, setSelectItemSundayHourC] = useState(true)
+  const [SelectItemSundayHourD, setSelectItemSundayHourD] = useState(true)
+  const [SelectItemSundayHourE, setSelectItemSundayHourE] = useState(true)
+  const [SelectItemSundayHourF, setSelectItemSundayHourF] = useState(true)
+  const [SelectItemSundayHourG, setSelectItemSundayHourG] = useState(true)
+  const [SelectItemSundayHourH, setSelectItemSundayHourH] = useState(true)
+  const [SelectItemSundayHourI, setSelectItemSundayHourI] = useState(true)
+
   const [BtnDisabled, setBtnDisabled] = useState({
     BtnCarry: false,
     BtnCancel: true,
@@ -91,7 +102,7 @@ const index = () => {
   const [DataHour, setDataHour] = useState<any>([])
   const [SelectedSede, setSelectedSede] = useState('')
   const [SelectSemester, setSelectSemester] = useState('')
-  const teacherCode = 'N00011885'
+  const teacherCode = get(USER_SESSION)
 
   const ApiHeadquartersBanners = async () => {
     const result = await apiDisponibilidadHorario.listHeadquartersBanners('')
@@ -106,12 +117,18 @@ const index = () => {
   }
 
   const ApiTeacherAvailability = async (action: any, user: any, day: any) => {
-    const result = await apiDisponibilidadHorario.listTeacherAvailability(
-      action,
-      user,
-      day
-    )
-    return result
+    try {
+      const result = await apiDisponibilidadHorario.listTeacherAvailability(
+        action,
+        user,
+        day
+      )
+      return result
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+    
   }
 
   const ApiCrudAvailability = async (
@@ -130,24 +147,32 @@ const index = () => {
     Saturday: any,
     Sunday: any
   ) => {
-    const item = {
-      action,
-      SedCode,
-      SemCode,
-      UserTeacher,
-      TimeBlock,
-      StartTime,
-      FinishTime,
-      Monday,
-      Tuesday,
-      Wednesday,
-      Thursday,
-      Friday,
-      Saturday,
-      Sunday,
+
+    try {
+      const item = {
+        action,
+        SedCode,
+        SemCode,
+        UserTeacher,
+        TimeBlock,
+        StartTime,
+        FinishTime,
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday,
+      }
+      const result = await apiDisponibilidadHorario.CrudAvailability(item)
+      return result
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
-    const result = await apiDisponibilidadHorario.CrudAvailability(item)
-    return result
+
+    
   }
 
   // Api
@@ -271,8 +296,7 @@ const index = () => {
 
   const SelectItemSede = async (item: any) => {
     setSelectedSede(item.target.value)
-    const response = await ApiSemesterUnitBusinessCode(item.target.value)
-    console.log('response', response)
+    await ApiSemesterUnitBusinessCode(item.target.value)
   }
 
   const BtnCarrySelect = async () => {
@@ -374,31 +398,31 @@ const index = () => {
   const BlockMonday = (key: any) => {
     switch (key) {
       case '1A':
-        defaultActive('ItemMondayHour1', setSelectItemMonday)
+        defaultActive('ItemMondayHourA', setSelectItemMondayA)
         break
       case '1B':
-        defaultActive('ItemMondayHour2', setSelectItemMondayHour2)
+        defaultActive('ItemMondayHourB', setSelectItemMondayHourB)
         break
       case '1C':
-        defaultActive('ItemMondayHour3', setSelectItemMondayHour3)
+        defaultActive('ItemMondayHourC', setSelectItemMondayHourC)
         break
       case '1D':
-        defaultActive('ItemMondayHour4', setSelectItemMondayHour4)
+        defaultActive('ItemMondayHourD', setSelectItemMondayHourD)
         break
       case '1E':
-        defaultActive('ItemMondayHour5', setSelectItemMondayHour5)
+        defaultActive('ItemMondayHourE', setSelectItemMondayHourE)
         break
       case '1F':
-        defaultActive('ItemMondayHour6', setSelectItemMondayHour6)
+        defaultActive('ItemMondayHourF', setSelectItemMondayHourF)
         break
       case '1G':
-        defaultActive('ItemMondayHour7', setSelectItemMondayHour7)
+        defaultActive('ItemMondayHourG', setSelectItemMondayHourG)
         break
       case '1H':
-        defaultActive('ItemMondayHour8', setSelectItemMondayHour8)
+        defaultActive('ItemMondayHourH', setSelectItemMondayHourH)
         break
       case '1I':
-        defaultActive('ItemMondayHour9', setSelectItemMondayHour9)
+        defaultActive('ItemMondayHourI', setSelectItemMondayHourI)
         break
       default:
         break
@@ -408,31 +432,31 @@ const index = () => {
   const BlockTuesday = (key: any) => {
     switch (key) {
       case '2A':
-        defaultActive('ItemTuesday1', setSelectItemTuesday)
+        defaultActive('ItemTuesdayA', setSelectItemTuesdayA)
         break
       case '2B':
-        defaultActive('ItemTuesday2', setSelectItemTuesdayHour2)
+        defaultActive('ItemTuesdayB', setSelectItemTuesdayHourB)
         break
       case '2C':
-        defaultActive('ItemTuesday3', setSelectItemTuesdayHour3)
+        defaultActive('ItemTuesdayC', setSelectItemTuesdayHourC)
         break
       case '2D':
-        defaultActive('ItemTuesday4', setSelectItemTuesdayHour4)
+        defaultActive('ItemTuesdayD', setSelectItemTuesdayHourD)
         break
       case '2E':
-        defaultActive('ItemTuesday5', setSelectItemTuesdayHour5)
+        defaultActive('ItemTuesdayE', setSelectItemTuesdayHourE)
         break
       case '2F':
-        defaultActive('ItemTuesday6', setSelectItemTuesdayHour6)
+        defaultActive('ItemTuesdayF', setSelectItemTuesdayHourF)
         break
       case '2G':
-        defaultActive('ItemTuesday7', setSelectItemTuesdayHour7)
+        defaultActive('ItemTuesdayG', setSelectItemTuesdayHourG)
         break
       case '2H':
-        defaultActive('ItemTuesday8', setSelectItemTuesdayHour8)
+        defaultActive('ItemTuesdayH', setSelectItemTuesdayHourH)
         break
       case '2I':
-        defaultActive('ItemTuesday9', setSelectItemTuesdayHour9)
+        defaultActive('ItemTuesdayI', setSelectItemTuesdayHourI)
         break
       default:
         break
@@ -442,31 +466,31 @@ const index = () => {
   const BlockWednesday = (key: any) => {
     switch (key) {
       case '3A':
-        defaultActive('ItemWednesday1', setSelectItemWednesday)
+        defaultActive('ItemWednesdayA', setSelectItemWednesdayA)
         break
       case '3B':
-        defaultActive('ItemWednesday2', setSelectItemWednesdayHour2)
+        defaultActive('ItemWednesdayB', setSelectItemWednesdayHourB)
         break
       case '3C':
-        defaultActive('ItemWednesday3', setSelectItemWednesdayHour3)
+        defaultActive('ItemWednesdayC', setSelectItemWednesdayHourC)
         break
       case '3D':
-        defaultActive('ItemWednesday4', setSelectItemWednesdayHour4)
+        defaultActive('ItemWednesdayD', setSelectItemWednesdayHourD)
         break
       case '3E':
-        defaultActive('ItemWednesday5', setSelectItemWednesdayHour5)
+        defaultActive('ItemWednesdayE', setSelectItemWednesdayHourE)
         break
       case '3F':
-        defaultActive('ItemWednesday6', setSelectItemWednesdayHour6)
+        defaultActive('ItemWednesdayF', setSelectItemWednesdayHourF)
         break
       case '3G':
-        defaultActive('ItemWednesday7', setSelectItemWednesdayHour7)
+        defaultActive('ItemWednesdayG', setSelectItemWednesdayHourG)
         break
       case '3H':
-        defaultActive('ItemWednesday8', setSelectItemWednesdayHour8)
+        defaultActive('ItemWednesdayH', setSelectItemWednesdayHourH)
         break
       case '3I':
-        defaultActive('ItemWednesday9', setSelectItemWednesdayHour9)
+        defaultActive('ItemWednesdayI', setSelectItemWednesdayHourI)
         break
       default:
         break
@@ -476,31 +500,31 @@ const index = () => {
   const BlockThursday = (key: any) => {
     switch (key) {
       case '4A':
-        defaultActive('ItemThursday1', setSelectItemThursday)
+        defaultActive('ItemThursdayA', setSelectItemThursdayA)
         break
       case '4B':
-        defaultActive('ItemThursday2', setSelectItemThursdayHour2)
+        defaultActive('ItemThursdayB', setSelectItemThursdayHourB)
         break
       case '4C':
-        defaultActive('ItemThursday3', setSelectItemThursdayHour3)
+        defaultActive('ItemThursdayC', setSelectItemThursdayHourC)
         break
       case '4D':
-        defaultActive('ItemThursday4', setSelectItemThursdayHour4)
+        defaultActive('ItemThursdayD', setSelectItemThursdayHourD)
         break
       case '4E':
-        defaultActive('ItemThursday5', setSelectItemThursdayHour5)
+        defaultActive('ItemThursdayE', setSelectItemThursdayHourE)
         break
       case '4F':
-        defaultActive('ItemThursday6', setSelectItemThursdayHour6)
+        defaultActive('ItemThursdayF', setSelectItemThursdayHourF)
         break
       case '4G':
-        defaultActive('ItemThursday7', setSelectItemThursdayHour7)
+        defaultActive('ItemThursdayG', setSelectItemThursdayHourG)
         break
       case '4H':
-        defaultActive('ItemThursday8', setSelectItemThursdayHour8)
+        defaultActive('ItemThursdayH', setSelectItemThursdayHourH)
         break
       case '4I':
-        defaultActive('ItemThursday9', setSelectItemThursdayHour9)
+        defaultActive('ItemThursdayI', setSelectItemThursdayHourI)
         break
       default:
         break
@@ -510,31 +534,31 @@ const index = () => {
   const BlockFriday = (key: any) => {
     switch (key) {
       case '5A':
-        defaultActive('ItemFriday1', setSelectItemFriday)
+        defaultActive('ItemFridayA', setSelectItemFridayA)
         break
       case '5B':
-        defaultActive('ItemFriday2', setSelectItemFridayHour2)
+        defaultActive('ItemFridayB', setSelectItemFridayHourB)
         break
       case '5C':
-        defaultActive('ItemFriday3', setSelectItemFridayHour3)
+        defaultActive('ItemFridayC', setSelectItemFridayHourC)
         break
       case '5D':
-        defaultActive('ItemFriday4', setSelectItemFridayHour4)
+        defaultActive('ItemFridayD', setSelectItemFridayHourD)
         break
       case '5E':
-        defaultActive('ItemFriday5', setSelectItemFridayHour5)
+        defaultActive('ItemFridayE', setSelectItemFridayHourE)
         break
       case '5F':
-        defaultActive('ItemFriday6', setSelectItemFridayHour6)
+        defaultActive('ItemFridayF', setSelectItemFridayHourF)
         break
       case '5G':
-        defaultActive('ItemFriday7', setSelectItemFridayHour7)
+        defaultActive('ItemFridayG', setSelectItemFridayHourG)
         break
       case '5H':
-        defaultActive('ItemFriday8', setSelectItemFridayHour8)
+        defaultActive('ItemFridayH', setSelectItemFridayHourH)
         break
       case '5I':
-        defaultActive('ItemFriday9', setSelectItemFridayHour9)
+        defaultActive('ItemFridayI', setSelectItemFridayHourI)
         break
       default:
         break
@@ -544,31 +568,31 @@ const index = () => {
   const BlockSaturday = (key: any) => {
     switch (key) {
       case '6A':
-        defaultActive('ItemSaturday1', setSelectItemSaturday)
+        defaultActive('ItemSaturdayA', setSelectItemSaturdayA)
         break
       case '6B':
-        defaultActive('ItemSaturday2', setSelectItemSaturdayHour2)
+        defaultActive('ItemSaturdayB', setSelectItemSaturdayHourB)
         break
       case '6C':
-        defaultActive('ItemSaturday3', setSelectItemSaturdayHour3)
+        defaultActive('ItemSaturdayC', setSelectItemSaturdayHourC)
         break
       case '6D':
-        defaultActive('ItemSaturday4', setSelectItemSaturdayHour4)
+        defaultActive('ItemSaturdayD', setSelectItemSaturdayHourD)
         break
       case '6E':
-        defaultActive('ItemSaturday5', setSelectItemSaturdayHour5)
+        defaultActive('ItemSaturdayE', setSelectItemSaturdayHourE)
         break
       case '6F':
-        defaultActive('ItemSaturday6', setSelectItemSaturdayHour6)
+        defaultActive('ItemSaturdayF', setSelectItemSaturdayHourF)
         break
       case '6G':
-        defaultActive('ItemSaturday7', setSelectItemSaturdayHour7)
+        defaultActive('ItemSaturdayG', setSelectItemSaturdayHourG)
         break
       case '6H':
-        defaultActive('ItemSaturday8', setSelectItemSaturdayHour8)
+        defaultActive('ItemSaturdayH', setSelectItemSaturdayHourH)
         break
       case '6I':
-        defaultActive('ItemSaturday9', setSelectItemSaturdayHour9)
+        defaultActive('ItemSaturdayI', setSelectItemSaturdayHourI)
         break
       default:
         break
@@ -578,31 +602,31 @@ const index = () => {
   const BlockSunday = (key: any) => {
     switch (key) {
       case '7A':
-        defaultActive('ItemSunday1', setSelectItemSunday)
+        defaultActive('ItemSundayA', setSelectItemSundayA)
         break
       case '7B':
-        defaultActive('ItemSunday2', setSelectItemSundayHour2)
+        defaultActive('ItemSundayB', setSelectItemSundayHourB)
         break
       case '7C':
-        defaultActive('ItemSunday3', setSelectItemSundayHour3)
+        defaultActive('ItemSundayC', setSelectItemSundayHourC)
         break
       case '7D':
-        defaultActive('ItemSunday4', setSelectItemSundayHour4)
+        defaultActive('ItemSundayD', setSelectItemSundayHourD)
         break
       case '7E':
-        defaultActive('ItemSunday5', setSelectItemSundayHour5)
+        defaultActive('ItemSundayE', setSelectItemSundayHourE)
         break
       case '7F':
-        defaultActive('ItemSunday6', setSelectItemSundayHour6)
+        defaultActive('ItemSundayF', setSelectItemSundayHourF)
         break
       case '7G':
-        defaultActive('ItemSunday7', setSelectItemSundayHour7)
+        defaultActive('ItemSundayG', setSelectItemSundayHourG)
         break
       case '7H':
-        defaultActive('ItemSunday8', setSelectItemSundayHour8)
+        defaultActive('ItemSundayH', setSelectItemSundayHourH)
         break
       case '7I':
-        defaultActive('ItemSunday9', setSelectItemSundayHour9)
+        defaultActive('ItemSundayI', setSelectItemSundayHourI)
         break
       default:
         break
@@ -617,82 +641,96 @@ const index = () => {
       CboSemestre: false,
     })
     setViewTable(false)
-    setSelectItemMonday(true)
-    setSelectItemMondayHour2(true)
-    setSelectItemMondayHour3(true)
-    setSelectItemMondayHour4(true)
-    setSelectItemMondayHour5(true)
-    setSelectItemMondayHour6(true)
-    setSelectItemMondayHour7(true)
-    setSelectItemMondayHour8(true)
-    setSelectItemMondayHour9(true)
-    setSelectItemTuesday(true)
-    setSelectItemTuesdayHour2(true)
-    setSelectItemTuesdayHour3(true)
-    setSelectItemTuesdayHour4(true)
-    setSelectItemTuesdayHour5(true)
-    setSelectItemTuesdayHour6(true)
-    setSelectItemTuesdayHour7(true)
-    setSelectItemTuesdayHour8(true)
-    setSelectItemTuesdayHour9(true)
-    setSelectItemWednesday(true)
-    setSelectItemWednesdayHour2(true)
-    setSelectItemWednesdayHour3(true)
-    setSelectItemWednesdayHour4(true)
-    setSelectItemWednesdayHour5(true)
-    setSelectItemWednesdayHour6(true)
-    setSelectItemWednesdayHour7(true)
-    setSelectItemWednesdayHour8(true)
-    setSelectItemWednesdayHour9(true)
-    setSelectItemThursday(true)
-    setSelectItemThursdayHour2(true)
-    setSelectItemThursdayHour3(true)
-    setSelectItemThursdayHour4(true)
-    setSelectItemThursdayHour5(true)
-    setSelectItemThursdayHour6(true)
-    setSelectItemThursdayHour7(true)
-    setSelectItemThursdayHour8(true)
-    setSelectItemThursdayHour9(true)
-    setSelectItemFriday(true)
-    setSelectItemFridayHour2(true)
-    setSelectItemFridayHour3(true)
-    setSelectItemFridayHour4(true)
-    setSelectItemFridayHour5(true)
-    setSelectItemFridayHour6(true)
-    setSelectItemFridayHour7(true)
-    setSelectItemFridayHour8(true)
-    setSelectItemFridayHour9(true)
-    setSelectItemSaturday(true)
-    setSelectItemSaturdayHour2(true)
-    setSelectItemSaturdayHour3(true)
-    setSelectItemSaturdayHour4(true)
-    setSelectItemSaturdayHour5(true)
-    setSelectItemSaturdayHour6(true)
-    setSelectItemSaturdayHour7(true)
-    setSelectItemSaturdayHour8(true)
-    setSelectItemSaturdayHour9(true)
-    setSelectItemSunday(true)
-    setSelectItemSundayHour2(true)
-    setSelectItemSundayHour3(true)
-    setSelectItemSundayHour4(true)
-    setSelectItemSundayHour5(true)
-    setSelectItemSundayHour6(true)
-    setSelectItemSundayHour7(true)
-    setSelectItemSundayHour8(true)
-    setSelectItemSundayHour9(true)
+    
+    setSelectItemMondayA(true)
+    setSelectItemMondayHourB(true)
+    setSelectItemMondayHourC(true)
+    setSelectItemMondayHourD(true)
+    setSelectItemMondayHourE(true)
+    setSelectItemMondayHourF(true)
+    setSelectItemMondayHourG(true)
+    setSelectItemMondayHourH(true)
+    setSelectItemMondayHourI(true)
+
+    setSelectItemTuesdayA(true)
+    setSelectItemTuesdayHourB(true)
+    setSelectItemTuesdayHourC(true)
+    setSelectItemTuesdayHourD(true)
+    setSelectItemTuesdayHourE(true)
+    setSelectItemTuesdayHourF(true)
+    setSelectItemTuesdayHourG(true)
+    setSelectItemTuesdayHourH(true)
+    setSelectItemTuesdayHourI(true)
+
+    setSelectItemWednesdayA(true)
+    setSelectItemWednesdayHourB(true)
+    setSelectItemWednesdayHourC(true)
+    setSelectItemWednesdayHourD(true)
+    setSelectItemWednesdayHourE(true)
+    setSelectItemWednesdayHourF(true)
+    setSelectItemWednesdayHourG(true)
+    setSelectItemWednesdayHourH(true)
+    setSelectItemWednesdayHourI(true)
+
+    setSelectItemThursdayA(true)
+    setSelectItemThursdayHourB(true)
+    setSelectItemThursdayHourC(true)
+    setSelectItemThursdayHourD(true)
+    setSelectItemThursdayHourE(true)
+    setSelectItemThursdayHourF(true)
+    setSelectItemThursdayHourG(true)
+    setSelectItemThursdayHourH(true)
+    setSelectItemThursdayHourI(true)
+
+    setSelectItemFridayA(true)
+    setSelectItemFridayHourB(true)
+    setSelectItemFridayHourC(true)
+    setSelectItemFridayHourD(true)
+    setSelectItemFridayHourE(true)
+    setSelectItemFridayHourF(true)
+    setSelectItemFridayHourG(true)
+    setSelectItemFridayHourH(true)
+    setSelectItemFridayHourI(true)
+
+    setSelectItemSaturdayA(true)
+    setSelectItemSaturdayHourB(true)
+    setSelectItemSaturdayHourC(true)
+    setSelectItemSaturdayHourD(true)
+    setSelectItemSaturdayHourE(true)
+    setSelectItemSaturdayHourF(true)
+    setSelectItemSaturdayHourG(true)
+    setSelectItemSaturdayHourH(true)
+    setSelectItemSaturdayHourI(true)
+
+    setSelectItemSundayA(true)
+    setSelectItemSundayHourB(true)
+    setSelectItemSundayHourC(true)
+    setSelectItemSundayHourD(true)
+    setSelectItemSundayHourE(true)
+    setSelectItemSundayHourF(true)
+    setSelectItemSundayHourG(true)
+    setSelectItemSundayHourH(true)
+    setSelectItemSundayHourI(true)
   }
 
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-      const resultHeadquartersBanners = await ApiHeadquartersBanners()
-      setSelectedSede(resultHeadquartersBanners[0].Descripcion)
-      setHeadquartersBanners(resultHeadquartersBanners)
-      const resultSemesterUnitBusinessCode = await ApiSemesterUnitBusinessCode(
-        'CAJ'
-      )
-      setSelectSemester(resultSemesterUnitBusinessCode[0].SemCode)
-      setSemesterUnitBusinessCode(resultSemesterUnitBusinessCode)
+
+      try {
+        const resultHeadquartersBanners = await ApiHeadquartersBanners()
+        setSelectedSede(resultHeadquartersBanners[0].Descripcion)
+        setHeadquartersBanners(resultHeadquartersBanners)
+        const resultSemesterUnitBusinessCode = await ApiSemesterUnitBusinessCode(
+          'CAJ'
+        )
+        setSelectSemester(resultSemesterUnitBusinessCode[0].SemCode)
+        setSemesterUnitBusinessCode(resultSemesterUnitBusinessCode)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+      
       setloading(false)
     }
 
@@ -710,14 +748,7 @@ const index = () => {
         </div>
         <hr />
         <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gridTemplateRows: '1fr 1fr',
-            maxWidth: '40%',
-            alignItems: 'center',
-            rowGap: '5px',
-          }}
+          className={`${styles.conteSelect}`}
         >
           <div>
             <label>Sede</label>
@@ -759,7 +790,7 @@ const index = () => {
           </div>
         </div>
 
-        <div style={{ display: 'flex', padding: '15px', gap: '5px' }}>
+        <div className={`${styles.contenBtnres}`}>
           <Button
             onclick={BtnCarrySelect}
             disabled={BtnDisabled.BtnCarry}
@@ -783,7 +814,7 @@ const index = () => {
         <br />
 
         {ViewTable === true ? (
-          <>
+          <div style={{overflowX:'scroll'}}>
             <Tabla>
               <Thead>
                 <th style={{ backgroundColor: '#343A40', color: 'white' }}>
@@ -826,13 +857,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMonday,
-                          setSelectItemMonday,
+                          SelectItemMondayA,
+                          setSelectItemMondayA,
                           'lunes',
                           '1A'
                         )
                       }
-                      id="ItemMondayHour1"
+                      id="ItemMondayHourA"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -846,13 +877,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesday,
-                          setSelectItemTuesday,
+                          SelectItemTuesdayA,
+                          setSelectItemTuesdayA,
                           'martes',
                           '2A'
                         )
                       }
-                      id="ItemTuesday1"
+                      id="ItemTuesdayA"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -866,13 +897,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesday,
-                          setSelectItemWednesday,
+                          SelectItemWednesdayA,
+                          setSelectItemWednesdayA,
                           'miercoles',
                           '3A'
                         )
                       }
-                      id="ItemWednesday1"
+                      id="ItemWednesdayA"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -886,13 +917,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursday,
-                          setSelectItemThursday,
+                          SelectItemThursdayA,
+                          setSelectItemThursdayA,
                           'jueves',
                           '4A'
                         )
                       }
-                      id="ItemThursday1"
+                      id="ItemThursdayA"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -906,13 +937,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFriday,
-                          setSelectItemFriday,
+                          SelectItemFridayA,
+                          setSelectItemFridayA,
                           'viernes',
                           '5A'
                         )
                       }
-                      id="ItemFriday1"
+                      id="ItemFridayA"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -926,13 +957,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturday,
-                          setSelectItemSaturday,
+                          SelectItemSaturdayA,
+                          setSelectItemSaturdayA,
                           'sabado',
                           '6A'
                         )
                       }
-                      id="ItemSaturday1"
+                      id="ItemSaturdayA"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -946,13 +977,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSunday,
-                          setSelectItemSunday,
+                          SelectItemSundayA,
+                          setSelectItemSundayA,
                           'domingo',
                           '7A'
                         )
                       }
-                      id="ItemSunday1"
+                      id="ItemSundayA"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -969,13 +1000,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour2,
-                          setSelectItemMondayHour2,
+                          SelectItemMondayHourB,
+                          setSelectItemMondayHourB,
                           'lunes',
                           '1B'
                         )
                       }
-                      id="ItemMondayHour2"
+                      id="ItemMondayHourB"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -989,13 +1020,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour2,
-                          setSelectItemTuesdayHour2,
+                          SelectItemTuesdayHourB,
+                          setSelectItemTuesdayHourB,
                           'martes',
                           '2B'
                         )
                       }
-                      id="ItemTuesday2"
+                      id="ItemTuesdayB"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1009,13 +1040,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour2,
-                          setSelectItemWednesdayHour2,
+                          SelectItemWednesdayHourB,
+                          setSelectItemWednesdayHourB,
                           'miercoles',
                           '3B'
                         )
                       }
-                      id="ItemWednesday2"
+                      id="ItemWednesdayB"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1029,13 +1060,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour2,
-                          setSelectItemThursdayHour2,
+                          SelectItemThursdayHourB,
+                          setSelectItemThursdayHourB,
                           'jueves',
                           '4B'
                         )
                       }
-                      id="ItemThursday2"
+                      id="ItemThursdayB"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1049,13 +1080,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour2,
-                          setSelectItemFridayHour2,
+                          SelectItemFridayHourB,
+                          setSelectItemFridayHourB,
                           'viernes',
                           '5B'
                         )
                       }
-                      id="ItemFriday2"
+                      id="ItemFridayB"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1069,13 +1100,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour2,
-                          setSelectItemSaturdayHour2,
+                          SelectItemSaturdayHourB,
+                          setSelectItemSaturdayHourB,
                           'sabado',
                           '6B'
                         )
                       }
-                      id="ItemSaturday2"
+                      id="ItemSaturdayB"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1089,13 +1120,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour2,
-                          setSelectItemSundayHour2,
+                          SelectItemSundayHourB,
+                          setSelectItemSundayHourB,
                           'domingo',
                           '7B'
                         )
                       }
-                      id="ItemSunday2"
+                      id="ItemSundayB"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1112,13 +1143,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour3,
-                          setSelectItemMondayHour3,
+                          SelectItemMondayHourC,
+                          setSelectItemMondayHourC,
                           'lunes',
                           '1C'
                         )
                       }
-                      id="ItemMondayHour3"
+                      id="ItemMondayHourC"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1132,13 +1163,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour3,
-                          setSelectItemTuesdayHour3,
+                          SelectItemTuesdayHourC,
+                          setSelectItemTuesdayHourC,
                           'martes',
                           '2C'
                         )
                       }
-                      id="ItemTuesday3"
+                      id="ItemTuesdayC"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1152,13 +1183,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour3,
-                          setSelectItemWednesdayHour3,
+                          SelectItemWednesdayHourC,
+                          setSelectItemWednesdayHourC,
                           'miercoles',
                           '3C'
                         )
                       }
-                      id="ItemWednesday3"
+                      id="ItemWednesdayC"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1172,13 +1203,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour3,
-                          setSelectItemThursdayHour3,
+                          SelectItemThursdayHourC,
+                          setSelectItemThursdayHourC,
                           'jueves',
                           '4C'
                         )
                       }
-                      id="ItemThursday3"
+                      id="ItemThursdayC"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1192,13 +1223,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour3,
-                          setSelectItemFridayHour3,
+                          SelectItemFridayHourC,
+                          setSelectItemFridayHourC,
                           'viernes',
                           '5C'
                         )
                       }
-                      id="ItemFriday3"
+                      id="ItemFridayC"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1212,13 +1243,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour3,
-                          setSelectItemSaturdayHour3,
+                          SelectItemSaturdayHourC,
+                          setSelectItemSaturdayHourC,
                           'sabado',
                           '6C'
                         )
                       }
-                      id="ItemSaturday3"
+                      id="ItemSaturdayC"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1232,13 +1263,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour3,
-                          setSelectItemSundayHour3,
+                          SelectItemSundayHourC,
+                          setSelectItemSundayHourC,
                           'domingo',
                           '7C'
                         )
                       }
-                      id="ItemSunday3"
+                      id="ItemSundayC"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1255,13 +1286,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour4,
-                          setSelectItemMondayHour4,
+                          SelectItemMondayHourD,
+                          setSelectItemMondayHourD,
                           'lunes',
                           '1D'
                         )
                       }
-                      id="ItemMondayHour4"
+                      id="ItemMondayHourD"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1275,13 +1306,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour4,
-                          setSelectItemTuesdayHour4,
+                          SelectItemTuesdayHourD,
+                          setSelectItemTuesdayHourD,
                           'martes',
                           '2D'
                         )
                       }
-                      id="ItemTuesday4"
+                      id="ItemTuesdayD"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1295,13 +1326,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour4,
-                          setSelectItemWednesdayHour4,
+                          SelectItemWednesdayHourD,
+                          setSelectItemWednesdayHourD,
                           'miercoles',
                           '3D'
                         )
                       }
-                      id="ItemWednesday4"
+                      id="ItemWednesdayD"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1315,13 +1346,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour4,
-                          setSelectItemThursdayHour4,
+                          SelectItemThursdayHourD,
+                          setSelectItemThursdayHourD,
                           'jueves',
                           '4D'
                         )
                       }
-                      id="ItemThursday4"
+                      id="ItemThursdayD"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1335,13 +1366,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour4,
-                          setSelectItemFridayHour4,
+                          SelectItemFridayHourD,
+                          setSelectItemFridayHourD,
                           'viernes',
                           '5D'
                         )
                       }
-                      id="ItemFriday4"
+                      id="ItemFridayD"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1355,13 +1386,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour4,
-                          setSelectItemSaturdayHour4,
+                          SelectItemSaturdayHourD,
+                          setSelectItemSaturdayHourD,
                           'sabado',
                           '6D'
                         )
                       }
-                      id="ItemSaturday4"
+                      id="ItemSaturdayD"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1375,13 +1406,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour4,
-                          setSelectItemSundayHour4,
+                          SelectItemSundayHourD,
+                          setSelectItemSundayHourD,
                           'domingo',
                           '7D'
                         )
                       }
-                      id="ItemSunday4"
+                      id="ItemSundayD"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1398,13 +1429,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour5,
-                          setSelectItemMondayHour5,
+                          SelectItemMondayHourE,
+                          setSelectItemMondayHourE,
                           'lunes',
                           '1E'
                         )
                       }
-                      id="ItemMondayHour5"
+                      id="ItemMondayHourE"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1418,13 +1449,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour5,
-                          setSelectItemTuesdayHour5,
+                          SelectItemTuesdayHourE,
+                          setSelectItemTuesdayHourE,
                           'martes',
                           '2E'
                         )
                       }
-                      id="ItemTuesday5"
+                      id="ItemTuesdayE"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1438,13 +1469,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour5,
-                          setSelectItemWednesdayHour5,
+                          SelectItemWednesdayHourE,
+                          setSelectItemWednesdayHourE,
                           'miercoles',
                           '3E'
                         )
                       }
-                      id="ItemWednesday5"
+                      id="ItemWednesdayE"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1458,13 +1489,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour5,
-                          setSelectItemThursdayHour5,
+                          SelectItemThursdayHourE,
+                          setSelectItemThursdayHourE,
                           'jueves',
                           '4E'
                         )
                       }
-                      id="ItemThursday5"
+                      id="ItemThursdayE"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1478,13 +1509,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour5,
-                          setSelectItemFridayHour5,
+                          SelectItemFridayHourE,
+                          setSelectItemFridayHourE,
                           'viernes',
                           '5E'
                         )
                       }
-                      id="ItemFriday5"
+                      id="ItemFridayE"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1498,13 +1529,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour5,
-                          setSelectItemSaturdayHour5,
+                          SelectItemSaturdayHourE,
+                          setSelectItemSaturdayHourE,
                           'sabado',
                           '6E'
                         )
                       }
-                      id="ItemSaturday5"
+                      id="ItemSaturdayE"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1518,13 +1549,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour5,
-                          setSelectItemSundayHour5,
+                          SelectItemSundayHourE,
+                          setSelectItemSundayHourE,
                           'domingo',
                           '7E'
                         )
                       }
-                      id="ItemSunday5"
+                      id="ItemSundayE"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1541,13 +1572,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour6,
-                          setSelectItemMondayHour6,
+                          SelectItemMondayHourF,
+                          setSelectItemMondayHourF,
                           'lunes',
                           '1F'
                         )
                       }
-                      id="ItemMondayHour6"
+                      id="ItemMondayHourF"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1561,13 +1592,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour6,
-                          setSelectItemTuesdayHour6,
+                          SelectItemTuesdayHourF,
+                          setSelectItemTuesdayHourF,
                           'martes',
                           '2F'
                         )
                       }
-                      id="ItemTuesday6"
+                      id="ItemTuesdayF"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1581,13 +1612,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour6,
-                          setSelectItemWednesdayHour6,
+                          SelectItemWednesdayHourF,
+                          setSelectItemWednesdayHourF,
                           'miercoles',
                           '3F'
                         )
                       }
-                      id="ItemWednesday6"
+                      id="ItemWednesdayF"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1601,13 +1632,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour6,
-                          setSelectItemThursdayHour6,
+                          SelectItemThursdayHourF,
+                          setSelectItemThursdayHourF,
                           'jueves',
                           '4F'
                         )
                       }
-                      id="ItemThursday6"
+                      id="ItemThursdayF"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1621,13 +1652,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour6,
-                          setSelectItemFridayHour6,
+                          SelectItemFridayHourF,
+                          setSelectItemFridayHourF,
                           'viernes',
                           '5F'
                         )
                       }
-                      id="ItemFriday6"
+                      id="ItemFridayF"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1641,13 +1672,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour6,
-                          setSelectItemSaturdayHour6,
+                          SelectItemSaturdayHourF,
+                          setSelectItemSaturdayHourF,
                           'sabado',
                           '6F'
                         )
                       }
-                      id="ItemSaturday6"
+                      id="ItemSaturdayF"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1661,13 +1692,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour6,
-                          setSelectItemSundayHour6,
+                          SelectItemSundayHourF,
+                          setSelectItemSundayHourF,
                           'domingo',
                           '7F'
                         )
                       }
-                      id="ItemSunday6"
+                      id="ItemSundayF"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1684,13 +1715,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour7,
-                          setSelectItemMondayHour7,
+                          SelectItemMondayHourG,
+                          setSelectItemMondayHourG,
                           'lunes',
                           '1G'
                         )
                       }
-                      id="ItemMondayHour7"
+                      id="ItemMondayHourG"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1704,13 +1735,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour7,
-                          setSelectItemTuesdayHour7,
+                          SelectItemTuesdayHourG,
+                          setSelectItemTuesdayHourG,
                           'martes',
                           '2G'
                         )
                       }
-                      id="ItemTuesday7"
+                      id="ItemTuesdayG"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1724,13 +1755,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour7,
-                          setSelectItemWednesdayHour7,
+                          SelectItemWednesdayHourG,
+                          setSelectItemWednesdayHourG,
                           'miercoles',
                           '3G'
                         )
                       }
-                      id="ItemWednesday7"
+                      id="ItemWednesdayG"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1744,13 +1775,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour7,
-                          setSelectItemThursdayHour7,
+                          SelectItemThursdayHourG,
+                          setSelectItemThursdayHourG,
                           'jueves',
                           '4G'
                         )
                       }
-                      id="ItemThursday7"
+                      id="ItemThursdayG"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1764,13 +1795,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour7,
-                          setSelectItemFridayHour7,
+                          SelectItemFridayHourG,
+                          setSelectItemFridayHourG,
                           'viernes',
                           '5G'
                         )
                       }
-                      id="ItemFriday7"
+                      id="ItemFridayG"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1784,13 +1815,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour7,
-                          setSelectItemSaturdayHour7,
+                          SelectItemSaturdayHourG,
+                          setSelectItemSaturdayHourG,
                           'sabado',
                           '6G'
                         )
                       }
-                      id="ItemSaturday7"
+                      id="ItemSaturdayG"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1804,13 +1835,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour7,
-                          setSelectItemSundayHour7,
+                          SelectItemSundayHourG,
+                          setSelectItemSundayHourG,
                           'domingo',
                           '7G'
                         )
                       }
-                      id="ItemSunday7"
+                      id="ItemSundayG"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1827,13 +1858,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour8,
-                          setSelectItemMondayHour8,
+                          SelectItemMondayHourH,
+                          setSelectItemMondayHourH,
                           'lunes',
                           '1H'
                         )
                       }
-                      id="ItemMondayHour8"
+                      id="ItemMondayHourH"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1847,13 +1878,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour8,
-                          setSelectItemTuesdayHour8,
+                          SelectItemTuesdayHourH,
+                          setSelectItemTuesdayHourH,
                           'martes',
                           '2H'
                         )
                       }
-                      id="ItemTuesday8"
+                      id="ItemTuesdayH"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1867,13 +1898,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour8,
-                          setSelectItemWednesdayHour8,
+                          SelectItemWednesdayHourH,
+                          setSelectItemWednesdayHourH,
                           'miercoles',
                           '3H'
                         )
                       }
-                      id="ItemWednesday8"
+                      id="ItemWednesdayH"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1887,13 +1918,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour8,
-                          setSelectItemThursdayHour8,
+                          SelectItemThursdayHourH,
+                          setSelectItemThursdayHourH,
                           'jueves',
                           '4H'
                         )
                       }
-                      id="ItemThursday8"
+                      id="ItemThursdayH"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1907,13 +1938,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour8,
-                          setSelectItemFridayHour8,
+                          SelectItemFridayHourH,
+                          setSelectItemFridayHourH,
                           'viernes',
                           '5H'
                         )
                       }
-                      id="ItemFriday8"
+                      id="ItemFridayH"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1927,13 +1958,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour8,
-                          setSelectItemSaturdayHour8,
+                          SelectItemSaturdayHourH,
+                          setSelectItemSaturdayHourH,
                           'sabado',
                           '6H'
                         )
                       }
-                      id="ItemSaturday8"
+                      id="ItemSaturdayH"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1947,13 +1978,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour8,
-                          setSelectItemSundayHour8,
+                          SelectItemSundayHourH,
+                          setSelectItemSundayHourH,
                           'domingo',
                           '7H'
                         )
                       }
-                      id="ItemSunday8"
+                      id="ItemSundayH"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1970,13 +2001,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemMondayHour9,
-                          setSelectItemMondayHour9,
+                          SelectItemMondayHourI,
+                          setSelectItemMondayHourI,
                           'lunes',
                           '1I'
                         )
                       }
-                      id="ItemMondayHour9"
+                      id="ItemMondayHourI"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -1990,13 +2021,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemTuesdayHour9,
-                          setSelectItemTuesdayHour9,
+                          SelectItemTuesdayHourI,
+                          setSelectItemTuesdayHourI,
                           'martes',
                           '2I'
                         )
                       }
-                      id="ItemTuesday9"
+                      id="ItemTuesdayI"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -2010,13 +2041,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemWednesdayHour9,
-                          setSelectItemWednesdayHour9,
+                          SelectItemWednesdayHourI,
+                          setSelectItemWednesdayHourI,
                           'miercoles',
                           '3I'
                         )
                       }
-                      id="ItemWednesday9"
+                      id="ItemWednesdayI"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -2030,13 +2061,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemThursdayHour9,
-                          setSelectItemThursdayHour9,
+                          SelectItemThursdayHourI,
+                          setSelectItemThursdayHourI,
                           'jueves',
                           '4I'
                         )
                       }
-                      id="ItemThursday9"
+                      id="ItemThursdayI"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -2050,13 +2081,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemFridayHour9,
-                          setSelectItemFridayHour9,
+                          SelectItemFridayHourI,
+                          setSelectItemFridayHourI,
                           'viernes',
                           '5I'
                         )
                       }
-                      id="ItemFriday9"
+                      id="ItemFridayI"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -2070,13 +2101,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSaturdayHour9,
-                          setSelectItemSaturdayHour9,
+                          SelectItemSaturdayHourI,
+                          setSelectItemSaturdayHourI,
                           'sabado',
                           '6I'
                         )
                       }
-                      id="ItemSaturday9"
+                      id="ItemSaturdayI"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -2090,13 +2121,13 @@ const index = () => {
                       onClick={(x) =>
                         SelectConten(
                           x,
-                          SelectItemSundayHour9,
-                          setSelectItemSundayHour9,
+                          SelectItemSundayHourI,
+                          setSelectItemSundayHourI,
                           'domingo',
                           '7I'
                         )
                       }
-                      id="ItemSunday9"
+                      id="ItemSundayI"
                       className={styles.DefaultBlock}
                       style={{
                         height: '30px',
@@ -2108,7 +2139,7 @@ const index = () => {
                 </tr>
               </Tbody>
             </Tabla>
-          </>
+          </div>
         ) : null}
       </div>
     </div>

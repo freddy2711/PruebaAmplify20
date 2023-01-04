@@ -1,7 +1,4 @@
-import {
-  axiosCreate,
-  axiosfetchPrivateUpload,
-} from '../../../config/axios'
+import { axiosCreate, axiosfetchPrivateUpload } from '../../../config/axios'
 // import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from '../../../consts/path'
@@ -23,25 +20,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'list': {
       const URL = apiPath.competence.PATH_List(params[1])
       try {
-
-				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC001')
+        genError(res, error, 'EC001')
       }
       break
     }
     case 'comp_by_class': {
       const URL = apiPath.competence.PATH_Competence_by_class(params[1])
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC002')
+        genError(res, error, 'EC002')
       }
       break
     }
@@ -51,37 +47,36 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         params[2]
       )
       try {
-
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC003')
+        genError(res, error, 'EC003')
       }
       break
     }
     case 'conductasList': {
       const URL = apiPath.competence.PATH_conductasList(params[1])
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC004')
+        genError(res, error, 'EC004')
       }
       break
     }
     case 'listTipo': {
       const URL = apiPath.competence.PATH_listTipo(params[1])
       try {
-				const apiCall:AxiosInstance = axiosCreate(Note)
+        const apiCall: AxiosInstance = axiosCreate(Note)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC005')
+        genError(res, error, 'EC005')
       }
       break
     }
@@ -93,13 +88,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         conductId: params[2],
       }
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall.post(URL, obj)
         const result = data.detail
         console.log(data)
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC006')
+        genError(res, error, 'EC006')
       }
       break
     }
@@ -107,12 +102,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const item = req.body
       const URL = apiPath.competence.PATH_saveAdjunto
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall.post(URL, item)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC007')
+        genError(res, error, 'EC007')
       }
       break
     }
@@ -139,7 +134,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const URL_UPLOAD = data.url
         res.status(200).json(URL_UPLOAD)
       } catch (error) {
-        genError(res,error,'EC008')
+        genError(res, error, 'EC008')
       }
       break
     }
@@ -147,12 +142,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       // PATH_listAdjunto
       const URL = apiPath.competence.PATH_listAdjunto(params[1], params[2])
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC009')
+        genError(res, error, 'EC009')
       }
       break
     }
@@ -160,12 +155,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       // PATH_listAdjunto
       const URL = apiPath.competence.PATH_AttachConducts(params[1])
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC010')
+        genError(res, error, 'EC010')
       }
       break
     }
@@ -178,12 +173,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         params[5]
       )
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC011')
+        genError(res, error, 'EC011')
       }
       break
     }
@@ -191,24 +186,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const URL = apiPath.competence.PATH_generalEscala(params[1])
       console.log('URL', URL)
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC012')
+        genError(res, error, 'EC012')
       }
       break
     }
     case 'retro': {
       const URL = apiPath.competence.PATH_alumCompeLog(params[1])
       try {
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC013')
+        genError(res, error, 'EC013')
       }
       break
     }
@@ -216,12 +211,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const item = req.body
       const URL = apiPath.competence.PATH_RegisterNotesCompetence
       try {
-				const apiCall:AxiosInstance = axiosCreate(Note)
+        const apiCall: AxiosInstance = axiosCreate(Note)
         const { data } = await apiCall.post(URL, item)
+				console.log(data)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC014')
+        genError(res, error, 'EC014')
       }
       break
     }
@@ -237,13 +233,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
 
       try {
-				
-				const apiCall:AxiosInstance = axiosCreate(Utility)
+        const apiCall: AxiosInstance = axiosCreate(Utility)
         const { data } = await apiCall.post(URL, fileObj)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC015')
+        genError(res, error, 'EC015')
       }
       break
     }
@@ -254,13 +249,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           competenceId: params[1],
         }
 
-				const apiCall:AxiosInstance = axiosCreate(Competence)
+        const apiCall: AxiosInstance = axiosCreate(Competence)
         const { data } = await apiCall.put(URL, obj)
         const result = data.detail
 
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'EC016')
+        genError(res, error, 'EC016')
       }
       break
     }

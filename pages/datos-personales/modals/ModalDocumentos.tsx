@@ -7,6 +7,9 @@ import Button from './../../../components/UI/atoms/button/Button'
 import FileInputComponent from 'react-file-input-previews-base64'
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux'
+import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get, set } from 'local-storage'
+
 // import dynamic from 'next/dynamic'
 
 import { saveAdjuntoAction } from './../../../redux/actions/infoGeneralAction'
@@ -134,6 +137,9 @@ const ModalDocumentos = ({ modalShowDocs, setModalShowDocs }: any) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault()
 
+    const DUENO: any = get(SET_DATA_DOCENTE)
+    const DUENOSESSION = DUENO?.userName
+
     try {
       const obj = {
         IdPersonaAdjunto: 'null',
@@ -146,7 +152,7 @@ const ModalDocumentos = ({ modalShowDocs, setModalShowDocs }: any) => {
           txtfile.name.length
         ),
         Activo: '1',
-        audit_usuario_creacion: 'RVI',
+        audit_usuario_creacion: DUENOSESSION, //'RVI',
         audit_usuario_actualizacion: '',
         IdTipoAdjunto: ddlTipoAdjunto,
         IdEstudio: 'null',

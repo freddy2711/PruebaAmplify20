@@ -74,7 +74,7 @@ const API = {
       const result: any = await axiosfetchPublic(URL)
       if (result.status === true) {
         console.log('status', result?.status)
-      }      
+      }
       return result.data
     } catch (err) {
       const error = await ErrorMessageClient(err, false)

@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { axiosCreate } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const Teacher = objecApi.Teacher
@@ -20,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'T001')
       }
       break
     }
@@ -35,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'T002')
       }
       break
     }
@@ -49,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'T003')
       }
       break
     }
@@ -62,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'T004')
       }
       break
     }

@@ -12,10 +12,12 @@ import Swal from 'sweetalert2'
 import moment from 'moment'
 import Router from 'next/router'
 import { apiAsistencia, apiSolicitud } from './../../../pages/api'
+import { redirectRouter } from './../../../helpers/routerRedirect'
 import {
   CierreDeSesionExitoso,
   enviarSolicitud,
 } from './../../../helpers/asistenciaHelpers'
+import { catchingErrorFront } from '../../../helpers/helpers'
 
 import {
   TEACHERCODE,
@@ -26,6 +28,7 @@ import {
   VALIDAR,
   COMENTARIO,
   // DATOS DE PRUEBA
+	SET_DATA_DOCENTE,
   SET_DUENO_SESSION,
   CONTROL_CLASE_ESTADO,
   TIPO_ASISTENCIA,
@@ -48,7 +51,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
   const [btnTomarAsistencia, setBtnTomarAsistencia] = useState(true)
   const [motivo, setMotivo] = useState('')
 
-  const DUENO: any = get(DUENO_SESSION)
+	const DUENOSS: any = get(SET_DATA_DOCENTE)
+  const DUENOSESSION = DUENOSS?.userName
+
+  const DUENO = DUENOSESSION
 
   const noClose =
     get(NO_CLOSE) === '' ||
@@ -72,7 +78,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
   })
 
   const formatHora = (valor: string) => {
-    
     const dateSplit = valor.split('T')
     const date = `${dateSplit[0]} ${dateSplit[1]}`
 
@@ -110,9 +115,9 @@ const AsistenciaSolicitud = ({ ip }: any) => {
     }
 
     const validaciones = async () => {
-			const obj: any = get(CLASS_SELECTED_SOL_MARCACION)
+      const obj: any = get(CLASS_SELECTED_SOL_MARCACION)
       const item = JSON.parse(obj)
-			
+
       const ctlClassIDLocal = get(CONTROL_CLASE_ID)
 
       const ControlClaseID: any =
@@ -146,11 +151,13 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           })
         }
       }
-
-      if (DUENO !== SET_DUENO_SESSION) {
+			const teacherDueno = item.teacherUser
+			const user = DUENO
+			// console.log('DUENO__', {user,teacherDueno})
+      if (user.toUpperCase() !==  teacherDueno.toUpperCase()) {
         Swal.fire({
           title: 'Portal de Docentes',
-          text: `Las sesiones de clase solo pueden ser modificadas por el docente ${DUENO}`,
+          text: `Las sesiones de clase solo pueden ser modificadas por el docente ${teacherDueno.toUpperCase()}`,
           icon: 'warning',
           showCancelButton: false,
           confirmButtonColor: '#3085d6',
@@ -246,13 +253,12 @@ const AsistenciaSolicitud = ({ ip }: any) => {
       setloading(false)
     }
 
-		
-		const fun = async() =>{
-			await consultaApi()
-			await validaciones()
-		}
+    const fun = async () => {
+      await consultaApi()
+      await validaciones()
+    }
 
-		fun()
+    fun()
   }, [])
 
   const btnFin = async (ControlClaseID: string, ClaCode: string) => {
@@ -321,7 +327,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
       )
 
       dataGSDSV = resp.data
-
     } catch (error) {
       console.log(error)
     }
@@ -357,7 +362,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
             const resp = await apiSolicitud.actualizaSesionAbiertaSolicitud(
               item
             )
-
           } catch (error) {
             console.log(error)
           }
@@ -369,8 +373,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
               DUENO,
               '1'
             )
-
-     
           } catch (error) {
             console.log(error)
           }
@@ -378,7 +380,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           await enviarSolicitud(ControlClaseID, ClaCode)
           set(VALIDAR, '1')
 
-          Router.push('/solicitud-de-marcacion')
+					redirectRouter('/solicitud-de-marcacion', setloading)
         } else {
           // actualizaSesionAbierta_Solicitud
 
@@ -396,7 +398,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
             const resp = await apiSolicitud.actualizaSesionAbiertaSolicitud(
               item
             )
-    
           } catch (error) {
             console.log(error)
           }
@@ -421,16 +422,14 @@ const AsistenciaSolicitud = ({ ip }: any) => {
                 DUENO,
                 '1'
               )
-       
             } catch (error) {
               console.log(error)
             }
 
             set(VALIDAR, '1')
-
-            Router.push('/solicitud-de-marcacion')
+						redirectRouter('/solicitud-de-marcacion', setloading)
           } else {
-            Router.push('/solicitud-de-marcacion/TomarAsistencia')
+						redirectRouter('/solicitud-de-marcacion/TomarAsistencia', setloading)
           }
         }
       }
@@ -447,7 +446,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
       } catch (error) {
         console.log(error)
       }
-
 
       if (parseInt(PemitirCerrarSesionSinAsistenciaEstudiante) === 1) {
         // TODO: getInsertaSesion_Solicitud
@@ -471,7 +469,6 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           const resp = await apiSolicitud.insertar(item)
 
           set(CONTROL_CLASE_ID, resp)
-
         } catch (error) {
           console.log(error)
         }
@@ -496,15 +493,15 @@ const AsistenciaSolicitud = ({ ip }: any) => {
             ip,
           }
 
-          const resp = await apiSolicitud.insertar(item)
+          const resp: any = await apiSolicitud.insertar(item)
+
+          console.log(resp)
 
           set(CONTROL_CLASE_ID, resp.data)
-
+					redirectRouter('/asistencia', setloading)
         } catch (error) {
-          console.log(error)
+          catchingErrorFront(error)
         }
-
-        Router.push('/asistencia')
       }
     }
 

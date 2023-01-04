@@ -4,6 +4,8 @@ import Modals from './../../../components/UI/atoms/modal/Modal'
 import Form from './../../../components/UI/molecules/form/Form'
 import Button from './../../../components/UI/atoms/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
+import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get, set } from 'local-storage'
 
 import { saveIdiomasAction } from './../../../redux/actions/infoGeneralAction'
 
@@ -76,6 +78,9 @@ const ModalIdiomas = ({ modalShowIdiomas, setModalShowIdiomas }: any) => {
     e.preventDefault()
     console.log('saveNewEL')
 
+    const DUENO: any = get(SET_DATA_DOCENTE)
+    const DUENOSESSION = DUENO?.userName
+
     const obj = {
       IdPersonaIdioma: id,
       IdPersona: info.idPersona,
@@ -86,7 +91,7 @@ const ModalIdiomas = ({ modalShowIdiomas, setModalShowIdiomas }: any) => {
       EsCertificado: '0',
       NoSeEncontroIdioma: '0',
       NombreIdioma: '',
-      audit_usuario_creacion: 'RVI',
+      audit_usuario_creacion: DUENOSESSION,
       audit_usuario_actualizacion: '',
     }
 

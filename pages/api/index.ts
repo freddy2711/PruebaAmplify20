@@ -22,7 +22,7 @@ import apiEvaluacionDocente from './evaluacion-docente'
 import apiDatosPersonales from './datos-personales'
 import apiSoporteVirtual from './soporte-virtual'
 import apiLogin from './login'
-
+import apiRegistroModificacion from './registro-modificacion'
 // import apiReembolso from "./reembolso/index";
 // import apiInsertDocument from "./tramites/insertdocuments";
 
@@ -50,6 +50,7 @@ export {
   apiEvaluacionDocente,
   apiDatosPersonales,
   apiSoporteVirtual,
+  apiRegistroModificacion,
   // apiReembolso,
   apiLogin,
   // apiInsertDocument,

@@ -10,12 +10,14 @@ import styles from '../../components/templates/docenteDescanso/Descanso.module.s
 import Loader from '../../components/UI/atoms/loader/Loader'
 import { apiDescanso } from '../api/index'
 import dynamic from 'next/dynamic'
+import { get } from 'local-storage'
 import {
   callErrorValid,
   convertStringToDate,
   SET_DESCANSO_SELECT,
   SET_DESCANSO_SOLICITUD,
   SET_TEACHER_BREAK,
+  USER_SESSION,
   // SET_DATA_DOCENTE,
   // SET_IMG_BASE64,
 } from '../../consts/storageConst'
@@ -49,7 +51,7 @@ const DescansoDocente = () => {
 
   const dateNow = convertStringToDate(new Date())
   const ValidService = async () => {
-    const codeUser: string = 'N00180912'
+    const codeUser: string = get(USER_SESSION)
     const rs3: any = await apiDescanso.TeacherBreak(codeUser)
     if (callErrorValid(rs3, setloading) === undefined) return
     setDateTeacher(rs3[0])

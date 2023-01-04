@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap'
 import Button from '../../../../atoms/button/Button'
 import Select from '../../../../atoms/select/Select'
 import ExportCSV from '../../../../atoms/CSVLink/CSVLink'
+import style from '../../../reports/AcademicReport/ReportButtons/reportButtons.module.scss'
 
 const reportButtons = (props: any) => {
   const [disable, setDisable] = useState(true)
@@ -19,10 +20,10 @@ const reportButtons = (props: any) => {
   return (
     <div>
       <Form>
-        <div className="row">
+        <div className={`${style.responsivebtns} row`}>
           <div
             style={props.width !== null ? { width: props.width } : undefined}
-            className="col-sm-12 col-md-2"
+            className={`${style.selectInput} col-sm-12 col-md-2`}
           >
             <Select
               id="formato"

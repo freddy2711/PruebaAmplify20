@@ -1,4 +1,5 @@
 import axiosfetchPublic from '../../../config/axios'
+import { catchingErrorApi } from '../../../helpers/helpers'
 
 const API = {
   listTokenActive: async (
@@ -6,14 +7,22 @@ const API = {
     semesterCode: any,
     limitState: any
   ) => {
-    const URL = `/logs-creacion/listTokenActive/${userCode}/${semesterCode}/${limitState}`
-    const result: any = await axiosfetchPublic(URL)
-    return result.data
+    try {
+      const URL = `/logs-creacion/listTokenActive/${userCode}/${semesterCode}/${limitState}`
+      const result: any = await axiosfetchPublic(URL)
+      return result.data
+    } catch (error) {
+      catchingErrorApi(error)
+    }
   },
   listTokenGenerate: async (userCode: any, semesterCode: any) => {
-    const URL = `/logs-creacion/listTokenGenerate/${userCode}/${semesterCode}`
-    const result: any = await axiosfetchPublic(URL)
-    return result.data
+    try {
+      const URL = `/logs-creacion/listTokenGenerate/${userCode}/${semesterCode}`
+      const result: any = await axiosfetchPublic(URL)
+      return result.data
+    } catch (error) {
+      catchingErrorApi(error)
+    }
   },
 }
 

@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import { get } from 'local-storage'
 import FileInputComponent from 'react-file-input-previews-base64'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
 import {
   faTimes,
   faFileText,
@@ -126,8 +127,14 @@ const index = () => {
               ddlTipo: value,
             })
             setloading(false)
+            const DUENO: any = get(SET_DATA_DOCENTE)
+            const DUENOSESSION = DUENO?.userName
 
-            const datos = await apiSoporteVirtual.fileAsesor('N00011885', 'RVI')
+            const codeteacher = get(USER_SESSION)
+            const datos = await apiSoporteVirtual.fileAsesor(
+              codeteacher,
+              DUENOSESSION
+            )
             console.log(datos.data)
 
             convertoLink(datos.data)
@@ -261,7 +268,12 @@ const index = () => {
       const { nameS3, usuario, name, size } = obj
       const extend = name.substring(name.lastIndexOf('.') + 1, name.length)
       // TODO: traer desde storage
-      const adviser = 'RVI'
+
+      const DUENO: any = get(SET_DATA_DOCENTE)
+      const DUENOSESSION = DUENO?.userName
+
+      const adviser = DUENOSESSION
+      // const codeteacher = get(USER_SESSION)
 
       console.log('IMAGEPESO_', obj)
 
@@ -424,7 +436,7 @@ const index = () => {
     try {
       setloading(true)
       const obj = {
-        teacherCode: 'N00011885',
+        teacherCode: get(USER_SESSION) ,//'N00011885',
         query: descrip,
         type: ddlTipo,
         subType: ddlSubTipo,
@@ -482,14 +494,12 @@ const index = () => {
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK',
         }).then(async (result) => {
-			
-					if (result.isConfirmed) {
-						setFormConsulta(initForm)
-						setloading(false)
-						window.location.href = '/soporte-virtual'
-					}
-				})
-
+          if (result.isConfirmed) {
+            setFormConsulta(initForm)
+            setloading(false)
+            window.location.href = '/soporte-virtual'
+          }
+        })
       }
     } catch (error) {
       console.log(error)

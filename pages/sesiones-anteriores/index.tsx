@@ -16,11 +16,11 @@ import {
   LST_COURSES_TEACHER,
   RECUPERACION_ID,
   SEMESTERID,
-  SET_TEACHERCODE,
   TIPO_DOCENTE,
+  USER_SESSION,
 } from '../../consts/storageConst'
-import Router from 'next/router'
 import { apiPreviousSessions } from './../api'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
   ssr: false,
@@ -63,8 +63,7 @@ const index = () => {
   const [ViewSessions, setViewSessions] = useState(false)
   const [CoursesByTeacherSelected, setCoursesByTeacherSelected] =
     useState<CoursesBySelected>({ TipoDoc: '' })
-  const UserID =
-    get(SET_TEACHERCODE) === null ? 'N00011153' : get(SET_TEACHERCODE)
+  const UserID: any = get(USER_SESSION)
 
   const COLUMNS_COURSES_TEACHER = [
     { label: 'Seleccionar clase', field: 'select', sort: 'asc' },
@@ -123,12 +122,18 @@ const index = () => {
     StateMessage: any
   ) => {
     setloading(true)
-    const result: any = await apiPreviousSessions.listSessionsByClass(
-      classCode,
-      accion,
-      paymentPeriodId
-    )
-    PreviousSessionValidator(result, classCode, StateMessage)
+    try {
+      const result: any = await apiPreviousSessions.listSessionsByClass(
+        classCode,
+        accion,
+        paymentPeriodId
+      )
+      PreviousSessionValidator(result, classCode, StateMessage)
+    } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+    }
+  
     setloading(false)
   }
 
@@ -156,9 +161,9 @@ const index = () => {
       const ControlFecha = new Date(item.ControlFecha)
       const ControlInicio = new Date(item.ControlInicio)
       const ControlTermino = new Date(item.ControlTermino)
-      item.ControlFecha = moment(ControlFecha).format('DD/MM/YYYY')
-      item.ControlInicio = moment(ControlInicio).format('DD/MM/YYYY HH:mm:ss')
-      item.ControlTermino = moment(ControlTermino).format('DD/MM/YYYY HH:mm:ss')
+      item.ControlFecha = item.ControlFecha === "" ? "" :  moment(ControlFecha).format('DD/MM/YYYY')
+      item.ControlInicio = item.ControlInicio === "" ? "" :  moment(ControlInicio).format('DD/MM/YYYY HH:mm:ss')
+      item.ControlTermino = item.ControlTermino === "" ? "" : moment(ControlTermino).format('DD/MM/YYYY HH:mm:ss')
       return item
     })
 
@@ -190,7 +195,7 @@ const index = () => {
     set(RECUPERACION_ID, 0)
     set(TIPO_DOCENTE, CoursesByTeacherSelected.TipoDoc)
     setloading(false)
-    Router.push('/asistencia/resumen-asistencia')
+    window.location.href = '/asistencia/resumen-asistencia'
   }
 
   // validate
@@ -282,9 +287,15 @@ const index = () => {
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-      await consultaApi()
-      GetPeriodPayment()
-      GetperiodPayDateApi()
+      try {
+        await consultaApi()
+        GetPeriodPayment()
+        GetperiodPayDateApi()
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+      
       setloading(false)
     }
 

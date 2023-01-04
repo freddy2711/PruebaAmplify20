@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { set } from 'local-storage'
+import { set, get } from 'local-storage'
 import { axiosfetchPrivateEmail } from '../config/axios'
 import getAlert from '../hooks/jspdf/alertify'
 
@@ -33,8 +33,11 @@ export const SET_RECOVER_SELECT = 'recoverSelect'
 export const SET_DT_ASISTENCE = 'dtAsistencia'
 
 // ** CONSTANTES DE PRUEBA PARA DATOS DE USUARIO
-export const SET_DUENO_SESSION = 'RVI'
-export const SET_TEACHERCODE = 'N00011885'
+const DUENO: any = get(SET_DATA_DOCENTE)
+const DUENOSESSIONUSER = DUENO?.userName
+
+export const SET_DUENO_SESSION: any = get(DUENOSESSIONUSER) // 'RVI'
+export const SET_TEACHERCODE: any = get(USER_SESSION) //'N00011885'
 
 // ** CONSTATES DE SESIONES ANTERIORES PARA STORAGE DE ASISTENCIA  - JD
 export const LST_COURSES_TEACHER = 'teacherAsistence'
@@ -62,6 +65,9 @@ export const SET_DESCANSO_SELECT = 'descansoSelect'
 export const SET_DESCANSO_SOLICITUD = 'descansoListWorker'
 export const SET_TEACHER_BREAK = 'teacherBreak'
 export const SET_EMAIL_SUPPOT_UPN = 'jsalazardj22@gmail.com'
+
+// ** CONSTANTES PARA PA AU SECCION
+export const SET_SECCION_GROUP = 'groupSeccion'
 
 export const MSM_INFO_DESCANSO =
   'No se puede registrar la solicitud, tiene solicitudes pendientes de aprobación o ha llegado al límite de solicitudes.'
@@ -115,6 +121,9 @@ export const TITLE_EMERG = 'Portal de Docentes'
 export const TITLE_ERROR = 'Notificación de Error'
 
 export const MSM_NO_ENUENTRA = `No se encuentra en el horario establecido para iniciar la sesión de clase.`
+export const MSM_NO_SECCION = `La sesión a caducado favor ingresar nuevamente.`
+export const MSM_NO_GROUP = `El usuario logueado no pertenece a ningún grupo.`
+export const MSM_NO_EXISTE_GROUP = `Ud. no tiene permisos para visualizar la página a la cual está intentando acceder.`
 export const MSM_LO_SENTIMOS =
   'Lo sentimos, por mantenimiento el registro de notas sólo se puede acceder dentro del campus UPN.'
 export const MSM_NO_SESIONES =
@@ -136,6 +145,8 @@ export const MSM_SE_ACTIVA_REGISTRO =
   'No se puede activar el registro de notas por que la fecha ya caducó o no ha sido registrada. Comuníquese con la dirección de la carrera.'
 export const MSM_SESION_FIN = `La sesión ya fue finalizada.`
 export const MSM_TOKEN_OK = 'Token Correcto'
+export const MSM_TOKEN_NO2 =
+  'Token Incorrecto o la vigencia del Token ya expiro por favor verficar se Correo o generacion de Token por google'
 export const MSM_TOKEN_NO = 'Token Incorrecto'
 export const MSM_SELECCIONADO_VIRTUAL =
   'Ha seleccionado una clase virtual, recuerde que el ingreso de notas se debe efectuar desde Cursos Virtuales.'
@@ -158,10 +169,11 @@ export const MSM_NOTAS_SELECCIONADA =
 export const MSM_NOTAS_CLASE_VIRTUAL =
   'Ha seleccionado una clase virtual, recuerde que el ingreso de notas se debe efectuar desde Cursos Virtuales.'
 export const MSM_NOTAS_MAIL_OK = (email: string) =>
-  `Se creó su nuevo Token para su registro de notas. Se envió el token a su correo " ${email}.`
+  `Se creó su nuevo Token para su registro de notas. Se envió el token a su correo "${email}".`
 // ** RESUMEN ASISTENCIA
 export const DATA_RESUMEN_SELECTED = 'dataResumenSelected'
 export const RECUPERATION_ID = 'RecuperacionID'
+export const APP_CODE = 'PDOC'
 // ASISTENCIA
 
 // ** CONSTANTES DE HOME - JS
@@ -189,7 +201,7 @@ export const callErrorValid = (result: any, setloading: any) => {
   }
   return result
 }
-export const ErrorMessageClient = async (error: any, state: any) => {
+export const ErrorMessageClient:any = async (error: any, state: any) => {
   const status = error?.response?.status
   const statusText = error?.response?.data?.error
   const url = error?.response?.config?.url
@@ -266,6 +278,7 @@ export const setBodyEmail = (message: any) => {
   </table>`
 }
 export const SET_SEMESTERCODE = 'SemesterCode'
+export const SET_SEMESTERCRONOLOGICO = 'SemesterCronologico'
 export const SET_FECHA_ORIGEN = '12/30/1899'
 
 // ** CONSTANTES EVALUACION DE COMPETENCIAS
@@ -358,7 +371,7 @@ export const getBase64Image = (
   outputFormat: any
 ) => {
   const img = new Image()
-  img.crossOrigin = 'Anonymous'
+  img.crossOrigin = "Anonymous"
   img.onload = () => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
@@ -368,7 +381,7 @@ export const getBase64Image = (
     const dataURL: string = canvas.toDataURL(outputFormat)
     callback(dataURL)
   }
-  img.src = src
+  img.src = src + "?not-from-cache-please";
   if (img.complete || img.complete === undefined) {
     img.src =
       'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='
@@ -437,41 +450,48 @@ export const objToken = async () => {
 // ** CONSTANTES DE CARGA DE EXÁMENES
 export const SET_DATAS_SELEC_COURSES_TEACHER_CE = 'SelectCoursesTeacher_CE'
 
+// ** CONSTANTES DE SOLICITUD DE MODIFICACION DE NOTAS
+export const CLASS_SELECTED_SM = 'CLASS_SELECTED_SM'
+
 export const objecApi = {
-  Teacher : {
+  Teacher: {
     URL: process.env.BACKEND_URL_TEACHER,
-    KEY:`${process.env.BACKEND_APIKEY_TEACHER}`
+    KEY: `${process.env.BACKEND_APIKEY_TEACHER}`,
   },
-  WorkerTeacher : {
-    URL:`${process.env.BACKEND_URL_WORKERTEACHER}`,
-    KEY:`${process.env.BACKEND_APIKEY_WORKERTEACHER}`,
+  WorkerTeacher: {
+    URL: `${process.env.BACKEND_URL_WORKERTEACHER}`,
+    KEY: `${process.env.BACKEND_APIKEY_WORKERTEACHER}`,
   },
-  Utility:{
-    URL:`${process.env.BACKEND_URL_UTILITY}`,
-    KEY:`${process.env.BACKEND_APIKEY_UTILITY}`,
+  Utility: {
+    URL: `${process.env.BACKEND_URL_UTILITY}`,
+    KEY: `${process.env.BACKEND_APIKEY_UTILITY}`,
   },
-  Competence:{
-    URL:`${process.env.BACKEND_URL_COMPETENCE}`,
-    KEY:`${process.env.BACKEND_APIKEY_COMPETENCE}`,
+  Competence: {
+    URL: `${process.env.BACKEND_URL_COMPETENCE}`,
+    KEY: `${process.env.BACKEND_APIKEY_COMPETENCE}`,
   },
-  TeacherAttendance : {
-    URL:`${process.env.BACKEND_URL_TEACHERATTENDANCE}`,
-    KEY:`${process.env.BACKEND_APIKEY_TEACHERATTENDANCE}`,
+  TeacherAttendance: {
+    URL: `${process.env.BACKEND_URL_TEACHERATTENDANCE}`,
+    KEY: `${process.env.BACKEND_APIKEY_TEACHERATTENDANCE}`,
   },
-  Note:{
-    URL:`${process.env.BACKEND_URL_NOTE}`,
-    KEY:`${process.env.BACKEND_APIKEY_NOTE}`,
+  Note: {
+    URL: `${process.env.BACKEND_URL_NOTE}`,
+    KEY: `${process.env.BACKEND_APIKEY_NOTE}`,
   },
-  Attendance:{
-    URL:`${process.env.BACKEND_URL_ATTENDANCE}`,
-    KEY:`${process.env.BACKEND_APIKEY_ATTENDANCE}`,
+  Attendance: {
+    URL: `${process.env.BACKEND_URL_ATTENDANCE}`,
+    KEY: `${process.env.BACKEND_APIKEY_ATTENDANCE}`,
   },
-  ClassShedule:{
-    URL:`${process.env.BACKEND_URL_CLASSSHEDULE}`,
-    KEY:`${process.env.BACKEND_APIKEY_CLASSSHEDULE}`,
+  ClassShedule: {
+    URL: `${process.env.BACKEND_URL_CLASSSHEDULE}`,
+    KEY: `${process.env.BACKEND_APIKEY_CLASSSHEDULE}`,
   },
-  Token:{
-    URL:`${process.env.BACKEND_URL_TOKEN}`,
-    KEY:`${process.env.BACKEND_APIKEY_TOKEN}`
-  }
+  Token: {
+    URL: `${process.env.BACKEND_URL_TOKEN}`,
+    KEY: `${process.env.BACKEND_APIKEY_TOKEN}`,
+  },
 }
+
+// ** TOKEN ACTIVE
+export const TOKEN_IN = 'Intk'
+export const TOKEN = 'tk'

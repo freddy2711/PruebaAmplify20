@@ -1,24 +1,19 @@
 import { useEffect, useState } from 'react'
-import Router from 'next/router'
+// import Router from 'next/router'
+import { useRouter } from 'next/router'
 import Button from '../../components/UI/atoms/button/Button'
 import Label from '../../components/UI/atoms/label/Label'
 import styles from '../../components/templates/ingresoNotas/IngresoNotas.module.scss'
 import dynamic from 'next/dynamic'
 import Loader from '../../components/UI/atoms/loader/Loader'
-// import getAlert from '../../hooks/jspdf/alertify'
 import { set, get, remove } from 'local-storage'
 import { apiNotes } from '../api/index'
 import {
   callErrorValid,
-  // TITLE_EMERG,
-  // MSM_NOTAS_MAIL_ERROR,
-  // MSM_NOTAS_MAIL_OK,
   SET_DATA_DOCENTE,
   SET_NOTES_SELECT,
-  // SET_SEMESTERCODE,
-  // convertStringToDateTime,
-  // convertStringToDate,
 } from '../../consts/storageConst'
+import { redirectRouter } from '../../helpers/routerRedirect'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -26,9 +21,6 @@ const TableDinamic = dynamic(
     ssr: false,
   }
 )
-// const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
-//   ssr: false,
-// })
 
 const COLUMNS = [
   { label: 'Seleccionar clase', field: 'Seleccionar', sort: 'asc' },
@@ -42,13 +34,12 @@ const COLUMNS = [
   { label: 'Tipo Clase', field: 'send', sort: 'asc' },
 ]
 const EnviarNotas = () => {
+  const router = useRouter()
   const [Loading, setloading] = useState(true)
   const dataUser: any = get(SET_DATA_DOCENTE)
   const [listCourse, setlistCourse] = useState([])
 
   useEffect(() => {
-    console.log('dataUser', dataUser)
-
     remove(SET_NOTES_SELECT)
     fecthNotesSendClass(dataUser?.code)
   }, [])
@@ -66,10 +57,9 @@ const EnviarNotas = () => {
   }
 
   const linkRedirect = async (row: any) => {
-    console.log("row", row);
-    
     set(SET_NOTES_SELECT, row)
-    Router.push('./enviar-notas/envnotassel')
+    redirectRouter('./enviar-notas/envnotassel', setloading)
+    // router.push('./enviar-notas/envnotassel')
   }
 
   const fecthNotesSendClass = async (codeUser: any) => {

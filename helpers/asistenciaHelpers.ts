@@ -121,7 +121,7 @@ const enviarSolicitud = async (iControlClase: string, classId: string) => {
         `
 
     const emailJson = {
-      EmailList: [listaCorreos],
+      EmailList: [listaCorreos, email],
       DisplayName: 'UPN Docentes',
       Subject: 'Portal Docentes - Ingreso de Solicitud de Marcación',
       IsHtml: true,

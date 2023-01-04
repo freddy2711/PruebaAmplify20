@@ -1,11 +1,9 @@
 import { AxiosInstance } from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
-import {
-  axiosCreate,
-  axiosfetchPrivateSedesUPN
-} from '../../../config/axios'
+import { axiosCreate, axiosfetchPrivateSedesUPN } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const Teacher = objecApi.Teacher
@@ -25,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RED001')
       }
       break
     case 'lstSedesUPN':
@@ -35,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RED002')
       }
       break
     case 'lsttDocumentsAWSS3':
@@ -49,7 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RED003')
       }
       break
     case 'DownloadDocumentsAWSS3':
@@ -61,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RED004')
       }
       break
   }

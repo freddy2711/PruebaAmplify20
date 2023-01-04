@@ -7,7 +7,7 @@ import styles from '../../components/templates/evaluacionComp/EvaluacionComp.mod
 import dynamic from 'next/dynamic'
 import { apiCompetence } from '../api'
 import {
-  TEACHERCODE,
+  USER_SESSION,
   CLASS_SELECTED_EC,
   CB_COMPETENCE,
 } from '../../consts/storageConst'
@@ -83,7 +83,7 @@ const EvaluacionComp = () => {
   const [listEvalua, setListEvalua] = useState(initialState)
 
   useEffect(() => {
-    const techarCode: any = get(TEACHERCODE)
+    const techarCode: any = get(USER_SESSION)
 
     const getList = async () => {
       setloading(true)

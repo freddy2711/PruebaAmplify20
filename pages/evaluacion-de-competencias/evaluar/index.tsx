@@ -20,6 +20,7 @@ import {
   CLASS_SELECTED_EC,
   CB_COMPETENCE,
   DUENO_SESSION,
+	USER_SESSION
 } from '../../../consts/storageConst'
 import { get } from 'local-storage'
 import Loader from '../../../components/UI/atoms/loader/Loader'
@@ -166,7 +167,7 @@ const index = ({ ip }: any) => {
 
   let registerAdjIdVAR: any = null
 
-  const DUENO = get(DUENO_SESSION)
+  const DUENO = get(USER_SESSION)
 
   const handleRadioBtns = (e: any) => {
     const { name, value } = e.target
@@ -265,7 +266,7 @@ const index = ({ ip }: any) => {
       const resp2 = await apiCompetence.listCompetences(
         Accion2,
         competenciaId,
-        '',
+        'null',
         details.ClaCodigo,
         datosAlu.codigoAlumno
       )
@@ -557,38 +558,29 @@ const index = ({ ip }: any) => {
   }
 
   const deletes = async (id: string) => {
-    
-
     try {
+      Swal.fire({
+        title: 'Portal de Docentes',
+        text: `Estas seguro de eliminar el adjunto?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          setloading(true)
+          const resp = await apiCompetence.deletes(id)
+          console.log(resp)
+          if (resp === 1) {
+            await getListAdj(CompetenciaIdVAR, details.ClaCodigo)
+          }
 
-			Swal.fire({
-				title: 'Portal de Docentes',
-				text: `Estas seguro de eliminar el adjunto?`,
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'Si',
-				cancelButtonText: 'No',
-			}).then(async (result) => {
-		
-				if (result.isConfirmed) {
-					setloading(true)
-					const resp = await apiCompetence.deletes(id)
-					console.log(resp)
-					if (resp === 1) {
-						await getListAdj(CompetenciaIdVAR, details.ClaCodigo)
-					}
+          Swal.fire('Eliminado!', 'El adjunto ha sido eliminado.', 'success')
 
-					Swal.fire(
-						'Eliminado!',
-						'El adjunto ha sido eliminado.',
-						'success'
-					)
-
-					setloading(false)
-				}
-			})
-
+          setloading(false)
+        }
+      })
     } catch (error) {
       catchingErrorFront(error)
     }
@@ -774,23 +766,34 @@ const index = ({ ip }: any) => {
         comment: formData.comment,
       }
 
-      await apiCompetence.registerNotesCompetence(item)
-      
-			Swal.fire({
-				title: 'Portal de Docentes',
-				text: `Se registro Correctamente`,
-				icon: 'success',
-				showCancelButton: false,
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'OK',
-			}).then((result) => {
-				console.log(result)
-				if (result.isConfirmed) {
+      const resp = await apiCompetence.registerNotesCompetence(item)
+
+			if(resp === '1'){
+
+				Swal.fire({
+					title: 'Portal de Docentes',
+					text: `Se registro Correctamente`,
+					icon: 'success',
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: 'OK',
+				}).then((result) => {
+					console.log(result)
+					if (result.isConfirmed) {
 						// console.log('confirmed!!!')
 						window.location.reload()
-				}
-			})
-
+					}
+				})
+			}else{
+				Swal.fire({
+					title: 'Se produjo un error',
+					text: `No se han podido guardar los datos.`,
+					icon: 'success',
+					showCancelButton: false,
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: 'OK',
+				})
+			}
 
     } catch (error) {
       console.log(error)

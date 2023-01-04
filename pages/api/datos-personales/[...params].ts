@@ -176,7 +176,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP001')
+        genError(res, error, 'DP001')
       }
       break
     }
@@ -190,7 +190,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP002')
+        genError(res, error, 'DP002')
       }
       break
     }
@@ -204,7 +204,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP003')
+        genError(res, error, 'DP003')
       }
       break
     }
@@ -218,7 +218,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP004')
+        genError(res, error, 'DP004')
       }
       break
     }
@@ -232,7 +232,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP005')
+        genError(res, error, 'DP005')
       }
       break
     }
@@ -246,7 +246,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP006')
+        genError(res, error, 'DP006')
       }
       break
     }
@@ -260,7 +260,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP007')
+        genError(res, error, 'DP007')
       }
       break
     }
@@ -274,7 +274,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP008')
+        genError(res, error, 'DP008')
       }
       break
     }
@@ -288,7 +288,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP009')
+        genError(res, error, 'DP009')
       }
       break
     }
@@ -302,7 +302,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP010')
+        genError(res, error, 'DP010')
       }
       break
     }
@@ -316,7 +316,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP011')
+        genError(res, error, 'DP011')
       }
       break
     }
@@ -331,7 +331,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(lista)
         res.status(200).json(lista)
       } catch (error: any) {
-        genError(res,error,'DP012')
+        genError(res, error, 'DP012')
       }
       break
     }
@@ -346,7 +346,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data)
         res.status(200).json(data)
       } catch (error: any) {
-        genError(res,error,'DP013')
+        genError(res, error, 'DP013')
       }
       break
     }
@@ -361,7 +361,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP014')
+        genError(res, error, 'DP014')
       }
       break
     }
@@ -375,7 +375,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP015')
+        genError(res, error, 'DP015')
       }
       break
     }
@@ -389,7 +389,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP016')
+        genError(res, error, 'DP016')
       }
       break
     }
@@ -403,7 +403,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(translateEstudy(data.detail))
         res.status(200).json(translateEstudy(data.detail))
       } catch (error: any) {
-        genError(res,error,'DP017')
+        genError(res, error, 'DP017')
       }
       break
     }
@@ -418,7 +418,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data)
         res.status(200).json(data)
       } catch (error: any) {
-        genError(res,error,'DP018')
+        genError(res, error, 'DP018')
       }
       break
     }
@@ -434,7 +434,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(translateConos(data.detail))
         res.status(200).json(translateConos(data.detail))
       } catch (error: any) {
-        genError(res,error,'DP019')
+        genError(res, error, 'DP019')
       }
       break
     }
@@ -449,7 +449,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP020')
+        genError(res, error, 'DP020')
       }
       break
     }
@@ -463,7 +463,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP021')
+        genError(res, error, 'DP021')
       }
       break
     }
@@ -477,7 +477,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(translateIdiomas(data.detail))
         res.status(200).json(translateIdiomas(data.detail))
       } catch (error: any) {
-        genError(res,error,'DP022')
+        genError(res, error, 'DP022')
       }
       break
     }
@@ -492,7 +492,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP023')
+        genError(res, error, 'DP023')
       }
       break
     }
@@ -506,7 +506,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(translateRefLab(data.detail))
         res.status(200).json(translateRefLab(data.detail))
       } catch (error: any) {
-        genError(res,error,'DP024')
+        genError(res, error, 'DP024')
       }
       break
     }
@@ -521,7 +521,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP025')
+        genError(res, error, 'DP025')
       }
       break
     }
@@ -535,7 +535,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP026')
+        genError(res, error, 'DP026')
       }
       break
     }
@@ -549,7 +549,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(translateAdjuntos(data.detail))
       } catch (error: any) {
-        genError(res,error,'DP027')
+        genError(res, error, 'DP027')
       }
       break
     }
@@ -564,7 +564,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log('personaAdjuntoGuardar____', data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP028')
+        genError(res, error, 'DP028')
       }
       break
     }
@@ -581,7 +581,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP029')
+        genError(res, error, 'DP029')
       }
       break
     }
@@ -594,7 +594,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error) {
-        genError(res,error,'DP030')
+        genError(res, error, 'DP030')
       }
 
       break
@@ -609,7 +609,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         console.log(data.detail)
         res.status(200).json(data.detail)
       } catch (error: any) {
-        genError(res,error,'DP031')
+        genError(res, error, 'DP031')
       }
       break
     }

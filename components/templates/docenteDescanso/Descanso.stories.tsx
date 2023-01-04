@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/react'
-import styles from './Abiertas.module.scss'
+import styles from './Descanso.module.scss'
 
 const defaultStyle = {
   outline: '1px solid #bebec2',

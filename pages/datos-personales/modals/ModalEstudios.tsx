@@ -7,6 +7,8 @@ import Button from './../../../components/UI/atoms/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import dynamic from 'next/dynamic'
 import moment from 'moment'
+import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get, set } from 'local-storage'
 
 import { paisInstitucion } from './../../../redux/actions/guardarActions'
 import { saveEstudiosAction } from './../../../redux/actions/infoGeneralAction'
@@ -239,6 +241,9 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
     e.preventDefault()
     console.log('saveNewEL')
 
+    const DUENO: any = get(SET_DATA_DOCENTE)
+    const DUENOSESSION = DUENO?.userName
+
     const obj = {
       IdEstudio: id,
       IdPersona: info.idPersona,
@@ -256,7 +261,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
       rutaFile: null,
       CodigoClasificacionCarrera: ddlClasificacionCarrera,
       Activo: '1',
-      audit_usuario_creacion: 'RVI',
+      audit_usuario_creacion: DUENOSESSION, //'RVI',
       EsValidadoSunedu: false,
       UsuarioValidaSunedu: null,
       FechaValidaSunedu: null,

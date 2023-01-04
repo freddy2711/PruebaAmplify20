@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+
 import { json2xml } from 'xml-js'
+
 import Router from 'next/router'
 import Inputs from '../../components/UI/atoms/input/Input'
 import Button from '../../components/UI/atoms/button/Button'
@@ -9,7 +11,7 @@ import Tabla from '../../components/UI/organisms/table/Tabla'
 import dynamic from 'next/dynamic'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import getAlert from '../../hooks/jspdf/alertify'
-import ViewInput from '../../components/UI/molecules/viewInput/ViewInput'
+import ViewInput from '../../components/UI/molecules/recuperarAdelantarClases/viewInput/ViewInput'
 import { get } from 'local-storage'
 import { apiNotes, apiTokens, apiAsistencia } from '../api/index'
 import Select from '../../components/UI/atoms/select/Select'
@@ -22,6 +24,7 @@ import {
   SET_NOTES_SELECT,
   MSM_NOTAS_CLASE_VIRTUAL,
   SET_SEMESTERCODE,
+  SET_SEMESTERCRONOLOGICO,
   MSM_SE_ACTIVA_REGISTRO,
   changeRegExp,
   MSM_GENERA_TOKEN,
@@ -34,8 +37,17 @@ import {
   MSM_REGISTRO_OK,
   convertStringToDateTime,
   DUENO_SESSION,
+  MSM_TOKEN_NO2,
+  SET_NOTES_CA,
+  SET_NOTES_RE,
+  callErrorValid,
 } from '../../consts/storageConst'
+import { faL } from '@fortawesome/free-solid-svg-icons'
+import { redirectRouter } from '../../helpers/routerRedirect'
 
+const Modals = dynamic(() => import('../../components/UI/atoms/modal/Modal'), {
+  ssr: false,
+})
 const Thead = dynamic(
   () => import('../../components/UI/molecules/table/thead/Thead'),
   {
@@ -77,17 +89,23 @@ const COLUMNS = [
   { label: 'Nota(*)', field: 'notekey', sort: 'asc' },
   { label: 'Est.', field: 'madeEstate', sort: 'asc' },
 ]
+let dateTimeNow = ''
 const IngresoNotas = () => {
   const [Loading, setloading] = useState(true)
-  const [disable, setDisable] = useState(true)
+  const [stateMail, setStateMail] = useState(true)
+  const [disable, setDisable] = useState(false)
   const [listOption, setListOption] = useState([])
   const [listStudentNota, setListStudentNota] = useState([])
   const [tokenDinamic, setTokenDinamic] = useState(0)
   const [guardarDisable, setGuardarDisable] = useState(true)
+  const [progress, setprogress] = useState(0)
+  const [modalShowAvance, setModalShowAvance] = useState(false)
+  const [requestTableDinamic, setRequestTableDinamic] = useState({})
 
   const dataUser: any = get(SET_DATA_DOCENTE)
   const dataNotes: any = get(SET_NOTES_SELECT)
   const semesterCode: any = get(SET_SEMESTERCODE)
+  const semesterCrono: any = get(SET_SEMESTERCRONOLOGICO)
   const dueñoSession: any = get(DUENO_SESSION)
   const dateNow = convertStringToDate(new Date())
   // const dateTimeNow = `${convertStringToDate(
@@ -96,14 +114,16 @@ const IngresoNotas = () => {
   selectNote = get(SET_NOTES_SELECT)
   const ip = '::1'
   useEffect(() => {
-    setloading(true)
     const obj = {
       ip,
       user: dueñoSession,
     }
-    fetchNotesValidate(obj)
+    // if (dataUser?.code !== undefined) {
+    //   return
+    // }
     ClaCodigo = dataNotes?.ClaCodigo
     fetchTokenClass(ClaCodigo)
+    fetchNotesValidate(obj)
     // if (ClaCodigo === undefined && ClaCodigo === null) {
     //   Router.push('./registro-de-notas')
     // }
@@ -137,7 +157,7 @@ const IngresoNotas = () => {
   const ValidaEmail = async (userCode: any, token: number) => {
     let emailUPN = await fetchTokenEmail(userCode)
     if (emailUPN.includes('@upn.pe') || emailUPN.includes('@upn.edu.pe')) {
-      emailUPN = 'javierdj22@gmail.com'
+      // emailUPN = 'javierdj22@gmail.com'
       const msj = `<center><p>${token}</p></center>`
       const emailJson = {
         EmailList: [emailUPN],
@@ -194,7 +214,6 @@ const IngresoNotas = () => {
       gvNotas = false
     }
     if (dataUser?.ClaTipo === 'VT') {
-      setloading(false)
       return getAlert({
         title: TITLE_EMERG,
         text: MSM_NOTAS_CLASE_VIRTUAL,
@@ -213,8 +232,7 @@ const IngresoNotas = () => {
       state: '',
       typeToken,
     }
-    
-    if (enviarTokenPortal  === 1) {
+    if (enviarTokenPortal === 1) {
       const valid = {
         token: tokenDinamic,
         userCode: dataUser?.code,
@@ -261,19 +279,21 @@ const IngresoNotas = () => {
       })
     }
 
-    const dateTimeNow = `${convertStringToDate(
+    dateTimeNow = `${convertStringToDate(
       dtParametroValidador[0]?.date
     )} ${convertStringToDateTime(dtParametroValidador[0]?.date)}`
     const req = {
       Periodo: semesterCode,
       userName: dataUser?.userName,
       userCode: dataUser?.code,
-      fechahora: dateTimeNow,
+      fechaHora: dateTimeNow,
       token: tokenDinamic,
     }
-    console.log("fetchTokenGoogleValidate", req);
-    
+    console.log('fetchTokenGoogleValidate', req)
+
     const pinCorrecto = await fetchTokenGoogleValidate(req)
+    console.log('pinCorrecto', pinCorrecto)
+
     setloading(false)
     if (pinCorrecto) {
       obj.state = MSM_TOKEN_OK
@@ -336,10 +356,13 @@ const IngresoNotas = () => {
       classCode: ClaCodigo,
       noteId: e?.target?.value,
     }
+    setRequestTableDinamic(obj)
     const row: any = await ControlarNota(ClaCodigo, e?.target?.value)
     if (row === 2) {
+      showTableDinami = MSM_VISIBLE_NONE
+      showTableStatic = MSM_VISIBLE_BLOCK
       setloading(false)
-      getAlert({
+      return getAlert({
         title: TITLE_EMERG,
         text: MSM_SE_ACTIVA_REGISTRO,
         confirmButtonText: `Ok`,
@@ -363,14 +386,13 @@ const IngresoNotas = () => {
 
   const ControlarNota = async (classCode: any, notaCode: any) => {
     const sem = await fecthSemestre(classCode)
-    console.log('fecthSemestre', sem)
     const obj = {
       semesterCode: sem,
       notaCode,
       classCode,
     }
     const fech = await fecthSemestreControler(obj)
-    if (fech <= '1900-01-01' && fech < dateNow) {
+    if (fech <= '1900-01-01' && convertStringToDate(fech) < dateNow) {
       return 2
     } else {
       return 3
@@ -391,6 +413,8 @@ const IngresoNotas = () => {
       noteId: 0,
       notekey: inputNote(item),
     }))
+    console.log('rows2', rows2)
+
     setloading(false)
     setListStudentNota(rows2)
   }
@@ -402,7 +426,8 @@ const IngresoNotas = () => {
         style={{ width: '50px' }}
         id={`id_${row.studentCode}`}
         name="txtCode"
-        placeholder="0"
+        // placeholder="0"
+        placeholder={row.note === '' ? '0' : row.note}
         onchange={(_: any) => {
           changeNote(row.studentCode, _)
         }}
@@ -435,33 +460,12 @@ const IngresoNotas = () => {
     handleSelectedChange(e)
     showTableDinami = MSM_VISIBLE_NONE
     showTableStatic = MSM_VISIBLE_BLOCK
+    Router.push('../registro-de-notas')
   }
 
-  const SendGuardar = () => {
-    setloading(true)
-    const nota = listTempoNota.map((_: any) => {
-      return {
-        s_cla_codigo: ClaCodigo,
-        s_alu_codigo: _.studentCode,
-        n_nota_id: _.noteValue,
-        n_alnode_valor: selectOption,
-        audit_usuario: dataUser?.code,
-      }
-    })
-    const input: any = {
-      registro: {
-        nota,
-      },
-    }
-    const xml = json2xml(input, {
-      compact: true,
-    })
-    const obj = {
-      classCode: ClaCodigo,
-      dateXml: xml,
-      ip,
-    }
-    fecthNotespostState(obj)
+  const SendGuardar = async () => {
+    const rs = await redirectRouter('', setloading)
+    if (!rs) setModalShowAvance(true)
   }
 
   const fecthSemestreControler = async (obj: any) => {
@@ -476,7 +480,6 @@ const IngresoNotas = () => {
 
   const fecthNotespostState = async (obj: any) => {
     const resp = await apiNotes.notespostState(obj)
-    console.log('notespostState', resp)
     getAlert({
       title: TITLE_EMERG,
       text: MSM_REGISTRO_OK,
@@ -497,6 +500,7 @@ const IngresoNotas = () => {
 
   const fetchTokenClass = async (classCode: any) => {
     const resp = await apiNotes.notesClass(classCode)
+    setloading(false)
     setListOption(resp)
   }
 
@@ -526,10 +530,8 @@ const IngresoNotas = () => {
   }
 
   const fetchNotesValidate = async (obj: any) => {
-    console.log("fetchNotesValidate", obj);
     const resp = await apiNotes.notesValidate(obj)
-    console.log("notesValidate", resp);
-    
+
     // if (resp?.result === 0) {
     //   Router.push('./Logout')
     // }
@@ -550,8 +552,145 @@ const IngresoNotas = () => {
     return resp?.stateToken
   }
 
+  const onclickguardar = async () => {
+    setModalShowAvance(false)
+    setloading(true)
+    const valid = {
+      token: tokenDinamic,
+      userCode: dataUser?.code,
+      classCode: ClaCodigo,
+    }
+    const listToken = []
+    const dtValidarToken = await fetchTokenValidate(valid)
+    if (dtValidarToken?.tokenId !== undefined) {
+      listToken.push(dtValidarToken)
+    }
+    /* BEGIN VALIDA QUE EL REGISTRO SI FUE ENVIADO */
+    const obj1 = {
+      classCode: ClaCodigo,
+      classEstate: SET_NOTES_RE,
+    }
+    const rs1: any = await fecthNotesStudent(obj1)
+    if (callErrorValid(rs1, setloading) === undefined) return
+    const obj2 = {
+      classCode: ClaCodigo,
+      classEstate: SET_NOTES_CA,
+    }
+    const rs2: any = await fecthNotesStudent(obj2)
+    if (rs1.noteCode !== 0 && rs2.noteCode !== 0) {
+      return getAlert({
+        title: TITLE_EMERG,
+        text: `El registro ya fue enviado`,
+        confirmButtonText: `Ok`,
+      })
+    }
+    /* EBD VALIDA QUE EL REGISTRO SI FUE ENVIADO */
+    const reqCoup = {
+      semesterCode,
+      userCode: dataUser?.code,
+      limitState: 1,
+    }
+    const dtParametroValidador = await fetchTokenCoupling(reqCoup)
+    console.log('dtParametroValidador', dtParametroValidador)
+
+    if (dtParametroValidador?.length <= 0) {
+      setloading(false)
+      return getAlert({
+        title: TITLE_EMERG,
+        text: `Genere token para el semestre ${semesterCrono}`,
+        confirmButtonText: `Ok`,
+      })
+    }
+
+    dateTimeNow = `${convertStringToDate(
+      dtParametroValidador[0]?.date
+    )} ${convertStringToDateTime(dtParametroValidador[0]?.date)}`
+    const req = {
+      Periodo: semesterCode,
+      userName: dataUser?.userName,
+      userCode: dataUser?.code,
+      fechahora: dateTimeNow,
+      token: tokenDinamic,
+    }
+    const pinCorrecto = await fetchTokenGoogleValidate(req)
+
+    if (listToken?.length > 0) onclickSendData()
+    else if (pinCorrecto) onclickSendData()
+    else {
+      setDisable(true)
+      setloading(false)
+      const alertstat = await getAlert({
+        title: TITLE_EMERG,
+        text: `${MSM_TOKEN_NO2} !!`,
+        confirmButtonText: `Ok`,
+      })
+
+      if (alertstat) {
+        setModalShowAvance(true)
+      }
+      return
+    }
+  }
+  const onclickSendData = async () => {
+    setloading(true)
+    const nota = listTempoNota.map((_: any) => {
+      return {
+        s_cla_codigo: ClaCodigo,
+        s_alu_codigo: _.studentCode,
+        n_nota_id: selectOption,
+        n_alnode_valor: _.noteValue,
+        audit_usuario: dataUser?.code,
+      }
+    })
+    const input: any = {
+      registro: {
+        nota,
+      },
+    }
+    const xml = json2xml(input, {
+      compact: true,
+    })
+    const obj = {
+      classCode: ClaCodigo,
+      dateXml: xml,
+      ip,
+    }
+    await fecthNotespostState(obj)
+    setStateMail(false)
+    selectOption = '0'
+    fetchTokenClass(ClaCodigo)
+    setListStudentNota([])
+    // window.location.reload()
+  }
+  const fecthNotesStudent = async (obj: any) => {
+    const rs = await apiNotes.notesStudent(obj)
+    return rs
+  }
   return (
     <div className={styles.contenido}>
+      <Modals
+        size="lg"
+        show={modalShowAvance}
+        onHide={() => setModalShowAvance(false)}
+        titulo={'Código de Verificación'}
+        onGuardar={true}
+        onclickguardar={onclickguardar}
+        children={
+          <div className="form-group row mt-3">
+            <ViewInput
+              disabled={false}
+              texLabel={'Ingresar código :'}
+              typeInput={'text'}
+              nameInput={'  '}
+              idInput={'generateId'}
+              placeholder={' '}
+              Onchange={(_: any) => {
+                onChangeToken(_)
+              }}
+            />
+          </div>
+        }
+      />
       <Loader loading={Loading} />
       <div className={styles.content}>
         <div className={styles.titulo}>
@@ -569,7 +708,7 @@ const IngresoNotas = () => {
             </div>
           </Alerta>
         </div>
-        <div className={styles.rowButtons}>
+        {/* <div className={styles.rowButtons}>
           <ViewInput
             disabled={false}
             texLabel={'Ingresar código :'}
@@ -588,7 +727,7 @@ const IngresoNotas = () => {
           >
             Validar Token
           </Button>
-        </div>
+        </div> */}
         <div className={styles.rowButtons}>
           Seleccionar nota :
           <Select
@@ -612,9 +751,7 @@ const IngresoNotas = () => {
           </Select>
         </div>
         <hr />
-        <div
-          style={{ display: showTableStatic }}
-        >
+        <div style={{ display: showTableStatic }}>
           <Tabla>
             <Thead>
               <th
@@ -626,9 +763,7 @@ const IngresoNotas = () => {
             </Thead>
             {selectNote?.SedCodigo === undefined ? (
               <Tbody>
-                <tr>
-                  No se encontro Registro . . .
-                </tr>
+                <tr>No se encontro Registro . . .</tr>
               </Tbody>
             ) : (
               <Tbody>
@@ -668,9 +803,7 @@ const IngresoNotas = () => {
             )}
           </Tabla>
         </div>
-        <div
-          style={{ display: showTableDinami }}
-        >
+        <div style={{ display: showTableDinami }}>
           <TableDinamic
             columns={COLUMNS}
             listData={listStudentNota}

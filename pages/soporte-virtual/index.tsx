@@ -8,6 +8,9 @@ import ConsultaBlock from './../../components/UI/molecules/consultaBlock'
 import { apiSoporteVirtual } from '../api'
 import dynamic from 'next/dynamic'
 import Anchor from '../../components/UI/atoms/anchor/Anchor'
+import { get } from 'local-storage'
+
+import { USER_SESSION } from '../../consts/storageConst'
 
 const Tbody = dynamic(
   () => import('../../components/UI/molecules/table/tbody/Tbody'),
@@ -20,11 +23,13 @@ const index = () => {
   const [Loading, setloading] = useState(false)
   const [list, setList] = useState([])
 
+  const teacherCode = get(USER_SESSION)
+
   useEffect(() => {
     setloading(true)
     const getConsultas = async () => {
       try {
-        const resp = await apiSoporteVirtual.consulta('N00011885')
+        const resp = await apiSoporteVirtual.consulta(teacherCode)
         // console.log(resp.data)
         setList(resp.data)
         setloading(false)
@@ -61,7 +66,7 @@ const index = () => {
             </Anchor>
           </div>
 
-          <div className={styles.tabla}>
+          <div className={`${styles.tabla} table table-responsive`}>
             <Tabla classname="table-bordered">
               <Thead>
                 <th

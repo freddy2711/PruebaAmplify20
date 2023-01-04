@@ -1,0 +1,47 @@
+.viewTableConten {
+  display: grid;
+  grid-template-columns: 24.4% 1fr;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  align-items: center;
+
+  th {
+    background-color: #343a40;
+    color: white;
+  }
+
+  td {
+    background-color: #fcedc2;
+  }
+
+  @media (max-width: 767px){
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
+.TableNoData {
+  text-align: center;
+}
+
+.bloqueLineal {
+  height: 2px;
+  background-color: #eff0f3;
+  width: 100%;
+}
+
+.FormatedTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.LinkStyle {
+  cursor: pointer;
+  color: #d24726;
+  font-weight: bold;
+  &:hover {
+    color: #666;
+  }
+}

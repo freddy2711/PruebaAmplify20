@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import styles from '../../components/templates/evaluacionDocente/EvaluacionDocente.module.scss'
 import Label from '../../components/UI/atoms/label/Label'
 import Loader from '../../components/UI/atoms/loader/Loader'
+import { catchingErrorFront } from '../../helpers/helpers'
 import { apiEvaluacionDocente } from '../api'
 
 const index = () => {
@@ -15,8 +16,14 @@ const index = () => {
   }
 
   const ApiDownloadDocuments = async (rutaUrl: any) => {
-    const response = await apiEvaluacionDocente.DownloadDocumentsAWSS3(rutaUrl)
-    return response
+    try {
+      const response = await apiEvaluacionDocente.DownloadDocumentsAWSS3(rutaUrl)
+      return response
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+
   }
 
   const FormatedValue = (Data: any) => {
@@ -76,8 +83,15 @@ const index = () => {
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-      const response = await ApiAssessmentTeacher()
-      FormatedValue(response)
+      try {
+        const response = await ApiAssessmentTeacher()
+        FormatedValue(response)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+      
+
       setloading(false)
     }
 

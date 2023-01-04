@@ -88,7 +88,7 @@ const DescansoDocente = () => {
   const techSemesterThursday = async (dataDescanso: any) => {
     return await apiDescanso.SemesterThursday(dataDescanso)
   }
-  
+
   const btnGuardar = async () => {
     setloading(true)
     // console.log('btnGuardar', dataDescanso)

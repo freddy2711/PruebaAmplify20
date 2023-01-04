@@ -1,11 +1,9 @@
-import {
-  axiosCreate,
-  axiosfetchPrivateEmail
-} from '../../../config/axios'
+import { axiosCreate, axiosfetchPrivateEmail } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
 import { AxiosInstance } from 'axios'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const ClassShedule = objecApi.ClassShedule
@@ -29,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA001')
       }
       break
     }
@@ -43,7 +41,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA002')
       }
       break
     }
@@ -55,7 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA003')
       }
       break
     }
@@ -71,7 +69,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA004')
       }
       break
     }
@@ -83,7 +81,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA005')
       }
       break
     }
@@ -96,11 +94,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA006')
       }
       break
     }
     case 'ClasEnabled': {
+      try {
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
+        const URL = apiPath.recuperarAdelantarClases.PATH_GetClasEnabled(
+          params[5] === undefined ? '' : params[5],
+          params[1],
+          params[2],
+          params[3],
+          params[4]
+        )
+        const { data } = await apiCall(URL)
+        const result = data.detail
+        res.status(200).json(result)
+      } catch (error) {
+        genError(res, error, 'RA007')
+      }
+      break
+    }
+    case 'ClasEnabledEdit': {
       try {
         const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const URL = apiPath.recuperarAdelantarClases.PATH_GetClasEnabled(
@@ -114,7 +130,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA008')
       }
       break
     }
@@ -134,7 +150,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           })
         }
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA009')
       }
       break
     }
@@ -148,7 +164,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA010')
       }
       break
     }
@@ -168,7 +184,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           })
         }
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA011')
       }
       break
     }
@@ -182,7 +198,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA012')
       }
       break
     }
@@ -196,7 +212,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA013')
       }
       break
     }
@@ -210,7 +226,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA014')
       }
       break
     }
@@ -222,7 +238,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA015')
       }
       break
     }
@@ -233,7 +249,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         res.status(200).json(resp.data.Status)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA016')
       }
 
       break
@@ -249,7 +265,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA017')
       }
       break
     }
@@ -257,13 +273,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
         const apiCall: AxiosInstance = axiosCreate(Attendance)
         const URL = apiPath.recuperarAdelantarClases.PATH_GetProcessUser(
-          params[1],params[2]
+          params[1],
+          params[2]
         )
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA018')
       }
       break
     }

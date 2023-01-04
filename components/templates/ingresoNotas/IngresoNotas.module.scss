@@ -54,7 +54,6 @@
     }
   }
 }
-
 .contenido {
   min-height: calc(100vh - 243px);
   .content {
@@ -99,6 +98,11 @@
     .tabla {
       margin-bottom: 1rem;
     }
+  }
+
+  .bg-warning {
+    --bs-bg-opacity: 1;
+    background-color: red !important;
   }
 }
 

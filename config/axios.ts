@@ -5,7 +5,7 @@ const axiosfetchPublic = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 20000,
+  // timeout: 60000,
 })
 
 export default axiosfetchPublic
@@ -20,15 +20,16 @@ export default axiosfetchPublic
 // });
 // export default axiosfetchPrivate2;
 
-export const axiosCreate = ({URL,KEY}:any) => axios.create({
-  baseURL: `${URL}`,
-  headers: {
-    'x-api-key': `${KEY}`,
-    'Content-Type': 'application/json',
-    // 
-  },
-	timeout: 20000,
-})
+export const axiosCreate = ({ URL, KEY }: any) =>
+  axios.create({
+    baseURL: `${URL}`,
+    headers: {
+      'x-api-key': `${KEY}`,
+      'Content-Type': 'application/json',
+      //
+    },
+    // timeout: 20000,
+  })
 
 export const axiosfetchPrivateWSCV = axios.create({
   baseURL: `${process.env.BACKEND_URL_WSCV}`,

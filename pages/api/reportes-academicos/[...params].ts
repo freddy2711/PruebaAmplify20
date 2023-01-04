@@ -1,8 +1,9 @@
 import { AxiosInstance } from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { axiosCreate} from '../../../config/axios'
+import { axiosCreate } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const Attendance = objecApi.Attendance
@@ -22,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA001')
       }
       break
     case 'listTutoria':
@@ -33,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA002')
       }
       break
     case 'listClassAttendance':
@@ -46,7 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA003')
       }
       break
     case 'listNotes':
@@ -57,7 +58,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA004')
       }
       break
     case 'listClassStatistics':
@@ -69,7 +70,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA005')
       }
       break
     case 'listCompetenceGeneralByClass':
@@ -82,7 +83,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA006')
       }
       break
     case 'listCompetenceSchedule':
@@ -96,7 +97,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA007')
       }
       break
     case 'listDetailClass':
@@ -110,7 +111,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'RA008')
       }
       break
     default:

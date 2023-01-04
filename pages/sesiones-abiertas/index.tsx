@@ -4,7 +4,7 @@ import Anchor from '../../components/UI/atoms/anchor/Anchor'
 import Label from '../../components/UI/atoms/label/Label'
 import Button from '../../components/UI/atoms/button/Button'
 import styles from '../../components/templates/sesiones/abiertas/Abiertas.module.scss'
-import { set } from 'local-storage'
+import { get, set } from 'local-storage'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import { apiSeccionOpen } from '../api/index'
 import dynamic from 'next/dynamic'
@@ -15,6 +15,8 @@ import {
   CLASE_ID,
   TIPO_DOCENTE,
   DUENO_SESSION,
+  USER_SESSION,
+  SET_DATA_DOCENTE,
 } from './../../consts/storageConst'
 import moment from 'moment'
 import 'moment/locale/es'
@@ -62,6 +64,8 @@ const SesionesAbiertas = () => {
   const [seccionOpen, setSeccionOpen] = useState(initialStateSeccionOpen)
   const [Loading, setloading] = useState(false)
   // const dataRecover: any = get('dataUser')
+  const DUENO: any = get(SET_DATA_DOCENTE)
+  const User = DUENO?.userName
 
   const formatDate = (fecha: string) => {
     const dateSplit = fecha.split('T')
@@ -101,7 +105,7 @@ const SesionesAbiertas = () => {
 
   useEffect(() => {
     setloading(true)
-    fetchSeccionOpen('N00011885')
+    fetchSeccionOpen(get(USER_SESSION))
   }, [])
 
   const LinkButton = (row: any) => {
@@ -130,7 +134,7 @@ const SesionesAbiertas = () => {
       set(ASISTENCIA, 0)
     }
 
-    set(DUENO_SESSION, 'RVI')
+    set(DUENO_SESSION, User)
     set(CONTROL_CLASE_ID, row.classControl)
     set(CLASE_ID, row.classCode)
     set(TIPO_DOCENTE, row.typeTeacher)

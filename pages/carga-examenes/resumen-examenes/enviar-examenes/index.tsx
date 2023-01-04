@@ -11,14 +11,13 @@ import styles from '../../../../components/templates/cargaExamenes/resumen-exame
 import { useState, useEffect } from 'react'
 import Label from '../../../../components/UI/atoms/label/Label'
 import {
-  DUENO_SESSION,
   SET_DATAS_SELEC_COURSES_TEACHER_CE,
-  SET_TEACHERCODE,
+  SET_DATA_DOCENTE,
+  USER_SESSION,
 } from '../../../../consts/storageConst'
 import { get } from 'local-storage'
 import dynamic from 'next/dynamic'
 import Button from '../../../../components/UI/atoms/button/Button'
-import Router from 'next/router'
 import ViewList from '../../../../components/UI/molecules/cargaExamenes/ViewList/ViewList'
 import { apiCargaExamenes } from '../../../api'
 import Swal from 'sweetalert2'
@@ -26,6 +25,7 @@ import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import FileInputComponent from 'react-file-input-previews-base64'
+import { catchingErrorFront } from '../../../../helpers/helpers'
 
 const Alerta = dynamic(
   () => import('../../../../components/UI/atoms/alert/Alerts'),
@@ -111,10 +111,9 @@ const index = () => {
     btnUploadFile: true,
     lstNotes: false,
   })
-  const  [ViewInputExams,setViewInputExams] = useState(false)
+  const [ViewInputExams, setViewInputExams] = useState(false)
   const DataSelect: any = JSON.parse(get(SET_DATAS_SELEC_COURSES_TEACHER_CE))
-  const UserID =
-    get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
+  const UserID = get(USER_SESSION)
   let response: any = []
 
   const ApiClassNote = () => {
@@ -141,30 +140,50 @@ const index = () => {
     notaCode: any,
     classCode: any
   ) => {
-    const result = apiCargaExamenes.listControlNotes(
-      semesterCode,
-      notaCode,
-      classCode
-    )
-    return result
+
+    try {
+      const result = apiCargaExamenes.listControlNotes(
+        semesterCode,
+        notaCode,
+        classCode
+      )
+      return result
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+
+    
   }
 
   const ApiStateExams = (codeTeacher: any, noteId: any, ClassCode: any) => {
-    const result = apiCargaExamenes.listStateExams(
-      codeTeacher,
-      noteId,
-      ClassCode
-    )
-    return result
+
+    try {
+      const result = apiCargaExamenes.listStateExams(
+        codeTeacher,
+        noteId,
+        ClassCode
+      )
+      return result
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
   }
 
   const ApiActiveExams = (codeTeacher: any, noteId: any, ClassCode: any) => {
-    const result = apiCargaExamenes.listActiveExam(
-      codeTeacher,
-      noteId,
-      ClassCode
-    )
-    return result
+
+    try {
+      const result = apiCargaExamenes.listActiveExam(
+        codeTeacher,
+        noteId,
+        ClassCode
+      )
+      return result
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
   }
 
   // apis
@@ -193,6 +212,7 @@ const index = () => {
       if (state[0]?.s_state === 'A') {
         ViewMessage(0)
       } else {
+   
         const date = new Date(fech?.Fecha)
         const forDate = moment(date).format('YYYY-MM-DD')
         if (forDate === '1900-01-01') {
@@ -279,12 +299,14 @@ const index = () => {
 
   const ValiDate = () => {
     const date = new Date()
+    const tomorrow = new Date()
+    tomorrow.setDate(date.getDate() + 1)
     if (startDate < date) {
       return (
         <DatePicker
           dateFormat={'yyyy-MM-dd'}
-          minDate={startDate}
-          maxDate={startDate}
+          minDate={startDate === undefined ? tomorrow : startDate}
+          maxDate={startDate === undefined ? date : startDate}
           className="form-control text-center"
           disabled={controlsDisabled.datePrint}
           onChange={(date) => handleChange(date)}
@@ -299,7 +321,7 @@ const index = () => {
         <DatePicker
           dateFormat={'yyyy-MM-dd'}
           minDate={tomorrow}
-          maxDate={dateMax}
+          maxDate={DateLimit !== 'Invalid date' ? DateLimit !== '' ? dateMax : today : today}
           className="form-control text-center"
           disabled={controlsDisabled.datePrint}
           selected={startDate}
@@ -310,7 +332,7 @@ const index = () => {
   }
 
   const returClick = () => {
-    Router.push('/carga-examenes/resumen-examenes')
+    window.location.href = '/carga-examenes/resumen-examenes'
   }
 
   const handlePrintCal = (conten: any) => {
@@ -1523,7 +1545,7 @@ const index = () => {
     if (nota === '0' || nota === '') {
       ViewMessage(4, 'Seleccione la nota para la carga de exámen.')
     } else {
-      if (dFechaImpresion === undefined) {
+      if (dFechaImpresion === undefined || dFechaImpresion === null) {
         ViewMessage(4, 'Ingrese la fecha a imprimir exámen.')
       } else {
         sCantidadTipoExamen1 =
@@ -1650,7 +1672,8 @@ const index = () => {
               ViewMessage(4, msgInvaliFile)
             } else {
               const sclase = DataCoursesByTeacher?.ClaCodigo
-              const sUsuario = get(DUENO_SESSION)
+              const DUENO:any = get(SET_DATA_DOCENTE)
+              const sUsuario = DUENO?.userName
 
               const newNameFile =
                 sclase + '_' + nota + '_' + sUsuario + '_A.pdf'
@@ -1727,9 +1750,10 @@ const index = () => {
                 sCantidadTipoExamen5,
                 sHojasAdicionales
               )
-              console.log('response', response)
+              
               ViewMessage(5)
               ControlsDisabled()
+              Cancel()
             }
           }
         }
@@ -1964,15 +1988,24 @@ const index = () => {
   }
 
   const Cancel = async () => {
-    console.log("cancelar")
+    setloading(true)
     setViewInputExams(false)
-      setDataClassNote([])
-      const result = await ApiClassNote()
-      setDataClassNote(result)
-      setDateLimit('')
-      setViewInputExams(true)
-      setStartDate(null)
-      setSeleTypeExam('1')
+    const input: any = document.querySelector("input[type='file']")
+    input.value = ''
+    setDataClassNote([])
+    const result = await ApiClassNote()
+    setDataClassNote(result)
+    setDateLimit('')
+    setViewInputExams(true)
+    setStartDate(undefined)
+    setSeleTypeExam('1')
+    setArchivo({
+      ValueFile: initFile,
+      ValueFile2: initFile2,
+      ValueFile3: initFile3,
+      ValueFile4: initFile4,
+      ValueFile5: initFile5,
+    })
     setcontrolsDisabled({
       lstTypeExam: true,
       quantityPrint: true,
@@ -1980,8 +2013,9 @@ const index = () => {
       quantityNumber: true,
       fileUpload: true,
       btnUploadFile: true,
-      lstNotes: false
+      lstNotes: false,
     })
+    setloading(false)
   }
 
   // functions
@@ -1991,16 +2025,23 @@ const index = () => {
       setloading(true)
       setViewInputExams(true)
       setDataCoursesByTeacher(DataSelect)
-      const result = await ApiClassNote()
-      setDataClassNote(result)
-      const responseSemester: any = await ApiSemester()
-      setSemester(responseSemester?.semesterCode)
-      const responseAmountStudents = await ApiAmountStudents(
-        responseSemester?.semesterCode,
-        1,
-        DataSelect?.ClaCodigo
-      )
-      setNumberOfStudents(responseAmountStudents)
+
+      try {
+        const result = await ApiClassNote()
+        setDataClassNote(result)
+        const responseSemester: any = await ApiSemester()
+        setSemester(responseSemester?.semesterCode)
+        const responseAmountStudents = await ApiAmountStudents(
+          responseSemester?.semesterCode,
+          1,
+          DataSelect?.ClaCodigo
+        )
+        setNumberOfStudents(responseAmountStudents)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+
       ControlsDisabled()
       setloading(false)
     }
@@ -2084,18 +2125,15 @@ const index = () => {
             subtitle={`Recuerde que la cantidad maxima a imprimir es de: ${NumberOfStudents}`}
             id={''}
           >
-            {
-              ViewInputExams === true ? (
-                <>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </>
-              ) : null
-            }
-           
+            {ViewInputExams === true ? (
+              <>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </>
+            ) : null}
           </ViewList>
           <ViewList
             style={{ marginBottom: '2%' }}
@@ -2111,7 +2149,6 @@ const index = () => {
             <p style={{ marginBottom: '1%' }}>
               Seleccione la fecha requerida de impresión:
             </p>
-
             {ValiDate()}
           </div>
           <div style={{ marginTop: '1%' }}>
@@ -2141,8 +2178,10 @@ const index = () => {
           <div style={{ marginTop: '1%', marginBottom: '2%' }}>
             {BloackInputActiveFile()}
           </div>
+          </div>
 
-          <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+        <div className={`${styles.contenbtnAlign}`}>
+          <div style={{display:'flex',flexDirection:'row-reverse'}}>
             <Button
               type="button"
               classname={styles.styleBtn}
@@ -2152,23 +2191,25 @@ const index = () => {
             >
               Cargar Examen
             </Button>
+            </div>
+            <div>
+              <Button
+                type="button"
+                classname={styles.styleBtn}
+                variant="secondary"
+                onclick={Cancel}
+              >
+                Cancelar
+              </Button>
+            </div>
           </div>
-
-          <div>
-            <Button
-              type="button"
-              classname={styles.styleBtn}
-              variant="secondary"
-              onclick={Cancel}
-            >
-              Cancelar
-            </Button>
-          </div>
-        </div>
+       
+          
         <br />
       </div>
     </div>
   )
 }
 
+index.title = 'Carga de Exámen'
 export default index

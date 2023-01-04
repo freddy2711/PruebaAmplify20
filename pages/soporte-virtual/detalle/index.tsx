@@ -25,8 +25,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 // import Swal from 'sweetalert2'
 // import axios from 'axios'
-import { CONSULTA_DATA } from './../../../consts/storageConst'
+import { CONSULTA_DATA, SET_DATA_DOCENTE } from './../../../consts/storageConst'
 import dynamic from 'next/dynamic'
+import { USER_SESSION } from '../../../consts/storageConst';
 
 const QuillRichText = dynamic(
   () => import('../../../components/UI/molecules/quillRichText'),
@@ -155,7 +156,9 @@ const index = () => {
       const { nameS3, usuario, name, size } = obj
       const extend = name.substring(name.lastIndexOf('.') + 1, name.length)
       // TODO: traer desde storage
-      const adviser = 'RVI'
+      const DUENO: any = get(SET_DATA_DOCENTE)
+      const DUENOSESSION = DUENO?.userName
+      const adviser = DUENOSESSION
 
       const resp = await apiSoporteVirtual.insertImg(
         usuario,
@@ -400,8 +403,10 @@ const index = () => {
       setloading(true)
       const dataid: any = get(CONSULTA_DATA)
 
+			const userID:any = get(USER_SESSION)
+
       const { data } = await apiSoporteVirtual.requestConsulta(
-        'N00011885',
+        userID,
         descrip,
         dataid
       )
@@ -457,13 +462,11 @@ const index = () => {
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK',
         }).then(async (result) => {
-			
-					if (result.isConfirmed) {
-						setloading(false)
-						window.location.href = '/soporte-virtual'
-					}
-				})
-
+          if (result.isConfirmed) {
+            setloading(false)
+            window.location.href = '/soporte-virtual'
+          }
+        })
       }
     } catch (error) {
       console.log(error)

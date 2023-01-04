@@ -22,7 +22,11 @@ import {
   SET_SEMESTERCODE,
   convertStringToDateTime,
   convertStringToDate,
+  callErrorValid,
 } from '../../consts/storageConst'
+import Modals from '../../components/UI/atoms/modal/Modal'
+import ViewInput from '../../components/UI/molecules/recuperarAdelantarClases/viewInput/ViewInput'
+import { redirectRouter } from '../../helpers/routerRedirect'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -44,6 +48,7 @@ const COLUMNS = [
   { label: 'Carrera', field: 'CarNombre', sort: 'asc' },
   { label: 'Tipo Clase', field: 'ClaTipo', sort: 'asc' },
 ]
+
 const IngresoNotas = () => {
   const [Loading, setloading] = useState(true)
   const [listCourse, setlistCourse] = useState([])
@@ -54,8 +59,9 @@ const IngresoNotas = () => {
 
   useEffect(() => {
     remove(SET_NOTES_SELECT)
-    fetchTeacherCurse(dataUser?.code)
-    console.log('dataUser', dataUser)
+    if (dataUser?.code !== undefined) {
+      fetchTeacherCurse(dataUser?.code)
+    }
   }, [])
 
   const fetchTeacherCurse = async (obj: any) => {
@@ -64,6 +70,16 @@ const IngresoNotas = () => {
       ...item,
       Seleccionar: LinkButton(item),
     }))
+    if (callErrorValid(rows, setloading) === undefined) return
+    if (rows.length <= 0) {
+      setloading(false)
+      return getAlert({
+        title: TITLE_EMERG,
+        text: 'No tiene Registros',
+        confirmButtonText: `Ok`,
+      })
+    }
+    set(SET_SEMESTERCODE, rows[0].SemCodigo)
     setlistCourse(rows)
     setloading(false)
   }
@@ -82,14 +98,16 @@ const IngresoNotas = () => {
 
   const linkRedirect = async (row: any) => {
     set(SET_NOTES_SELECT, row)
-    Router.push('./registro-de-notas/ingresoNotas')
+    redirectRouter('./registro-de-notas/ingresoNotas', setloading)
+    // Router.push('./registro-de-notas/ingresoNotas')
   }
 
   const SendGenerarToken = async () => {
+    const semestreCode: any = get(SET_SEMESTERCODE)
     setloading(true)
     const req = {
       userCode: dataUser?.code,
-      Periodo: SET_SEMESTERCODE,
+      Periodo: semestreCode,
       userName: dataUser?.userName,
       fechaHora: dateTimeNow,
       state: true,
@@ -100,7 +118,7 @@ const IngresoNotas = () => {
 
     const obj = {
       userCode: dataUser?.code,
-      semesterCode: SET_SEMESTERCODE,
+      semesterCode: semestreCode,
       token: result?.setupInfo?.ManualEntryKey,
       fechaHora: dateTimeNow,
     }
@@ -117,13 +135,13 @@ const IngresoNotas = () => {
     ) {
       const msj = `<center><p><img src=' ${result?.setupInfo?.QrCodeSetupImageUrl}'></p> ${result?.setupInfo?.ManualEntryKey}</center>`
       const emailJson = {
-        // EmailList: [respEmail],
-        EmailList: ['javierdj22@gmail.com'],
+        EmailList: [respEmail.emailUPN],
+        // EmailList: ['flindrs.ortiz@upn.edu.pe', 'javierdj22@gmail.com'],
         DisplayName: 'UPN Docentes',
         Subject: 'Generación de Token para cambio de Notas!',
         IsHtml: true,
-        // ReplyToList: [respEmail.emailUPN],
-        ReplyToList: ['javierdj22@gmail.com'],
+        ReplyToList: [respEmail.emailUPN],
+        // ReplyToList: ['flindrs.ortiz@upn.edu.pe', 'javierdj22@gmail.com'],
         AttachmentB64: null,
         AttachmentName: null,
         NotificationType: 1,
@@ -178,7 +196,6 @@ const IngresoNotas = () => {
      </tr>
      </table>`
   }
-
   return (
     <div className={styles.contenido}>
       <Loader loading={Loading} />
@@ -223,7 +240,7 @@ const IngresoNotas = () => {
             variant="primary"
             onclick={SendGenerarToken}
           >
-            {`Generar Token Semestre ${SET_SEMESTERCODE}`}
+            Generar Token Semestre
           </Button>
         </div>
         <hr />

@@ -14,35 +14,49 @@ export interface Props {
     width?: number | undefined
     searchable?: boolean | undefined
   }[]
+  pagination?: boolean
+  entries?: number
+  scrollX?: boolean
   children?: ReactNode
+  order?: any
 }
 
-const Table = ({ listData, columns }: Props) => {
+const Table = ({
+  listData,
+  columns,
+  pagination = false,
+  entries = 10,
+  scrollX = false,
+  order = [],
+}: Props) => {
   return (
     <MDBDataTable
       noBottomColumns
       striped
       bordered
       hover
-      entries={10}
+      order={order}
+      entries={entries}
       displayEntries={false}
-      entriesLabel={`Total: ${listData?.length} ${
+      /*       entriesLabel={`Total: ${listData?.length} ${
         listData?.length === 1 ? 'Horario' : 'Horarios'
-      } cargados. Mostrar`}
-      entriesOptions={Array.from(
+      } cargados. Mostrar`} */
+      /*   entriesOptions={Array.from(
         new Set([5, 10, 20, 50, 100, listData?.length])
-      ).filter((cantidad) => cantidad <= listData?.length)}
+      ).filter((cantidad) => cantidad <= listData?.length)} */
       info={false}
       noRecordsFoundLabel={'No se encuentran Registros.'}
       paginationLabel={['<', '>']}
-      paging={false}
+      paging={pagination}
       searching={true}
       searchLabel="Buscar"
+      responsiveXl={true}
+      scrollX={scrollX}
       data={{
         columns,
         rows: listData,
       }}
-      responsive={true}
+      responsive={false}
     />
   )
 }

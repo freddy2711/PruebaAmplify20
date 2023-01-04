@@ -1,12 +1,10 @@
 /* eslint-disable */
-import {
-  axiosCreate,
-  axiosfetchPrivateUpload,
-} from '../../../config/axios'
+import { axiosCreate, axiosfetchPrivateUpload } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from '../../../consts/path'
 import { AxiosInstance } from 'axios'
 import { objecApi } from '../../../consts/storageConst'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const ClassShedule = objecApi.ClassShedule
@@ -25,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE001')
       }
       break
     }
@@ -40,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE002')
       }
       break
     }
@@ -52,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE003')
       }
       break
     }
@@ -64,7 +62,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE004')
       }
       break
     }
@@ -80,7 +78,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE005')
       }
       break
     }
@@ -96,7 +94,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE006')
       }
       break
     }
@@ -112,7 +110,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE007')
       }
       break
     }
@@ -128,7 +126,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE008')
       }
       break
     }
@@ -153,7 +151,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const URL_UPLOAD = data?.url
         res.status(200).json(URL_UPLOAD)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE009')
       }
       break
     }
@@ -166,7 +164,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data?.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'CE010')
       }
       break
     }

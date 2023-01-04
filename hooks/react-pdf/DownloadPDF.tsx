@@ -29,12 +29,11 @@ const GeneratePdf = async ({
 
   let _Y = 30
 
-  const image = new Image()
-  image.src = RouteImage
-  const pageWidth = doc.internal.pageSize.getWidth()
-  doc.addImage(image, 'png', 10, 15, 80, 35)
-  // console.log('img', image)
-  // doc.text('UPN', _X, _Y)
+  if (RouteImage !== null) {
+    const image = new Image()
+    image.src = RouteImage
+    doc.addImage(image, 'png', 9, 15, 65, 20)
+  }
 
   doc.setFontSize(14)
 
@@ -178,7 +177,5 @@ const GeneratePdf = async ({
 
   doc.save(name)
 }
-
-
 
 export default GeneratePdf

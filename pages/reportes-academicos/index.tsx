@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import Alerta from '../../components/UI/atoms/alert/Alerts'
 import Label from '../../components/UI/atoms/label/Label'
-import styles from '../../components/templates/reports/Report.module.scss'
+import styles from '../../components/templates/reportes/Reportes.module.scss'
 import Tbody from '../../components/UI/molecules/table/tbody/Tbody'
 import Thead from '../../components/UI/molecules/table/thead/Thead'
 import Tabla from '../../components/UI/organisms/table/Tabla'
@@ -9,12 +9,13 @@ import { Fragment, useEffect, useState } from 'react'
 import { apiReportesAcademicos } from '../api'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import Swal from 'sweetalert2'
-import { set } from 'local-storage'
+import { get, set } from 'local-storage'
 import {
   CLASEID_REPORTES,
   LST_SELECTED_COURSE,
+  USER_SESSION,
 } from '../../consts/storageConst'
-import Router from 'next/router'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const index = () => {
   const [Loading, setloading] = useState(false)
@@ -23,7 +24,7 @@ const index = () => {
   const [ViewPanelTutoria, setViewPanelTutoria] = useState(false)
   const [ViewPanelCourses, setViewPanelCourses] = useState(true)
   const [active, setActive] = useState()
-  const teacherCodeVal = 'N00011885'
+  const teacherCodeVal = get(USER_SESSION)
 
   const ApiTeacherCorses = async () => {
     const response = await apiReportesAcademicos.listCourseTeacher(
@@ -195,7 +196,7 @@ const index = () => {
     } else {
       set(CLASEID_REPORTES, data.ClaCodigo)
     }
-    Router.push('/reportes-academicos/ReporteAsistencia')
+    window.location.href = '/reportes-academicos/ReporteAsistencia'
   }
 
   const ReportNotas = (data: any) => {
@@ -204,7 +205,7 @@ const index = () => {
     } else {
       set(CLASEID_REPORTES, data.ClaCodigo)
     }
-    Router.push('/reportes-academicos/ReporteNotas')
+    window.location.href = '/reportes-academicos/ReporteNotas'
   }
 
   const ReportResultEsta = (data: any) => {
@@ -213,7 +214,7 @@ const index = () => {
     } else {
       set(CLASEID_REPORTES, data.ClaCodigo)
     }
-    Router.push('/reportes-academicos/ReporteEstadisticas')
+    window.location.href = '/reportes-academicos/ReporteEstadisticas'
   }
 
   const ReportCompetencias = (data: any) => {
@@ -222,7 +223,7 @@ const index = () => {
     } else {
       set(CLASEID_REPORTES, data.ClaCodigo)
     }
-    Router.push('/reportes-academicos/ReporteCompetencias')
+    window.location.href = '/reportes-academicos/ReporteCompetencias'
   }
 
   // funciones
@@ -230,9 +231,17 @@ const index = () => {
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-      const CountCorses = await ApiTeacherCorses()
-      const CountTutorships = await ApiTeacherTutoria()
-      ValidateLoad(CountCorses.length, CountTutorships.length)
+
+      try {
+        const CountCorses = await ApiTeacherCorses()
+        const CountTutorships = await ApiTeacherTutoria()
+        ValidateLoad(CountCorses.length, CountTutorships.length)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+      
+
       setloading(false)
     }
 

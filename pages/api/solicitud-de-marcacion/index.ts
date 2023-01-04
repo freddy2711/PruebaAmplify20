@@ -25,7 +25,6 @@ const API = {
     ctrlClassId: string,
     fecha: string
   ) => {
-
     try {
       const URL = `/solicitud-de-marcacion/chequeAsisAlum/${aula}/${ctrlClassId}/${fecha}`
       const result = await axiosfetchPublic(URL)
@@ -74,9 +73,13 @@ const API = {
     return result
   },
   insertar: async (item: any) => {
-    const URL = `/solicitud-de-marcacion/insertar`
-    const result = await axiosfetchPublic.post(URL, item)
-    return result
+    try {
+      const URL = `/solicitud-de-marcacion/insertar`
+      const result = await axiosfetchPublic.post(URL, item)
+      return result
+    } catch (error) {
+      catchingErrorApi(error)
+    }
   },
 }
 

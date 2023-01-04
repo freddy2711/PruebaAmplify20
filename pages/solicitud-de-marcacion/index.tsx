@@ -10,6 +10,7 @@ import 'moment/locale/es'
 import dynamic from 'next/dynamic'
 import { get, set } from 'local-storage'
 import { apiSolicitud } from './../../pages/api'
+import { USER_SESSION, SET_DATA_DOCENTE } from '../../consts/storageConst'
 // import Swal from 'sweetalert2'
 
 import {
@@ -32,6 +33,7 @@ import {
   NO_CLOSE,
 } from './../../consts/storageConst'
 import { catchingErrorFront } from '../../helpers/helpers'
+import { redirectRouter } from '../../helpers/routerRedirect'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -104,11 +106,10 @@ const SolicitudMarcacion = () => {
     set(ASISTENCIA, 1)
     set(CLASS_SELECTED_SOL_MARCACION, JSON.stringify(item))
 
-    Router.push('/solicitud-de-marcacion/AsistenciaSolicitud')
+		redirectRouter('/solicitud-de-marcacion/AsistenciaSolicitud', setloading)
   }
 
   const formatedData = (obj: any, setstate: any, tipo: string) => {
-
     let items = obj.map((item: any) => {
       const dateSplit = item.hoursIni.split('T')
       const date = `${dateSplit[0]} ${dateSplit[1]}`
@@ -144,11 +145,14 @@ const SolicitudMarcacion = () => {
   useEffect(() => {
     setloading(true)
 
-    set(TEACHERCODE, SET_TEACHERCODE)
-    set(DUENO_SESSION, 'RVI')
+    const DUENO: any = get(SET_DATA_DOCENTE)
+    const DUENOSESSION = DUENO?.userName
 
-    const teacherCode = SET_TEACHERCODE
+    set(DUENO_SESSION, DUENOSESSION)
 
+    const teacherCode: any = get(USER_SESSION)
+
+    set(TEACHERCODE, teacherCode)
     set(TEACHERCODE, teacherCode)
     set(CONTROL_CLASE_ID, '')
 
@@ -159,10 +163,10 @@ const SolicitudMarcacion = () => {
         )
 
         const { noinit, noClose, pending } = respApi.data
-				
-				if(respApi.data === undefined){
-					throw new  Error('Error de data')
-				} 
+
+        if (respApi.data === undefined) {
+          throw new Error('Error de data')
+        }
 
         set(LIST_SESION_SOL, JSON.stringify(respApi.data))
 
@@ -171,7 +175,7 @@ const SolicitudMarcacion = () => {
         formatedData(pending, setDatosPendientes, 'pending')
 
         setloading(false)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
@@ -262,7 +266,7 @@ const SolicitudMarcacion = () => {
           </Alerta>
         </div>
 
-        <div className={styles.rowButtons}>
+        <div className={`${styles.rowButtons} row`}>
           <SolMarcaButtons setOpcion={setOpcion} />
         </div>
 

@@ -15,6 +15,8 @@ import {
   SET_TEACHERCODE,
   TEACHERCODE,
   DUENO_SESSION,
+  USER_SESSION,
+  SET_DATA_DOCENTE,
 } from './../../consts/storageConst'
 
 const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
@@ -40,10 +42,12 @@ const Delegado = ({ data }: any) => {
   const [elegido, setElegido] = useState<string>('')
 
   useEffect(() => {
-    set(TEACHERCODE, SET_TEACHERCODE)
-    set(DUENO_SESSION, 'RVI')
+    const DUENO: any = get(SET_DATA_DOCENTE)
+    const DUENOSESSIONUSER = DUENO?.userName
+    const teacherCode: any = get(USER_SESSION)
 
-    const teacherCode: any = get(TEACHERCODE)
+    set(DUENO_SESSION, DUENOSESSIONUSER)
+    set(TEACHERCODE, teacherCode)
 
     const getList = async () => {
       setloading(true)

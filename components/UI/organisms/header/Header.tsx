@@ -10,8 +10,8 @@ export interface Props {
 
 const Header = ({ imagePros, welcomeProps }: Props) => {
   return (
-    <section className={styles.headerContent}>
-      <div className={`${styles.header} container mb-1`}>
+    <section className={`${styles.headerContent} container`}>
+      <div className={`${styles.header} mb-1`}>
         <Image {...imagePros} />
         <div>
           <Reloj />

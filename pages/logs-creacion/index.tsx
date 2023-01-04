@@ -8,11 +8,15 @@ import styles from '../../components/templates/logsToken/LogsToken.module.scss'
 import { useEffect, useState } from 'react'
 import { apiLogCreate } from '../api'
 import { get } from 'local-storage'
-import { SET_SEMESTERCODE, SET_TEACHERCODE } from '../../consts/storageConst'
+import {
+  SET_SEMESTERCODE,
+  USER_SESSION,
+} from '../../consts/storageConst'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import moment from 'moment'
 import dynamic from 'next/dynamic'
 import Swal from 'sweetalert2'
+import { catchingErrorApi, catchingErrorFront } from '../../helpers/helpers'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -25,10 +29,8 @@ const LogsCreacion = () => {
   const [Loading, setloading] = useState(false)
   const [listTokenActive, setlistTokenActive] = useState<any>([])
   const [listTokenGenerat, setlistTokenGenerat] = useState<any>([])
-  const UserCode =
-    get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
-  const SemesterCode =
-    get(SET_SEMESTERCODE) === null || get(SET_SEMESTERCODE) === '' ? '2022-1' : get(SET_SEMESTERCODE)
+  const UserCode = get(USER_SESSION)
+  const SemesterCode = get(SET_SEMESTERCODE)
 
   const COLUMNS_RECOVERY = [
     { label: 'Fecha Solicitud', field: 'DateSolicitud', sort: 'asc' },
@@ -103,6 +105,21 @@ const LogsCreacion = () => {
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK',
         })
+      case 1:
+         return Swal.fire({
+          title: 'Portal de Docentes',
+          text: `No se encontro un semestre para este usuario.`,
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
+        }).then((result: any) => {
+          if (result.isConfirmed) {
+            setloading(true)
+            window.location.href = '/'
+            setloading(false)
+          }
+        })
       default:
         break
     }
@@ -113,21 +130,33 @@ const LogsCreacion = () => {
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-      const TokenActiveData = await ApilistTokenActive(
-        UserCode,
-        SemesterCode,
-        1
-      )
-      setlistTokenActive(TokenActiveData[0])
-      const TokenGeneratData = await ApilistTokenGenerat(UserCode, SemesterCode)
-      console.log("TokenGeneratData",TokenGeneratData)
-      if (TokenGeneratData.length !== 0)
-        FormatedTokenGeneratData(TokenGeneratData, setlistTokenGenerat)
-      else ViewMessage(0)
+    
+      try {
+
+        if(SemesterCode === null ||  SemesterCode === undefined )ViewMessage(1)
+
+        const TokenActiveData = await ApilistTokenActive(
+          UserCode,
+          SemesterCode,
+          1
+        )
+        setlistTokenActive(TokenActiveData[0])
+        const TokenGeneratData = await ApilistTokenGenerat(UserCode, SemesterCode)
+
+        if (TokenGeneratData.length !== 0)
+          FormatedTokenGeneratData(TokenGeneratData, setlistTokenGenerat)
+        else ViewMessage(0)
+
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+
       setloading(false)
     }
 
-    Load()
+      Load()
+    
   }, [])
 
   return (
@@ -178,4 +207,5 @@ const LogsCreacion = () => {
   )
 }
 
+LogsCreacion.title = 'Tokens Generados - Portal Docentes'
 export default LogsCreacion

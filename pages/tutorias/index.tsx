@@ -4,9 +4,13 @@ import Loader from '../../components/UI/atoms/loader/Loader'
 import styles from '../../components/templates/tutorias/tutorias.module.scss'
 import dynamic from 'next/dynamic'
 import { get } from 'local-storage'
-import { SET_DUENO_SESSION, SET_TEACHERCODE } from '../../consts/storageConst'
+import {
+  SET_DATA_DOCENTE,
+  USER_SESSION,
+} from '../../consts/storageConst'
 import { apiTutorias } from '../api'
 import Swal from 'sweetalert2'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -58,27 +62,37 @@ const index = () => {
   const [TeacherNotesStudentTutori, setTeacherNotesStudentTutori] =
     useState<any>([])
   const [StudentTutoring, setStudentTutoring] = useState<any>([])
-  const DUENOSESSION =
-    get(SET_DUENO_SESSION) === null ? 'RVI' : get(SET_DUENO_SESSION)
-  const USER =
-    get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
-
+  const DUENO: any = get(SET_DATA_DOCENTE)
+  const DUENOSESSION = DUENO?.userName
+  const USER = get(USER_SESSION)
+  
   const ApiTutorias = async (traCode: any) => {
     const response = await apiTutorias.tutorials(traCode)
     return response
   }
 
   const ApiStudentTutoring = async (codAlu: any) => {
-    const response = await apiTutorias.StudentTutoring(codAlu)
-    return response
+    try {
+      const response = await apiTutorias.StudentTutoring(codAlu)
+      return response
+    } catch (error:any) {
+        catchingErrorFront(error.message)
+        setLoading(false)
+    }
+   
   }
 
   const ApiTeacherNotesStudentTutorin = async (clasCode: any, semCode: any) => {
-    const response = await apiTutorias.TeacherNotesStudentTutorin(
-      clasCode,
-      semCode
-    )
-    return response
+    try {
+      const response = await apiTutorias.TeacherNotesStudentTutorin(
+        clasCode,
+        semCode
+      )
+      return response
+    } catch (error:any) {
+        catchingErrorFront(error.message)
+        setLoading(false)
+    }
   }
 
   const ApiEmployeeLogin = async (userName: any) => {
@@ -190,11 +204,17 @@ const index = () => {
   useEffect(() => {
     const Load = async () => {
       setLoading(true)
-      const result = await ApiTutorias(USER)
-      if (result.length <= 0) ViewMessage(2)
-      else formatedData(result, setTutoriasData)
-
-      const user = await ApiEmployeeLogin(DUENOSESSION)
+      try {
+        const result = await ApiTutorias(USER)
+        if (result.length <= 0) ViewMessage(2)
+        else formatedData(result, setTutoriasData)
+  
+        const user = await ApiEmployeeLogin(DUENOSESSION)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setLoading(false)
+      }
+     
       setLoading(false)
     }
     Load()

@@ -9,7 +9,7 @@ export interface Props {
   children: ReactNode
   classname?: string
   targetBlank?: boolean
-  onClick?: (e: any) => void | ReactNode | Promise<void>
+  onClick?: (e: any) => any
 }
 
 const Anchor = ({

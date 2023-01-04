@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { axiosCreate } from '../../../config/axios'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
+import { genError } from '../../../helpers/helpers'
 
 type Data = {}
 const Token = objecApi.Token
@@ -23,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'LC001')
       }
       break
     case 'listTokenGenerate':
@@ -37,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        console.log(error)
+        genError(res, error, 'LC002')
       }
       break
     default:

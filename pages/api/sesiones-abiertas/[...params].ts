@@ -4,8 +4,7 @@ import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
 import { AxiosInstance } from 'axios'
 type Data = {}
-const {ClassShedule, TeacherAttendance} = objecApi
-
+const { ClassShedule, TeacherAttendance } = objecApi
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { params }: any = req.query
@@ -70,7 +69,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1],
           params[2]
         )
-				console.log("TESTURL__", URL)
+        console.log('TESTURL__', URL)
         const { data }: any = await apiCall(URL)
         const result = data
         if (result !== undefined) {

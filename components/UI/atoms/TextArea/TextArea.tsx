@@ -12,6 +12,7 @@ export interface Props {
   classname: string
   onChange?: any
   defaultValue?: any
+  value?: any
 }
 
 const TextArea = ({
@@ -23,6 +24,7 @@ const TextArea = ({
   classname = '',
   onChange,
   defaultValue,
+  value,
 }: Props) => {
   const classprops: string = classNames('mb-3', extractClass(styles, classname))
 
@@ -39,6 +41,7 @@ const TextArea = ({
         onChange={onChange}
         style={{ height: '10em' }}
         defaultValue={defaultValue}
+        value={value}
       />
     </FloatingLabel>
   )

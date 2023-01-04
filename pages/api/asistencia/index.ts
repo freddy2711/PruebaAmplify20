@@ -47,7 +47,7 @@ const API = {
       controlClassId: iControlClase,
       xmlData: `${xmldata}`,
     }
-		
+
     const URL = `/asistencia/registraAsistenciasolicitud`
     const result: any = await axiosfetchPublic.post(URL, item)
     return result.data

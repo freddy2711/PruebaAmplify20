@@ -16,12 +16,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'delegateList': {
       const URL = apiPath.delegado.PATH_delegateList(params[1])
       try {
-				const apiCall:AxiosInstance = axiosCreate(Attendance)
+        const apiCall: AxiosInstance = axiosCreate(Attendance)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'DE001')
+        genError(res, error, 'DE001')
       }
       break
     }
@@ -29,12 +29,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       // const URL = `/TeacherAttendance/Delegate/${params[1]}/class/`
       const URL = apiPath.delegado.Path_Delegate(params[1])
       try {
-				const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
+        const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'DE002')
+        genError(res, error, 'DE002')
       }
       break
     }
@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       // const URL = `/ClassSchedule/PostRegisterDelegate`
       const URL = apiPath.delegado.Path_PostRegisterDelegate
       try {
-				const apiCall: AxiosInstance = axiosCreate(ClassShedule)
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const { data } = await apiCall.post(URL, {
           classCode,
           xmlData,
@@ -51,7 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'DE003')
+        genError(res, error, 'DE003')
       }
       break
     }
@@ -59,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const { classCode, xmlData } = req.body
       const URL = apiPath.delegado.Path_PostRegisterDelegate
       try {
-				const apiCall: AxiosInstance = axiosCreate(ClassShedule)
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const { data } = await apiCall.post(URL, {
           classCode,
           xmlData,
@@ -67,7 +67,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'DE004')
+        genError(res, error, 'DE004')
       }
       break
     }

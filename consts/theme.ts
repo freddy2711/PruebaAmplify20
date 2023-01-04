@@ -10,6 +10,7 @@ export const ThemeColors = [
   'danger',
   'light',
   'dark',
+  'dangerous',
 ]
 
 export const Sizes = ['small', 'medium', 'large']

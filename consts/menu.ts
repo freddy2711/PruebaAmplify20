@@ -14,7 +14,7 @@ export const menuDefault = [
       },
       {
         label: 'Para Hoy',
-        link: `/`,
+        link: `/default`,
         child: [],
         target: false,
       },
@@ -84,15 +84,9 @@ export const menuDefault = [
         child: [],
         target: false,
       },
-			{
+      {
         label: 'Solicitud de modificacion de notas',
         link: '/solicitud-de-modificacion',
-        child: [],
-        target: false,
-      },
-			{
-        label: 'Lista de solicitudes de modificacion de notas',
-        link: '/solicitud-de-modificacion/lista-solicitudes',
         child: [],
         target: false,
       },

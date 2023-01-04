@@ -6,11 +6,11 @@ import dynamic from 'next/dynamic'
 import { apiCargaExamenes } from '../api'
 import {
   SET_DATAS_SELEC_COURSES_TEACHER_CE,
-  SET_TEACHERCODE,
+  USER_SESSION,
 } from '../../consts/storageConst'
 import { get, set } from 'local-storage'
 import Swal from 'sweetalert2'
-import Router from 'next/router'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
   ssr: false,
@@ -26,8 +26,8 @@ const TableDinamic = dynamic(
 const index = () => {
   const [Loading, setloading] = useState(false)
   const [dataListCourses, setDataListCourses] = useState([])
-  const UserID =
-    get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
+
+  const UserID = get(USER_SESSION)
 
   const COLUMNS = [
     { label: 'Seleccionar clase', field: 'select', sort: 'asc' },
@@ -74,9 +74,7 @@ const index = () => {
       ViewMessage(1)
     } else {
       set(SET_DATAS_SELEC_COURSES_TEACHER_CE, JSON.stringify(item))
-      // Router.push('/carga-examenes/resumen-examenes')
       window.location.href = `/carga-examenes/resumen-examenes`
-      // window.history.go(1)
     }
   }
 
@@ -110,8 +108,13 @@ const index = () => {
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-      const result = await consultaApi()
-      formatedDataCoursesByTeacher(result, setDataListCourses)
+      try {
+        const result = await consultaApi()
+        formatedDataCoursesByTeacher(result, setDataListCourses)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
       setloading(false)
     }
 
@@ -155,4 +158,5 @@ const index = () => {
   )
 }
 
+index.title = 'Carga de Exámen - Portal Docentes'
 export default index

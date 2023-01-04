@@ -1,5 +1,5 @@
 import axiosfetchPublic from '../../../config/axios'
-import { catchingErrorApi } from '../../../helpers/helpers'
+import { catchingErrorApi, catchingErrorApiComeBack } from '../../../helpers/helpers'
 
 const API = {
   personaObtener: async (user: any) => {
@@ -53,7 +53,7 @@ const API = {
       const result = await axiosfetchPublic(URL)
       return result
     } catch (error) {
-      catchingErrorApi(error)
+      catchingErrorApiComeBack(error)
     }
   },
   personaGuardar: async (Item: any) => {

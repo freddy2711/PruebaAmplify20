@@ -7,6 +7,8 @@ import Button from './../../../components/UI/atoms/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import dynamic from 'next/dynamic'
 import moment from 'moment'
+import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get, set } from 'local-storage'
 
 // ** ACTIONS IMPORTS
 import { saveExpLab } from './../../../redux/actions/infoGeneralAction'
@@ -156,6 +158,9 @@ const ModalEL = ({
 
     console.log(formNEL?.ddlInstitucionExperiencia)
 
+    const DUENO: any = get(SET_DATA_DOCENTE)
+    const DUENOSESSION = DUENO?.userName
+
     const obj = {
       IdExperienciaLaboral: formNEL?.id,
       IdPersona: info?.idPersona,
@@ -191,7 +196,7 @@ const ModalEL = ({
       NoSeEncontroInstitucion: formNEL?.chkInstitucionExperiencia,
       NombreInstitucion: formNEL?.txtInstitucionExperiencia,
       Activo: '1',
-      audit_usuario_creacion: 'RVI',
+      audit_usuario_creacion: DUENOSESSION, //'RVI',
       audit_usuario_actualizacion: '',
     }
 

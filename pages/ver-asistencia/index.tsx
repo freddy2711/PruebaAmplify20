@@ -60,16 +60,16 @@ const VerAsistencias = () => {
                 <td>
                   <BotonesAsistencia />
                 </td>
-                <td>N00267181</td>
-                <td>CABANILLAS</td>
-                <td>SANCHEZ</td>
-                <td>ANA LAURA</td>
-                <td>Adm. y Gestión Comercial </td>
-                <td>1</td>
-                <td>2225136111</td>
-                <td>0</td>
-                <td>-</td>
-                <td>RM</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </Tbody>
           </Tabla>

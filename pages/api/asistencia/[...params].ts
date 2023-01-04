@@ -1,7 +1,4 @@
-import {
-  axiosCreate,
-  axiosfetchPrivateEmail,
-} from '../../../config/axios'
+import { axiosCreate, axiosfetchPrivateEmail } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from './../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
@@ -21,13 +18,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1]
         )
 
-				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const { data } = await apiCall(URL)
         const result = data.detail[0]
         res.status(200).json(result)
       } catch (error) {
         console.log(error)
-				
       }
       break
     }
@@ -37,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1],
           params[2]
         )
-				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
@@ -52,7 +48,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1],
           params[2]
         )
-				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const { data } = await apiCall(URL)
         const { detail } = data
         res.status(200).json(detail[0].ParameterState)
@@ -64,8 +60,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'listarAsistencia': {
       try {
         const URL = apiPath.asistencia.PATH_GetPayrollAssistance(params[1])
-				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const resp = await apiCall(URL)
+        console.log(resp)
         res.status(200).json(resp.data.detail)
       } catch (error) {
         console.log(error)
@@ -78,7 +75,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         // PATH_InsertRequestAttendance
         const URL = apiPath.asistencia.PATH_InsertRequestAttendance
-				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const resp: any = await apiCall.post(URL, item)
 
         res.status(200).json(resp?.data.status)
@@ -93,7 +90,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const item = req.body
 
         const URL = apiPath.asistencia.PATH_PostRecordAttendance
-				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const resp: any = await apiCall.post(URL, item)
         res.status(200).json(resp?.data.detail.Status)
       } catch (error) {
@@ -106,7 +103,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
         const item = req.body
         const URL = apiPath.asistencia.PATH_UpdateStateRecovery
-				const apiCall:AxiosInstance = axiosCreate(Attendance)
+        const apiCall: AxiosInstance = axiosCreate(Attendance)
         const resp = await apiCall.post(URL, item)
         res.status(200).json(resp.data.detail)
       } catch (error) {
@@ -125,7 +122,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           username: params[2],
         }
 
-				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const resp = await apiCall.post(URL, obj)
 
         res.status(200).json(resp.data.detail)
@@ -145,7 +142,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           user: params[2],
           observation: params[3],
         }
-				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const resp = await apiCall.put(URL, obj)
 
         res.status(200).json(resp.data.detail)
@@ -160,7 +157,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const item = req.body
 
         const URL = apiPath.asistencia.PATH_PostAttendanceIsOnCheckDate
-				const apiCall:AxiosInstance = axiosCreate(TeacherAttendance)
+        const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const { data } = await apiCall.post(URL, item)
 
         res.status(200).json(data.detail)
@@ -173,7 +170,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'puedeCerrar': {
       try {
         const URL = apiPath.asistencia.PATH_cantCloseRequest(params[1])
-				const apiCall:AxiosInstance = axiosCreate(Attendance)
+        const apiCall: AxiosInstance = axiosCreate(Attendance)
         const resp = await apiCall(URL)
 
         res.status(200).json(resp.data.detail)
@@ -202,7 +199,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           params[1],
           params[2]
         )
-				const apiCall:AxiosInstance = axiosCreate(ClassShedule)
+        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
         const resp = await apiCall(URL)
 
         res.status(200).json(resp.data.detail)
@@ -216,7 +213,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
         // PATH_TeacherLogin
         const URL = apiPath.asistencia.PATH_TeacherLogin(params[1])
-				const apiCall:AxiosInstance = axiosCreate(Teacher)
+        const apiCall: AxiosInstance = axiosCreate(Teacher)
         const resp = await apiCall(URL)
         res.status(200).json(resp.data.detail[0])
       } catch (error) {

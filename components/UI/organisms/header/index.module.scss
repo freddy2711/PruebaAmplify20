@@ -1,13 +1,18 @@
 .headerContent {
   box-sizing: border-box;
+  @media (min-width: 1200px){
+    max-width: 1140px !important;
+ }
+
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1140px !important;
   flex-direction: column;
+
+ 
 
   img {
     display: none;

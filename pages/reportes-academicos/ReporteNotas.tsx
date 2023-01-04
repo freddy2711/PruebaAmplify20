@@ -1,7 +1,6 @@
 import Tbody from '../../components/UI/molecules/table/tbody/Tbody'
-import Thead from '../../components/UI/molecules/table/thead/Thead'
 import Tabla from '../../components/UI/organisms/table/Tabla'
-import styles from '../../components/templates/reports/AcademicReports/NotesReport/NotesReport.module.scss'
+import styles from '../../components/templates/reportes/ReportesAcademicos/ReporteNotas/ReporteNotas.module.scss'
 import Label from '../../components/UI/atoms/label/Label'
 import { useEffect, useState } from 'react'
 import { apiReportesAcademicos } from '../api'
@@ -13,11 +12,11 @@ import {
   SET_IMG_BASE64,
 } from '../../consts/storageConst'
 import ReportButtons from '../../components/UI/molecules/reports/AcademicReport/ReportButtons/reportButtons'
-import Router from 'next/router'
 import dynamic from 'next/dynamic'
 import Modal from 'react-bootstrap/Modal'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import GeneratePdf from '../../hooks/react-pdf/DownloadPDF'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -144,7 +143,7 @@ const ReporteNotas = () => {
   const ToReturn = () => {
     remove(CLASEID_REPORTES)
     remove(LST_SELECTED_COURSE)
-    Router.push('/reportes-academicos')
+    window.location.href = '/reportes-academicos'
   }
 
   const handleClose = () => setShow(false)
@@ -204,11 +203,11 @@ const ReporteNotas = () => {
       name: `RptNotas_${TeacherCoursesData.ClaCodigo}.pdf`,
       Information: TeacherCoursesData,
       Docente:
-        DocenteSection.lastName +
+        DocenteSection?.lastName +
         ' ' +
-        DocenteSection.middleLastName +
+        DocenteSection?.middleLastName +
         ', ' +
-        DocenteSection.name,
+        DocenteSection?.name,
       NameRepote: 'Notas',
       RouteImage: imgBase64,
     }
@@ -234,8 +233,14 @@ const ReporteNotas = () => {
         AplicaCompetencia: lstCoursesTeacher.AplicaCompetencia,
         ClaMetodoEducativo: lstCoursesTeacher.ClaMetodoEducativo,
       })
-      const response = await ApiNotes(ClassCode)
-      formatedDataNotes(response, setNotesData)
+      try {
+        const response = await ApiNotes(ClassCode)
+        formatedDataNotes(response, setNotesData)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+      
       setloading(false)
     }
     Load()
@@ -243,7 +248,7 @@ const ReporteNotas = () => {
 
   return (
     <div className={styles.contenido}>
-          <input
+      <input
         id="imgBase64"
         type="hidden"
       />

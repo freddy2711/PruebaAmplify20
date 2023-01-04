@@ -17,29 +17,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'list': {
       try {
         const apiCall: AxiosInstance = axiosCreate(ClassShedule)
-        const URL = apiPath.seccionAnteriores.PATH_GetTeachersCorses(params[1])
+        // const URL = apiPath.seccionAnteriores.PATH_GetTeachersCorses(params[1])
+        const URL = apiPath.competence.PATH_List(params[1])
         const { data } = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'SA001')
+        genError(res, error, 'SA001')
       }
       break
     }
     case 'SessionsByClass': {
       try {
-        
         const apiCall: AxiosInstance = axiosCreate(TeacherAttendance)
         const URL = apiPath.seccionAnteriores.PATH_GetSessionsByClass(
           params[2],
           params[3],
           params[4]
         )
-        const { data }:any = await apiCall(URL)
+        const { data }: any = await apiCall(URL)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'SA002')
+        genError(res, error, 'SA002')
       }
       break
     }
@@ -51,7 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'SA003')
+        genError(res, error, 'SA003')
       }
       break
     }
@@ -66,7 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'SA004')
+        genError(res, error, 'SA004')
       }
       break
     }
@@ -79,7 +79,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {
-        genError(res,error,'SA005')
+        genError(res, error, 'SA005')
       }
       break
     }

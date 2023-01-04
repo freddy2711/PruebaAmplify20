@@ -129,7 +129,6 @@ export const apiPath = {
       `/ClassSchedule/teachers/${teacherCode}/recoverys/${pend}`,
     PATH_GetTeacherCourses: (teacherCode: string) =>
       `/ClassSchedule/teachers/${teacherCode}/courses/recuperation`,
-    // /ClassSchedule/teachers/{teacherCode}/courses/recuperation
     PATH_GetHolyday: (sedeCode: string) => `/Utility/holyday/${sedeCode}`,
     PATH_GetClassDate: (
       classCode: string,
@@ -139,18 +138,20 @@ export const apiPath = {
     PATH_GetLaboratories: `/ClassSchedule/laboratories/`,
     PATH_PostScheduleSessions: `/ClassSchedule/schedules/sessions`,
     PATH_GetClasEnabled: (
-      classCode: string,
+      classroom: string,
       sedeCode: string,
       date: string,
       hours: string,
       quantity: string
     ) =>
-      `/ClassSchedule/class/${classCode}/enabled/${sedeCode}/${date}/${hours}/${quantity}`,
+      `/ClassSchedule/classroom/${classroom}/enabled/${sedeCode}/${date}/${hours}/${quantity}`,
     PATH_PostTeacherAttendanceRecoverys: `/TeacherAttendance/recoverys`,
     PATH_GetClassRecuperation: (idRecuperation: any) =>
       `/ClassSchedule/class/recuperations/${idRecuperation}`,
     PATH_DeleteRecovery: `/TeacherAttendance/recoverys`,
     PATH_GetTeacherUser: (userName: any) => `/teacher/login/user/${userName}`,
+    PATH_GetProcessUser: (carrCode: any, sedeCode: any) =>
+      `/Attendance/process/users/${carrCode}/${sedeCode}`,
     PATH_GetClassTeachers: (Classcode: any) =>
       `/ClassSchedule/class/${Classcode}/teachers`,
     PATH_GetTeacher: (code: any) => `/teacher/teachers/${code}`,
@@ -239,6 +240,7 @@ export const apiPath = {
     ) =>
       `/token/coupling/user/${userCode}/semester/${semesterCode}/limit/${limitState}`,
     PATH_PostTokenValidateToken: `/token/ValidateToken`,
+    PATH_PostTokenClose: `/token/token/close`,
   },
   datosPersonales: {
     PATH_persona: (user: string) => `/person/cv/person/0/${user}`,
@@ -301,7 +303,7 @@ export const apiPath = {
     PATH_GetTokenActive: (userCode: any, semesterCode: any, limitState: any) =>
       `/token/coupling/user/${userCode}/semester/${semesterCode}/limit/${limitState}`,
     PATH_GetTokenGenerate: (userCode: any, semesterCode: any) =>
-      `/token/DS/${userCode}/user/${semesterCode}/semester`,
+      `/token/DS/user/${userCode}/semester/${semesterCode}`,
   },
   reportesEvaluacion: {
     PATH_GetResultTeacherEvaluation: (teacherCode: any) =>
@@ -391,5 +393,38 @@ export const apiPath = {
     PATH_INSERT_IMG: `/teacher/insert/query/cse/annexes`,
     PATH_DELETE_AWS: `/Utility/delete/file/s3`,
     PATH_CLEAN: `/teacher/clean/annexes/queries/cse`,
+  },
+  registroModificacionNotas: {
+    PATH_listado: (teacherCode: string) =>
+      `/notes/request/change/${teacherCode}/note`,
+    PATH_GetTeachersCorses: (UserID: string) =>
+      `/ClassSchedule/teachers/${UserID}/courses/recuperation`,
+    PATH_listStudent: (classCode: string, noteId: string) =>
+      `/notes/student/${classCode}/note/${noteId}`,
+    PATH_reason: `/notes/modification/type/note`,
+    PATH_cancel: `/notes/cancel/request/change/note`,
+    PATH_register: `/notes/record/request/change/note`,
+    PATH_validationNotes: `/notes/validate/registered/note`,
+    PATH_validationPlazo: (
+      classCode: string,
+      carCode: string,
+      semCode: string,
+      sedCode: string,
+      noteId: string
+    ) =>
+      `/notes/request/record/validation/${classCode}/${carCode}/${semCode}/${sedCode}/${noteId}`,
+    PATH_detail: (RequestId: string) =>
+      `/notes/detail/request/${RequestId}/change/note`,
+    PATH_emailsCC: (classCode: string) => `/notes/email/cc/${classCode}`,
+    PATH_emailsDAS: (sedCode: string) => `/notes/email/das/${sedCode}`,
+  },
+  autenticacionPA_AU: {
+    PATH_PA_AU_App: `/token/PA_AU`,
+    PATH_GET_PA_AU_App: (codeUser: string, codeApp: string, pageName: string) =>
+      `/token/PA_AU/codeuser/${codeUser}/app/${codeApp}/page/${pageName}`,
+    PATH_PA_AU_Group: (groupName: string) => `/token/PA_AU/group/${groupName} `,
+    PATH_PA_AU_Parameters: (sedCode: string, paramName: string) =>
+      `/token/PA_AU/sede/${sedCode}/parameteres/${paramName}`,
+    PATH_PA_AU_User: (codeUser: string) => `/token/PA_AU/user/${codeUser} `,
   },
 }

@@ -10,9 +10,10 @@ import Tbody from '../../../components/UI/molecules/table/tbody/Tbody'
 import { apiCargaExamenes } from '../../api'
 import {
   SET_DATAS_SELEC_COURSES_TEACHER_CE,
-  SET_TEACHERCODE,
+  USER_SESSION,
 } from '../../../consts/storageConst'
 import { get, remove } from 'local-storage'
+import { catchingErrorFront } from '../../../helpers/helpers'
 
 const TableDinamic = dynamic(
   () => import('../../../components/UI/molecules/tableDinamic/Table'),
@@ -25,8 +26,7 @@ const index = () => {
   const [Loading, setloading] = useState(false)
   const [DataCoursesByTeacher, setDataCoursesByTeacher] = useState<any>([])
   const [DataLoadedExams, setDataLoadedExams] = useState<any>([])
-  const UserID =
-    get(SET_TEACHERCODE) === null ? 'N00011885' : get(SET_TEACHERCODE)
+  const UserID = get(USER_SESSION)
   const DataSelect: any = JSON.parse(get(SET_DATAS_SELEC_COURSES_TEACHER_CE))
 
   const COLUMNS = [
@@ -49,8 +49,8 @@ const index = () => {
   }
 
   const returClick = () => {
-    window.location.href = `/carga-examenes`
     remove(SET_DATAS_SELEC_COURSES_TEACHER_CE)
+    window.location.href = `/carga-examenes`
   }
 
   const nextClick = () => {
@@ -61,8 +61,14 @@ const index = () => {
     const Load = async () => {
       setloading(true)
       setDataCoursesByTeacher(DataSelect)
-      const result = await LoadedExamsApi()
-      setDataLoadedExams(result)
+
+      try {
+        const result = await LoadedExamsApi()
+        setDataLoadedExams(result)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
       setloading(false)
     }
 
@@ -184,4 +190,5 @@ const index = () => {
   )
 }
 
+index.title = 'Carga de Exámen - Portal Docentes'
 export default index

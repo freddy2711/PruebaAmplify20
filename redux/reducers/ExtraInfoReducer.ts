@@ -50,6 +50,7 @@ export default function (state: any = initialState, action: Action) {
       return {
         ...state,
         error: action.payload,
+				loading: false,
       }
     case OBTENER_PAISES:
       return {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from '../../components/templates/documentos-manuales/DocumentosManuales.module.scss'
 import Label from '../../components/UI/atoms/label/Label'
 import Loader from '../../components/UI/atoms/loader/Loader'
+import { catchingErrorFront } from '../../helpers/helpers'
 import { apiDocumentosManuales } from '../api'
 
 const index = () => {
@@ -20,8 +21,14 @@ const index = () => {
   }
 
   const ApiDownloadDocuments = async (rutaUrl: any) => {
-    const response = await apiDocumentosManuales.DownloadDocumentsAWSS3(rutaUrl)
-    return response
+    try {
+      const response = await apiDocumentosManuales.DownloadDocumentsAWSS3(rutaUrl)
+      return response
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+        setloading(false)
+    }
+   
   }
 
   const FormatedValueDocuments = (Data: any) => {
@@ -83,10 +90,17 @@ const index = () => {
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-      const response = await ApiDocumentsTeacher()
-      if (response !== '') FormatedValueDocuments(response)
-      const result = await ApiManualsTeacher()
-      if (result !== '') FormatedValueManuals(result)
+
+      try {
+        const response = await ApiDocumentsTeacher()
+        if (response !== '') FormatedValueDocuments(response)
+        const result = await ApiManualsTeacher()
+        if (result !== '') FormatedValueManuals(result)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+     
       setloading(false)
     }
 

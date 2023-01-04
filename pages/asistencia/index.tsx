@@ -113,6 +113,21 @@ const index = () => {
       try {
         const resp: any = await apiAsistencia.listarAsistencia(ctrlClassId)
 
+				console.log('listarAsistencia__', resp.data)
+
+				if(resp.data.length < 1){
+					Swal.fire({
+						title: 'Se Produjo un error',
+						text: `Esta clase no tiene alumnos asignados.`,
+						icon: 'warning',
+						showCancelButton: false,
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: 'OK',
+					}).then((result) => {
+						window.history.go(-2)
+					})
+				}
+
         const items = addBtns(resp.data)
 
         console.log('respItem__', items)
@@ -143,10 +158,9 @@ const index = () => {
           Router.push('/')
           break
       }
-    }else{
-			listarAsistencia(controlClaseId)
-		}
-
+    } else {
+      listarAsistencia(controlClaseId)
+    }
 
     setDatos([])
   }, [])
@@ -184,155 +198,171 @@ const index = () => {
     }
 
     console.log(validaAsistencia)
-    const datosAsisCont = datosAsis.length > 0
-    console.log('datosAsisCont', datosAsisCont)
 
-    if (validaAsistencia) {
-      const getCountN = (arrai: Array<any>) => {
-        // return datosAsis.map((item: any) => {
-        return arrai.map((item: any) => {
-          let countN = 0
-          if (item.Asistencia === 'N') {
-            countN = 1
-            console.log('N')
-          }
-          return countN
-        })
-      }
+		console.log('datosAsis___',datosAsis.length)
 
-      let AsistenciasNulas = []
+		if(datosAsis.length > 0){
 
-      if (!datosAsisCont) {
-        setDatosAsis(datos)
-        AsistenciasNulas = getCountN(datos)
-      } else {
-        AsistenciasNulas = getCountN(datosAsis)
-      }
+			const datosAsisCont = datosAsis.length > 0
+			console.log('datosAsisCont', datosAsisCont)
 
-      const conteo = AsistenciasNulas.filter((item) => item === 1)
+			if (validaAsistencia) {
+				const getCountN = (arrai: Array<any>) => {
+					// return datosAsis.map((item: any) => {
+					return arrai.map((item: any) => {
+						let countN = 0
+						if (item.Asistencia === 'N') {
+							countN = 1
+							console.log('N')
+						}
+						return countN
+					})
+				}
 
-      const contador = conteo.length
+				let AsistenciasNulas = []
 
-      if (contador > 0) {
-        Swal.fire({
-          title: 'Portal de Docentes',
-          text: `Se encontraron registros con asistencia = N Indique A, T o F`,
-          icon: 'warning',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK',
-        })
+				if (!datosAsisCont) {
+					setDatosAsis(datos)
+					AsistenciasNulas = getCountN(datos)
+				} else {
+					AsistenciasNulas = getCountN(datosAsis)
+				}
 
-        setloading(false)
-        return
-      }
-    }
+				const conteo = AsistenciasNulas.filter((item) => item === 1)
 
-    const xmlConstruct = (arrai: Array<any>) => {
-      return arrai.map((item: any) => {
-        const xmlAsis = `<asistencia 
-					audit_usuario="${DUENO}" 
-					s_alas_control="${item.Asistencia}" 
-					s_cla_codigo="${item.ClaCodigo}" 
-					s_alu_codigo="${item.AluCodigo}" 
-					n_control_clase_id="${ctrlClassId}"
-				/>
-				`
-        return xmlAsis
-      })
-    }
+				const contador = conteo.length
 
-    let xmlFor
+				if (contador > 0) {
+					Swal.fire({
+						title: 'Portal de Docentes',
+						text: `Se encontraron registros con asistencia = N Indique A, T o F`,
+						icon: 'warning',
+						showCancelButton: false,
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: 'OK',
+					})
 
-    if (!datosAsisCont) {
-      xmlFor = xmlConstruct(datos)
-    } else {
-      xmlFor = xmlConstruct(datosAsis)
-    }
+					setloading(false)
+					return
+				}
+			}
 
-    console.log(xmlFor)
+			const xmlConstruct = (arrai: Array<any>) => {
+				return arrai.map((item: any) => {
+					const xmlAsis = `<asistencia 
+						audit_usuario="${DUENO}" 
+						s_alas_control="${item.Asistencia}" 
+						s_cla_codigo="${item.ClaCodigo}" 
+						s_alu_codigo="${item.AluCodigo}" 
+						n_control_clase_id="${ctrlClassId}"
+					/>
+					`
+					return xmlAsis
+				})
+			}
 
-    const xmldata = `<registro>${xmlFor.join('')}</registro>`
+			let xmlFor
 
-    console.log(xmldata)
+			if (!datosAsisCont) {
+				xmlFor = xmlConstruct(datos)
+			} else {
+				xmlFor = xmlConstruct(datosAsis)
+			}
 
-    const xml = xmldata.replace(/ {2} |\r\n|\n|\r/gm, '')
+			console.log(xmlFor)
 
-    let respRegis
+			const xmldata = `<registro>${xmlFor.join('')}</registro>`
 
-    switch (tipoAistencia) {
-      case REGASI: {
-        try {
-          const date = moment().format('YYYY-MM-DD')
-          const data: any = await apiAsistencia.registraAsistencia(
-            ctrlClassId,
-            xml,
-            date,
-            semesterId
-          )
+			console.log(xmldata)
 
-          respRegis = data
-        } catch (error) {
-          console.log(error)
-        }
+			const xml = xmldata.replace(/ {2} |\r\n|\n|\r/gm, '')
 
-        break
-      }
-      case REGSOL: {
-        try {
-          const data: any = await apiAsistencia.registraAsistenciasolicitud(
-            ctrlClassId,
-            xml
-          )
-          respRegis = data
-        } catch (error) {
-          console.log(error)
-        }
+			let respRegis
 
-        break
-      }
-      default:
-        break
-    }
+			switch (tipoAistencia) {
+				case REGASI: {
+					try {
+						const date = moment().format('YYYY-MM-DD')
+						const data: any = await apiAsistencia.registraAsistencia(
+							ctrlClassId,
+							xml,
+							date,
+							semesterId
+						)
 
-    console.log(respRegis)
+						respRegis = data
+					} catch (error) {
+						console.log(error)
+					}
 
-    if (respRegis === 'OK' || respRegis === true) {
-      try {
-        if (tipoAistencia === REGSOL) {
-          const cierreExito = await CierreDeSesionExitoso()
+					break
+				}
+				case REGSOL: {
+					try {
+						const data: any = await apiAsistencia.registraAsistenciasolicitud(
+							ctrlClassId,
+							xml
+						)
+						respRegis = data
+					} catch (error) {
+						console.log(error)
+					}
 
-          if (cierreExito) {
-            const sCodClase: string = get(CLASE_ID)
-            const controlClaseId: string = get(CONTROL_CLASE_ID)
-            await enviarSolicitud(controlClaseId, sCodClase)
-          }
-          set(VALIDAR, '1')
-        }
+					break
+				}
+				default:
+					break
+			}
 
-        setloading(false)
+			console.log(respRegis)
 
-        Swal.fire({
-          title: 'Portal de Docentes',
-          text: `El Registro de Asistencia se ha guardado con éxito`,
-          icon: 'success',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK',
-        }).then((result) => {
-          if (result.isDismissed === true || result.isConfirmed === true) {
-            window.history.go(-2)
-          }
+			if (respRegis === 'OK' || respRegis === true) {
+				try {
+					if (tipoAistencia === REGSOL) {
+						const cierreExito = await CierreDeSesionExitoso()
 
-          console.log(result)
-        })
-      } catch (error) {
-        console.log(error)
-      }
+						if (cierreExito) {
+							const sCodClase: string = get(CLASE_ID)
+							const controlClaseId: string = get(CONTROL_CLASE_ID)
+							await enviarSolicitud(controlClaseId, sCodClase)
+						}
+						set(VALIDAR, '1')
+					}
 
-      // window.history.go(-2)
-    }
-    setloading(false)
+					setloading(false)
+
+					Swal.fire({
+						title: 'Portal de Docentes',
+						text: `El Registro de Asistencia se ha guardado con éxito`,
+						icon: 'success',
+						showCancelButton: false,
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: 'OK',
+					}).then((result) => {
+						if (result.isDismissed === true || result.isConfirmed === true) {
+							window.history.go(-2)
+						}
+
+						console.log(result)
+					})
+				} catch (error) {
+					console.log(error)
+				}
+
+				// window.history.go(-2)
+			}
+			setloading(false)
+		}else{
+			setloading(false)
+			Swal.fire({
+				title: 'Se produjo un error',
+				text: `No ha realizado ninguna selección de asistencia.`,
+				icon: 'warning',
+				showCancelButton: false,
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: 'OK',
+			})
+		}
   }
 
   return (
@@ -372,6 +402,7 @@ const index = () => {
           <TableDinamic
             columns={COLUMNS}
             listData={datos}
+						pagination={false}
           />
         </div>
 

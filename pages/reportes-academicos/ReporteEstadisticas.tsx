@@ -1,8 +1,7 @@
 import { get, remove } from 'local-storage'
 import dynamic from 'next/dynamic'
-import Router from 'next/router'
 import { useEffect, useState } from 'react'
-import styles from '../../components/templates/reports/AcademicReports/ClassReport/ClassReport.module.scss'
+import styles from '../../components/templates/reportes/ReportesAcademicos/ReporteClase/ReporteClase.module.scss'
 import Alerta from '../../components/UI/atoms/alert/Alerts'
 import Label from '../../components/UI/atoms/label/Label'
 import Loader from '../../components/UI/atoms/loader/Loader'
@@ -12,7 +11,9 @@ import {
   LST_SELECTED_COURSE,
   SET_DATA_DOCENTE,
   SET_IMG_BASE64,
+  USER_SESSION,
 } from '../../consts/storageConst'
+import { catchingErrorFront } from '../../helpers/helpers'
 import GeneratePdf from '../../hooks/react-pdf/DownloadPDF'
 import { apiReportesAcademicos } from '../api'
 
@@ -60,7 +61,7 @@ const ReporteEstadisticas = () => {
   const [ClassStatisticsData, setClassStatisticsData] = useState<any>([])
 
   const lstCoursesTeacher: any = JSON.parse(get(LST_SELECTED_COURSE))
-  const userId = 'N00011885'
+  const userId = get(USER_SESSION)
   const nameXLS = `RptClases_${TeacherCoursesData.ClaCodigo}.csv`
   const DocenteSection: any = get(SET_DATA_DOCENTE)
   const imgBase64: any = get(SET_IMG_BASE64)
@@ -201,7 +202,6 @@ const ReporteEstadisticas = () => {
     return response
   }
 
-
   const CallReportPDF = async () => {
     setloading(true)
     const obj = {
@@ -210,11 +210,11 @@ const ReporteEstadisticas = () => {
       name: `RptClases_${TeacherCoursesData.ClaCodigo}.pdf`,
       Information: TeacherCoursesData,
       Docente:
-        DocenteSection.lastName +
+        DocenteSection?.lastName +
         ' ' +
-        DocenteSection.middleLastName +
+        DocenteSection?.middleLastName +
         ', ' +
-        DocenteSection.name,
+        DocenteSection?.name,
       NameRepote: 'Clases: Resultados y Estadísticas',
       RouteImage: imgBase64,
     }
@@ -225,7 +225,7 @@ const ReporteEstadisticas = () => {
   const ToReturn = () => {
     remove(CLASEID_REPORTES)
     remove(LST_SELECTED_COURSE)
-    Router.push('/reportes-academicos')
+    window.location.href = '/reportes-academicos'
   }
 
   useEffect(() => {
@@ -246,8 +246,14 @@ const ReporteEstadisticas = () => {
         AplicaCompetencia: lstCoursesTeacher.AplicaCompetencia,
         ClaMetodoEducativo: lstCoursesTeacher.ClaMetodoEducativo,
       })
-      const response = await ApiClassStatistics(userId)
-      setClassStatisticsData(response)
+      try {
+        const response = await ApiClassStatistics(userId)
+        setClassStatisticsData(response)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+
       setloading(false)
     }
     Load()
@@ -256,10 +262,10 @@ const ReporteEstadisticas = () => {
   return (
     <div>
       <div className={styles.contenido}>
-      <input
-        id="imgBase64"
-        type="hidden"
-      />
+        <input
+          id="imgBase64"
+          type="hidden"
+        />
         <Loader loading={Loading} />
         <div className={styles.content}>
           <div className={styles.titulo}>

@@ -1,15 +1,15 @@
-// import Anchor from '../../components/UI/atoms/anchor/Anchor'
 import Label from '../../components/UI/atoms/label/Label'
 import RecuperarButtons from '../../components/UI/molecules/recuperarButtons/RecuperarButtons'
-import styles from '../../components/templates/recuperar/recuperar/Recuperar.module.scss'
+import styles from '../../components/templates/recuperarAdelantar/recuperar/Recuperar.module.scss'
 import { useEffect, useState } from 'react'
 import { apiRecuperarAdelantar } from '../api'
 import moment from 'moment'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import dynamic from 'next/dynamic'
-import Router from 'next/router'
-import { set } from 'local-storage'
-import { LST_RECOVERY_SELECTED } from '../../consts/storageConst'
+import { get, set } from 'local-storage'
+import { LST_RECOVERY_SELECTED, USER_SESSION } from '../../consts/storageConst'
+import { redirectRouter } from '../../helpers/routerRedirect'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -22,7 +22,7 @@ const Recuperar = () => {
   const [dataListRecovery, setdataListRecovery] = useState([])
   const [Loading, setloading] = useState(false)
   const [Clicked, setClicked] = useState(false)
-  const teacherCode = 'N00011885'
+  const teacherCode = get(USER_SESSION)
   const pend = '0'
 
   const COLUMNS_RECOVERY = [
@@ -48,8 +48,8 @@ const Recuperar = () => {
       )
       formatedDataRecovery(ListRecovery, setdataListRecovery)
       setloading(false)
-    } catch (error) {
-      console.log(error)
+    } catch (error:any) {
+      catchingErrorFront(error.message)
       setloading(false)
     }
   }
@@ -93,16 +93,22 @@ const Recuperar = () => {
 
   const RowSeletec = (Data: any) => {
     set(LST_RECOVERY_SELECTED, JSON.stringify(Data))
-    Router.push('/recuperar-adelantar/editar-recupera')
+    redirectRouter('/recuperar-adelantar/editar', setloading)
   }
 
   const BTNAddNew = () => {
-    Router.push('/recuperar-adelantar/resumen-recupera')
+    redirectRouter('/recuperar-adelantar/registrar', setloading)
   }
 
   useEffect(() => {
     const Load = async () => {
-      await GetApiRecovery(teacherCode, pend)
+      try {
+        await GetApiRecovery(teacherCode, pend)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+      
     }
     Load()
   }, [])

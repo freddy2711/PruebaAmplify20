@@ -7,6 +7,7 @@ const SolMarcaButtons = ({ setOpcion }: any) => {
 
   return (
     <>
+		<div className={`col-12 col-md-4 text-center`}>
       <Form.Check
         type={`radio`}
         id={`default-checkbox-radio1`}
@@ -15,8 +16,11 @@ const SolMarcaButtons = ({ setOpcion }: any) => {
         defaultChecked={true}
         onClick={handleCheck}
         value={1}
+				className={`w-60 m-auto`}
       />
+		</div>
 
+		<div className={`col-12 col-md-4 text-center`}>
       <Form.Check
         type={`radio`}
         id={`default-checkbox-radio2`}
@@ -24,8 +28,11 @@ const SolMarcaButtons = ({ setOpcion }: any) => {
         name={'session'}
         onClick={handleCheck}
         value={2}
+				className={`w-60 m-auto`}
       />
+		</div>
 
+		<div className={`col-12 col-md-4 text-center`}>
       <Form.Check
         type={`radio`}
         id={`default-checkbox-radio3`}
@@ -33,7 +40,10 @@ const SolMarcaButtons = ({ setOpcion }: any) => {
         name={'session'}
         onClick={handleCheck}
         value={3}
+				className={`w-60 m-auto`}
       />
+		</div>
+
     </>
   )
 }

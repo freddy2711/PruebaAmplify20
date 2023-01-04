@@ -13,7 +13,6 @@ import { get } from 'local-storage'
 import { apiNotes, apiAsistencia } from '../api/index'
 import {
   TITLE_EMERG,
-  // MSM_NOTAS_MAIL_ERROR,
   MSM_ENVIAR_NOTAS,
   SET_DATA_DOCENTE,
   SET_NOTES_SELECT,
@@ -32,6 +31,7 @@ import {
   SET_NOTES_PDF,
   buttons,
 } from '../../consts/storageConst'
+import { redirectRouter } from '../../helpers/routerRedirect'
 
 const Thead = dynamic(
   () => import('../../components/UI/molecules/table/thead/Thead'),
@@ -59,7 +59,6 @@ const COLUMNS = [
 const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
   ssr: false,
 })
-// let showTableDinami: any = MSM_VISIBLE_NONE
 let showTableStatic: any = MSM_VISIBLE_NONE
 
 const EnviarNotas = (props: any) => {
@@ -77,10 +76,10 @@ const EnviarNotas = (props: any) => {
     new Date()
   )} ${convertStringToDateTime(new Date())}`
   useEffect(() => {
-    console.log('imgBase64', imgBase64)
-    console.log('mvEnvio', mvEnvio)
-    console.log("dataSelect", dataSelect);
-    
+    // console.log('imgBase64', imgBase64)
+    // console.log('mvEnvio', mvEnvio)
+    // console.log('dataSelect', dataSelect)
+
     showTableStatic = MSM_VISIBLE_BLOCK
     setshowTableDinami(MSM_VISIBLE_NONE)
     ValidityState()
@@ -222,7 +221,7 @@ const EnviarNotas = (props: any) => {
       startY: 130,
     })
     const docente = dt[0].employe
-    doc.save(`notas_${docente}.pdf`)
+    // doc.save(`notas_${docente}.pdf`)
     // return
     const base = doc.output('datauristring') // base64 string
     const base64 = base.split(',')
@@ -231,7 +230,10 @@ const EnviarNotas = (props: any) => {
     const semestre = dt[0].semCode
     const sClase = dataSelect.classCode
     const curso = dt[0].curName
-    const emailUPN = SET_NOTES_PDF.emailUPN
+    // const emailUPN = SET_NOTES_PDF.emailUPN
+    const respEmail = await apiNotes.notesEmail(dataUser.code)
+    const emailUPN = respEmail.emailUPN
+    console.log('notesEmail', respEmail.emailUPN)
     const asunto: string = SET_NOTES_PDF.titleEmail(
       sede,
       semestre,
@@ -255,13 +257,20 @@ const EnviarNotas = (props: any) => {
       Body: setBodyEmail(docente, sClase),
     }
     apiAsistencia.email(emailJson)
-    getAlert({
+    setloading(false)
+    const rs = await getAlert({
       title: TITLE_EMERG,
       text: MSM_SEND_EMAIL(emailUPN),
       confirmButtonText: buttons.ok,
     })
-    setloading(false)
-    return true
+    if (rs) {
+      callEnviarNotas()
+    }
+  }
+
+  const callEnviarNotas = () => {
+    setloading(true)
+    Router.push('./')
   }
 
   const SendGuardar = async () => {
@@ -274,6 +283,7 @@ const EnviarNotas = (props: any) => {
       cancelButtonText: buttons.cancel,
     })
     if (data) {
+      await redirectRouter('', setloading)
       setloading(true)
       const result: any = await fecthNotesState(dataSelect.classCode)
       if (callErrorValid(result, setloading) === undefined) return
@@ -281,8 +291,8 @@ const EnviarNotas = (props: any) => {
       const count = result.length
       if (count !== 0) {
         setMvEnvio(2)
-        const state: any = await VerificaPdf()
-        if (!state) return
+        // const state: any = await VerificaPdf()
+        // if (!state) return
         setloading(false)
       } else {
         setMvEnvio(3)
@@ -339,7 +349,8 @@ const EnviarNotas = (props: any) => {
     return await apiNotes.notesAverage(classCode)
   }
   const fecthNotesStudent = async (obj: any) => {
-    return await apiNotes.notesStudent(obj)
+    const rs = await apiNotes.notesStudent(obj)
+    return rs
   }
 
   const fecthNotesState = async (classCode: any) => {
@@ -373,9 +384,7 @@ const EnviarNotas = (props: any) => {
         </div>
 
         <div className={styles.tabla}>
-          <div
-            style={{ display: showTableStatic }}
-          >
+          <div style={{ display: showTableStatic }}>
             <Tabla>
               <Thead>
                 <th
@@ -387,9 +396,7 @@ const EnviarNotas = (props: any) => {
               </Thead>
               {dataSelect?.sedeCode === undefined ? (
                 <Tbody>
-                  <tr>
-                    No se encontro Registro . . .
-                  </tr>
+                  <tr>No se encontro Registro . . .</tr>
                 </Tbody>
               ) : (
                 <Tbody>

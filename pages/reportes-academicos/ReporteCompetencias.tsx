@@ -2,16 +2,14 @@
 /* eslint-disable no-undef */
 import { get, remove } from 'local-storage'
 import dynamic from 'next/dynamic'
-import Router from 'next/router'
 import { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import styles from '../../components/templates/reports/AcademicReports/CompetenciesReport/CompetenciesReport.module.scss'
+import styles from '../../components/templates/reportes/ReportesAcademicos/ReporteCompetencias/ReporteCompetencias.module.scss'
 import Label from '../../components/UI/atoms/label/Label'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import Select from '../../components/UI/atoms/select/Select'
 import ReportButtons from '../../components/UI/molecules/reports/AcademicReport/ReportButtons/reportButtons'
 import Tbody from '../../components/UI/molecules/table/tbody/Tbody'
-import Thead from '../../components/UI/molecules/table/thead/Thead'
 import Tabla from '../../components/UI/organisms/table/Tabla'
 import {
   CLASEID_REPORTES,
@@ -19,6 +17,7 @@ import {
   SET_DATA_DOCENTE,
   SET_IMG_BASE64,
 } from '../../consts/storageConst'
+import { catchingErrorFront } from '../../helpers/helpers'
 import GeneratePdf from '../../hooks/react-pdf/DownloadPDF'
 import { apiReportesAcademicos } from '../api'
 
@@ -82,17 +81,29 @@ const ReporteCompetencias = () => {
   }
 
   const ApiNotes = async (classCode: any) => {
-    const response = await apiReportesAcademicos.listNotes(classCode)
-    return response
+    try {
+      const response = await apiReportesAcademicos.listNotes(classCode)
+      return response
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)  
+    }
+
+   
   }
 
-
   const ApiCompetenceSchedule = async (classId: any, noteId: any) => {
-    const response = await apiReportesAcademicos.listCompetenceSchedule(
-      classId,
-      noteId
-    )
-    return response
+    try {
+      const response = await apiReportesAcademicos.listCompetenceSchedule(
+        classId,
+        noteId
+      )
+      return response
+    } catch (error:any) {
+      catchingErrorFront(error.message)
+      setloading(false)  
+    }
+   
   }
 
   const handleClose = () => setShow(false)
@@ -246,7 +257,7 @@ const ReporteCompetencias = () => {
   const ToReturn = () => {
     remove(CLASEID_REPORTES)
     remove(LST_SELECTED_COURSE)
-    Router.push('/reportes-academicos')
+    window.location.href = '/reportes-academicos'
   }
 
   const CallReportPDF = async () => {
@@ -257,11 +268,11 @@ const ReporteCompetencias = () => {
       name: `RptEvaluación_${TeacherCoursesData.ClaCodigo}.pdf`,
       Information: TeacherCoursesData,
       Docente:
-        DocenteSection.lastName +
+        DocenteSection?.lastName +
         ' ' +
-        DocenteSection.middleLastName +
+        DocenteSection?.middleLastName +
         ', ' +
-        DocenteSection.name,
+        DocenteSection?.name,
       NameRepote: 'evaluación de competencias',
       RouteImage: imgBase64,
     }
@@ -287,8 +298,16 @@ const ReporteCompetencias = () => {
         AplicaCompetencia: lstCoursesTeacher.AplicaCompetencia,
         ClaMetodoEducativo: lstCoursesTeacher.ClaMetodoEducativo,
       })
-      const response = await ApiCompetenceGeneralByClass(ClassCode)
-      setlstCompetenceGeneralByClass(response)
+
+      try {
+        const response = await ApiCompetenceGeneralByClass(ClassCode)
+        setlstCompetenceGeneralByClass(response)
+      } catch (error:any) {
+        catchingErrorFront(error.message)
+        setloading(false)
+      }
+
+
       setloading(false)
     }
     Load()
@@ -296,7 +315,7 @@ const ReporteCompetencias = () => {
 
   return (
     <div className={styles.contenido}>
-       <input
+      <input
         id="imgBase64"
         type="hidden"
       />
@@ -407,7 +426,7 @@ const ReporteCompetencias = () => {
                 Seleccionar Competencia:
               </p>
             </div>
-            <div>
+            <div className={styles.selectInput}>
               <Select
                 id="formato"
                 classname="primary"
