@@ -80,7 +80,7 @@ type TableSecondaryView = {
   TraCodigo: string
 }
 
-const resumen = () => {
+const Resumen = () => {
   const [ip, setip] = useState("")
   const [TeacherCourses, setTeacherCourses] = useState<any>([])
   const [Holyday, setHolyday] = useState([])
@@ -1085,7 +1085,7 @@ const resumen = () => {
   const EnviaEmail = async () => {
     const drDocente = await GetTeacherUser(User)
 
-    if (drDocente != undefined) {
+    if (drDocente !== undefined) {
       const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
       const curso = TeacherCoursesSelected.coruseId
       const clase = TeacherCoursesSelected.ClaCodigo
@@ -1245,6 +1245,7 @@ const resumen = () => {
     Load()
 
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -1530,5 +1531,5 @@ const resumen = () => {
   )
 }
 
-resumen.title = 'Recuperar/Adelantar clases'
-export default resumen
+Resumen.title = 'Recuperar/Adelantar clases'
+export default Resumen

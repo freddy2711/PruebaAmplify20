@@ -10,7 +10,7 @@ import styles from '../../components/templates/docenteDescanso/Descanso.module.s
 import Loader from '../../components/UI/atoms/loader/Loader'
 import { apiDescanso } from '../api/index'
 import dynamic from 'next/dynamic'
-import { get } from 'local-storage'
+import { get, set } from 'local-storage'
 import {
   callErrorValid,
   convertStringToDate,
@@ -22,7 +22,6 @@ import {
   // SET_IMG_BASE64,
 } from '../../consts/storageConst'
 import 'moment/locale/es'
-import { set } from 'local-storage'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -72,6 +71,7 @@ const DescansoDocente = () => {
 
   useEffect(() => {
     ValidService()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleActualiza = () => {

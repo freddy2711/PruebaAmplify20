@@ -66,7 +66,7 @@ const EnviarNotas = (props: any) => {
   const dataUser: any = get(SET_DATA_DOCENTE)
   const dataSelect: any = get(SET_NOTES_SELECT)
   const [listData, setListData] = useState([])
-  const [mvEnvio, setMvEnvio] = useState(0)
+  // const [mvEnvio, setMvEnvio] = useState(0)
   const [showTableDinami, setshowTableDinami] = useState(MSM_VISIBLE_NONE)
   const [showTableDinami2, setshowTableDinami2] = useState(MSM_VISIBLE_NONE)
   const [butonStatic, setButonStatic] = useState(MSM_VISIBLE_BLOCK)
@@ -83,6 +83,7 @@ const EnviarNotas = (props: any) => {
     showTableStatic = MSM_VISIBLE_BLOCK
     setshowTableDinami(MSM_VISIBLE_NONE)
     ValidityState()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const SendCancel = () => {
@@ -109,9 +110,9 @@ const EnviarNotas = (props: any) => {
       confirmButtonText: buttons.ok,
     })
     if (rs1.noteCode === 0 && rs2.noteCode === 0) {
-      setMvEnvio(0)
+      // setMvEnvio(0)
     } else {
-      setMvEnvio(3)
+      // setMvEnvio(3)
       setButonStatic(MSM_VISIBLE_NONE)
       setshowTableDinami2(MSM_VISIBLE_BLOCK)
     }
@@ -274,7 +275,7 @@ const EnviarNotas = (props: any) => {
   }
 
   const SendGuardar = async () => {
-    setMvEnvio(1)
+    // setMvEnvio(1)
     const data = await getAlert({
       title: TITLE_EMERG,
       text: MSM_ENVIAR_NOTAS(dataSelect.classCode),
@@ -290,12 +291,12 @@ const EnviarNotas = (props: any) => {
       setListData(result)
       const count = result.length
       if (count !== 0) {
-        setMvEnvio(2)
+        // setMvEnvio(2)
         // const state: any = await VerificaPdf()
         // if (!state) return
         setloading(false)
       } else {
-        setMvEnvio(3)
+        // setMvEnvio(3)
         const obj = {
           classCode: dataSelect.classCode,
           classEstate: 'RE',
@@ -313,7 +314,7 @@ const EnviarNotas = (props: any) => {
       setButonStatic(MSM_VISIBLE_NONE)
       setButonDinamic(MSM_VISIBLE_BLOCK)
     } else {
-      setMvEnvio(0)
+      // setMvEnvio(0)
       setshowTableDinami(MSM_VISIBLE_NONE)
     }
   }

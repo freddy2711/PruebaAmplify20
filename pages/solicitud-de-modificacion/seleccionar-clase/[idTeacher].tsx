@@ -5,23 +5,17 @@ import Anchor from '../../../components/UI/atoms/anchor/Anchor'
 import styles from './../../../components/templates/sesiones/anteriores/Anteriores.module.scss'
 import Button from '../../../components/UI/atoms/button/Button'
 import dynamic from 'next/dynamic'
-import { apiRegistroModificacion } from '../../api'
-import { remove, set, get } from 'local-storage'
-import Router from 'next/router'
+import { set } from 'local-storage'
 import { axiosCreate } from '../../../config/axios'
 import { AxiosInstance } from 'axios'
-import { objecApi } from '../../../consts/storageConst'
 import { apiPath } from '../../../consts/path'
 import { redirectRouter } from '../../../helpers/routerRedirect'
 
-// import Select from '../../components/UI/atoms/select/Select'
-
 import {
-  SET_TEACHERCODE,
+	objecApi,
   CLASS_SELECTED_SM,
-  USER_SESSION,
 } from '../../../consts/storageConst'
-import React from 'react'
+
 
 const TableDinamic = dynamic(
   () => import('../../../components/UI/molecules/tableDinamic/Table'),
@@ -35,17 +29,13 @@ type Selected = {
   CurNombre: string
 }
 
-const Alerta = dynamic(
-  () => import('../../../components/UI/atoms/alert/Alerts'),
-  {
-    ssr: false,
-  }
-)
 
-const index = ({ data }: any) => {
+const Index = ({ data }: any) => {
   console.log('DATADESSR', data)
+
   const [Loading, setloading] = useState(true)
 
+  // eslint-disable-next-line no-unused-vars
   const [dataSelected, setDataSelected] = useState<Selected>({
     ClaCodigo: '',
     CurNombre: '',
@@ -53,7 +43,6 @@ const index = ({ data }: any) => {
 
   const [dataListCourses, setDataListCourses] = useState([])
 
-  const UserID = get(USER_SESSION) // === null ? 'N00011885' : get(SET_TEACHERCODE)
 
   const handleClickRowCoursesByTeacher = (e: any, item: any) => {
     e.preventDefault()
@@ -65,11 +54,11 @@ const index = ({ data }: any) => {
   }
 
   const formatedDataCoursesByTeacher = (obj: any, setstate: any) => {
-    const rows = obj.map((item: any, index: number) => ({
+    const rows = obj.map((item: any) => ({
       ...item,
       select: (
         <Anchor
-          //href={`/solicitud-de-modificacion/registrar-solicitud/${item.ClaCodigo}`}
+          // href={`/solicitud-de-modificacion/registrar-solicitud/${item.ClaCodigo}`}
 					href='!#'
           onClick={(e) => handleClickRowCoursesByTeacher(e, item)}
           classname="text-decoration-none text-center w-100 d-block"
@@ -85,10 +74,10 @@ const index = ({ data }: any) => {
   const consultaApi = async (data: any) => {
     // const result: any = await apiRegistroModificacion.listCoursesByTeacher(UserID)
     formatedDataCoursesByTeacher(data, setDataListCourses)
-    //return result
+    // return result
   }
 
-  const dataInit: any = []
+  // const dataInit: any = []
 
   const COLUMNS = [
     { label: 'Seleccionar clase', field: 'select', sort: 'asc' },
@@ -109,6 +98,7 @@ const index = ({ data }: any) => {
     }
 
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -154,7 +144,7 @@ const index = ({ data }: any) => {
   )
 }
 
-export default index
+export default Index
 
 export async function getServerSideProps(context: any) {
   const { query } = context

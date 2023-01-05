@@ -74,7 +74,7 @@ const initFile5 = {
   file: null,
 }
 
-const index = () => {
+const Index = () => {
   const [Loading, setloading] = useState(false)
   const [DataCoursesByTeacher, setDataCoursesByTeacher] = useState<any>([])
   const [DataClassNote, setDataClassNote] = useState<any>([])
@@ -2047,6 +2047,7 @@ const index = () => {
     }
 
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -2211,5 +2212,5 @@ const index = () => {
   )
 }
 
-index.title = 'Carga de Exámen'
-export default index
+Index.title = 'Carga de Exámen'
+export default Index

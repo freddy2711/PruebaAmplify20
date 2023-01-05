@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect, useRef, Fragment } from 'react'
 import styles from './../../../components/templates/soporteVirtual/soporteVirtual.module.scss'
 import Loader from '../../../components/UI/atoms/loader/Loader'
@@ -25,9 +26,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 // import Swal from 'sweetalert2'
 // import axios from 'axios'
-import { CONSULTA_DATA, SET_DATA_DOCENTE } from './../../../consts/storageConst'
+import { CONSULTA_DATA, SET_DATA_DOCENTE, USER_SESSION } from './../../../consts/storageConst'
 import dynamic from 'next/dynamic'
-import { USER_SESSION } from '../../../consts/storageConst';
 
 const QuillRichText = dynamic(
   () => import('../../../components/UI/molecules/quillRichText'),
@@ -37,7 +37,7 @@ const QuillRichText = dynamic(
   }
 )
 
-const index = () => {
+const Index = () => {
   const initFile = {
     name: 'ADJUNTAR ARCHIVOS (tamaño maximo 5mb)',
     type: '',
@@ -506,7 +506,7 @@ const index = () => {
                     className={`form-group chat-one chat-one-${item.id}`}
                   >
                     <div className="img-chat">
-                      <img src="https://intranet.upn.edu.pe/wsfoto/foto/MVdYR2dBdGdTbCsyd0NnaEdsY0NsUT09/Collaborator" />
+                      <img alt="foto" src="https://intranet.upn.edu.pe/wsfoto/foto/MVdYR2dBdGdTbCsyd0NnaEdsY0NsUT09/Collaborator" />
                       <p
                         style={{
                           lineHeight: '1',
@@ -695,4 +695,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

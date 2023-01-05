@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Tbody from '../../components/UI/molecules/table/tbody/Tbody'
 import Tabla from '../../components/UI/organisms/table/Tabla'
 import styles from '../../components/templates/reportes/ReportesAcademicos/ReporteAsistencia/ReporteAsistencia.module.scss'
@@ -132,6 +133,7 @@ const ReporteAsistencia = () => {
     const rows = obj.map((item: any, index: number) => ({
       ...item,
       Image: (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           onClick={() => handleShow(item.image)}
           src={item.image}
@@ -212,6 +214,7 @@ const ReporteAsistencia = () => {
       setloading(false)
     }
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

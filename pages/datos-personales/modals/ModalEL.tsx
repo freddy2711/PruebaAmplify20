@@ -7,8 +7,8 @@ import Button from './../../../components/UI/atoms/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import dynamic from 'next/dynamic'
 import moment from 'moment'
-import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
-import { get, set } from 'local-storage'
+import { SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get } from 'local-storage'
 
 // ** ACTIONS IMPORTS
 import { saveExpLab } from './../../../redux/actions/infoGeneralAction'
@@ -119,6 +119,7 @@ const ModalEL = ({
     ) {
       getCombos()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoextra])
 
   useEffect(() => {
@@ -150,6 +151,7 @@ const ModalEL = ({
 
       setFormNEL(obj)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoeditar])
 
   const saveNewEL = async (e: any) => {
@@ -196,7 +198,7 @@ const ModalEL = ({
       NoSeEncontroInstitucion: formNEL?.chkInstitucionExperiencia,
       NombreInstitucion: formNEL?.txtInstitucionExperiencia,
       Activo: '1',
-      audit_usuario_creacion: DUENOSESSION, //'RVI',
+      audit_usuario_creacion: DUENOSESSION, // 'RVI',
       audit_usuario_actualizacion: '',
     }
 

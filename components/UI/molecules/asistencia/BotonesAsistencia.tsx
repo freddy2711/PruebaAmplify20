@@ -12,6 +12,7 @@ const BotonesAsistencia = ({
   const onChecked = (e: any) => {
     const valor = e.target.value
     console.log(valor)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const datosModificados = useDatosAsis(datos, valor, idAlu)
     setDatos(datosModificados)
   }

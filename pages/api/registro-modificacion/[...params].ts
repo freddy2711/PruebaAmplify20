@@ -1,10 +1,10 @@
-import { axiosCreate } from '../../../config/axios'
+import { axiosCreate, axiosfetchPrivateEmail } from '../../../config/axios'
 import { AxiosInstance } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
 import { genError } from '../../../helpers/helpers'
-import { axiosfetchPrivateEmail } from './../../../config/axios'
+
 
 type Data = {}
 const { ClassShedule, Note } = objecApi

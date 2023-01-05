@@ -65,6 +65,7 @@ const TabContacto = () => {
       txtCorreoPersonal1: info?.emailpersonal,
       txtCorreoPersonal: info?.email,
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [info?.idPersona])
 
   const savecontact = (datos: any) => dispatch<any>(saveContacto(datos))

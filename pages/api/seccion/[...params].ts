@@ -1,6 +1,6 @@
 // import { axiosfetchPrivate } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { apiPath } from './../../../consts/path'
+// import { apiPath } from './../../../consts/path'
 
 type Data = {}
 

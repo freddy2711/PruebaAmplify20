@@ -1,5 +1,4 @@
 import { useState, useEffect, useReducer } from 'react'
-import React from 'react'
 import Tabla from '../../../components/UI/organisms/table/Tabla'
 import Thead from '../../../components/UI/molecules/table/thead/Thead'
 import Tbody from '../../../components/UI/molecules/table/tbody/Tbody'
@@ -17,7 +16,7 @@ import {
   apiRegistroModificacion,
   apiTokens,
 } from './../../api'
-import { remove, set, get } from 'local-storage'
+import { get } from 'local-storage'
 import { apiPath } from '../../../consts/path'
 import { axiosCreate } from '../../../config/axios'
 import { AxiosInstance } from 'axios'
@@ -31,16 +30,16 @@ import {
   objecApi,
   SET_DATA_DOCENTE,
   TITLE_EMERG,
+	USER_SESSION, CLASS_SELECTED_SM
 } from '../../../consts/storageConst'
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBan } from '@fortawesome/free-solid-svg-icons'
+import getAlert from '../../../hooks/jspdf/alertify'
+import Modals from '../../../components/UI/atoms/modal/Modal'
 
 const { Note } = objecApi
 
-import { USER_SESSION, CLASS_SELECTED_SM } from '../../../consts/storageConst'
-import getAlert from '../../../hooks/jspdf/alertify'
-import Modals from '../../../components/UI/atoms/modal/Modal'
 
 interface detailClass {
   AplicaCompetencia: string
@@ -72,13 +71,13 @@ interface alumns {
   observacion: any
 }
 
-interface initDataAluSelected {
+/* interface initDataAluSelected {
   studentId: string
   notePrevious: string
   noteChange: string
   teacherObservation: string
   reasonChange: string
-}
+} */
 
 const TableDinamic = dynamic(
   () => import('../../../components/UI/molecules/tableDinamic/Table'),
@@ -87,7 +86,7 @@ const TableDinamic = dynamic(
   }
 )
 
-const index = ({ data }: any) => {
+const Index = ({ data }: any) => {
   //   console.log('DATA_SSR', data)
 
   const dataInit: any = []
@@ -164,6 +163,7 @@ const index = ({ data }: any) => {
   }
 
   const [state, dispatch] = useReducer(reducer, initDataAluSelected)
+  // eslint-disable-next-line no-unused-vars
   const [habilit, dispatch2] = useReducer(reducer2, {})
   const [modalShowAvance, setModalShowAvance] = useState(false)
   const [tokenDinamic, setTokenDinamic] = useState(0)
@@ -253,6 +253,7 @@ const index = ({ data }: any) => {
 
   const formatAlu = (datos: any, motivo: any) => {
     const alumnsReturn = datos.map((item: any) => {
+      // eslint-disable-next-line no-unneeded-ternary
       const RequestSlope = parseInt(item.RequestSlope) === 1 ? true : false
       dispatch2({
         type: 'ADD',
@@ -354,6 +355,7 @@ const index = ({ data }: any) => {
       state: false,
     }
     ValidaToken(req)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const ValidaToken = async (req: any) => {
@@ -370,7 +372,7 @@ const index = ({ data }: any) => {
   }
 
   const ValidaEmail = async (userCode: any, token: number) => {
-    let emailUPN = await fetchTokenEmail(userCode)
+    const emailUPN = await fetchTokenEmail(userCode)
     if (emailUPN.includes('@upn.pe') || emailUPN.includes('@upn.edu.pe')) {
       // emailUPN = 'cgarcia@csticorp.biz'
       const msj = `<center><p>${token}</p></center>`
@@ -435,7 +437,7 @@ const index = ({ data }: any) => {
     //   console.log(e.target.value)
     const classCode: any = detailClass?.ClaCodigo
     const noteId = e.target.value
-    //const tipo = apiPath.registroModificacionNotas.PATH_listStudent(classCode,notCode)
+    // const tipo = apiPath.registroModificacionNotas.PATH_listStudent(classCode,notCode)
     const AlumnsVstipo = await apiRegistroModificacion.listStudent(
       classCode,
       noteId
@@ -503,6 +505,7 @@ const index = ({ data }: any) => {
   }
 
   const validationNotes = (items: any) => {
+    // eslint-disable-next-line array-callback-return
     items.map((item: any) => {
       const codeAlu = item.CodAlu
       const Msj = item.message
@@ -517,7 +520,7 @@ const index = ({ data }: any) => {
           confirmButtonText: 'OK',
         })
 
-        return
+        
       }
     })
   }
@@ -603,12 +606,12 @@ const index = ({ data }: any) => {
       const carCode: any = detailClass?.CarCodigo
       const SemCode: any = detailClass?.SemCodigo
       const SedCode: any = detailClass?.SedCodigo
-      const curCode: any = detailClass?.CurCodigo
+      // const curCode: any = detailClass?.CurCodigo
 
       const notesVal = {
-        ClassCode: ClassCode,
+        ClassCode,
         SemCode: parseInt(SemCode),
-        SedCode: SedCode,
+        SedCode,
         NoteId: parseInt(noteSelected),
         ContenCodAlu: Object.keys(state).join(','),
       }
@@ -787,7 +790,7 @@ const index = ({ data }: any) => {
       if (alertstat) {
         setModalShowAvance(true)
       }
-      return
+ 
     }
   }
 
@@ -961,6 +964,7 @@ const index = ({ data }: any) => {
           titulo={'Código de Verificación'}
           onGuardar={true}
           onclickguardar={onclickguardar}
+          // eslint-disable-next-line react/no-children-prop
           children={
             <div className="form-group row mt-3">
               <ViewInput
@@ -1013,7 +1017,7 @@ const index = ({ data }: any) => {
   )
 }
 
-export default index
+export default Index
 
 export async function getServerSideProps(context: any) {
   const { query } = context
@@ -1043,9 +1047,10 @@ export async function getServerSideProps(context: any) {
     )
 
     const student = await apiCall(URL2)
+    // eslint-disable-next-line no-unused-vars
     const result2 = student.data.detail
 
-    //PATH_reason
+    // PATH_reason
     const URL3 = apiPath.registroModificacionNotas.PATH_reason
     const reasons = await apiCall(URL3)
     const reason = reasons.data.detail

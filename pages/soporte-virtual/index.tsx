@@ -19,7 +19,7 @@ const Tbody = dynamic(
   }
 )
 
-const index = () => {
+const Index = () => {
   const [Loading, setloading] = useState(false)
   const [list, setList] = useState([])
 
@@ -39,6 +39,7 @@ const index = () => {
     }
 
     getConsultas()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -100,4 +101,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

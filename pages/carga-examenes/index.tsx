@@ -23,7 +23,7 @@ const TableDinamic = dynamic(
   }
 )
 
-const index = () => {
+const Index = () => {
   const [Loading, setloading] = useState(false)
   const [dataListCourses, setDataListCourses] = useState([])
 
@@ -119,6 +119,7 @@ const index = () => {
     }
 
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -158,5 +159,5 @@ const index = () => {
   )
 }
 
-index.title = 'Carga de Exámen - Portal Docentes'
-export default index
+Index.title = 'Carga de Exámen - Portal Docentes'
+export default Index

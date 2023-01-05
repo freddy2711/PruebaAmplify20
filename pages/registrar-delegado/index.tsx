@@ -12,7 +12,6 @@ import { apiDelegado } from './../../pages/api'
 import { get, set } from 'local-storage'
 
 import {
-  SET_TEACHERCODE,
   TEACHERCODE,
   DUENO_SESSION,
   USER_SESSION,
@@ -91,6 +90,7 @@ const Delegado = ({ data }: any) => {
     }
 
     getList()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkDelegado = (e: any, item: any, codClass: string) => {

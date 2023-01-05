@@ -42,7 +42,6 @@ import {
   convertStringToDay,
   RECUPERATION_ID,
   USER_SESSION,
-  SET_IMG_BASE64,
   TOKEN_IN,
   TOKEN,
   SET_SEMESTERCRONOLOGICO,
@@ -50,9 +49,8 @@ import {
 
 // import { useCookies } from 'react-cookie'
 import { apiPath } from '../../consts/path'
-import { json } from 'stream/consumers'
 import { redirectRouter } from '../../helpers/routerRedirect'
-import UserContext, { UserProvider } from '../../Context/userContext'
+import UserContext from '../../Context/userContext'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -152,8 +150,7 @@ const Index = (props: any) => {
   let iControlClase = '-1'
 
   const {
-    setUser,
-    user
+    setUser
   } = useContext(UserContext);
 
   const callApiLogin = async (codeTeacher: any, day: any) => {
@@ -358,6 +355,7 @@ const Index = (props: any) => {
     //   console.log(resp)
     // }
     // getApiPublic()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const LinkButton = (row: any, _grid: number) => {
     return (
@@ -772,17 +770,19 @@ Index.getInitialProps = async ({ res, query }: any) => {
   const p1 = query.u
   let tk = query.tk
 
-  if (tk == undefined) {
+  if (tk === undefined) {
     return {
       data,
       p1,
       tk,
     }
   } else {
+    // eslint-disable-next-line no-var, n/no-deprecated-api
     var b = new Buffer(query.u, 'base64')
     const response = b.toString()
     //
     const rs: any = query.tk.split('.')[1]
+    // eslint-disable-next-line n/no-deprecated-api
     const t = new Buffer(rs, 'base64').toString()
     const newRS: any = JSON.parse(t)
     tk = newRS.jti

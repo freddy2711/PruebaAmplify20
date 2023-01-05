@@ -2,7 +2,7 @@ import { useMemo /* useRef */ } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
-const index = ({ value = '', set, handleImage, refe }: any) => {
+const Index = ({ value = '', set, handleImage, refe }: any) => {
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
     [{ list: 'ordered' }, { list: 'bullet' }],
@@ -26,6 +26,7 @@ const index = ({ value = '', set, handleImage, refe }: any) => {
         container: toolbarOptions,
       },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -44,4 +45,4 @@ const index = ({ value = '', set, handleImage, refe }: any) => {
   )
 }
 
-export default index
+export default Index

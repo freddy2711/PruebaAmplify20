@@ -1,5 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import Tabla from '../../../components/UI/organisms/table/Tabla'
 import Thead from '../../../components/UI/molecules/table/thead/Thead'
 import Tbody from '../../../components/UI/molecules/table/tbody/Tbody'
@@ -8,20 +7,16 @@ import Loader from '../../../components/UI/atoms/loader/Loader'
 import Label from '../../../components/UI/atoms/label/Label'
 import styles from '../../../components/templates/sesiones/anteriores/Anteriores.module.scss'
 import dynamic from 'next/dynamic'
-import ViewInput from '../../../components/UI/molecules/recuperarAdelantarClases/viewInput/ViewInput'
+//  import ViewInput from '../../../components/UI/molecules/recuperarAdelantarClases/viewInput/ViewInput'
 // import Anchor from '../../../components/UI/atoms/anchor/Anchor'
-import Select from '../../../components/UI/atoms/select/Select'
-import { apiRegistroModificacion } from '../../api'
-import { remove, set, get } from 'local-storage'
+// import Select from '../../../components/UI/atoms/select/Select'
+// import { apiRegistroModificacion } from '../../api'
 import { apiPath } from '../../../consts/path'
 import { axiosCreate } from '../../../config/axios'
 import { AxiosInstance } from 'axios'
 import { objecApi } from '../../../consts/storageConst'
-import Swal from 'sweetalert2'
 
 const { Note, ClassShedule } = objecApi
-
-import { USER_SESSION } from '../../../consts/storageConst'
 
 interface detailClass {
   AplicaCompetencia: string
@@ -60,7 +55,7 @@ const TableDinamic = dynamic(
   }
 )
 
-const index = ({ data }: any) => {
+const Index = ({ data }: any) => {
   console.log('DATA_SSR', data)
 
   const dataInit = {
@@ -77,6 +72,7 @@ const index = ({ data }: any) => {
     State: 'PEN',
   }
 
+  // eslint-disable-next-line no-unused-vars
   const [Loading, setloading] = useState(false)
   const [dataList, setDataList] = useState<alumns[]>([dataInit])
   const [detailClass, setDetailClass] = useState<detailClass>()
@@ -107,48 +103,43 @@ const index = ({ data }: any) => {
             Pendiente
           </Label>
         )
-        break
       case 'PRO':
         return (
           <Label classname="badge bg-success text-white text-decoration-none me-1">
             Procesado
           </Label>
         )
-        break
       case 'CAN':
         return (
           <Label classname="badge bg-secondary text-white text-decoration-none me-1">
             Cancelado
           </Label>
         )
-        break
       case 'DES':
         return (
           <Label classname="badge bg-danger text-white text-decoration-none me-1">
             Desaprobado
           </Label>
         )
-        break
       case 'NOAP':
         return (
           <Label classname="badge bg-default text-dark text-decoration-none me-1">
             No Aplica
           </Label>
         )
-        break
       default:
         return (
           <Label classname="badge bg-warning text-white text-decoration-none me-1">
             Pendiente
           </Label>
         )
-        break
     }
   }
 
   useEffect(() => {
     setDataList(data.result)
     setDetailClass(data.clase)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -252,7 +243,7 @@ const index = ({ data }: any) => {
   )
 }
 
-export default index
+export default Index
 
 export async function getServerSideProps(context: any) {
   const { query } = context

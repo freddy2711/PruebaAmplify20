@@ -69,6 +69,7 @@ const RegistroAsistencia = () => {
     }
     fetchControl(obj)
     fetchSummary(dataRecover?.recuperationId)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const regresar = () => {

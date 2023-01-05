@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Tbody from '../../components/UI/molecules/table/tbody/Tbody'
 import Tabla from '../../components/UI/organisms/table/Tabla'
 import styles from '../../components/templates/reportes/ReportesAcademicos/ReporteNotas/ReporteNotas.module.scss'
@@ -244,6 +245,7 @@ const ReporteNotas = () => {
       setloading(false)
     }
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

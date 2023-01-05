@@ -5,8 +5,8 @@ import Form from './../../../components/UI/molecules/form/Form'
 import Input from './../../../components/UI/atoms/input/Input'
 import Button from './../../../components/UI/atoms/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
-import { get, set } from 'local-storage'
+import { SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get } from 'local-storage'
 
 import { saveConoAction } from './../../../redux/actions/infoGeneralAction'
 
@@ -59,7 +59,7 @@ const ModalConociminetos = ({
       NombreConocimiento: txtConocimiento,
       NivelConocimiento: ddlOtroNivelConocimiento,
       Activo: '1',
-      audit_usuario_creacion: DUENOSESSION, //'RVI',
+      audit_usuario_creacion: DUENOSESSION, // 'RVI',
       audit_usuario_actualizacion: null,
       EsCertificado: '0',
     }

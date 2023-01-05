@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import React from 'react'
 import Tabla from '../../../components/UI/organisms/table/Tabla'
 import Button from '../../../components/UI/atoms/button/Button'
 import Loader from '../../../components/UI/atoms/loader/Loader'
 import Label from '../../../components/UI/atoms/label/Label'
 import styles from './../../../components/templates/sesiones/anteriores/Anteriores.module.scss'
 import dynamic from 'next/dynamic'
-import Select from '../../../components/UI/atoms/select/Select'
 import Alerta from '../../../components/UI/atoms/alert/Alerts'
 import ViewInput from '../../../components/UI/molecules/recuperarAdelantarClases/viewInput/ViewInput'
 import getAlert from '../../../hooks/jspdf/alertify'
@@ -65,8 +63,8 @@ let selectNote: any = {
   AplicaCompetencia: '',
   ClaMetodoEducativo: '',
 }
-const index = () => {
-  const dataInit = [
+const Index = () => {
+/*   const dataInit = [
     {
       select: (
         <input
@@ -82,11 +80,11 @@ const index = () => {
       notaMod: '18',
       observacion: 'Cambio de Nota',
     },
-  ]
+  ] */
 
   const [tokenDinamic, setTokenDinamic] = useState(0)
   const [Loading, setloading] = useState(false)
-  const [dataList, setDataList] = useState(dataInit)
+  // const [dataList, setDataList] = useState(dataInit)
   const [disable, setDisable] = useState(true)
   const [listStudentNota, setListStudentNota] = useState([])
   const dataUser: any = get(SET_DATA_DOCENTE)
@@ -96,7 +94,7 @@ const index = () => {
   console.log('selectNote', selectNote)
 
   const dueñoSession: any = get(DUENO_SESSION)
-  const dateNow = convertStringToDate(new Date())
+  // const dateNow = convertStringToDate(new Date())
 
   const COLUMNS = [
     { label: 'Seleccionar', field: 'select', sort: 'asc' },
@@ -135,6 +133,7 @@ const index = () => {
       noteId: 1,
     }
     fecthNotesPostClassGroup(obj2)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fecthNotesPostClassGroup = async (obj: any) => {
@@ -162,7 +161,7 @@ const index = () => {
   }
 
   const ValidaEmail = async (userCode: any, token: number) => {
-    let emailUPN = await fetchTokenEmail(userCode)
+    const emailUPN = await fetchTokenEmail(userCode)
     if (emailUPN.includes('@upn.pe') || emailUPN.includes('@upn.edu.pe')) {
       // emailUPN = 'javierdj22@gmail.com'
       const msj = `<center><p>${token}</p></center>`
@@ -368,7 +367,7 @@ const index = () => {
   }
 
   const fetchNotesValidate = async (obj: any) => {
-    const resp = await apiNotes.notesValidate(obj)
+     await apiNotes.notesValidate(obj)
   }
 
   const fetchTokenTecher = async (classCode: any) => {
@@ -552,4 +551,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

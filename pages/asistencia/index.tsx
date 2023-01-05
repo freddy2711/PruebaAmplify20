@@ -51,7 +51,7 @@ const COLUMNS = [
   { label: 'Tipo Clase', field: 'ClaTipo', sort: 'asc' },
 ]
 
-const index = () => {
+const Index = () => {
   const [datos, setDatos] = useState([])
   const [datosAsis, setDatosAsis] = useState([])
   const [Loading, setloading] = useState(false)
@@ -163,6 +163,7 @@ const index = () => {
     }
 
     setDatos([])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleBtnGuardar = async () => {
@@ -433,6 +434,6 @@ const index = () => {
   )
 }
 
-index.title = 'Asistencia - Portal Docentes'
+Index.title = 'Asistencia - Portal Docentes'
 
-export default index
+export default Index

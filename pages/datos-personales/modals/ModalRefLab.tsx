@@ -5,8 +5,8 @@ import Form from './../../../components/UI/molecules/form/Form'
 import Button from './../../../components/UI/atoms/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import Input from './../../../components/UI/atoms/input/Input'
-import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
-import { get, set } from 'local-storage'
+import { SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get } from 'local-storage'
 
 import { saveRefLabAction } from './../../../redux/actions/infoGeneralAction'
 
@@ -76,7 +76,7 @@ const ModalRefLab = ({ modalShowRefLAb, setModalShowRefLAb }: any) => {
       Celular1: txtTelfCelular1Contacto,
       Celular2: txtTelfCelular2Contacto,
       Activo: '1',
-      audit_usuario_creacion: DUENOSESSION, //'RVI',
+      audit_usuario_creacion: DUENOSESSION, // 'RVI',
       audit_usuario_actualizacion: '',
     }
 

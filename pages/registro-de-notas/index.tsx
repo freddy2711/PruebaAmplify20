@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Router from 'next/router'
 import Button from '../../components/UI/atoms/button/Button'
 import Label from '../../components/UI/atoms/label/Label'
 import styles from '../../components/templates/ingresoNotas/IngresoNotas.module.scss'
@@ -24,8 +23,8 @@ import {
   convertStringToDate,
   callErrorValid,
 } from '../../consts/storageConst'
-import Modals from '../../components/UI/atoms/modal/Modal'
-import ViewInput from '../../components/UI/molecules/recuperarAdelantarClases/viewInput/ViewInput'
+// import Modals from '../../components/UI/atoms/modal/Modal'
+// import ViewInput from '../../components/UI/molecules/recuperarAdelantarClases/viewInput/ViewInput'
 import { redirectRouter } from '../../helpers/routerRedirect'
 
 const TableDinamic = dynamic(
@@ -62,6 +61,7 @@ const IngresoNotas = () => {
     if (dataUser?.code !== undefined) {
       fetchTeacherCurse(dataUser?.code)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchTeacherCurse = async (obj: any) => {

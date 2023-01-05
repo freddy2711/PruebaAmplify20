@@ -17,7 +17,7 @@ import {
 } from '../../consts/storageConst'
 import { catchingErrorFront } from '../../helpers/helpers'
 
-const index = () => {
+const Index = () => {
   const [Loading, setloading] = useState(false)
   const [TeacherCoursesData, setTeacherCoursesData] = useState<any>([])
   const [TeacherTutoriaData, setTeacherTutoriaData] = useState<any>([])
@@ -246,6 +246,7 @@ const index = () => {
     }
 
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -347,5 +348,5 @@ const index = () => {
   )
 }
 
-index.title = 'Reportes - Portal Docentes'
-export default index
+Index.title = 'Reportes - Portal Docentes'
+export default Index

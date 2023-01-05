@@ -7,6 +7,7 @@ const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
   ssr: false,
 })
 const Index = (props: any) => {
+  // eslint-disable-next-line no-unused-vars
   const [Loading, setloading] = useState(false)
   useEffect(() => {
     // if (props.data === null) {
@@ -47,7 +48,7 @@ const Index = (props: any) => {
           <Label classname="text-warning h5 mt-3 mb-3">Página Permisos</Label>
         </div>
         <hr />
-        <div className={styles.alertaContent}>
+        <div className={styles.alertContent}>
           <Alerta
             classname="w-100"
             variant="info"

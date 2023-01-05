@@ -47,7 +47,7 @@ type CoursesBySelected = {
   TipoDoc: string
 }
 
-const index = () => {
+const Index = () => {
   const [dataListCourses, setDataListCourses] = useState([])
   const [dataListSessions, setListSessions] = useState([])
   const [dataPeriodPayment, setdataPeriodPayment] = useState([])
@@ -300,6 +300,7 @@ const index = () => {
     }
 
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -398,5 +399,5 @@ const index = () => {
   )
 }
 
-index.title = 'Sesiones Anteriores - Portal Docentes'
-export default index
+Index.title = 'Sesiones Anteriores - Portal Docentes'
+export default Index

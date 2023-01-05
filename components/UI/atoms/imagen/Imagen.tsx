@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from './index.module.scss'
 import classNames from 'classnames'
 import { extractClass } from '../../../../helpers/helpers'

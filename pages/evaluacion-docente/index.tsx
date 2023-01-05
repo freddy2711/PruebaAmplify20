@@ -6,7 +6,7 @@ import Loader from '../../components/UI/atoms/loader/Loader'
 import { catchingErrorFront } from '../../helpers/helpers'
 import { apiEvaluacionDocente } from '../api'
 
-const index = () => {
+const Index = () => {
   const [DocumentData, setDocumentData] = useState<any>([])
   const [Loading, setloading] = useState(false)
 
@@ -144,5 +144,5 @@ const index = () => {
   )
 }
 
-index.title = 'Evaluación del desempeño Docente - Portal Docentes'
-export default index
+Index.title = 'Evaluación del desempeño Docente - Portal Docentes'
+export default Index

@@ -55,7 +55,7 @@ const Navigation = ({ menu = menuDefault }: Props) => {
                       href={addUserToUrl(item.link, teacherCode)}
                       target={item.target === false ? undefined : '_blank'}
 											data-link={`${item.link}`}
-											className="dropdown-item"
+											className="dropdown-item" rel="noreferrer"
                     >
                       {item.label}
                     </a>
@@ -66,7 +66,7 @@ const Navigation = ({ menu = menuDefault }: Props) => {
                   key={index}
                   href={item.link}
                   target={item.target === false ? undefined : '_blank'}
-									className="dropdown-item"
+									className="dropdown-item" rel="noreferrer"
                 >
                   {item.label}
                 </a>

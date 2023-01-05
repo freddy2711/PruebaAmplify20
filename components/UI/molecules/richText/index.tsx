@@ -2,7 +2,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
 import { useState } from 'react'
 
-const index = () => {
+const Index = () => {
   const [editorState, seteditorState] = useState<any>()
 
   return (
@@ -16,4 +16,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

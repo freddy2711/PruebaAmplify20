@@ -19,6 +19,7 @@ import {
   SET_DATA_DOCENTE,
   TITLE_EMERG,
   MSM_GENERA_TOKEN,
+	SET_TEACHERCODE, USER_SESSION
 } from '../../consts/storageConst'
 import { apiPath } from '../../consts/path'
 import Swal from 'sweetalert2'
@@ -27,12 +28,9 @@ import { redirectRouter } from '../../helpers/routerRedirect'
 import {
   faPencilSquare,
   faTrash,
-  faEye,
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { SET_TEACHERCODE, USER_SESSION } from '../../consts/storageConst'
-import React from 'react'
 import {
   apiAsistencia,
   apiNotes,
@@ -62,49 +60,49 @@ const estados = (estado: string) => {
           Pendiente
         </Label>
       )
-      break
+      
     case 'APR':
       return (
         <Label classname="badge bg-success text-white text-decoration-none me-1">
           Aprobado
         </Label>
       )
-      break
+      
     case 'CAN':
       return (
         <Label classname="badge bg-secondary text-white text-decoration-none me-1">
           Cancelado
         </Label>
       )
-      break
+      
     case 'DES':
       return (
         <Label classname="badge bg-danger text-white text-decoration-none me-1">
           Desaprobado
         </Label>
       )
-      break
+      
     case 'NOAP':
       return (
         <Label classname="badge bg-default text-dark text-decoration-none me-1">
           No Aplica
         </Label>
       )
-      break
+      
     default:
       return (
         <Label classname="badge bg-warning text-white text-decoration-none me-1">
           Pendiente
         </Label>
       )
-      break
+      
   }
 }
 
 let itemSelect = { SemCode: '', ClassCode: '' }
 // let UserID:any = SET_TEACHERCODE
 
-const index = ({ data }: any) => {
+const Index = ({ data }: any) => {
   const dataInit = [
     {
       id: '219935',
@@ -238,7 +236,7 @@ const index = ({ data }: any) => {
       if (alertstat) {
         setModalShowAvance(true)
       }
-      return
+   
     }
   }
 
@@ -286,7 +284,7 @@ const index = ({ data }: any) => {
   }
 
   const ValidaEmail = async (userCode: any, token: number) => {
-    let emailUPN = await fetchTokenEmail(userCode)
+    const emailUPN = await fetchTokenEmail(userCode)
     if (emailUPN.includes('@upn.pe') || emailUPN.includes('@upn.edu.pe')) {
       // emailUPN = 'cgarcia@csticorp.biz'
       const msj = `<center><p>${token}</p></center>`
@@ -368,11 +366,12 @@ const index = ({ data }: any) => {
 
     setUserID(UserIDst)
 
+    // eslint-disable-next-line no-unused-vars
     const format = data.map((item: any, index: number) => {
       const disableCancel =
-        item.StateApproval == 'CAN' ||
-        item.StateApproval == 'APR' ||
-        item.StateApproval == 'DES'
+        item.StateApproval === 'CAN' ||
+        item.StateApproval === 'APR' ||
+        item.StateApproval === 'DES'
 
       if (parseInt(item.TypeFlujoId) === 2) {
         item.StateApprovalCC = estados(item.StateApprovalCC)
@@ -427,6 +426,7 @@ const index = ({ data }: any) => {
     })
     // console.log('reverse', )
     setDataList(data.reverse())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleDetalle = (item: any) => {
@@ -434,6 +434,7 @@ const index = ({ data }: any) => {
     location.href = `/solicitud-de-modificacion/detalle-solicitud/${item.RequestId}/${item.TraCode}/${item.ClassCode}`
   }
 
+  // eslint-disable-next-line no-unused-vars
   const SendGenerarToken = async () => {
     setloading(true)
     const req = {
@@ -559,6 +560,7 @@ const index = ({ data }: any) => {
         titulo={'Código de Verificación'}
         onGuardar={true}
         onclickguardar={onclickguardar}
+        // eslint-disable-next-line react/no-children-prop
         children={
           <div className="form-group row mt-3">
             <ViewInput
@@ -620,7 +622,7 @@ const index = ({ data }: any) => {
           <div>
             <Anchor
               classname=""
-              //href={`/solicitud-de-modificacion/seleccionar-clase/${UserID}`}
+              // href={`/solicitud-de-modificacion/seleccionar-clase/${UserID}`}
 							href='!#'
 							onClick={(e:any) => handleRegister(e,`/solicitud-de-modificacion/seleccionar-clase/${UserID}`)}
             >
@@ -649,7 +651,7 @@ const index = ({ data }: any) => {
   )
 }
 
-export default index
+export default Index
 
 export async function getServerSideProps(context: any) {
   const { query } = context

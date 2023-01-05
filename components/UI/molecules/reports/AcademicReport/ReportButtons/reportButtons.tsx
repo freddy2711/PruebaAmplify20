@@ -5,7 +5,7 @@ import Select from '../../../../atoms/select/Select'
 import ExportCSV from '../../../../atoms/CSVLink/CSVLink'
 import style from '../../../reports/AcademicReport/ReportButtons/reportButtons.module.scss'
 
-const reportButtons = (props: any) => {
+const ReportButtons = (props: any) => {
   const [disable, setDisable] = useState(true)
   const [selectOption, setSelectOption] = useState('0')
 
@@ -81,4 +81,4 @@ const reportButtons = (props: any) => {
   )
 }
 
-export default reportButtons
+export default ReportButtons

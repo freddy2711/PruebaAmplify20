@@ -826,7 +826,7 @@ const EditarRecupera = () => {
       if (ScheduleSessions !== undefined) {
         const nrHoras = ScheduleSessions.NroHoras
         let itemHour = ''
-        if (index == 1) itemHour = hour
+        if (index === 1) itemHour = hour
         else {
           itemHour = SelectedHour
           value = value + 'T00:00:00'
@@ -971,7 +971,7 @@ const EditarRecupera = () => {
 
   const EnviaEmailAnulacion = async () => {
     const drDocente = await GetTeacherUser(User)
-    if (drDocente != undefined) {
+    if (drDocente !== undefined) {
       const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
 
       const curso = DataRecuperation.coruseId
@@ -1036,7 +1036,9 @@ const EditarRecupera = () => {
       await SendMail(emailJsonDirectores)
 
       const lstEmailUsuarioAlerta: any = []
+      // eslint-disable-next-line camelcase
       const dt_usucfg: any = await getUsuariosByProceso(carrera, sede)
+      // eslint-disable-next-line camelcase
       dt_usucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
       const emailJsonUsuarios = {
         ListDestinatarios: lstEmailUsuarioAlerta,
@@ -1055,7 +1057,7 @@ const EditarRecupera = () => {
 
   const EnviaEmailEdicion = async () => {
     const drDocente = await GetTeacherUser(User)
-    if (drDocente != undefined) {
+    if (drDocente !== undefined) {
       const nombre = `${drDocente.lastName} ${drDocente.middleLastName}, ${drDocente.name}`
       const curso = DataRecuperation.coruseId
       const clase = ScheduleSessions.ClaCodigo
@@ -1155,7 +1157,9 @@ const EditarRecupera = () => {
       await SendMail(emailJson)
 
       const lstEmailUsuarioAlerta: any = []
+      // eslint-disable-next-line camelcase
       const dt_usucfg: any = await getUsuariosByProceso(carrera, sede)
+      // eslint-disable-next-line camelcase
       dt_usucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
 
       const emailJsonUsuarios = {
@@ -1256,6 +1260,7 @@ const EditarRecupera = () => {
     if (lstSelected !== undefined) {
       Load()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

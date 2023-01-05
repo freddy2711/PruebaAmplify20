@@ -5,7 +5,7 @@ import styles from '../../components/templates/tutorias/tutorias.module.scss'
 import dynamic from 'next/dynamic'
 import { get } from 'local-storage'
 import {
-  SET_DATA_DOCENTE,
+  // SET_DATA_DOCENTE,
   USER_SESSION,
 } from '../../consts/storageConst'
 import { apiTutorias } from '../api'
@@ -56,14 +56,14 @@ const NOTES = [
   { label: 'EST', field: 'MadeEstado', sort: 'asc' },
 ]
 
-const index = () => {
+const Index = () => {
   const [Loading, setLoading] = useState(false)
   const [TutoriasData, setTutoriasData] = useState<any>([])
   const [TeacherNotesStudentTutori, setTeacherNotesStudentTutori] =
     useState<any>([])
   const [StudentTutoring, setStudentTutoring] = useState<any>([])
-  const DUENO: any = get(SET_DATA_DOCENTE)
-  const DUENOSESSION = DUENO?.userName
+  // const DUENO: any = get(SET_DATA_DOCENTE)
+  // const DUENOSESSION = DUENO?.userName
   const USER = get(USER_SESSION)
   
   const ApiTutorias = async (traCode: any) => {
@@ -95,10 +95,10 @@ const index = () => {
     }
   }
 
-  const ApiEmployeeLogin = async (userName: any) => {
+/*   const ApiEmployeeLogin = async (userName: any) => {
     const response = await apiTutorias.EmployeeLogin(userName)
     return response
-  }
+  } */
 
   // apis
 
@@ -209,7 +209,7 @@ const index = () => {
         if (result.length <= 0) ViewMessage(2)
         else formatedData(result, setTutoriasData)
   
-        const user = await ApiEmployeeLogin(DUENOSESSION)
+        // const user = await ApiEmployeeLogin(DUENOSESSION)
       } catch (error:any) {
         catchingErrorFront(error.message)
         setLoading(false)
@@ -218,6 +218,7 @@ const index = () => {
       setLoading(false)
     }
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -267,5 +268,5 @@ const index = () => {
   )
 }
 
-index.title = 'Tutoría - Portal Docentes'
-export default index
+Index.title = 'Tutoría - Portal Docentes'
+export default Index

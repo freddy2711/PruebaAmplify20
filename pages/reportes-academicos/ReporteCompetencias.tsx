@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-undef */
 import { get, remove } from 'local-storage'
@@ -123,6 +124,7 @@ const ReporteCompetencias = () => {
     const rows = objNotas.map((item: any) => ({
       ...item,
       Image: (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           onClick={() => handleShow(item.image)}
           src={item.image}
@@ -311,6 +313,7 @@ const ReporteCompetencias = () => {
       setloading(false)
     }
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

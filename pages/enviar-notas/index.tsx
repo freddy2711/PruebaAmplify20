@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 // import Router from 'next/router'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import Button from '../../components/UI/atoms/button/Button'
 import Label from '../../components/UI/atoms/label/Label'
 import styles from '../../components/templates/ingresoNotas/IngresoNotas.module.scss'
@@ -34,7 +34,7 @@ const COLUMNS = [
   { label: 'Tipo Clase', field: 'send', sort: 'asc' },
 ]
 const EnviarNotas = () => {
-  const router = useRouter()
+  // const router = useRouter()
   const [Loading, setloading] = useState(true)
   const dataUser: any = get(SET_DATA_DOCENTE)
   const [listCourse, setlistCourse] = useState([])
@@ -42,6 +42,7 @@ const EnviarNotas = () => {
   useEffect(() => {
     remove(SET_NOTES_SELECT)
     fecthNotesSendClass(dataUser?.code)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const LinkButton = (row: any) => {

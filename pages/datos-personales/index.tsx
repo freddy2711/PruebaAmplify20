@@ -32,7 +32,7 @@ import TabIdiomas from './tabs/TabIdiomas'
 import TabRefLaboral from './tabs/TabRefLaboral'
 import TabDocs from './tabs/TabDocs'
 import ModalAvance from './modals/ModalAvance'
-import { USER_SESSION, SET_DATA_DOCENTE } from '../../consts/storageConst'
+import { SET_DATA_DOCENTE } from '../../consts/storageConst'
 
 const DatosPersonales = () => {
   const cargando1 = useSelector((state: any) => state?.infoGeneral?.loading)
@@ -64,7 +64,7 @@ const DatosPersonales = () => {
 			console.log(DUENOSESSION)
 			
       await loadData({
-        user: DUENOSESSION, //'RVI',
+        user: DUENOSESSION, // 'RVI',
       })
 
       await loadinfoextra()
@@ -77,6 +77,7 @@ const DatosPersonales = () => {
     }
 
     init()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [progress, setprogress] = useState(0)
@@ -105,7 +106,7 @@ const DatosPersonales = () => {
       IdConfirmacion: null,
       IdPersona: info.idPersona,
       Activo: '1',
-      audit_usuario_creacion: DUENOSESSION, //'RVI',
+      audit_usuario_creacion: DUENOSESSION, // 'RVI',
       audit_usuario_actualizacion: '0',
     }
 

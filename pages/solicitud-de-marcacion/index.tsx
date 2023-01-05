@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Router from 'next/router'
 import Anchor from '../../components/UI/atoms/anchor/Anchor'
 import Label from '../../components/UI/atoms/label/Label'
 import SolMarcaButtons from '../../components/UI/molecules/solMarcaButtons/SolMarcaButtons'
@@ -10,10 +9,11 @@ import 'moment/locale/es'
 import dynamic from 'next/dynamic'
 import { get, set } from 'local-storage'
 import { apiSolicitud } from './../../pages/api'
-import { USER_SESSION, SET_DATA_DOCENTE } from '../../consts/storageConst'
 // import Swal from 'sweetalert2'
 
 import {
+	USER_SESSION, 
+	SET_DATA_DOCENTE,
   TEACHERCODE,
   CLASS_SELECTED_SOL_MARCACION,
   LIST_SESION_SOL,
@@ -29,7 +29,6 @@ import {
   CONTROL_CLASE_FECHA,
   CONTROL_CLASE_FECHAHORA_INICIO,
   CONTROL_CLASE_FECHAHORA_FIN,
-  SET_TEACHERCODE,
   NO_CLOSE,
 } from './../../consts/storageConst'
 import { catchingErrorFront } from '../../helpers/helpers'
@@ -181,6 +180,7 @@ const SolicitudMarcacion = () => {
       }
     }
     consultaApi()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const COLUMNS_SESIONES = [

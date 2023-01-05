@@ -7,7 +7,7 @@ import { get } from 'local-storage'
 import { TOKEN, USER_SESSION } from '../../../../consts/storageConst'
 import { useState } from 'react'
 import Loader from '../../atoms/loader/Loader'
-import Button from '../../atoms/button/Button'
+// import Button from '../../atoms/button/Button'
 
 export interface Props {
   labelWelcome: labelProps

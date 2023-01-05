@@ -4,8 +4,8 @@ import Modals from './../../../components/UI/atoms/modal/Modal'
 import Form from './../../../components/UI/molecules/form/Form'
 import Button from './../../../components/UI/atoms/button/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { USER_SESSION, SET_DATA_DOCENTE } from '../../../consts/storageConst'
-import { get, set } from 'local-storage'
+import { SET_DATA_DOCENTE } from '../../../consts/storageConst'
+import { get } from 'local-storage'
 
 import { saveIdiomasAction } from './../../../redux/actions/infoGeneralAction'
 
@@ -42,6 +42,7 @@ const ModalIdiomas = ({ modalShowIdiomas, setModalShowIdiomas }: any) => {
         getCombos()
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingextraidiomas])
 
   const saveidiomasaction = (datos: any) =>

@@ -16,7 +16,7 @@ import Loader from '../../components/UI/atoms/loader/Loader'
 import moment from 'moment'
 import dynamic from 'next/dynamic'
 import Swal from 'sweetalert2'
-import { catchingErrorApi, catchingErrorFront } from '../../helpers/helpers'
+import { catchingErrorFront } from '../../helpers/helpers'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -157,6 +157,7 @@ const LogsCreacion = () => {
 
       Load()
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -35,7 +35,7 @@ const QuillRichText = dynamic(
   }
 )
 
-const index = () => {
+const Index = () => {
   const initForm = {
     ddlTipo: '0',
     ddlSubTipo: '0',
@@ -80,6 +80,7 @@ const index = () => {
     }
 
     loadData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const convertoLink = async (arr: any) => {
@@ -436,7 +437,7 @@ const index = () => {
     try {
       setloading(true)
       const obj = {
-        teacherCode: get(USER_SESSION) ,//'N00011885',
+        teacherCode: get(USER_SESSION) ,// 'N00011885',
         query: descrip,
         type: ddlTipo,
         subType: ddlSubTipo,
@@ -786,4 +787,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

@@ -10,7 +10,6 @@ import dynamic from 'next/dynamic'
 import { get, set } from 'local-storage'
 import Swal from 'sweetalert2'
 import moment from 'moment'
-import Router from 'next/router'
 import { apiAsistencia, apiSolicitud } from './../../../pages/api'
 import { redirectRouter } from './../../../helpers/routerRedirect'
 import {
@@ -24,12 +23,10 @@ import {
   CLASS_SELECTED_SOL_MARCACION,
   CONTROL_CLASE_ID,
   ASISTENCIA,
-  DUENO_SESSION,
   VALIDAR,
   COMENTARIO,
   // DATOS DE PRUEBA
 	SET_DATA_DOCENTE,
-  SET_DUENO_SESSION,
   CONTROL_CLASE_ESTADO,
   TIPO_ASISTENCIA,
   REGSOL,
@@ -259,6 +256,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
     }
 
     fun()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const btnFin = async (ControlClaseID: string, ClaCode: string) => {
@@ -359,7 +357,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
               observations: motivo,
             }
 
-            const resp = await apiSolicitud.actualizaSesionAbiertaSolicitud(
+            await apiSolicitud.actualizaSesionAbiertaSolicitud(
               item
             )
           } catch (error) {
@@ -368,7 +366,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
 
           // termina la sesion pa_TERMINA_SESION_SOLICITUD
           try {
-            const resp = await apiSolicitud.endSesion(
+             await apiSolicitud.endSesion(
               ControlClaseID,
               DUENO,
               '1'
@@ -395,7 +393,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
               observations: motivo,
             }
 
-            const resp = await apiSolicitud.actualizaSesionAbiertaSolicitud(
+             await apiSolicitud.actualizaSesionAbiertaSolicitud(
               item
             )
           } catch (error) {
@@ -417,7 +415,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
 
           if (parseInt(PemitirCerrarSesionSinAsistenciaEstudiante) === 1) {
             try {
-              const resp = await apiSolicitud.endSesion(
+               await apiSolicitud.endSesion(
                 ControlClaseID,
                 DUENO,
                 '1'

@@ -1,3 +1,5 @@
+/* eslint-disable react/no-children-prop */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
 
 import { json2xml } from 'xml-js'
@@ -42,7 +44,7 @@ import {
   SET_NOTES_RE,
   callErrorValid,
 } from '../../consts/storageConst'
-import { faL } from '@fortawesome/free-solid-svg-icons'
+// import { faL } from '@fortawesome/free-solid-svg-icons'
 import { redirectRouter } from '../../helpers/routerRedirect'
 
 const Modals = dynamic(() => import('../../components/UI/atoms/modal/Modal'), {
@@ -93,7 +95,6 @@ let dateTimeNow = ''
 const IngresoNotas = () => {
   const [Loading, setloading] = useState(true)
   const [stateMail, setStateMail] = useState(true)
-  const [disable, setDisable] = useState(false)
   const [listOption, setListOption] = useState([])
   const [listStudentNota, setListStudentNota] = useState([])
   const [tokenDinamic, setTokenDinamic] = useState(0)
@@ -141,6 +142,7 @@ const IngresoNotas = () => {
       }
       ValidaToken(req)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const ValidaToken = async (req: any) => {
@@ -155,7 +157,7 @@ const IngresoNotas = () => {
   }
 
   const ValidaEmail = async (userCode: any, token: number) => {
-    let emailUPN = await fetchTokenEmail(userCode)
+    const emailUPN = await fetchTokenEmail(userCode)
     if (emailUPN.includes('@upn.pe') || emailUPN.includes('@upn.edu.pe')) {
       // emailUPN = 'javierdj22@gmail.com'
       const msj = `<center><p>${token}</p></center>`
@@ -247,7 +249,6 @@ const IngresoNotas = () => {
       if (listToken?.length > 0) {
         obj.state = MSM_TOKEN_OK
         apiTokens.ByTokenlogPost(obj)
-        setDisable(false)
         return getAlert({
           title: TITLE_EMERG,
           text: `${MSM_TOKEN_OK} !!`,
@@ -256,7 +257,6 @@ const IngresoNotas = () => {
       } else {
         obj.state = MSM_TOKEN_NO
         apiTokens.ByTokenlogPost(obj)
-        setDisable(true)
         return getAlert({
           title: TITLE_EMERG,
           text: `${MSM_TOKEN_NO} !!`,
@@ -298,7 +298,6 @@ const IngresoNotas = () => {
     if (pinCorrecto) {
       obj.state = MSM_TOKEN_OK
       apiTokens.ByTokenlogPost(obj)
-      setDisable(false)
       getAlert({
         title: TITLE_EMERG,
         text: `${MSM_TOKEN_OK} !!`,
@@ -307,7 +306,6 @@ const IngresoNotas = () => {
     } else {
       obj.state = MSM_TOKEN_NO
       apiTokens.ByTokenlogPost(obj)
-      setDisable(true)
       getAlert({
         title: TITLE_EMERG,
         text: `${MSM_TOKEN_NO} !!`,
@@ -342,13 +340,11 @@ const IngresoNotas = () => {
   }
 
   const handleSelectedChange = async (e: any) => {
-    setDisable(false)
     setloading(true)
     selectOption = e.target.value
     if (e.target.value === '0') {
       showTableDinami = MSM_VISIBLE_NONE
       showTableStatic = MSM_VISIBLE_BLOCK
-      setDisable(true)
       setloading(false)
       return
     }
@@ -480,12 +476,16 @@ const IngresoNotas = () => {
 
   const fecthNotespostState = async (obj: any) => {
     const resp = await apiNotes.notespostState(obj)
-    getAlert({
+    setloading(false)
+    const rs = await getAlert({
       title: TITLE_EMERG,
       text: MSM_REGISTRO_OK,
       confirmButtonText: `Ok`,
     })
-    setloading(false)
+    if(rs){
+      showTableDinami = MSM_VISIBLE_NONE
+      showTableStatic = MSM_VISIBLE_BLOCK      
+    }
   }
 
   const fecthTokenAutentica = async (obj: any) => {
@@ -617,7 +617,6 @@ const IngresoNotas = () => {
     if (listToken?.length > 0) onclickSendData()
     else if (pinCorrecto) onclickSendData()
     else {
-      setDisable(true)
       setloading(false)
       const alertstat = await getAlert({
         title: TITLE_EMERG,
@@ -628,7 +627,7 @@ const IngresoNotas = () => {
       if (alertstat) {
         setModalShowAvance(true)
       }
-      return
+  
     }
   }
   const onclickSendData = async () => {
@@ -731,7 +730,6 @@ const IngresoNotas = () => {
         <div className={styles.rowButtons}>
           Seleccionar nota :
           <Select
-            disabled={disable}
             id="formato"
             classname="primary"
             name="formato"

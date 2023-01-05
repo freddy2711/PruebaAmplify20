@@ -15,7 +15,7 @@ import { USER_SESSION } from '../../consts/storageConst'
 import { catchingErrorFront } from '../../helpers/helpers'
 import { apiDisponibilidadHorario } from '../api'
 
-const index = () => {
+const Index = () => {
   const [HeadquartersBanners, setHeadquartersBanners] = useState<any>([])
   const [SemesterUnitBusinessCode, setSemesterUnitBusinessCode] = useState<any>(
     []
@@ -2146,5 +2146,5 @@ const index = () => {
   )
 }
 
-index.title = `UPN Portal Docente | Disponibilidad Horaria - Portal Docentes`
-export default index
+Index.title = `UPN Portal Docente | Disponibilidad Horaria - Portal Docentes`
+export default Index

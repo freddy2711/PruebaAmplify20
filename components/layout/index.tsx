@@ -28,7 +28,7 @@ interface Props {
   children: ReactNode
 }
 
-const index = ({ children }: Props) => {
+const Index = ({ children }: Props) => {
   const [Loading, setloading] = useState(true)
 
   const {
@@ -46,6 +46,7 @@ const index = ({ children }: Props) => {
   
   const welcomeProps = {
     labelWelcome: {
+      // eslint-disable-next-line no-unneeded-ternary
       children: `Bienvenido Profesor(a): ${DUENOSESSION ? DUENOSESSION : '...'}`,
       classname: 'badge bg-light text-dark mb-2',
     },
@@ -132,6 +133,7 @@ const index = ({ children }: Props) => {
     }, 2000)
     const codeteacher = get(USER_SESSION)
     callApiLogin(codeteacher)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [obj.keyA])
 
   return (
@@ -154,4 +156,4 @@ const index = ({ children }: Props) => {
   )
 }
 
-export default index
+export default Index

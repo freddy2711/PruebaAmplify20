@@ -4,7 +4,7 @@ import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
 import { AxiosInstance } from 'axios'
 type Data = {}
-const Teacher = objecApi.Teacher
+// const Teacher = objecApi.Teacher
 const TeacherAttendance = objecApi.TeacherAttendance
 const ClassShedule = objecApi.ClassShedule
 const Utility = objecApi.Utility

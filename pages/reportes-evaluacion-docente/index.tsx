@@ -9,7 +9,7 @@ import { apiReportTeacherEvaluation } from '../api'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import { catchingErrorFront } from '../../helpers/helpers'
 
-const index = () => {
+const Index = () => {
   const [Loading, setLoading] = useState(false)
   const [ReportData, setReportData] = useState<any>([])
   const UserCode = get(USER_SESSION)
@@ -190,6 +190,7 @@ const index = () => {
     }
 
     Load()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const TargetConten = () => {
@@ -265,5 +266,5 @@ const index = () => {
   )
 }
 
-index.title = 'Reporte Evaluación Docente - Portal Docentes'
-export default index
+Index.title = 'Reporte Evaluación Docente - Portal Docentes'
+export default Index

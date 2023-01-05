@@ -38,7 +38,7 @@ type initialStateSummary = {
   Matriculados: number
 }
 
-const asistencia = () => {
+const Asistencia = () => {
   const [summary, setSummaryTeacher] = useState<initialStateSummary>({
     Asistentes: 0,
     Faltantes: 0,
@@ -244,6 +244,7 @@ const asistencia = () => {
   useEffect(() => {
     console.log(dataClassSelected)
     PreLoad()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const ViewMessage = (StateMessage: any) => {
@@ -481,6 +482,6 @@ const asistencia = () => {
   )
 }
 
-asistencia.title = 'Asistencia - Portal Docentes'
+Asistencia.title = 'Asistencia - Portal Docentes'
 
-export default asistencia
+export default Asistencia

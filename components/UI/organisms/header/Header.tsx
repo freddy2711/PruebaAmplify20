@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import Welcome, { Props as welcomeProps } from '../../molecules/welcome/Welcome'
 import Image, { Props as imagePros } from '../../atoms/imagen/Imagen'
 import styles from './index.module.scss'

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-unneeded-ternary */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-useless-return */
@@ -59,10 +60,10 @@ const DescansoDocente = () => {
   const [disableGuardar, setDisableGuardar] = useState(false)
   const [semesterSustitutory, setSemesterSustitutory] = useState(objGeneric)
 
-  const [semesterTuesday, setSemesterTuesday] = useState(objGeneric)
+  // const [semesterTuesday, setSemesterTuesday] = useState(objGeneric)
   const [semesterThursday, setSemesterThursday] = useState(objGeneric)
   const dateNow = convertStringToDate(new Date())
-  const [value, setValue] = useState(moment(dateNow))
+  // const [value, setValue] = useState(moment(dateNow))
   const [selectedValue, setSelectedValue] = useState(moment(dateNow))
   const dataDescanso: any = get(SET_DESCANSO_SELECT)
   const dataWorker: any = get(SET_DESCANSO_SOLICITUD)
@@ -73,7 +74,7 @@ const DescansoDocente = () => {
     setSemesterSustitutory(rs)
     const rs1 = await apiDescanso.SemesterTuesday(dataDescanso)
     if (callErrorValid(rs1, setloading) === undefined) return
-    setSemesterTuesday(rs1)
+    setSemesterThursday(rs1)
 
     const rs2 = await techSemesterThursday(dataDescanso)
     if (callErrorValid(rs2, setloading) === undefined) return
@@ -83,6 +84,7 @@ const DescansoDocente = () => {
   useEffect(() => {
     ValidService()
     // console.log('value', value)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const techSemesterThursday = async (dataDescanso: any) => {
@@ -290,7 +292,7 @@ const DescansoDocente = () => {
       start: validFecha(item, newsemesterThursday[0], newValue.day()),
     }))
     setSemesterThursday(dataTemp)
-    setValue(newValue)
+    // setValue(newValue)
     setSelectedValue(newValue)
   }
 

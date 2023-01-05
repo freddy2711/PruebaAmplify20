@@ -19,7 +19,6 @@ import { catchingErrorFront } from './../../../helpers/helpers'
 import {
   CLASS_SELECTED_EC,
   CB_COMPETENCE,
-  DUENO_SESSION,
 	USER_SESSION
 } from '../../../consts/storageConst'
 import { get } from 'local-storage'
@@ -80,7 +79,7 @@ const COLUMNSADJ = [
   { label: 'Acciones', field: 'action', sort: 'asc' },
 ]
 
-const index = ({ ip }: any) => {
+const Index = ({ ip }: any) => {
   const initDetails = {
     CurCodigo: '',
     CurNombre: '',
@@ -298,6 +297,7 @@ const index = ({ ip }: any) => {
     if (Object.entries(datosAlu).length !== 0) {
       listaConductaEscala(datosAlu)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datosAlu])
 
   useEffect(() => {
@@ -1183,7 +1183,7 @@ const index = ({ ip }: any) => {
   )
 }
 
-export default index
+export default Index
 
 // pdf,doc,docx,xlsx,xls,pptx,ppt,jpeg,rar,zip,
 export async function getServerSideProps({ req }: any) {
