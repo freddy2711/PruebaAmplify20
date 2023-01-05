@@ -106,10 +106,10 @@
       grid-template-rows: 1fr;
       justify-content: center;
       align-items: baseline;
-        @media (max-width: 768px){
-          grid-template-columns: 1fr;
-          grid-template-rows: 1fr 1fr;
-        }
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
     }
 
     .viewListConten {
@@ -118,16 +118,14 @@
       align-items: center;
       gap: 5%;
 
-        @media (max-width: 991px){
-          flex-direction: column;
-          gap: 5px;
-        }
-
-        
+      @media (max-width: 991px) {
+        flex-direction: column;
+        gap: 5px;
+      }
     }
 
-    .selectInput{
-      @media (max-width: 767px){
+    .selectInput {
+      @media (max-width: 767px) {
         width: 100%;
       }
     }

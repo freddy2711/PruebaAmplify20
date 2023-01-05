@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Router from 'next/router'
 import Alerta from '../../components/UI/atoms/alert/Alerts'
 import Label from '../../components/UI/atoms/label/Label'
@@ -149,9 +150,7 @@ const Index = (props: any) => {
 
   let iControlClase = '-1'
 
-  const {
-    setUser
-  } = useContext(UserContext);
+  const { setUser } = useContext(UserContext)
 
   const callApiLogin = async (codeTeacher: any, day: any) => {
     // const codeTeacher = 'N00011885'
@@ -227,7 +226,6 @@ const Index = (props: any) => {
     setDatosRecover(rows2)
     setloading(false)
   }
-
 
   const InserToken = async (obj: any) => {
     await apiTokens.ByTokenInsertState(obj)
@@ -355,7 +353,6 @@ const Index = (props: any) => {
     //   console.log(resp)
     // }
     // getApiPublic()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const LinkButton = (row: any, _grid: number) => {
     return (
@@ -656,7 +653,6 @@ const Index = (props: any) => {
     Router.push('./enviar-notas')
   }
   return (
-    
     <div className={styles.contenido}>
       <Loader loading={Loading} />
       <div className={styles.content}>
@@ -761,7 +757,6 @@ const Index = (props: any) => {
         </div>
       </div>
     </div>
-  
   )
 }
 

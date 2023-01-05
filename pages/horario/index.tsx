@@ -67,7 +67,7 @@ const Horario = () => {
       isEpec: 0,
     }
     fetchteachingTime(obj)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const radioActive = (e: any) => {
     if (radioSelect.r1) {

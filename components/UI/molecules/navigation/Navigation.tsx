@@ -37,7 +37,7 @@ const Navigation = ({ menu = menuDefault }: Props) => {
       className="mb-1"
       sticky="top"
     >
-      <Container className={`${styles.nabContent}`  }>
+      <Container className={`${styles.nabContent}`}>
         <Navbar.Brand href="/">Portal Docentes</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -54,8 +54,9 @@ const Navigation = ({ menu = menuDefault }: Props) => {
                       key={index}
                       href={addUserToUrl(item.link, teacherCode)}
                       target={item.target === false ? undefined : '_blank'}
-											data-link={`${item.link}`}
-											className="dropdown-item" rel="noreferrer"
+                      data-link={`${item.link}`}
+                      className="dropdown-item"
+                      rel="noreferrer"
                     >
                       {item.label}
                     </a>
@@ -66,7 +67,8 @@ const Navigation = ({ menu = menuDefault }: Props) => {
                   key={index}
                   href={item.link}
                   target={item.target === false ? undefined : '_blank'}
-									className="dropdown-item" rel="noreferrer"
+                  className="dropdown-item"
+                  rel="noreferrer"
                 >
                   {item.label}
                 </a>

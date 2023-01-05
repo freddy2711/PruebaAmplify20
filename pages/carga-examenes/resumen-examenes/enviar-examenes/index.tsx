@@ -140,7 +140,6 @@ const Index = () => {
     notaCode: any,
     classCode: any
   ) => {
-
     try {
       const result = apiCargaExamenes.listControlNotes(
         semesterCode,
@@ -148,16 +147,13 @@ const Index = () => {
         classCode
       )
       return result
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
-
-    
   }
 
   const ApiStateExams = (codeTeacher: any, noteId: any, ClassCode: any) => {
-
     try {
       const result = apiCargaExamenes.listStateExams(
         codeTeacher,
@@ -165,14 +161,13 @@ const Index = () => {
         ClassCode
       )
       return result
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
   }
 
   const ApiActiveExams = (codeTeacher: any, noteId: any, ClassCode: any) => {
-
     try {
       const result = apiCargaExamenes.listActiveExam(
         codeTeacher,
@@ -180,7 +175,7 @@ const Index = () => {
         ClassCode
       )
       return result
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -212,7 +207,6 @@ const Index = () => {
       if (state[0]?.s_state === 'A') {
         ViewMessage(0)
       } else {
-   
         const date = new Date(fech?.Fecha)
         const forDate = moment(date).format('YYYY-MM-DD')
         if (forDate === '1900-01-01') {
@@ -321,7 +315,13 @@ const Index = () => {
         <DatePicker
           dateFormat={'yyyy-MM-dd'}
           minDate={tomorrow}
-          maxDate={DateLimit !== 'Invalid date' ? DateLimit !== '' ? dateMax : today : today}
+          maxDate={
+            DateLimit !== 'Invalid date'
+              ? DateLimit !== ''
+                ? dateMax
+                : today
+              : today
+          }
           className="form-control text-center"
           disabled={controlsDisabled.datePrint}
           selected={startDate}
@@ -1672,7 +1672,7 @@ const Index = () => {
               ViewMessage(4, msgInvaliFile)
             } else {
               const sclase = DataCoursesByTeacher?.ClaCodigo
-              const DUENO:any = get(SET_DATA_DOCENTE)
+              const DUENO: any = get(SET_DATA_DOCENTE)
               const sUsuario = DUENO?.userName
 
               const newNameFile =
@@ -1750,7 +1750,7 @@ const Index = () => {
                 sCantidadTipoExamen5,
                 sHojasAdicionales
               )
-              
+
               ViewMessage(5)
               ControlsDisabled()
               Cancel()
@@ -2037,7 +2037,7 @@ const Index = () => {
           DataSelect?.ClaCodigo
         )
         setNumberOfStudents(responseAmountStudents)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
@@ -2047,7 +2047,7 @@ const Index = () => {
     }
 
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -2179,10 +2179,10 @@ const Index = () => {
           <div style={{ marginTop: '1%', marginBottom: '2%' }}>
             {BloackInputActiveFile()}
           </div>
-          </div>
+        </div>
 
         <div className={`${styles.contenbtnAlign}`}>
-          <div style={{display:'flex',flexDirection:'row-reverse'}}>
+          <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
             <Button
               type="button"
               classname={styles.styleBtn}
@@ -2192,20 +2192,19 @@ const Index = () => {
             >
               Cargar Examen
             </Button>
-            </div>
-            <div>
-              <Button
-                type="button"
-                classname={styles.styleBtn}
-                variant="secondary"
-                onclick={Cancel}
-              >
-                Cancelar
-              </Button>
-            </div>
           </div>
-       
-          
+          <div>
+            <Button
+              type="button"
+              classname={styles.styleBtn}
+              variant="secondary"
+              onclick={Cancel}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </div>
+
         <br />
       </div>
     </div>

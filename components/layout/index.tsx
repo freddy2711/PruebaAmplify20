@@ -31,9 +31,7 @@ interface Props {
 const Index = ({ children }: Props) => {
   const [Loading, setloading] = useState(true)
 
-  const {
-    user
-} = useContext(UserContext);
+  const { user } = useContext(UserContext)
 
   const imagePros = {
     src: 'https://upn-repositorio-public.s3.amazonaws.com/logos/png/logo-upn-sin-fondo.png',
@@ -41,13 +39,16 @@ const Index = ({ children }: Props) => {
     classname: 'logoHeader',
   }
 
-  const DUENO: any = get(SET_DATA_DOCENTE) === undefined ? user : get(SET_DATA_DOCENTE)
-  const DUENOSESSION = DUENO?.lastName 
-  
+  const DUENO: any =
+    get(SET_DATA_DOCENTE) === undefined ? user : get(SET_DATA_DOCENTE)
+  const DUENOSESSION = DUENO?.lastName
+
   const welcomeProps = {
     labelWelcome: {
       // eslint-disable-next-line no-unneeded-ternary
-      children: `Bienvenido Profesor(a): ${DUENOSESSION ? DUENOSESSION : '...'}`,
+      children: `Bienvenido Profesor(a): ${
+        DUENOSESSION || '...'
+      }`,
       classname: 'badge bg-light text-dark mb-2',
     },
     anchorDatPer: {
@@ -127,13 +128,13 @@ const Index = ({ children }: Props) => {
 
   useEffect(() => {
     // callApiLoginValid()
-      // Router.push('default')
+    // Router.push('default')
     setTimeout(async () => {
       redirectRouter('', setloading)
     }, 2000)
     const codeteacher = get(USER_SESSION)
     callApiLogin(codeteacher)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [obj.keyA])
 
   return (
@@ -148,9 +149,7 @@ const Index = ({ children }: Props) => {
         state={objNotificar.state}
         message={objNotificar.message}
       />
-       <div className='container'>
-        {children}
-       </div>
+      <div className="container">{children}</div>
       <Footer />
     </Fragment>
   )

@@ -85,12 +85,10 @@ const ReporteCompetencias = () => {
     try {
       const response = await apiReportesAcademicos.listNotes(classCode)
       return response
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
-      setloading(false)  
+      setloading(false)
     }
-
-   
   }
 
   const ApiCompetenceSchedule = async (classId: any, noteId: any) => {
@@ -100,11 +98,10 @@ const ReporteCompetencias = () => {
         noteId
       )
       return response
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
-      setloading(false)  
+      setloading(false)
     }
-   
   }
 
   const handleClose = () => setShow(false)
@@ -304,16 +301,15 @@ const ReporteCompetencias = () => {
       try {
         const response = await ApiCompetenceGeneralByClass(ClassCode)
         setlstCompetenceGeneralByClass(response)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
 
-
       setloading(false)
     }
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

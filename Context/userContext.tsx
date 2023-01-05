@@ -1,36 +1,32 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react'
 
 type userContextType = {
-    user: any;
-    setUser:Function;
-};
+  user: any
+  setUser: Function
+}
 
 const userContextDefaultValues: userContextType = {
-    user: [],
-    setUser:() => {}
-};
+  user: [],
+  setUser: () => {},
+}
 
- const UserContext = createContext<userContextType>(userContextDefaultValues);
+const UserContext = createContext<userContextType>(userContextDefaultValues)
 
- const UserProvider = ({ children }:any) => {
+const UserProvider = ({ children }: any) => {
+  const [user, setUser] = useState<any>([])
 
-    const [ user, setUser ] = useState<any>([]);
-  
-    return (
-      <UserContext.Provider
-        value= {{
-            user : user,
-            setUser : setUser
-        }}
-      >
-        { children }
-      </UserContext.Provider>
-    )
-  }
-  
+  return (
+    <UserContext.Provider
+      value={{
+        user: user,
+        setUser: setUser,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  )
+}
 
-  export {
-    UserProvider
-  }
-  
-  export default UserContext;
+export { UserProvider }
+
+export default UserContext

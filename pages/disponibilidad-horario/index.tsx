@@ -124,11 +124,10 @@ const Index = () => {
         day
       )
       return result
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
-    
   }
 
   const ApiCrudAvailability = async (
@@ -147,7 +146,6 @@ const Index = () => {
     Saturday: any,
     Sunday: any
   ) => {
-
     try {
       const item = {
         action,
@@ -167,12 +165,10 @@ const Index = () => {
       }
       const result = await apiDisponibilidadHorario.CrudAvailability(item)
       return result
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
-
-    
   }
 
   // Api
@@ -641,7 +637,7 @@ const Index = () => {
       CboSemestre: false,
     })
     setViewTable(false)
-    
+
     setSelectItemMondayA(true)
     setSelectItemMondayHourB(true)
     setSelectItemMondayHourC(true)
@@ -721,16 +717,15 @@ const Index = () => {
         const resultHeadquartersBanners = await ApiHeadquartersBanners()
         setSelectedSede(resultHeadquartersBanners[0].Descripcion)
         setHeadquartersBanners(resultHeadquartersBanners)
-        const resultSemesterUnitBusinessCode = await ApiSemesterUnitBusinessCode(
-          'CAJ'
-        )
+        const resultSemesterUnitBusinessCode =
+          await ApiSemesterUnitBusinessCode('CAJ')
         setSelectSemester(resultSemesterUnitBusinessCode[0].SemCode)
         setSemesterUnitBusinessCode(resultSemesterUnitBusinessCode)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-      
+
       setloading(false)
     }
 
@@ -747,9 +742,7 @@ const Index = () => {
           </Label>
         </div>
         <hr />
-        <div
-          className={`${styles.conteSelect}`}
-        >
+        <div className={`${styles.conteSelect}`}>
           <div>
             <label>Sede</label>
           </div>
@@ -814,7 +807,7 @@ const Index = () => {
         <br />
 
         {ViewTable === true ? (
-          <div style={{overflowX:'scroll'}}>
+          <div style={{ overflowX: 'scroll' }}>
             <Tabla>
               <Thead>
                 <th style={{ backgroundColor: '#343A40', color: 'white' }}>

@@ -65,7 +65,7 @@ const Index = () => {
   // const DUENO: any = get(SET_DATA_DOCENTE)
   // const DUENOSESSION = DUENO?.userName
   const USER = get(USER_SESSION)
-  
+
   const ApiTutorias = async (traCode: any) => {
     const response = await apiTutorias.tutorials(traCode)
     return response
@@ -75,11 +75,10 @@ const Index = () => {
     try {
       const response = await apiTutorias.StudentTutoring(codAlu)
       return response
-    } catch (error:any) {
-        catchingErrorFront(error.message)
-        setLoading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setLoading(false)
     }
-   
   }
 
   const ApiTeacherNotesStudentTutorin = async (clasCode: any, semCode: any) => {
@@ -89,13 +88,13 @@ const Index = () => {
         semCode
       )
       return response
-    } catch (error:any) {
-        catchingErrorFront(error.message)
-        setLoading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setLoading(false)
     }
   }
 
-/*   const ApiEmployeeLogin = async (userName: any) => {
+  /*   const ApiEmployeeLogin = async (userName: any) => {
     const response = await apiTutorias.EmployeeLogin(userName)
     return response
   } */
@@ -208,17 +207,17 @@ const Index = () => {
         const result = await ApiTutorias(USER)
         if (result.length <= 0) ViewMessage(2)
         else formatedData(result, setTutoriasData)
-  
+
         // const user = await ApiEmployeeLogin(DUENOSESSION)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setLoading(false)
       }
-     
+
       setLoading(false)
     }
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

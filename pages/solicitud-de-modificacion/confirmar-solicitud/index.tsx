@@ -64,7 +64,7 @@ let selectNote: any = {
   ClaMetodoEducativo: '',
 }
 const Index = () => {
-/*   const dataInit = [
+  /*   const dataInit = [
     {
       select: (
         <input
@@ -133,7 +133,7 @@ const Index = () => {
       noteId: 1,
     }
     fecthNotesPostClassGroup(obj2)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fecthNotesPostClassGroup = async (obj: any) => {
@@ -367,7 +367,7 @@ const Index = () => {
   }
 
   const fetchNotesValidate = async (obj: any) => {
-     await apiNotes.notesValidate(obj)
+    await apiNotes.notesValidate(obj)
   }
 
   const fetchTokenTecher = async (classCode: any) => {

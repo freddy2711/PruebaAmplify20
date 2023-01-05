@@ -186,7 +186,7 @@ const ModalDocumentos = ({ modalShowDocs, setModalShowDocs }: any) => {
         getCombos()
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingextraadjunto])
 
   return (

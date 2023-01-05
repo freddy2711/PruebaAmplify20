@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
@@ -23,7 +24,6 @@ import { SET_DATA_DOCENTE, USER_SESSION } from '../../consts/storageConst'
 import { get } from 'local-storage'
 import { catchingErrorFront, getIpClient } from '../../helpers/helpers'
 import { redirectRouter } from '../../helpers/routerRedirect'
-
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -81,7 +81,7 @@ type TableSecondaryView = {
 }
 
 const Resumen = () => {
-  const [ip, setip] = useState("")
+  const [ip, setip] = useState('')
   const [TeacherCourses, setTeacherCourses] = useState<any>([])
   const [Holyday, setHolyday] = useState([])
   const [TeacherCoursesSelected, setTeacherCoursesSelected] =
@@ -175,7 +175,7 @@ const Resumen = () => {
       const TeacherCoursesData: any =
         await apiRecuperarAdelantar.listTeacherCourses(teacherCodeVal)
       return TeacherCoursesData
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -187,7 +187,7 @@ const Resumen = () => {
         sedeCode
       )
       setHolyday(DateHolidayData)
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -206,7 +206,7 @@ const Resumen = () => {
       }
       setClassDate(dataFormated)
       return ClassDateData
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -224,8 +224,8 @@ const Resumen = () => {
       setLaboratoriesList(LaboratoriesData)
       setSelectedHour(dataFormated[0])
       return dataFormated[0]
-    } catch (error:any) {
-       catchingErrorFront(error.message)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
       setloading(false)
     }
   }
@@ -252,8 +252,8 @@ const Resumen = () => {
       ObtenerHoraFin(ScheduleSessionsData[0], 0, Hour)
       setloading(false)
       return ScheduleSessionsData
-    } catch (error:any) {
-       catchingErrorFront(error.message)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
       setloading(false)
     }
   }
@@ -279,9 +279,9 @@ const Resumen = () => {
       }
       setClasEnabled(dataFormated)
       setDLaula(ClasEnabledData)
-    } catch (error:any) {
-       catchingErrorFront(error.message)
-       setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
   }
 
@@ -339,9 +339,9 @@ const Resumen = () => {
         FormatedMessage(ScheduleSessionsData.data.message),
         ScheduleSessionsData.data.state
       )
-    } catch (error:any) {
-       catchingErrorFront(error.message)
-       setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
   }
 
@@ -351,9 +351,9 @@ const Resumen = () => {
         userName
       )
       return TeacherUserData[0]
-    } catch (error:any) {
-       catchingErrorFront(error.message)
-       setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
   }
 
@@ -363,9 +363,9 @@ const Resumen = () => {
         Classcode
       )
       return ClassTeachersData[0]
-    } catch (error:any) {
-       catchingErrorFront(error.message)
-       setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
   }
 
@@ -373,9 +373,9 @@ const Resumen = () => {
     try {
       const codeData = await apiRecuperarAdelantar.GetTeacher(code)
       return codeData[0]
-    } catch (error:any) {
-       catchingErrorFront(error.message)
-       setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
   }
 
@@ -383,9 +383,9 @@ const Resumen = () => {
     try {
       const status = await apiRecuperarAdelantar.email(emailJson)
       return status
-    } catch (error:any) {
-       catchingErrorFront(error.message)
-       setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
   }
 
@@ -396,9 +396,9 @@ const Resumen = () => {
         sedeCode
       )
       return status
-    } catch (error:any) {
-       catchingErrorFront(error.message)
-       setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
   }
 
@@ -564,7 +564,7 @@ const Resumen = () => {
     ValeText = ValeText.replace(':', '.').replace('PM', '').replace('AM', '')
     if (ClassDate.length > 0) {
       ObtenerHoraFin(TableSecondary, 0, ValeText)
-      LlenarDDlAula(DateSelectedItem,1,ValeText)
+      LlenarDDlAula(DateSelectedItem, 1, ValeText)
     }
     setViewTableData(true)
     setSelectedHour(ValeText)
@@ -875,10 +875,9 @@ const Resumen = () => {
     }
   }
 
-  const LlenarDDlAula = (DateToRecover: any,key?:any,textHour?:any) => {
+  const LlenarDDlAula = (DateToRecover: any, key?: any, textHour?: any) => {
     if (MissedClassDate !== '-- Seleccione --' && DateToRecover !== '') {
       if (TableSecondary.HorFin !== '') {
-
         const hour = key === 1 ? textHour : SelectedHour
         const HorCodigo: any = LaboratoriesList.find(
           (x: any) => x.HorInicioDesc === hour
@@ -1184,8 +1183,8 @@ const Resumen = () => {
       await SendMail(emailJson)
 
       const lstEmailUsuarioAlerta: any = []
-      const dt_usucfg: any = await getUsuariosByProceso(carrera, sede)
-      dt_usucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
+      const dtUsucfg: any = await getUsuariosByProceso(carrera, sede)
+      dtUsucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
 
       const emailJsonUsuarios = {
         ListDestinatarios: lstEmailUsuarioAlerta,
@@ -1234,18 +1233,15 @@ const Resumen = () => {
         setip(ip)
         const TeacherCoursesData = await GetApiTeachersCourses()
         formatedDataRecovery(TeacherCoursesData, setTeacherCourses)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-     
+
       setloading(false)
     }
 
     Load()
-
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -1314,8 +1310,6 @@ const Resumen = () => {
             listData={TeacherCourses}
           />
         </div>
-
-      
 
         {ViewRB === true ? (
           <div className={styles.blockRadioButton}>

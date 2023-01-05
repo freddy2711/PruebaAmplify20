@@ -77,10 +77,9 @@ export function loadProgress(id: any) {
 export function loadInfoGeneral(datos: any) {
   return async (dispatch: any) => {
     dispatch(cargarData())
-		
-    try {
 
-			console.log(datos);
+    try {
+      console.log(datos)
       const { data }: any = await apiDatosPersonales.personaObtener(datos.user)
       console.log(data)
 

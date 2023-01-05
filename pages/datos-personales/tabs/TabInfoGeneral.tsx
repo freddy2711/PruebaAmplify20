@@ -42,7 +42,7 @@ const TabInfoGeneral = () => {
       setcboSexo([{ value: info.sexo, label: info.sexo }])
       setCboPais([...cboPais, ...paises])
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoextra])
 
   return (

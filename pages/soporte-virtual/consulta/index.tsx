@@ -80,7 +80,7 @@ const Index = () => {
     }
 
     loadData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const convertoLink = async (arr: any) => {
@@ -437,7 +437,7 @@ const Index = () => {
     try {
       setloading(true)
       const obj = {
-        teacherCode: get(USER_SESSION) ,// 'N00011885',
+        teacherCode: get(USER_SESSION), // 'N00011885',
         query: descrip,
         type: ddlTipo,
         subType: ddlSubTipo,

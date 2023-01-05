@@ -5,7 +5,6 @@ import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
 import { genError } from '../../../helpers/helpers'
 
-
 type Data = {}
 const { ClassShedule, Note } = objecApi
 

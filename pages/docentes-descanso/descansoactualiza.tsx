@@ -84,7 +84,7 @@ const DescansoDocente = () => {
   useEffect(() => {
     ValidService()
     // console.log('value', value)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const techSemesterThursday = async (dataDescanso: any) => {

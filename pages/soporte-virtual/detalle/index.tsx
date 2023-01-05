@@ -26,7 +26,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 // import Swal from 'sweetalert2'
 // import axios from 'axios'
-import { CONSULTA_DATA, SET_DATA_DOCENTE, USER_SESSION } from './../../../consts/storageConst'
+import {
+  CONSULTA_DATA,
+  SET_DATA_DOCENTE,
+  USER_SESSION,
+} from './../../../consts/storageConst'
 import dynamic from 'next/dynamic'
 
 const QuillRichText = dynamic(
@@ -403,7 +407,7 @@ const Index = () => {
       setloading(true)
       const dataid: any = get(CONSULTA_DATA)
 
-			const userID:any = get(USER_SESSION)
+      const userID: any = get(USER_SESSION)
 
       const { data } = await apiSoporteVirtual.requestConsulta(
         userID,
@@ -506,7 +510,10 @@ const Index = () => {
                     className={`form-group chat-one chat-one-${item.id}`}
                   >
                     <div className="img-chat">
-                      <img alt="foto" src="https://intranet.upn.edu.pe/wsfoto/foto/MVdYR2dBdGdTbCsyd0NnaEdsY0NsUT09/Collaborator" />
+                      <img
+                        alt="foto"
+                        src="https://intranet.upn.edu.pe/wsfoto/foto/MVdYR2dBdGdTbCsyd0NnaEdsY0NsUT09/Collaborator"
+                      />
                       <p
                         style={{
                           lineHeight: '1',

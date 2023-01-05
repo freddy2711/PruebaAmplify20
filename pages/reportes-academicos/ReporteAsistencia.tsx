@@ -206,15 +206,15 @@ const ReporteAsistencia = () => {
       try {
         const response = await ApiClassAttendance(ClassCode)
         formatedDataClassAttendance(response, setClassAttendanceData)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-      
+
       setloading(false)
     }
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

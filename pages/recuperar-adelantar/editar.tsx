@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react'
@@ -194,7 +195,7 @@ const EditarRecupera = () => {
       } else {
         return ''
       }
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -223,7 +224,7 @@ const EditarRecupera = () => {
       )
 
       return ScheduleSessionsData
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -240,7 +241,7 @@ const EditarRecupera = () => {
       setLaboratories(dataFormated)
       setLaboratoriesList(LaboratoriesData)
       return { LaboratoriesData, dataFormated }
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -253,7 +254,7 @@ const EditarRecupera = () => {
       )
       setHoliday(DateHolidayData)
       return DateHolidayData
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -283,7 +284,7 @@ const EditarRecupera = () => {
       setClasEnabled(dataFormated)
       setDLaula(ClasEnabledData)
       return ClasEnabledData
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -311,7 +312,7 @@ const EditarRecupera = () => {
       setClasEnabled(dataFormated)
       setDLaula(ClasEnabledData)
       return ClasEnabledData
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -363,7 +364,7 @@ const EditarRecupera = () => {
       EnviaEmailEdicion()
       setloading(false)
       redirectRouter('/recuperar-adelantar', setloading)
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -375,7 +376,7 @@ const EditarRecupera = () => {
         recoveryId
       )
       return DeeleteRecoveryData
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -387,7 +388,7 @@ const EditarRecupera = () => {
         userName
       )
       return TeacherUserData[0]
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -399,7 +400,7 @@ const EditarRecupera = () => {
         Classcode
       )
       return ClassTeachersData[0]
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -409,7 +410,7 @@ const EditarRecupera = () => {
     try {
       const codeData = await apiRecuperarAdelantar.GetTeacher(code)
       return codeData[0]
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -419,7 +420,7 @@ const EditarRecupera = () => {
     try {
       const status = await apiRecuperarAdelantar.email(emailJson)
       return status
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -432,7 +433,7 @@ const EditarRecupera = () => {
         campusCode
       )
       return RateCampusCode
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -445,7 +446,7 @@ const EditarRecupera = () => {
         sedeCode
       )
       return status
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -606,7 +607,7 @@ const EditarRecupera = () => {
       expression = dataValue.aula
 
       foundRows = dataAula.find((x: any) => x.classCode === expression)
-      
+
       if (foundRows !== undefined) {
         setAulaInitial(foundRows?.classCode)
         setContenPanel(foundRows?.description)
@@ -1037,9 +1038,9 @@ const EditarRecupera = () => {
 
       const lstEmailUsuarioAlerta: any = []
       // eslint-disable-next-line camelcase
-      const dt_usucfg: any = await getUsuariosByProceso(carrera, sede)
+      const dtUsucfg: any = await getUsuariosByProceso(carrera, sede)
       // eslint-disable-next-line camelcase
-      dt_usucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
+      dtUsucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
       const emailJsonUsuarios = {
         ListDestinatarios: lstEmailUsuarioAlerta,
         DisplayName: 'UPN Docentes',
@@ -1158,9 +1159,9 @@ const EditarRecupera = () => {
 
       const lstEmailUsuarioAlerta: any = []
       // eslint-disable-next-line camelcase
-      const dt_usucfg: any = await getUsuariosByProceso(carrera, sede)
+      const dtUsucfg: any = await getUsuariosByProceso(carrera, sede)
       // eslint-disable-next-line camelcase
-      dt_usucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
+      dtUsucfg.map((x: any) => lstEmailUsuarioAlerta.push(x.s_proale_email))
 
       const emailJsonUsuarios = {
         ListDestinatarios: lstEmailUsuarioAlerta,
@@ -1228,9 +1229,10 @@ const EditarRecupera = () => {
     const Load = async () => {
       setloading(true)
       setIdUser(IdRecperation)
-      
+
       try {
-        const { LaboratoriesData, dataFormated }: any = await GetApiLaboratories()
+        const { LaboratoriesData, dataFormated }: any =
+          await GetApiLaboratories()
         const ClassRecuperation = await ApiGetClassRecuperation(IdRecperation)
         const { semester, dateLost, sede } = ClassRecuperation
         const ScheduleSessions = await ApiPostScheduleSessions(
@@ -1248,11 +1250,10 @@ const EditarRecupera = () => {
         ValidateCodAula(ClassRecuperation, response)
         ValidateState(ClassRecuperation.state)
         ValidatePanel(lstSelected.ClaMetodoEducativo)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-      
 
       setloading(false)
     }
@@ -1260,7 +1261,6 @@ const EditarRecupera = () => {
     if (lstSelected !== undefined) {
       Load()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

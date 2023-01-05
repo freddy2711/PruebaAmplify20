@@ -37,7 +37,7 @@ const DUENO: any = get(SET_DATA_DOCENTE)
 const DUENOSESSIONUSER = DUENO?.userName
 
 export const SET_DUENO_SESSION: any = get(DUENOSESSIONUSER) // 'RVI'
-export const SET_TEACHERCODE: any = get(USER_SESSION) //'N00011885'
+export const SET_TEACHERCODE: any = get(USER_SESSION) //  'N00011885'
 
 // ** CONSTATES DE SESIONES ANTERIORES PARA STORAGE DE ASISTENCIA  - JD
 export const LST_COURSES_TEACHER = 'teacherAsistence'
@@ -201,7 +201,7 @@ export const callErrorValid = (result: any, setloading: any) => {
   }
   return result
 }
-export const ErrorMessageClient:any = async (error: any, state: any) => {
+export const ErrorMessageClient: any = async (error: any, state: any) => {
   const status = error?.response?.status
   const statusText = error?.response?.data?.error
   const url = error?.response?.config?.url
@@ -371,7 +371,7 @@ export const getBase64Image = (
   outputFormat: any
 ) => {
   const img = new Image()
-  img.crossOrigin = "Anonymous"
+  img.crossOrigin = 'Anonymous'
   img.onload = () => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
@@ -381,7 +381,7 @@ export const getBase64Image = (
     const dataURL: string = canvas.toDataURL(outputFormat)
     callback(dataURL)
   }
-  img.src = src + "?not-from-cache-please";
+  img.src = src + '?not-from-cache-please'
   if (img.complete || img.complete === undefined) {
     img.src =
       'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='

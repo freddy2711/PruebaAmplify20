@@ -26,7 +26,7 @@ import {
   VALIDAR,
   COMENTARIO,
   // DATOS DE PRUEBA
-	SET_DATA_DOCENTE,
+  SET_DATA_DOCENTE,
   CONTROL_CLASE_ESTADO,
   TIPO_ASISTENCIA,
   REGSOL,
@@ -48,7 +48,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
   const [btnTomarAsistencia, setBtnTomarAsistencia] = useState(true)
   const [motivo, setMotivo] = useState('')
 
-	const DUENOSS: any = get(SET_DATA_DOCENTE)
+  const DUENOSS: any = get(SET_DATA_DOCENTE)
   const DUENOSESSION = DUENOSS?.userName
 
   const DUENO = DUENOSESSION
@@ -148,10 +148,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           })
         }
       }
-			const teacherDueno = item.teacherUser
-			const user = DUENO
-			// console.log('DUENO__', {user,teacherDueno})
-      if (user.toUpperCase() !==  teacherDueno.toUpperCase()) {
+      const teacherDueno = item.teacherUser
+      const user = DUENO
+      // console.log('DUENO__', {user,teacherDueno})
+      if (user.toUpperCase() !== teacherDueno.toUpperCase()) {
         Swal.fire({
           title: 'Portal de Docentes',
           text: `Las sesiones de clase solo pueden ser modificadas por el docente ${teacherDueno.toUpperCase()}`,
@@ -256,7 +256,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
     }
 
     fun()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const btnFin = async (ControlClaseID: string, ClaCode: string) => {
@@ -357,20 +357,14 @@ const AsistenciaSolicitud = ({ ip }: any) => {
               observations: motivo,
             }
 
-            await apiSolicitud.actualizaSesionAbiertaSolicitud(
-              item
-            )
+            await apiSolicitud.actualizaSesionAbiertaSolicitud(item)
           } catch (error) {
             console.log(error)
           }
 
           // termina la sesion pa_TERMINA_SESION_SOLICITUD
           try {
-             await apiSolicitud.endSesion(
-              ControlClaseID,
-              DUENO,
-              '1'
-            )
+            await apiSolicitud.endSesion(ControlClaseID, DUENO, '1')
           } catch (error) {
             console.log(error)
           }
@@ -378,7 +372,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           await enviarSolicitud(ControlClaseID, ClaCode)
           set(VALIDAR, '1')
 
-					redirectRouter('/solicitud-de-marcacion', setloading)
+          redirectRouter('/solicitud-de-marcacion', setloading)
         } else {
           // actualizaSesionAbierta_Solicitud
 
@@ -393,9 +387,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
               observations: motivo,
             }
 
-             await apiSolicitud.actualizaSesionAbiertaSolicitud(
-              item
-            )
+            await apiSolicitud.actualizaSesionAbiertaSolicitud(item)
           } catch (error) {
             console.log(error)
           }
@@ -415,19 +407,18 @@ const AsistenciaSolicitud = ({ ip }: any) => {
 
           if (parseInt(PemitirCerrarSesionSinAsistenciaEstudiante) === 1) {
             try {
-               await apiSolicitud.endSesion(
-                ControlClaseID,
-                DUENO,
-                '1'
-              )
+              await apiSolicitud.endSesion(ControlClaseID, DUENO, '1')
             } catch (error) {
               console.log(error)
             }
 
             set(VALIDAR, '1')
-						redirectRouter('/solicitud-de-marcacion', setloading)
+            redirectRouter('/solicitud-de-marcacion', setloading)
           } else {
-						redirectRouter('/solicitud-de-marcacion/TomarAsistencia', setloading)
+            redirectRouter(
+              '/solicitud-de-marcacion/TomarAsistencia',
+              setloading
+            )
           }
         }
       }
@@ -496,7 +487,7 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           console.log(resp)
 
           set(CONTROL_CLASE_ID, resp.data)
-					redirectRouter('/asistencia', setloading)
+          redirectRouter('/asistencia', setloading)
         } catch (error) {
           catchingErrorFront(error)
         }

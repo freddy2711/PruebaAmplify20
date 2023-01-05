@@ -44,7 +44,7 @@ const API = {
   getDetallesResumen: async (classControlId: string, recoveryId: string) => {
     try {
       const URL = `/sesiones-abiertas/getDetallesResumen/${classControlId}/${recoveryId}`
-			console.log(URL)
+      console.log(URL)
       const result: any = await axiosfetchPublic(URL)
       if (result.status === true) {
         console.log('status', result?.status)

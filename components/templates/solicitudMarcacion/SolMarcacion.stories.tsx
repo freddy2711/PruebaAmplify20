@@ -24,7 +24,10 @@ storiesOf('Templates/SolicitudMarcacion', module)
             style={defaultStyle}
           >
             <div style={defaultStyle}>
-              <img  alt=""  src="https://via.placeholder.com/150x76" />
+              <img
+                alt=""
+                src="https://via.placeholder.com/150x76"
+              />
             </div>
             <div style={defaultStyle}>[ HOY 07/06/2022 16:22:33 ]</div>
             <div style={defaultStyle}>Login</div>

@@ -11,11 +11,7 @@ import { AxiosInstance } from 'axios'
 import { apiPath } from '../../../consts/path'
 import { redirectRouter } from '../../../helpers/routerRedirect'
 
-import {
-	objecApi,
-  CLASS_SELECTED_SM,
-} from '../../../consts/storageConst'
-
+import { objecApi, CLASS_SELECTED_SM } from '../../../consts/storageConst'
 
 const TableDinamic = dynamic(
   () => import('../../../components/UI/molecules/tableDinamic/Table'),
@@ -28,7 +24,6 @@ type Selected = {
   ClaCodigo: string
   CurNombre: string
 }
-
 
 const Index = ({ data }: any) => {
   console.log('DATADESSR', data)
@@ -43,13 +38,15 @@ const Index = ({ data }: any) => {
 
   const [dataListCourses, setDataListCourses] = useState([])
 
-
   const handleClickRowCoursesByTeacher = (e: any, item: any) => {
     e.preventDefault()
     setloading(true)
     set(CLASS_SELECTED_SM, item)
     setDataSelected({ ClaCodigo: item.ClaCodigo, CurNombre: item.CurNombre })
-		redirectRouter(`/solicitud-de-modificacion/registrar-solicitud/${item.ClaCodigo}`, setloading)
+    redirectRouter(
+      `/solicitud-de-modificacion/registrar-solicitud/${item.ClaCodigo}`,
+      setloading
+    )
     // setloading(false)
   }
 
@@ -59,7 +56,7 @@ const Index = ({ data }: any) => {
       select: (
         <Anchor
           // href={`/solicitud-de-modificacion/registrar-solicitud/${item.ClaCodigo}`}
-					href='!#'
+          href="!#"
           onClick={(e) => handleClickRowCoursesByTeacher(e, item)}
           classname="text-decoration-none text-center w-100 d-block"
         >
@@ -98,7 +95,7 @@ const Index = ({ data }: any) => {
     }
 
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

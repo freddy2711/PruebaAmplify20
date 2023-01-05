@@ -150,7 +150,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const Request = req.body
       const URL = apiPath.autenticacionPA_AU.PATH_PA_AU_App
       try {
-          const { data } = await apiCall.post(URL, Request)
+        const { data } = await apiCall.post(URL, Request)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {

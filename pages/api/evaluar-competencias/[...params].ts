@@ -213,7 +213,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
         const apiCall: AxiosInstance = axiosCreate(Note)
         const { data } = await apiCall.post(URL, item)
-				console.log(data)
+        console.log(data)
         const result = data.detail
         res.status(200).json(result)
       } catch (error) {

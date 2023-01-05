@@ -96,7 +96,7 @@ const ModalEstudios = ({ modalShowEstudio, setModalShowEstudio }: any) => {
         getCombos()
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingextraestudios])
 
   useEffect(() => {

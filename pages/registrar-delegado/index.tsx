@@ -90,7 +90,7 @@ const Delegado = ({ data }: any) => {
     }
 
     getList()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkDelegado = (e: any, item: any, codClass: string) => {

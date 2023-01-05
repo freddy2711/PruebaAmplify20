@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Label from '../../components/UI/atoms/label/Label'
 import RecuperarButtons from '../../components/UI/molecules/recuperarButtons/RecuperarButtons'
 import styles from '../../components/templates/recuperarAdelantar/recuperar/Recuperar.module.scss'
@@ -39,6 +40,7 @@ const Recuperar = () => {
     { label: 'Estado', field: 'RecEstado', sort: 'asc' },
   ]
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetApiRecovery = async (teacherCode: any, pend: any) => {
     try {
       setloading(true)
@@ -48,7 +50,7 @@ const Recuperar = () => {
       )
       formatedDataRecovery(ListRecovery, setdataListRecovery)
       setloading(false)
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
@@ -104,14 +106,12 @@ const Recuperar = () => {
     const Load = async () => {
       try {
         await GetApiRecovery(teacherCode, pend)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-      
     }
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -18,8 +18,6 @@ import {
   SET_DESCANSO_SOLICITUD,
   SET_TEACHER_BREAK,
   USER_SESSION,
-  // SET_DATA_DOCENTE,
-  // SET_IMG_BASE64,
 } from '../../consts/storageConst'
 import 'moment/locale/es'
 
@@ -71,7 +69,7 @@ const DescansoDocente = () => {
 
   useEffect(() => {
     ValidService()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleActualiza = () => {

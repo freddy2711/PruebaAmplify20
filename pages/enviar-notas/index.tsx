@@ -42,7 +42,7 @@ const EnviarNotas = () => {
   useEffect(() => {
     remove(SET_NOTES_SELECT)
     fecthNotesSendClass(dataUser?.code)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const LinkButton = (row: any) => {

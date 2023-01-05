@@ -237,15 +237,15 @@ const ReporteNotas = () => {
       try {
         const response = await ApiNotes(ClassCode)
         formatedDataNotes(response, setNotesData)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-      
+
       setloading(false)
     }
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

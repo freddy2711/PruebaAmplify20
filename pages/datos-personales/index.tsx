@@ -61,8 +61,8 @@ const DatosPersonales = () => {
       const DUENO: any = get(SET_DATA_DOCENTE)
       const DUENOSESSION = DUENO?.userName
 
-			console.log(DUENOSESSION)
-			
+      console.log(DUENOSESSION)
+
       await loadData({
         user: DUENOSESSION, // 'RVI',
       })
@@ -77,7 +77,7 @@ const DatosPersonales = () => {
     }
 
     init()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [progress, setprogress] = useState(0)

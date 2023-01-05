@@ -28,30 +28,30 @@ const Welcome = ({
   const CloseSession = async () => {
     setloading(true)
     const obj = {
-      "token":get(TOKEN),
-      "userCode":get(USER_SESSION),
-      "classCode":get(USER_SESSION)
-  }
+      token: get(TOKEN),
+      userCode: get(USER_SESSION),
+      classCode: get(USER_SESSION),
+    }
     await apiTokens.ByTokenClose(obj)
     localStorage.clear()
     setloading(false)
-    window.location.href = "/";
+    window.location.href = '/'
   }
 
   return (
     <div className={classprops}>
-         <Loader loading={Loading} />
+      <Loader loading={Loading} />
       <Label {...labelWelcome} />
       <div className="d-flex">
         <Anchor {...anchorDatPer} />
-           <a
-              rel="noreferrer"
-              className={anchorLogout.classname}
-              onClick={CloseSession}
-              style={{cursor:'pointer'}}
-            >
-              {anchorLogout.children}
-            </a>
+        <a
+          rel="noreferrer"
+          className={anchorLogout.classname}
+          onClick={CloseSession}
+          style={{ cursor: 'pointer' }}
+        >
+          {anchorLogout.children}
+        </a>
       </div>
     </div>
   )

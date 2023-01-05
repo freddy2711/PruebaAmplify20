@@ -244,7 +244,7 @@ const Asistencia = () => {
   useEffect(() => {
     console.log(dataClassSelected)
     PreLoad()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const ViewMessage = (StateMessage: any) => {

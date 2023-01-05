@@ -32,11 +32,10 @@ const Index = () => {
         name
       )
       return response
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setLoading(false)
     }
-   
   }
 
   const ApiDownloadAWSS3 = async (rutaUrl: any) => {
@@ -45,11 +44,10 @@ const Index = () => {
         rutaUrl
       )
       return response
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setLoading(false)
     }
-    
   }
 
   // api
@@ -172,8 +170,6 @@ const Index = () => {
     return DataCenter
   }
 
-
-
   useEffect(() => {
     const Load = async () => {
       setLoading(true)
@@ -181,16 +177,16 @@ const Index = () => {
         const result = await ApiResultTeacherEvaluation(UserCode)
         const sedeData = await ApiResultSede()
         await ValidateListData(result, sedeData)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setLoading(false)
       }
-    
+
       setLoading(false)
     }
 
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const TargetConten = () => {

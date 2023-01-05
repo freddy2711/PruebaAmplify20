@@ -19,7 +19,8 @@ import {
   SET_DATA_DOCENTE,
   TITLE_EMERG,
   MSM_GENERA_TOKEN,
-	SET_TEACHERCODE, USER_SESSION
+  SET_TEACHERCODE,
+  USER_SESSION,
 } from '../../consts/storageConst'
 import { apiPath } from '../../consts/path'
 import Swal from 'sweetalert2'
@@ -60,42 +61,41 @@ const estados = (estado: string) => {
           Pendiente
         </Label>
       )
-      
+
     case 'APR':
       return (
         <Label classname="badge bg-success text-white text-decoration-none me-1">
           Aprobado
         </Label>
       )
-      
+
     case 'CAN':
       return (
         <Label classname="badge bg-secondary text-white text-decoration-none me-1">
           Cancelado
         </Label>
       )
-      
+
     case 'DES':
       return (
         <Label classname="badge bg-danger text-white text-decoration-none me-1">
           Desaprobado
         </Label>
       )
-      
+
     case 'NOAP':
       return (
         <Label classname="badge bg-default text-dark text-decoration-none me-1">
           No Aplica
         </Label>
       )
-      
+
     default:
       return (
         <Label classname="badge bg-warning text-white text-decoration-none me-1">
           Pendiente
         </Label>
       )
-      
   }
 }
 
@@ -236,7 +236,6 @@ const Index = ({ data }: any) => {
       if (alertstat) {
         setModalShowAvance(true)
       }
-   
     }
   }
 
@@ -426,7 +425,7 @@ const Index = ({ data }: any) => {
     })
     // console.log('reverse', )
     setDataList(data.reverse())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleDetalle = (item: any) => {
@@ -545,10 +544,10 @@ const Index = ({ data }: any) => {
     return resp?.stateToken
   }
 
-	const handleRegister = (e:any, url:string) => {
-		e.preventDefault()
-		redirectRouter(url, setloading)
-	}
+  const handleRegister = (e: any, url: string) => {
+    e.preventDefault()
+    redirectRouter(url, setloading)
+  }
 
   return (
     <div className={styles.contenido}>
@@ -623,8 +622,13 @@ const Index = ({ data }: any) => {
             <Anchor
               classname=""
               // href={`/solicitud-de-modificacion/seleccionar-clase/${UserID}`}
-							href='!#'
-							onClick={(e:any) => handleRegister(e,`/solicitud-de-modificacion/seleccionar-clase/${UserID}`)}
+              href="!#"
+              onClick={(e: any) =>
+                handleRegister(
+                  e,
+                  `/solicitud-de-modificacion/seleccionar-clase/${UserID}`
+                )
+              }
             >
               <Button
                 type="button"

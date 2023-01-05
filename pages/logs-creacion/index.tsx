@@ -8,10 +8,7 @@ import styles from '../../components/templates/logsToken/LogsToken.module.scss'
 import { useEffect, useState } from 'react'
 import { apiLogCreate } from '../api'
 import { get } from 'local-storage'
-import {
-  SET_SEMESTERCODE,
-  USER_SESSION,
-} from '../../consts/storageConst'
+import { SET_SEMESTERCODE, USER_SESSION } from '../../consts/storageConst'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import moment from 'moment'
 import dynamic from 'next/dynamic'
@@ -106,7 +103,7 @@ const LogsCreacion = () => {
           confirmButtonText: 'OK',
         })
       case 1:
-         return Swal.fire({
+        return Swal.fire({
           title: 'Portal de Docentes',
           text: `No se encontro un semestre para este usuario.`,
           icon: 'warning',
@@ -130,10 +127,9 @@ const LogsCreacion = () => {
   useEffect(() => {
     const Load = async () => {
       setloading(true)
-    
-      try {
 
-        if(SemesterCode === null ||  SemesterCode === undefined )ViewMessage(1)
+      try {
+        if (SemesterCode === null || SemesterCode === undefined) ViewMessage(1)
 
         const TokenActiveData = await ApilistTokenActive(
           UserCode,
@@ -141,13 +137,15 @@ const LogsCreacion = () => {
           1
         )
         setlistTokenActive(TokenActiveData[0])
-        const TokenGeneratData = await ApilistTokenGenerat(UserCode, SemesterCode)
+        const TokenGeneratData = await ApilistTokenGenerat(
+          UserCode,
+          SemesterCode
+        )
 
         if (TokenGeneratData.length !== 0)
           FormatedTokenGeneratData(TokenGeneratData, setlistTokenGenerat)
         else ViewMessage(0)
-
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
@@ -155,9 +153,9 @@ const LogsCreacion = () => {
       setloading(false)
     }
 
-      Load()
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    Load()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

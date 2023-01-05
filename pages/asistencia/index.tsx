@@ -113,20 +113,20 @@ const Index = () => {
       try {
         const resp: any = await apiAsistencia.listarAsistencia(ctrlClassId)
 
-				console.log('listarAsistencia__', resp.data)
+        console.log('listarAsistencia__', resp.data)
 
-				if(resp.data.length < 1){
-					Swal.fire({
-						title: 'Se Produjo un error',
-						text: `Esta clase no tiene alumnos asignados.`,
-						icon: 'warning',
-						showCancelButton: false,
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: 'OK',
-					}).then((result) => {
-						window.history.go(-2)
-					})
-				}
+        if (resp.data.length < 1) {
+          Swal.fire({
+            title: 'Se Produjo un error',
+            text: `Esta clase no tiene alumnos asignados.`,
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            window.history.go(-2)
+          })
+        }
 
         const items = addBtns(resp.data)
 
@@ -163,7 +163,7 @@ const Index = () => {
     }
 
     setDatos([])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleBtnGuardar = async () => {
@@ -200,57 +200,56 @@ const Index = () => {
 
     console.log(validaAsistencia)
 
-		console.log('datosAsis___',datosAsis.length)
+    console.log('datosAsis___', datosAsis.length)
 
-		if(datosAsis.length > 0){
+    if (datosAsis.length > 0) {
+      const datosAsisCont = datosAsis.length > 0
+      console.log('datosAsisCont', datosAsisCont)
 
-			const datosAsisCont = datosAsis.length > 0
-			console.log('datosAsisCont', datosAsisCont)
+      if (validaAsistencia) {
+        const getCountN = (arrai: Array<any>) => {
+          // return datosAsis.map((item: any) => {
+          return arrai.map((item: any) => {
+            let countN = 0
+            if (item.Asistencia === 'N') {
+              countN = 1
+              console.log('N')
+            }
+            return countN
+          })
+        }
 
-			if (validaAsistencia) {
-				const getCountN = (arrai: Array<any>) => {
-					// return datosAsis.map((item: any) => {
-					return arrai.map((item: any) => {
-						let countN = 0
-						if (item.Asistencia === 'N') {
-							countN = 1
-							console.log('N')
-						}
-						return countN
-					})
-				}
+        let AsistenciasNulas = []
 
-				let AsistenciasNulas = []
+        if (!datosAsisCont) {
+          setDatosAsis(datos)
+          AsistenciasNulas = getCountN(datos)
+        } else {
+          AsistenciasNulas = getCountN(datosAsis)
+        }
 
-				if (!datosAsisCont) {
-					setDatosAsis(datos)
-					AsistenciasNulas = getCountN(datos)
-				} else {
-					AsistenciasNulas = getCountN(datosAsis)
-				}
+        const conteo = AsistenciasNulas.filter((item) => item === 1)
 
-				const conteo = AsistenciasNulas.filter((item) => item === 1)
+        const contador = conteo.length
 
-				const contador = conteo.length
+        if (contador > 0) {
+          Swal.fire({
+            title: 'Portal de Docentes',
+            text: `Se encontraron registros con asistencia = N Indique A, T o F`,
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          })
 
-				if (contador > 0) {
-					Swal.fire({
-						title: 'Portal de Docentes',
-						text: `Se encontraron registros con asistencia = N Indique A, T o F`,
-						icon: 'warning',
-						showCancelButton: false,
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: 'OK',
-					})
+          setloading(false)
+          return
+        }
+      }
 
-					setloading(false)
-					return
-				}
-			}
-
-			const xmlConstruct = (arrai: Array<any>) => {
-				return arrai.map((item: any) => {
-					const xmlAsis = `<asistencia 
+      const xmlConstruct = (arrai: Array<any>) => {
+        return arrai.map((item: any) => {
+          const xmlAsis = `<asistencia 
 						audit_usuario="${DUENO}" 
 						s_alas_control="${item.Asistencia}" 
 						s_cla_codigo="${item.ClaCodigo}" 
@@ -258,112 +257,112 @@ const Index = () => {
 						n_control_clase_id="${ctrlClassId}"
 					/>
 					`
-					return xmlAsis
-				})
-			}
+          return xmlAsis
+        })
+      }
 
-			let xmlFor
+      let xmlFor
 
-			if (!datosAsisCont) {
-				xmlFor = xmlConstruct(datos)
-			} else {
-				xmlFor = xmlConstruct(datosAsis)
-			}
+      if (!datosAsisCont) {
+        xmlFor = xmlConstruct(datos)
+      } else {
+        xmlFor = xmlConstruct(datosAsis)
+      }
 
-			console.log(xmlFor)
+      console.log(xmlFor)
 
-			const xmldata = `<registro>${xmlFor.join('')}</registro>`
+      const xmldata = `<registro>${xmlFor.join('')}</registro>`
 
-			console.log(xmldata)
+      console.log(xmldata)
 
-			const xml = xmldata.replace(/ {2} |\r\n|\n|\r/gm, '')
+      const xml = xmldata.replace(/ {2} |\r\n|\n|\r/gm, '')
 
-			let respRegis
+      let respRegis
 
-			switch (tipoAistencia) {
-				case REGASI: {
-					try {
-						const date = moment().format('YYYY-MM-DD')
-						const data: any = await apiAsistencia.registraAsistencia(
-							ctrlClassId,
-							xml,
-							date,
-							semesterId
-						)
+      switch (tipoAistencia) {
+        case REGASI: {
+          try {
+            const date = moment().format('YYYY-MM-DD')
+            const data: any = await apiAsistencia.registraAsistencia(
+              ctrlClassId,
+              xml,
+              date,
+              semesterId
+            )
 
-						respRegis = data
-					} catch (error) {
-						console.log(error)
-					}
+            respRegis = data
+          } catch (error) {
+            console.log(error)
+          }
 
-					break
-				}
-				case REGSOL: {
-					try {
-						const data: any = await apiAsistencia.registraAsistenciasolicitud(
-							ctrlClassId,
-							xml
-						)
-						respRegis = data
-					} catch (error) {
-						console.log(error)
-					}
+          break
+        }
+        case REGSOL: {
+          try {
+            const data: any = await apiAsistencia.registraAsistenciasolicitud(
+              ctrlClassId,
+              xml
+            )
+            respRegis = data
+          } catch (error) {
+            console.log(error)
+          }
 
-					break
-				}
-				default:
-					break
-			}
+          break
+        }
+        default:
+          break
+      }
 
-			console.log(respRegis)
+      console.log(respRegis)
 
-			if (respRegis === 'OK' || respRegis === true) {
-				try {
-					if (tipoAistencia === REGSOL) {
-						const cierreExito = await CierreDeSesionExitoso()
+      if (respRegis === 'OK' || respRegis === true) {
+        try {
+          if (tipoAistencia === REGSOL) {
+            const cierreExito = await CierreDeSesionExitoso()
 
-						if (cierreExito) {
-							const sCodClase: string = get(CLASE_ID)
-							const controlClaseId: string = get(CONTROL_CLASE_ID)
-							await enviarSolicitud(controlClaseId, sCodClase)
-						}
-						set(VALIDAR, '1')
-					}
+            if (cierreExito) {
+              const sCodClase: string = get(CLASE_ID)
+              const controlClaseId: string = get(CONTROL_CLASE_ID)
+              await enviarSolicitud(controlClaseId, sCodClase)
+            }
+            set(VALIDAR, '1')
+          }
 
-					setloading(false)
+          setloading(false)
 
-					Swal.fire({
-						title: 'Portal de Docentes',
-						text: `El Registro de Asistencia se ha guardado con éxito`,
-						icon: 'success',
-						showCancelButton: false,
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: 'OK',
-					}).then((result) => {
-						if (result.isDismissed === true || result.isConfirmed === true) {
-							window.history.go(-2)
-						}
+          Swal.fire({
+            title: 'Portal de Docentes',
+            text: `El Registro de Asistencia se ha guardado con éxito`,
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            if (result.isDismissed === true || result.isConfirmed === true) {
+              window.history.go(-2)
+            }
 
-						console.log(result)
-					})
-				} catch (error) {
-					console.log(error)
-				}
+            console.log(result)
+          })
+        } catch (error) {
+          console.log(error)
+        }
 
-				// window.history.go(-2)
-			}
-			setloading(false)
-		}else{
-			setloading(false)
-			Swal.fire({
-				title: 'Se produjo un error',
-				text: `No ha realizado ninguna selección de asistencia.`,
-				icon: 'warning',
-				showCancelButton: false,
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'OK',
-			})
-		}
+        // window.history.go(-2)
+      }
+      setloading(false)
+    } else {
+      setloading(false)
+      Swal.fire({
+        title: 'Se produjo un error',
+        text: `No ha realizado ninguna selección de asistencia.`,
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+      })
+    }
   }
 
   return (
@@ -403,7 +402,7 @@ const Index = () => {
           <TableDinamic
             columns={COLUMNS}
             listData={datos}
-						pagination={false}
+            pagination={false}
           />
         </div>
 

@@ -50,8 +50,8 @@ export const catchingErrorApiComeBack = (error: any) => {
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'OK',
       }).then(async (result: any) => {
-				history.back()
-			})
+        history.back()
+      })
     }
   }
   throw new Error(mensaje)
@@ -97,9 +97,9 @@ export const genError = (res: any, error: any, trackingCode: string) => {
 
 export async function getIpClient() {
   try {
-    const response = await axios.get('https://api.ipify.org?format=json');
+    const response = await axios.get('https://api.ipify.org?format=json')
     return response.data.ip
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }

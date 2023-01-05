@@ -42,7 +42,7 @@ const ModalIdiomas = ({ modalShowIdiomas, setModalShowIdiomas }: any) => {
         getCombos()
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingextraidiomas])
 
   const saveidiomasaction = (datos: any) =>

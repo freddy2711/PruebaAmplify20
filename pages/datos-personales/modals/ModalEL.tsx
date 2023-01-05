@@ -119,7 +119,7 @@ const ModalEL = ({
     ) {
       getCombos()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoextra])
 
   useEffect(() => {
@@ -151,7 +151,7 @@ const ModalEL = ({
 
       setFormNEL(obj)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoeditar])
 
   const saveNewEL = async (e: any) => {

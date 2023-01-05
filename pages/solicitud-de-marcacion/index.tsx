@@ -12,8 +12,8 @@ import { apiSolicitud } from './../../pages/api'
 // import Swal from 'sweetalert2'
 
 import {
-	USER_SESSION, 
-	SET_DATA_DOCENTE,
+  USER_SESSION,
+  SET_DATA_DOCENTE,
   TEACHERCODE,
   CLASS_SELECTED_SOL_MARCACION,
   LIST_SESION_SOL,
@@ -105,7 +105,7 @@ const SolicitudMarcacion = () => {
     set(ASISTENCIA, 1)
     set(CLASS_SELECTED_SOL_MARCACION, JSON.stringify(item))
 
-		redirectRouter('/solicitud-de-marcacion/AsistenciaSolicitud', setloading)
+    redirectRouter('/solicitud-de-marcacion/AsistenciaSolicitud', setloading)
   }
 
   const formatedData = (obj: any, setstate: any, tipo: string) => {
@@ -180,7 +180,7 @@ const SolicitudMarcacion = () => {
       }
     }
     consultaApi()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const COLUMNS_SESIONES = [

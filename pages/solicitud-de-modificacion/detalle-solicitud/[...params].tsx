@@ -139,7 +139,7 @@ const Index = ({ data }: any) => {
   useEffect(() => {
     setDataList(data.result)
     setDetailClass(data.clase)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

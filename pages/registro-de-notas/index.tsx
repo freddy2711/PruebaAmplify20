@@ -61,7 +61,7 @@ const IngresoNotas = () => {
     if (dataUser?.code !== undefined) {
       fetchTeacherCurse(dataUser?.code)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchTeacherCurse = async (obj: any) => {

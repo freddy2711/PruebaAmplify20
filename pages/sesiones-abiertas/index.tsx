@@ -106,7 +106,7 @@ const SesionesAbiertas = () => {
   useEffect(() => {
     setloading(true)
     fetchSeccionOpen(get(USER_SESSION))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const LinkButton = (row: any) => {

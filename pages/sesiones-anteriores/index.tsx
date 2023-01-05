@@ -129,11 +129,11 @@ const Index = () => {
         paymentPeriodId
       )
       PreviousSessionValidator(result, classCode, StateMessage)
-    } catch (error:any) {
-        catchingErrorFront(error.message)
-        setloading(false)
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
     }
-  
+
     setloading(false)
   }
 
@@ -161,9 +161,18 @@ const Index = () => {
       const ControlFecha = new Date(item.ControlFecha)
       const ControlInicio = new Date(item.ControlInicio)
       const ControlTermino = new Date(item.ControlTermino)
-      item.ControlFecha = item.ControlFecha === "" ? "" :  moment(ControlFecha).format('DD/MM/YYYY')
-      item.ControlInicio = item.ControlInicio === "" ? "" :  moment(ControlInicio).format('DD/MM/YYYY HH:mm:ss')
-      item.ControlTermino = item.ControlTermino === "" ? "" : moment(ControlTermino).format('DD/MM/YYYY HH:mm:ss')
+      item.ControlFecha =
+        item.ControlFecha === ''
+          ? ''
+          : moment(ControlFecha).format('DD/MM/YYYY')
+      item.ControlInicio =
+        item.ControlInicio === ''
+          ? ''
+          : moment(ControlInicio).format('DD/MM/YYYY HH:mm:ss')
+      item.ControlTermino =
+        item.ControlTermino === ''
+          ? ''
+          : moment(ControlTermino).format('DD/MM/YYYY HH:mm:ss')
       return item
     })
 
@@ -291,16 +300,16 @@ const Index = () => {
         await consultaApi()
         GetPeriodPayment()
         GetperiodPayDateApi()
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-      
+
       setloading(false)
     }
 
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

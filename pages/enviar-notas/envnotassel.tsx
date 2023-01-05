@@ -83,7 +83,7 @@ const EnviarNotas = (props: any) => {
     showTableStatic = MSM_VISIBLE_BLOCK
     setshowTableDinami(MSM_VISIBLE_NONE)
     ValidityState()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const SendCancel = () => {

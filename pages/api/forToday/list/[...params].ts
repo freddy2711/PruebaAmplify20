@@ -2,8 +2,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 type Data = {}
 
-export const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-/*   const { params }: any = req.query
+export const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) => {
+  /*   const { params }: any = req.query
 
   console.log(params)
 

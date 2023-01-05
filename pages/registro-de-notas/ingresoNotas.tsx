@@ -142,7 +142,7 @@ const IngresoNotas = () => {
       }
       ValidaToken(req)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const ValidaToken = async (req: any) => {
@@ -482,9 +482,9 @@ const IngresoNotas = () => {
       text: MSM_REGISTRO_OK,
       confirmButtonText: `Ok`,
     })
-    if(rs){
+    if (rs) {
       showTableDinami = MSM_VISIBLE_NONE
-      showTableStatic = MSM_VISIBLE_BLOCK      
+      showTableStatic = MSM_VISIBLE_BLOCK
     }
   }
 
@@ -627,7 +627,6 @@ const IngresoNotas = () => {
       if (alertstat) {
         setModalShowAvance(true)
       }
-  
     }
   }
   const onclickSendData = async () => {

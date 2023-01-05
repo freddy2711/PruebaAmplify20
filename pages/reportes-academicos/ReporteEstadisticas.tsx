@@ -249,7 +249,7 @@ const ReporteEstadisticas = () => {
       try {
         const response = await ApiClassStatistics(userId)
         setClassStatisticsData(response)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
@@ -257,7 +257,7 @@ const ReporteEstadisticas = () => {
       setloading(false)
     }
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

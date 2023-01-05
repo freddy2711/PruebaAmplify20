@@ -79,9 +79,9 @@
 
     .tabla {
       margin-bottom: 1rem;
-        @media (max-width: 1400px){
-          overflow-x: scroll;
-        }
+      @media (max-width: 1400px) {
+        overflow-x: scroll;
+      }
     }
 
     .tabla * {

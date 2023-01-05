@@ -8,16 +8,16 @@ import { UserProvider } from '../Context/userContext'
 
 function MyApp({ Component, pageProps }: AppProps | any) {
   return (
-		<UserProvider>
-			<Provider store={store}>
-				<Head>
-					<title>{Component.title}</title>
-				</Head>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</Provider>
-		</UserProvider>
+    <UserProvider>
+      <Provider store={store}>
+        <Head>
+          <title>{Component.title}</title>
+        </Head>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
+    </UserProvider>
   )
 }
 

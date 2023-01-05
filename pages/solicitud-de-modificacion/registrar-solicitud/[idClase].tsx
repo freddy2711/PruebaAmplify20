@@ -30,7 +30,8 @@ import {
   objecApi,
   SET_DATA_DOCENTE,
   TITLE_EMERG,
-	USER_SESSION, CLASS_SELECTED_SM
+  USER_SESSION,
+  CLASS_SELECTED_SM,
 } from '../../../consts/storageConst'
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -39,7 +40,6 @@ import getAlert from '../../../hooks/jspdf/alertify'
 import Modals from '../../../components/UI/atoms/modal/Modal'
 
 const { Note } = objecApi
-
 
 interface detailClass {
   AplicaCompetencia: string
@@ -355,7 +355,7 @@ const Index = ({ data }: any) => {
       state: false,
     }
     ValidaToken(req)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const ValidaToken = async (req: any) => {
@@ -519,8 +519,6 @@ const Index = ({ data }: any) => {
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK',
         })
-
-        
       }
     })
   }
@@ -790,7 +788,6 @@ const Index = ({ data }: any) => {
       if (alertstat) {
         setModalShowAvance(true)
       }
- 
     }
   }
 

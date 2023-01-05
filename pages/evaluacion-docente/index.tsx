@@ -17,13 +17,14 @@ const Index = () => {
 
   const ApiDownloadDocuments = async (rutaUrl: any) => {
     try {
-      const response = await apiEvaluacionDocente.DownloadDocumentsAWSS3(rutaUrl)
+      const response = await apiEvaluacionDocente.DownloadDocumentsAWSS3(
+        rutaUrl
+      )
       return response
-    } catch (error:any) {
+    } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
     }
-
   }
 
   const FormatedValue = (Data: any) => {
@@ -86,11 +87,10 @@ const Index = () => {
       try {
         const response = await ApiAssessmentTeacher()
         FormatedValue(response)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-      
 
       setloading(false)
     }

@@ -19,7 +19,7 @@ import { catchingErrorFront } from './../../../helpers/helpers'
 import {
   CLASS_SELECTED_EC,
   CB_COMPETENCE,
-	USER_SESSION
+  USER_SESSION,
 } from '../../../consts/storageConst'
 import { get } from 'local-storage'
 import Loader from '../../../components/UI/atoms/loader/Loader'
@@ -297,7 +297,7 @@ const Index = ({ ip }: any) => {
     if (Object.entries(datosAlu).length !== 0) {
       listaConductaEscala(datosAlu)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datosAlu])
 
   useEffect(() => {
@@ -768,33 +768,31 @@ const Index = ({ ip }: any) => {
 
       const resp = await apiCompetence.registerNotesCompetence(item)
 
-			if(resp === '1'){
-
-				Swal.fire({
-					title: 'Portal de Docentes',
-					text: `Se registro Correctamente`,
-					icon: 'success',
-					showCancelButton: false,
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: 'OK',
-				}).then((result) => {
-					console.log(result)
-					if (result.isConfirmed) {
-						// console.log('confirmed!!!')
-						window.location.reload()
-					}
-				})
-			}else{
-				Swal.fire({
-					title: 'Se produjo un error',
-					text: `No se han podido guardar los datos.`,
-					icon: 'success',
-					showCancelButton: false,
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: 'OK',
-				})
-			}
-
+      if (resp === '1') {
+        Swal.fire({
+          title: 'Portal de Docentes',
+          text: `Se registro Correctamente`,
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
+        }).then((result) => {
+          console.log(result)
+          if (result.isConfirmed) {
+            // console.log('confirmed!!!')
+            window.location.reload()
+          }
+        })
+      } else {
+        Swal.fire({
+          title: 'Se produjo un error',
+          text: `No se han podido guardar los datos.`,
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
+        })
+      }
     } catch (error) {
       console.log(error)
     }

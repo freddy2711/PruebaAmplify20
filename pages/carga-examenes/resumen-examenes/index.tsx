@@ -65,7 +65,7 @@ const Index = () => {
       try {
         const result = await LoadedExamsApi()
         setDataLoadedExams(result)
-      } catch (error:any) {
+      } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
@@ -73,7 +73,7 @@ const Index = () => {
     }
 
     Load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
