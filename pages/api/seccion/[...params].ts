@@ -1,11 +1,11 @@
-import { axiosfetchPrivate } from '../../../config/axios'
+// import { axiosfetchPrivate } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from './../../../consts/path'
 
 type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params }: any = req.query
+  /* const { params }: any = req.query
 
   switch (params[0]) {
     case 'open': {
@@ -33,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       break
     }
-  }
+  } */
 }
 
 export default handler

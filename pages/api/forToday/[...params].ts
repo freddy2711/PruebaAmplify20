@@ -1,9 +1,9 @@
-import { axiosfetchPrivate } from '../../../config/axios'
+// import { axiosfetchPrivate } from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 type Data = {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { params }: any = req.query
+/*   const { params }: any = req.query
 
   console.log(params)
 
@@ -14,5 +14,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     `/ClassSchedule/GetSessionTeacherByDay/${teacher}/${date}`
   )
 
-  res.json(result.data)
+  res.json(result.data) */
 }
