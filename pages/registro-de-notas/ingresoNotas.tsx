@@ -460,6 +460,28 @@ const IngresoNotas = () => {
   }
 
   const SendGuardar = async () => {
+    setloading(true)
+    /* BEGIN VALIDA QUE EL REGISTRO SI FUE ENVIADO */
+    const obj1 = {
+      classCode: ClaCodigo,
+      classEstate: SET_NOTES_RE,
+    }
+    const rs1: any = await fecthNotesStudent(obj1)
+    if (callErrorValid(rs1, setloading) === undefined) return
+    const obj2 = {
+      classCode: ClaCodigo,
+      classEstate: SET_NOTES_CA,
+    }
+    const rs2: any = await fecthNotesStudent(obj2)
+    if (rs1.noteCode !== 0 || rs2.noteCode !== 0) {
+      setloading(false)
+      return getAlert({
+        title: TITLE_EMERG,
+        text: `El registro ya fue enviado`,
+        confirmButtonText: `Ok`,
+      })
+    }
+    /* EBD VALIDA QUE EL REGISTRO SI FUE ENVIADO */
     const rs = await redirectRouter('', setloading)
     if (!rs) setModalShowAvance(true)
   }
@@ -565,26 +587,6 @@ const IngresoNotas = () => {
     if (dtValidarToken?.tokenId !== undefined) {
       listToken.push(dtValidarToken)
     }
-    /* BEGIN VALIDA QUE EL REGISTRO SI FUE ENVIADO */
-    const obj1 = {
-      classCode: ClaCodigo,
-      classEstate: SET_NOTES_RE,
-    }
-    const rs1: any = await fecthNotesStudent(obj1)
-    if (callErrorValid(rs1, setloading) === undefined) return
-    const obj2 = {
-      classCode: ClaCodigo,
-      classEstate: SET_NOTES_CA,
-    }
-    const rs2: any = await fecthNotesStudent(obj2)
-    if (rs1.noteCode !== 0 && rs2.noteCode !== 0) {
-      return getAlert({
-        title: TITLE_EMERG,
-        text: `El registro ya fue enviado`,
-        confirmButtonText: `Ok`,
-      })
-    }
-    /* EBD VALIDA QUE EL REGISTRO SI FUE ENVIADO */
     const reqCoup = {
       semesterCode,
       userCode: dataUser?.code,

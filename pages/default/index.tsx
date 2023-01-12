@@ -46,6 +46,7 @@ import {
   TOKEN_IN,
   TOKEN,
   SET_SEMESTERCRONOLOGICO,
+  DUENO_SESSION,
 } from './../../consts/storageConst'
 
 // import { useCookies } from 'react-cookie'
@@ -196,6 +197,8 @@ const Index = (props: any) => {
     await set(SET_SEMESTERCODE, semesterTemp[0]?.semesterCode)
     await set(SET_SEMESTERCRONOLOGICO, semesterTemp[0]?.semesterCode)
     await set(SET_DATA_DOCENTE, dataUser2[0])
+    const datateacher: any = dataUser2[0]
+    set(DUENO_SESSION, datateacher.userName)
     setUser(dataUser2[0])
 
     setDataTemp(data)
@@ -566,11 +569,15 @@ const Index = (props: any) => {
       set(CONTROL_CLASE_ID, Number(iControlClase))
       set(ASISTENCIA, '1')
     }
-    if (iControlClase > '0') {
-      if (grid === 2) {
+    if (grid === 2) {
+      if (iControlClase === '0') {
         set(CONTROL_CLASE_ID, Number(row.solRecuperationId))
-        set(RECUPERATION_ID, Number(row.recuperationId))
+      } else {
+        set(CONTROL_CLASE_ID, Number(iControlClase))
       }
+      set(RECUPERATION_ID, Number(row.recuperationId))
+    } 
+    if (iControlClase > '0') {
       linkRedirect(row)
     } else {
       setloading(false)
