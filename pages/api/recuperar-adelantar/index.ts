@@ -67,24 +67,18 @@ const API = {
         teacherCode,
       }
 
-      const URL = `/recuperar-adelantar/ScheduleSessions/`
+      const URL = `/recuperar-adelantar/ScheduleSessions`
       const result: any = await axiosfetchPublic.post(URL, { obj })
       return result.data
     } catch (error) {
       catchingErrorApi(error)
     }
   },
-  ClasEnabled: async (
-    classroom: string,
-    sedeCode: string,
-    date: string,
-    hours: string,
-    quantity: string
-  ) => {
+  ClasEnabled: async (dateIni: string, dateFin: string) => {
     try {
-      const URL = `/recuperar-adelantar/ClasEnabled/${classroom}/${sedeCode}/${date}/${hours}/${quantity}`
+      const URL = `/recuperar-adelantar/ClasEnabled/${dateIni}/${dateFin}`
       const result: any = await axiosfetchPublic(URL)
-      return result.data
+      return result.data.data
     } catch (error) {
       catchingErrorApi(error)
     }
@@ -117,7 +111,9 @@ const API = {
     hourIdProgInitial: any,
     hourIdProgFinal: any,
     type: any,
-    path: any
+    path: any,
+    bookingId: any,
+    ocurrenceId: any
   ) => {
     try {
       const obj = {
@@ -134,8 +130,10 @@ const API = {
         hourIdProgFinal,
         type,
         path,
+        bookingId,
+        ocurrenceId,
       }
-      const URL = `/recuperar-adelantar/AttendanceRecoverys/`
+      const URL = `/recuperar-adelantar/AttendanceRecoverys`
       const result: any = await axiosfetchPublic.post(URL, { obj })
       return result
     } catch (error) {
@@ -176,7 +174,7 @@ const API = {
         type,
         path,
       }
-      const URL = `/recuperar-adelantar/AttendanceRecoverysPUT/`
+      const URL = `/recuperar-adelantar/AttendanceRecoverysPUT`
       const result: any = await axiosfetchPublic.put(URL, { obj })
       return result
     } catch (error) {
@@ -237,6 +235,46 @@ const API = {
     try {
       const URL = `/recuperar-adelantar/GetProcessUser/${carrCode}/${sedeCode}`
       const result: any = await axiosfetchPublic(URL)
+      return result.data
+    } catch (error) {
+      catchingErrorApi(error)
+    }
+  },
+  BookingClassrooms: async (data: any) => {
+    try {
+      const URL = `/recuperar-adelantar/BookingClassrooms`
+      const result: any = await axiosfetchPublic.post(URL, { data })
+      return result.data
+    } catch (error) {
+      catchingErrorApi(error)
+    }
+  },
+  ClasEnabledBookingCodeRooms: async (
+    dateIni: string,
+    dateFin: string,
+    bookingCode: any
+  ) => {
+    try {
+      const URL = `/recuperar-adelantar/ClasEnabledBookingCodeRooms/${dateIni}/${dateFin}/${bookingCode}`
+      const result: any = await axiosfetchPublic(URL)
+      return result.data.data
+    } catch (error) {
+      catchingErrorApi(error)
+    }
+  },
+  UpdateClassroomReservation: async (data: any) => {
+    try {
+      const URL = `/recuperar-adelantar/UpdateClassroomReservation`
+      const result: any = await axiosfetchPublic.put(URL, { data })
+      return result.data
+    } catch (error) {
+      catchingErrorApi(error)
+    }
+  },
+  DeleteBooking: async (data: any) => {
+    try {
+      const URL = `/recuperar-adelantar/DeleteBooking`
+      const result: any = await axiosfetchPublic.post(URL, { data })
       return result.data
     } catch (error) {
       catchingErrorApi(error)

@@ -81,13 +81,12 @@ const API = {
       return { error }
     }
   },
-  logintokenValid: async (Cookie: any) => {
+  logintokenValid: async () => {
     try {
       const config = {
         withCredentials: true,
       }
       const URL: any = process.env.NEXT_PUBLIC_TOKEN_API
-      // const URL = `/login/token/${Cookie}`
       const result: any = await axios(URL, config)
       if (result.status !== 200) {
         console.log('status', result?.status)

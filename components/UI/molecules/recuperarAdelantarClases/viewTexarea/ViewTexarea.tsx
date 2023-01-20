@@ -9,6 +9,7 @@ export interface Props {
   onchange?: any
   defaultValue?: any
   value?: any
+  style?: any
 }
 
 const ViewTexarea = ({
@@ -17,6 +18,7 @@ const ViewTexarea = ({
   placeholder,
   defaultValue,
   value,
+  style,
 }: Props) => {
   return (
     <div className={styles.viewTexareaConten}>
@@ -30,6 +32,7 @@ const ViewTexarea = ({
         onChange={onchange}
         defaultValue={defaultValue}
         value={value}
+        style={style}
       />
     </div>
   )

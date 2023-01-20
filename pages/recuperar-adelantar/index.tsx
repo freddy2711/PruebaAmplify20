@@ -38,6 +38,7 @@ const Recuperar = () => {
     { label: 'Fecha recuperación', field: 'RecFechaRecuperacion', sort: 'asc' },
     { label: 'Horas', field: 'Horas', sort: 'asc' },
     { label: 'Estado', field: 'RecEstado', sort: 'asc' },
+    { label: 'Cod Reserva Ubooking', field: 'BookingId', sort: 'asc' },
   ]
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

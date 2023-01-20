@@ -118,6 +118,7 @@
     .blocFormValidateRow {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
       gap: 3%;
 
       @media (max-width: 767px) {
@@ -169,6 +170,17 @@
       width: 50%;
       @media (max-width: 767px) {
         width: 100%;
+      }
+    }
+
+    .TexareaConten {
+      display: grid;
+      grid-template-columns: 24% 1fr;
+      grid-template-rows: 1fr;
+      justify-content: center;
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1% 1fr;
       }
     }
   }

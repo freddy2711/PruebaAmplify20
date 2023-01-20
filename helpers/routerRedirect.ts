@@ -3,6 +3,7 @@ import Router from 'next/router'
 import {
   APP_CODE,
   callErrorValid,
+  DUENO_SESSION,
   MSM_NO_EXISTE_GROUP,
   MSM_NO_GROUP,
   MSM_NO_SECCION,
@@ -15,15 +16,19 @@ import {
 import getAlert from '../hooks/jspdf/alertify'
 import { apiLogin, apiTokens } from '../pages/api'
 
+// eslint-disable-next-line camelcase
 export const ValidateSessionPA_AU = async (loadin: any) => {
   const codeteacher: any = get(USER_SESSION)
-  const dataUserTemp = await apiLogin.DatosUsuario(codeteacher)
-  if (callErrorValid(dataUserTemp, loadin) === undefined) return
+  let codeNameUser: any = get(DUENO_SESSION)
+  if (codeNameUser === undefined || codeNameUser === null) {
+    const dataUserTemp = await apiLogin.DatosUsuario(codeteacher)
+    if (callErrorValid(dataUserTemp, loadin) === undefined) return
+    codeNameUser = dataUserTemp[0]?.userName
+  }
   const seccionGroup: any = get(SET_SECCION_GROUP)
   const valores = window.location
-  if (dataUserTemp[0] === undefined) return
   const obj = {
-    codeUser: dataUserTemp[0].userName,
+    codeUser: codeNameUser,
     // sedCode: 'sedCode',
     // paramName: 'paramName',
     codeApp: APP_CODE,
@@ -48,11 +53,12 @@ export const ValidateSessionPA_AU = async (loadin: any) => {
     await ValidateVigenciaGroup(rs, loadin)
   if (obj.pageName !== 'permisos') ValidateExisteGroup(obj, loadin)
   // const rs2 = await apiTokens.ByPA_AU_Parameters(obj)
+  return false
 }
 export const ValidateVigenciaGroup = async (rs: any, loadin: any) => {
   const groupSeccion = []
   for (let index = 0; index < rs.length; index++) {
-    let element = rs[index].groupName
+    const element = rs[index].groupName
     const rs0 = await apiTokens.ByPA_AU_Group(element)
     if (callErrorValid(rs0, loadin) === undefined) return
     if (rs0[0] !== undefined) groupSeccion.push(rs0[0])
@@ -77,10 +83,10 @@ export const ValidateExisteGroup = async (obj: any, loadin: any) => {
   }
 }
 export const ValidateSession = async (loadin: any) => {
-  let token: any = get(TOKEN)
+  const token: any = get(TOKEN)
 
   const obj = {
-    token: token,
+    token,
     userCode: get(USER_SESSION),
     classCode: get(USER_SESSION),
   }
@@ -116,7 +122,9 @@ export const ValidateSession = async (loadin: any) => {
 export const redirectRouter = async (vista: any, loadin: any) => {
   loadin(true)
   const rs = await ValidateSession(loadin)
-  const rs0 = await ValidateSessionPA_AU(loadin)
+  const rs0: any = await ValidateSessionPA_AU(loadin)
+  console.log('rs0', rs0)
+
   loadin(false)
   if (vista !== '' && !rs) {
     Router.push(vista)

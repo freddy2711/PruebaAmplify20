@@ -48,6 +48,24 @@ export const menuDefault = [
         child: [],
         target: false,
       },
+      {
+        label: 'Gestor Prácticas de Campo',
+        link: '/practicas-campo',
+        child: [],
+        target: false,
+      },
+      {
+        label: 'Gestor Tesis de Investigación',
+        link: '/tesis-investigacion',
+        child: [],
+        target: false,
+      },
+      {
+        label: 'Gestor Consulta Documentos',
+        link: '/consulta-documentos',
+        child: [],
+        target: false,
+      },
       /* {
         label: 'Asistencia',
         link: '/asistencia',

@@ -6,7 +6,7 @@ import Button from '../../components/UI/atoms/button/Button'
 import styles from './../../components/templates/default/Default.module.scss'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import getAlert from '../../hooks/jspdf/alertify'
-import { apiSeccionOpen, apiHome, apiLogin, apiTokens } from './../api/index'
+import { apiSeccionOpen, apiHome, apiLogin } from './../api/index'
 import { useContext, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { set, remove, get } from 'local-storage'
@@ -43,7 +43,6 @@ import {
   convertStringToDay,
   RECUPERATION_ID,
   USER_SESSION,
-  TOKEN_IN,
   TOKEN,
   SET_SEMESTERCRONOLOGICO,
   DUENO_SESSION,
@@ -230,11 +229,11 @@ const Index = (props: any) => {
     setloading(false)
   }
 
-  const InserToken = async (obj: any) => {
-    await apiTokens.ByTokenInsertState(obj)
-    set(TOKEN_IN, true)
-    window.location.reload()
-  }
+  // const InserToken = async (obj: any) => {
+  //   await apiTokens.ByTokenInsertState(obj)
+  //   set(TOKEN_IN, true)
+  //   window.location.reload()
+  // }
 
   const callApiLoginSeccion = () => {
     const codeteacher =
@@ -266,36 +265,36 @@ const Index = (props: any) => {
     }, 2000)
   }
   useEffect(() => {
-    if (props.data === null) {
-      const codeteacher = get(USER_SESSION)
-      if (
-        codeteacher === null ||
-        codeteacher === undefined ||
-        codeteacher === ''
-      ) {
-        window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL_ENTIDADES}${process.env.NEXT_PUBLIC_SERVER_URL_REDIRECT}`
-      }
-    } else {
-      if (
-        props.tk !== undefined ||
-        (props.tk !== null && props.data !== null) ||
-        props.data !== undefined
-      ) {
-        if (
-          get(TOKEN_IN) === null ||
-          get(TOKEN_IN) === false ||
-          get(TOKEN_IN) === undefined
-        ) {
-          const obj = {
-            token: props.tk,
-            userCode: props.data,
-            classCode: props.data,
-          }
+    // if (props.data === null) {
+    //   const codeteacher = get(USER_SESSION)
+    //   if (
+    //     codeteacher === null ||
+    //     codeteacher === undefined ||
+    //     codeteacher === ''
+    //   ) {
+    //     window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL_ENTIDADES}${process.env.NEXT_PUBLIC_SERVER_URL_REDIRECT}`
+    //   }
+    // } else {
+    //   if (
+    //     props.tk !== undefined ||
+    //     (props.tk !== null && props.data !== null) ||
+    //     props.data !== undefined
+    //   ) {
+    //     if (
+    //       get(TOKEN_IN) === null ||
+    //       get(TOKEN_IN) === false ||
+    //       get(TOKEN_IN) === undefined
+    //     ) {
+    //       const obj = {
+    //         token: props.tk,
+    //         userCode: props.data,
+    //         classCode: props.data,
+    //       }
 
-          InserToken(obj)
-        }
-      }
-    }
+    //       InserToken(obj)
+    //     }
+    //   }
+    // }
 
     //
     renderizaImageBase64(
@@ -309,6 +308,7 @@ const Index = (props: any) => {
 
     remove(SET_RECOVER_SELECT)
 
+    setloading(false)
     callApiLoginSeccion()
 
     // if (data.error !== undefined) {
@@ -512,7 +512,7 @@ const Index = (props: any) => {
       if (rs4.iControlClase === '') {
         rs4.iControlClase = 0
       }
-      if (rs4.iControlClase?.length > 0) {
+      if (rs4.length > 0) {
         setloading(false)
         return getAlert({
           title: TITLE_EMERG,
@@ -576,7 +576,7 @@ const Index = (props: any) => {
         set(CONTROL_CLASE_ID, Number(iControlClase))
       }
       set(RECUPERATION_ID, Number(row.recuperationId))
-    } 
+    }
     if (iControlClase > '0') {
       linkRedirect(row)
     } else {
@@ -704,17 +704,26 @@ const Index = (props: any) => {
 
           <div>
             <strong>
-              <span>{FECHA_SECCION_NOW}</span>
+              <span>
+                <h5>{FECHA_SECCION_NOW}</h5>
+              </span>
             </strong>
           </div>
         </div>
 
-        <hr />
         <div className={styles.tablas}>
           <TableDinamic
             columns={COLUMNS}
             listData={datosByDay}
           />
+        </div>
+
+        <div>
+          <strong>
+            <span>
+              <h5>Clases por recuperar</h5>
+            </span>
+          </strong>
         </div>
 
         <div className={styles.tablas}>

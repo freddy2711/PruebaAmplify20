@@ -59,3 +59,32 @@ export const axiosfetchPrivateSedesUPN = axios.create({
 export const axiosfetchPrivateUpload = axios.create({
   baseURL: `${process.env.URL_UPLOAD}`,
 })
+
+export const axiosfetchUbooking = async (TOKEN: any, URL: any) => {
+  const config = {
+    headers: { Authorization: `Bearer ${TOKEN}` },
+  }
+  const axiosfetchUbooking = await axios.get(URL, config)
+
+  return axiosfetchUbooking
+}
+
+export const axiosfetchUbookingPOST = async (
+  TOKEN: any,
+  URL: any,
+  obj: any
+) => {
+  const config = {
+    headers: { Authorization: `Bearer ${TOKEN}` },
+  }
+  const axiosfetchUbooking = await axios.post(URL, obj, config)
+  return axiosfetchUbooking
+}
+
+export const axiosfetchUbookingPUT = async (TOKEN: any, URL: any, obj: any) => {
+  const config = {
+    headers: { Authorization: `Bearer ${TOKEN}` },
+  }
+  const axiosfetchUbooking = await axios.put(URL, obj, config)
+  return axiosfetchUbooking
+}
