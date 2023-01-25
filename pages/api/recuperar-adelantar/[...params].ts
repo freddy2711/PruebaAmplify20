@@ -1,4 +1,10 @@
-import { axiosCreate, axiosfetchPrivateEmail } from '../../../config/axios'
+import axiosfetchPublic, {
+  axiosCreate,
+  axiosfetchPrivateEmail,
+  axiosfetchUbooking,
+  axiosfetchUbookingPOST,
+  axiosfetchUbookingPUT,
+} from '../../../config/axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { apiPath } from '../../../consts/path'
 import { objecApi } from '../../../consts/storageConst'
@@ -100,17 +106,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
     case 'ClasEnabled': {
       try {
-        const apiCall: AxiosInstance = axiosCreate(ClassShedule)
-        const URL = apiPath.recuperarAdelantarClases.PATH_GetClasEnabled(
-          params[5] === undefined ? '' : params[5],
+        const obj = {
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
+          grant_type: process.env.GRANT_TYPE,
+        }
+        const URLKEY = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PostUbookingToken}`
+        const TOKEN: any = await axiosfetchPublic.post(URLKEY, obj)
+        const URLAULAS = `${
+          process.env.URL_BASE_UBOOKING
+        }${apiPath.recuperarAdelantarClases.PATH_PostUbookingClassrooms(
           params[1],
-          params[2],
-          params[3],
-          params[4]
+          params[2]
+        )}`
+        const DATAAULAS = await axiosfetchUbooking(
+          TOKEN?.data?.access_token,
+          URLAULAS
         )
-        const { data } = await apiCall(URL)
-        const result = data.detail
-        res.status(200).json(result)
+        res.status(200).json(DATAAULAS.data)
       } catch (error) {
         genError(res, error, 'RA007')
       }
@@ -281,6 +294,98 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         res.status(200).json(result)
       } catch (error) {
         genError(res, error, 'RA018')
+      }
+      break
+    }
+    case 'BookingClassrooms': {
+      try {
+        const obj = {
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
+          grant_type: process.env.GRANT_TYPE,
+        }
+        const URLKEY = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PostUbookingToken}`
+        const TOKEN: any = await axiosfetchPublic.post(URLKEY, obj)
+        const URLAULAS = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PostBooking}`
+        const { data } = req.body
+        const response = await axiosfetchUbookingPOST(
+          TOKEN?.data?.access_token,
+          URLAULAS,
+          data
+        )
+        res.status(200).json(response.data)
+      } catch (error) {
+        genError(res, error, 'RA019')
+      }
+      break
+    }
+    case 'ClasEnabledBookingCodeRooms': {
+      try {
+        const obj = {
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
+          grant_type: process.env.GRANT_TYPE,
+        }
+        const URLKEY = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PostUbookingToken}`
+        const TOKEN: any = await axiosfetchPublic.post(URLKEY, obj)
+        const URLAULA = `${
+          process.env.URL_BASE_UBOOKING
+        }${apiPath.recuperarAdelantarClases.PATH_PostUbookingClassroomsBookingCode(
+          params[1],
+          params[2],
+          params[3]
+        )}`
+        const response = await axiosfetchUbooking(
+          TOKEN?.data?.access_token,
+          URLAULA
+        )
+        res.status(200).json(response.data)
+      } catch (error) {
+        genError(res, error, 'RA020')
+      }
+      break
+    }
+    case 'UpdateClassroomReservation': {
+      try {
+        const obj = {
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
+          grant_type: process.env.GRANT_TYPE,
+        }
+        const URLKEY = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PostUbookingToken}`
+        const TOKEN: any = await axiosfetchPublic.post(URLKEY, obj)
+        const URL = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PutBooking}`
+        const { data } = req.body
+        const response = await axiosfetchUbookingPUT(
+          TOKEN?.data?.access_token,
+          URL,
+          data
+        )
+        res.status(200).json(response.data)
+      } catch (error) {
+        genError(res, error, 'RA021')
+      }
+      break
+    }
+    case 'DeleteBooking': {
+      try {
+        const obj = {
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
+          grant_type: process.env.GRANT_TYPE,
+        }
+        const URLKEY = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PostUbookingToken}`
+        const TOKEN: any = await axiosfetchPublic.post(URLKEY, obj)
+        const URL = `${process.env.URL_BASE_UBOOKING}${apiPath.recuperarAdelantarClases.PATH_PostDeleteBooking}`
+        const { data } = req.body
+        const response = await axiosfetchUbookingPOST(
+          TOKEN?.data?.access_token,
+          URL,
+          data
+        )
+        res.status(200).json(response.data)
+      } catch (error) {
+        genError(res, error, 'RA022')
       }
       break
     }

@@ -435,6 +435,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
       } catch (error) {
         console.log(error)
       }
+      console.log(
+        'PemitirCerrarSesionSinAsistenciaEstudiante',
+        PemitirCerrarSesionSinAsistenciaEstudiante
+      )
 
       if (parseInt(PemitirCerrarSesionSinAsistenciaEstudiante) === 1) {
         // TODO: getInsertaSesion_Solicitud
@@ -455,9 +459,10 @@ const AsistenciaSolicitud = ({ ip }: any) => {
             ip,
           }
 
-          const resp = await apiSolicitud.insertar(item)
-
-          set(CONTROL_CLASE_ID, resp)
+          const resp: any = await apiSolicitud.insertar(item)
+          // if(resp.updateId === "{}")
+          set(CONTROL_CLASE_ID, resp.data.controlClass)
+          return
         } catch (error) {
           console.log(error)
         }
@@ -483,10 +488,9 @@ const AsistenciaSolicitud = ({ ip }: any) => {
           }
 
           const resp: any = await apiSolicitud.insertar(item)
+          // if (resp.data.updateId !== "") return
 
-          console.log(resp)
-
-          set(CONTROL_CLASE_ID, resp.data)
+          set(CONTROL_CLASE_ID, resp.data.controlClass)
           redirectRouter('/asistencia', setloading)
         } catch (error) {
           catchingErrorFront(error)

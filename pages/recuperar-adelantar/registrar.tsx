@@ -1,3 +1,5 @@
+/* eslint-disable spaced-comment */
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
@@ -24,6 +26,7 @@ import { SET_DATA_DOCENTE, USER_SESSION } from '../../consts/storageConst'
 import { get } from 'local-storage'
 import { catchingErrorFront, getIpClient } from '../../helpers/helpers'
 import { redirectRouter } from '../../helpers/routerRedirect'
+import TextArea from '../../components/UI/atoms/TextArea/TextArea'
 
 const TableDinamic = dynamic(
   () => import('../../components/UI/molecules/tableDinamic/Table'),
@@ -43,6 +46,7 @@ type Selected = {
   sede: string
   dateLost: string
   CodSol: string
+  CurCodigo: string
 }
 
 type LstText = {
@@ -96,6 +100,7 @@ const Resumen = () => {
       sede: '',
       dateLost: '',
       CodSol: '',
+      CurCodigo: '',
     })
   const [ClassDate, setClassDate] = useState([''])
   const [Laboratories, setLaboratories] = useState([''])
@@ -153,6 +158,10 @@ const Resumen = () => {
   const [BtnCheckedAcep, setBtnCheckedAAcep] = useState(false)
   const [DateValidate, setDateValidate] = useState(false)
   const [ActiveTextConten, setActiveTextConten] = useState(false)
+  const [WriteDate, setWriteDate] = useState<any>()
+  const [CodAulaSelected, setCodAulaSelected] = useState('')
+  const [Description, setDescription] = useState('')
+  const [ContenInitial, setContenInitial] = useState(false)
 
   const current = new Date()
   const teacherCodeVal: any = get(USER_SESSION)
@@ -266,19 +275,25 @@ const Resumen = () => {
     quantity: string
   ) => {
     try {
+      setloading(true)
       const dataFormated = []
+      date = date.replace('-', '').replace('-', '')
+      let fordate: any = MissedClassDate.split('-')
+      fordate = fordate[0].split('/')
+      fordate = fordate[2].trim() + fordate[1].trim() + fordate[0].trim()
+
       const ClasEnabledData: any = await apiRecuperarAdelantar.ClasEnabled(
-        classroom,
-        sedeCode,
         date,
-        hours,
-        quantity
+        date
       )
-      for (const element of ClasEnabledData) {
-        dataFormated.push(element.classCode)
+      const row = ClasEnabledData.filter((x: any) => x.campusCode === sedeCode)
+      for (const element of row) {
+        dataFormated.push(element.classroomCode)
       }
+
       setClasEnabled(dataFormated)
-      setDLaula(ClasEnabledData)
+      setDLaula(row)
+      setloading(false)
     } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
@@ -298,11 +313,11 @@ const Resumen = () => {
     hourIdProgInitial: any,
     hourIdProgFinal: any,
     type: any,
-    path: any
+    path: any,
+    bookingId: any,
+    ocurrenceId: any
   ) => {
     try {
-      setloading(true)
-
       const dataSchedule = {
         classCode,
         teacherCode,
@@ -317,6 +332,8 @@ const Resumen = () => {
         hourIdProgFinal,
         type,
         path,
+        bookingId,
+        ocurrenceId,
       }
       const ScheduleSessionsData: any =
         await apiRecuperarAdelantar.AttendanceRecoverys(
@@ -332,9 +349,11 @@ const Resumen = () => {
           dataSchedule.hourIdProgInitial,
           dataSchedule.hourIdProgFinal,
           dataSchedule.type,
-          dataSchedule.path
+          dataSchedule.path,
+          dataSchedule.bookingId,
+          dataSchedule.ocurrenceId
         )
-      setloading(false)
+
       ValidateSave(
         FormatedMessage(ScheduleSessionsData.data.message),
         ScheduleSessionsData.data.state
@@ -396,6 +415,83 @@ const Resumen = () => {
         sedeCode
       )
       return status
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+  }
+
+  const PostBookingClassrooms = async (
+    classroomsjson: any,
+    description: any,
+    capacity: any,
+    startDate: any,
+    campusIntCode: any,
+    startTime: any,
+    endTime: any,
+    endDate: any,
+    codClass: any,
+    codCourse: any
+  ) => {
+    try {
+      const data = {
+        userIntCode: teacherCodeVal,
+        isCurricular: 0,
+        classrooms: classroomsjson,
+        description,
+        eventName: `Codigo clase: ${codClass} - Cod. Curso : ${codCourse}`,
+        sectionIntCode: '',
+        capacity,
+        responsiblePersons: [
+          {
+            responsibleIntCode: teacherCodeVal,
+          },
+        ],
+        startDate,
+        campusIntCode,
+        recurringType: 1,
+        isRecurring: 0,
+        startTime,
+        endTime,
+        endDate,
+        activityIntCode: '',
+        daysOfWeek: [0],
+        dayOfMonth: 0,
+        separationCount: 0,
+        groupIntCode: 1,
+        attendanceList: [],
+        extraPermissions: {
+          responsible: true,
+          assistants: true,
+          eventName: true,
+          activity: true,
+          groupId: false,
+        },
+        responsibleForTheReservation: true,
+        applicant: true,
+        attendees: true,
+      }
+      const status = await apiRecuperarAdelantar.BookingClassrooms(data)
+      return status
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+  }
+
+  const GetApiClasEnabledBookingCodeRooms = async (
+    date: any,
+    bookingCode: any
+  ) => {
+    try {
+      const ClasEnabledData: any =
+        await apiRecuperarAdelantar.ClasEnabledBookingCodeRooms(
+          date,
+          date,
+          bookingCode
+        )
+
+      return ClasEnabledData
     } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
@@ -542,19 +638,41 @@ const Resumen = () => {
   }
 
   const BTN_Regresar = () => {
-    // window.location.href = '/recuperar-adelantar'
     redirectRouter('/recuperar-adelantar', setloading)
   }
 
   const OnchageValidateLst = async (e: any) => {
     setloading(true)
     if (e.target.value !== '-- Seleccione --') {
+      setDescription('')
+      setAulaSelected('')
+      setDateSelectedItem('')
+      setCodAulaSelected('')
+      setWriteDate('')
+      setInputDateEmty(false)
+      setClasEnabled(undefined)
+      setContenPanel('')
+      setDateValidate(false)
       const response = await GetLstHours()
       setMissedClassDate(e.target.value)
       PostApiScheduleSessions(e.target.value, response)
       setBtnSelected(1)
     } else {
       cleanComponents()
+
+      if (btnActive === 'R') {
+        await GetApiClassDate('get_fechasperdidas')
+      }
+
+      if (btnActive === 'A') {
+        await GetApiClassDate('get_fechasadelantadas')
+      }
+
+      ValidatePanel()
+      setClasEnabled(undefined)
+      setContenPanel('')
+      await GetLstHours()
+
       setloading(false)
     }
   }
@@ -570,42 +688,56 @@ const Resumen = () => {
     setSelectedHour(ValeText)
   }
 
-  const btnSave = () => {
+  const btnSave = async () => {
     let aula: string = ' '
     let codAula: string = ' '
     let valor = 0
+    setloading(true)
 
     if (TeacherCoursesSelected.ClaMetodoEducativo !== '') {
-      if (TeacherCoursesSelected.ClaMetodoEducativo === 'RM') {
+      if (
+        TeacherCoursesSelected.ClaMetodoEducativo === 'RM' ||
+        TeacherCoursesSelected.ClaMetodoEducativo === 'VT'
+      ) {
         aula = ''
         codAula = '0'
       } else {
-        aula = DLaula[0]?.classCode
-        codAula = DLaula[0]?.resoursecode
+        const filter: any = DLaula.find(
+          (x: any) => x.classroomCode === CodAulaSelected
+        )
+        aula = filter?.classroomCode
+        codAula = filter?.classroomId
       }
     } else {
-      aula = DLaula[0]?.classCode
-      codAula = DLaula[0]?.resoursecode
+      const filter: any = DLaula.find(
+        (x: any) => x.classroomCode === CodAulaSelected
+      )
+      aula = filter?.classroomCode
+      codAula = filter?.classroomId
     }
 
     if (ViewPanel === true) {
       if (AulaSelected === '') {
         ViewMessage(9)
         valor = 1
+        setloading(false)
       }
     }
 
     if (TeacherCourses.length === 0) {
       ViewMessage(1)
       valor = 1
+      setloading(false)
     }
 
     if (TableSecondary.HorFin === '') {
       ViewMessage(2)
       valor = 1
+      setloading(false)
     }
 
     const clase = TeacherCoursesSelected.ClaCodigo
+    const curCode = TeacherCoursesSelected.CurCodigo
     const fechaclase: Date = formatDate(MissedClassDate, 4)
     const fecharequerida: Date = formatDate(DateSelectedItem, 5)
     const value: any = LaboratoriesList.find(
@@ -625,6 +757,7 @@ const Resumen = () => {
       if (fecharequerida < fechaclase) {
         ViewMessage(3)
         valor = 1
+        setloading(false)
       }
     }
 
@@ -633,12 +766,14 @@ const Resumen = () => {
       if (fecha > fecharequerida || fecharequerida >= fechaclase) {
         ViewMessage(4)
         valor = 1
+        setloading(false)
       }
     }
 
     if (AcepterCond === false) {
       ViewMessage(5)
       valor = 1
+      setloading(false)
     }
 
     if (
@@ -647,33 +782,91 @@ const Resumen = () => {
     ) {
       ViewMessage(8)
       valor = 1
+      setloading(false)
     }
 
     if (viewCalculatedTime === '') {
       ViewMessage(10)
       valor = 1
+      setloading(false)
     }
 
-    if (valor === 0)
-      return PostTeacherAttendanceRecoverys(
-        clase,
-        teacherCodeVal,
-        SendDate(fechaclase),
-        SendDate(fecharequerida),
-        hora,
-        nrohoras,
-        codAula,
-        UserName,
-        host,
-        nHoraIdProgInicial,
-        nHoraIdProgFin,
-        tipo,
-        path
-      )
+    if (valor === 0) {
+      if (ViewPanel === true) {
+        if (AulaSelected !== '') {
+          const filter: any = DLaula.find(
+            (x: any) => x.classroomCode === CodAulaSelected
+          )
+          let date: any = SendDate(fecharequerida)
+          date = date.split('T')
+          date = date[0].replace('-', '').replace('-', '')
+          const startTime = `${SelectedHour.replace('.', ':').trim()}:00`
+          const endTime = `${viewCalculatedTime}:00`
+
+          const classroomsjson: any = []
+          filter.usageTypes.map((x: any) => {
+            const row = {
+              classroomIntCode: filter.classroomIntCode,
+              resourceTypeIntCode: x.usageTypeIntCode,
+            }
+            classroomsjson.push(row)
+          })
+
+          const response = await PostBookingClassrooms(
+            classroomsjson,
+            Description,
+            filter.capacity,
+            date,
+            filter.campusIntCode,
+            startTime,
+            endTime,
+            date,
+            clase,
+            curCode
+          )
+          await ValidateBookingClassrooms(
+            response,
+            date,
+            clase,
+            teacherCodeVal,
+            SendDate(fechaclase),
+            SendDate(fecharequerida),
+            hora,
+            nrohoras,
+            aula,
+            UserName,
+            host,
+            nHoraIdProgInicial,
+            nHoraIdProgFin,
+            tipo,
+            path
+          )
+          setloading(false)
+        }
+      } else {
+        await PostTeacherAttendanceRecoverys(
+          clase,
+          teacherCodeVal,
+          SendDate(fechaclase),
+          SendDate(fecharequerida),
+          hora,
+          nrohoras,
+          aula,
+          UserName,
+          host,
+          nHoraIdProgInicial,
+          nHoraIdProgFin,
+          tipo,
+          path,
+          '',
+          ''
+        )
+        setloading(false)
+      }
+    }
   }
 
   const cancelOperation = () => {
-    // window.location.href = '/recuperar-adelantar'
     redirectRouter('/recuperar-adelantar', setloading)
   }
 
@@ -690,11 +883,20 @@ const Resumen = () => {
     setAcepterCond(!AcepterCond)
   }
 
+  const OnchangeDescription = (e: any) => {
+    const value = e.target.value
+    setDescription(value)
+  }
+
   // metodos
 
   const ValidatePanel = () => {
     if (TeacherCoursesSelected.ClaMetodoEducativo !== '') {
-      if (TeacherCoursesSelected.ClaMetodoEducativo === 'RM') {
+      // RM-> Remoto or VT-> Virtual
+      if (
+        TeacherCoursesSelected.ClaMetodoEducativo === 'RM' ||
+        TeacherCoursesSelected.ClaMetodoEducativo === 'VT'
+      ) {
         setViewPanel(false)
       } else {
         setViewPanel(true)
@@ -707,10 +909,12 @@ const Resumen = () => {
   const ValidaDateOnchangeText = (event: React.FormEvent<HTMLInputElement>) => {
     let result = false
     let DateSelected = ''
+    setContenInitial(true)
     setInputDateEmty(result)
     if (ClassDate.length > 0) {
       if (Holyday.length > 0) {
         const DateToRecover = (event.target as HTMLInputElement).value
+        setWriteDate(DateToRecover)
         DateSelected = formatDate(DateToRecover, 2)
         const response = Holyday.find(
           (x: any) => formatDate(x.date, 3) === DateSelected
@@ -728,6 +932,8 @@ const Resumen = () => {
           btnSave: false,
         })
         setDateSelectedItem(DateSelected)
+        setClasEnabled(undefined)
+        setContenPanel('')
         LlenarDDlAula(DateSelected)
       }
     } else {
@@ -740,13 +946,15 @@ const Resumen = () => {
     setViewTableData(true)
   }
 
-  const ValidateSave = (message: string, status: boolean) => {
+  const ValidateSave = async (message: string, status: boolean) => {
     if (status === true) {
       EnviaEmail()
+
       ViewMessage(7, message)
-      // window.location.href = '/recuperar-adelantar'
       redirectRouter('/recuperar-adelantar', setloading)
+      setloading(false)
     } else {
+      setloading(false)
       ViewMessage(6, message)
     }
   }
@@ -807,18 +1015,81 @@ const Resumen = () => {
   const onValidate = (e: any) => {
     let caracteristicas: string = ''
     const codigoAula = e
+    setCodAulaSelected(codigoAula)
     if (DLaula !== undefined) {
-      const filter: any = DLaula.find((x: any) => x.classCode === codigoAula)
+      const filter: any = DLaula.find(
+        (x: any) => x.classroomCode === codigoAula
+      )
+      const description = `     * Capacidad : ${filter?.capacity} Personas
+      * Ubicación : ${filter?.classroomCode[1]} Piso, Pab "${filter?.classroomCode[0]}"
+      * Campus    : ${filter?.campusName}
+      * Lugar          : ${filter?.classroomName}`
+
       if (filter !== undefined) {
-        caracteristicas = filter?.description
+        caracteristicas = description
       }
     }
     return caracteristicas
   }
 
+  const ValidateBookingClassrooms = async (
+    response: any,
+    date: any,
+    clase: any,
+    teacherCodeVal: any,
+    fechaclase: any,
+    fecharequerida: any,
+    hora: any,
+    nrohoras: any,
+    codAula: any,
+    UserName: any,
+    host: any,
+    nHoraIdProgInicial: any,
+    nHoraIdProgFin: any,
+    tipo: any,
+    path: any
+  ) => {
+    if (response.message !== undefined) {
+      if (response.data === null || response.data === undefined) {
+        ViewMessage(6, `${response.message}`)
+      } else {
+        ViewMessage(
+          6,
+          `${response.message}, ocurrenceId: ${response.data[0][0].ocurrenceId}`
+        )
+      }
+    } else {
+      const result = await GetApiClasEnabledBookingCodeRooms(
+        date,
+        response.data[0].bookingCode
+      )
+      await PostTeacherAttendanceRecoverys(
+        clase,
+        teacherCodeVal,
+        fechaclase,
+        fecharequerida,
+        hora,
+        nrohoras,
+        codAula,
+        UserName,
+        host,
+        nHoraIdProgInicial,
+        nHoraIdProgFin,
+        tipo,
+        path,
+        response.data[0].bookingCode,
+        result[0].ocurrenceId
+      )
+    }
+  }
+
   // validate
 
   const cleanComponents = () => {
+    setContenInitial(false)
+    setDescription('')
+    setCodAulaSelected('')
+    setWriteDate('')
     setClassDate([])
     setMissedClassDate('')
     setInputDateEmty(false)
@@ -886,7 +1157,7 @@ const Resumen = () => {
         DateToRecover =
           DateToRecover[2] + '-' + DateToRecover[1] + '-' + DateToRecover[0]
         GetApiClasEnabled(
-          '',
+          'null',
           TeacherCoursesSelected.SedCodigo,
           DateToRecover,
           HorCodigo?.HorCodigo,
@@ -1120,7 +1391,10 @@ const Resumen = () => {
 
       let msgEnd, msg2End
       if (TeacherCoursesSelected.ClaTipo !== '') {
-        if (TeacherCoursesSelected.ClaTipo === 'RM') {
+        if (
+          TeacherCoursesSelected.ClaTipo === 'RM' ||
+          TeacherCoursesSelected.ClaMetodoEducativo === 'VT'
+        ) {
           msgEnd = `Aula: Remoto/Virtual`
           msg2End = `Aula: Remoto/Virtual`
         } else {
@@ -1362,6 +1636,7 @@ const Resumen = () => {
                         ? DateMax()
                         : ''
                     }
+                    value={WriteDate}
                   />
 
                   {InputDateEmty === true ? (
@@ -1419,66 +1694,86 @@ const Resumen = () => {
               )}
             </div>
             <br />
-            <div className={styles.blocFormValidateRow}>
-              <ViewList
-                texLabel={AlterTextView.HoraPropuesta}
-                optionSelect={Laboratories}
-                onChange={OnchangeValidateHoraPropuesta}
-                index={0}
-              />
-              {BtnSelected !== 0 ? (
-                <ViewInput
-                  texLabel={AlterTextView.HoraPropuestaFin}
-                  typeInput={'text'}
-                  nameInput={''}
-                  idInput={''}
-                  value={convertTimeto24(viewCalculatedTime)}
-                  placeholder=""
-                  disabled={true}
-                />
-              ) : (
-                <Input
-                  // style={{ width: '50%' }}
-                  classname={`md-3 ${styles.InputDefault}`}
-                  type="text"
-                  disabled={true}
-                  name={''}
-                  id={''}
-                  placeholder=" "
-                />
-              )}
-            </div>
-            <br />
 
-            {ViewPanel === true ? (
-              <div>
+            {ContenInitial === true ? (
+              <>
                 <div className={styles.blocFormValidateRow}>
                   <ViewList
-                    texLabel={'Aula:'}
-                    optionSelect={ClasEnabled}
-                    index={ClasEnabled?.length > 1 ? 1 : 2}
-                    onChange={OnchangeAulaEdit}
-                    consult={2}
+                    texLabel={AlterTextView.HoraPropuesta}
+                    optionSelect={Laboratories}
+                    onChange={OnchangeValidateHoraPropuesta}
+                    index={0}
                   />
-
-                  {ActiveTextConten === true ? (
-                    <ViewTexarea
-                      texLabel={'Caracteristicas del ambiente:'}
+                  {BtnSelected !== 0 ? (
+                    <ViewInput
+                      texLabel={AlterTextView.HoraPropuestaFin}
+                      typeInput={'text'}
+                      nameInput={''}
+                      idInput={''}
+                      value={convertTimeto24(viewCalculatedTime)}
+                      placeholder=""
                       disabled={true}
-                      placeholder=" "
-                      defaultValue={ContenPanel}
                     />
                   ) : (
-                    <ViewTexarea
-                      texLabel={'Caracteristicas del ambiente:'}
-                      placeholder=" "
+                    <Input
+                      // style={{ width: '50%' }}
+                      classname={`md-3 ${styles.InputDefault}`}
+                      type="text"
                       disabled={true}
-                      onchange={() => setDesabledBTN({ btnSave: false })}
+                      name={''}
+                      id={''}
+                      placeholder=" "
                     />
                   )}
                 </div>
                 <br />
-              </div>
+
+                {ViewPanel === true ? (
+                  <div>
+                    <div className={styles.blocFormValidateRow}>
+                      <ViewList
+                        texLabel={'Aula:'}
+                        optionSelect={ClasEnabled}
+                        index={ClasEnabled?.length > 1 ? 1 : 2}
+                        onChange={OnchangeAulaEdit}
+                        consult={2}
+                      />
+
+                      {ActiveTextConten === true ? (
+                        <ViewTexarea
+                          texLabel={'Caracteristicas del ambiente:'}
+                          disabled={true}
+                          placeholder=" "
+                          defaultValue={ContenPanel}
+                          style={{ height: '3em', paddingTop: '7px' }}
+                        />
+                      ) : (
+                        <ViewTexarea
+                          texLabel={'Caracteristicas del ambiente:'}
+                          placeholder=" "
+                          disabled={true}
+                          onchange={() => setDesabledBTN({ btnSave: false })}
+                          style={{ height: '3em', paddingTop: '7px' }}
+                        />
+                      )}
+                    </div>
+                    <div className={styles.TexareaConten}>
+                      <Label>Descripción</Label>
+                      <TextArea
+                        type={'textarea'}
+                        placeholder={''}
+                        controlId={''}
+                        disabled={false}
+                        classname={''}
+                        onChange={OnchangeDescription}
+                        value={Description}
+                        style={{ paddingTop: '7px' }}
+                      />
+                    </div>
+                    <br />
+                  </div>
+                ) : null}
+              </>
             ) : null}
 
             <div>

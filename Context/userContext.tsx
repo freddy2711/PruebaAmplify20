@@ -18,8 +18,8 @@ const UserProvider = ({ children }: any) => {
   return (
     <UserContext.Provider
       value={{
-        user: user,
-        setUser: setUser,
+        user,
+        setUser,
       }}
     >
       {children}

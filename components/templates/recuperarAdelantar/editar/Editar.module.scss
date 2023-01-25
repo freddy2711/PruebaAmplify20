@@ -135,6 +135,17 @@
       // overflow: hidden;
       white-space: nowrap;
     }
+
+    .TexareaConten {
+      display: grid;
+      grid-template-columns: 24% 1fr;
+      grid-template-rows: 1fr;
+      justify-content: center;
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1% 1fr;
+      }
+    }
   }
 }
 
