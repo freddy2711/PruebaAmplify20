@@ -13,6 +13,7 @@ export interface Props {
   onChange?: any
   defaultValue?: any
   value?: any
+  style?: any
 }
 
 const TextArea = ({
@@ -25,6 +26,7 @@ const TextArea = ({
   onChange,
   defaultValue,
   value,
+  style,
 }: Props) => {
   const classprops: string = classNames('mb-3', extractClass(styles, classname))
 
@@ -39,7 +41,7 @@ const TextArea = ({
         disabled={disabled}
         className={classprops}
         onChange={onChange}
-        style={{ height: '10em' }}
+        style={style}
         defaultValue={defaultValue}
         value={value}
       />

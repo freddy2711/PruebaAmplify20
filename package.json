@@ -26,7 +26,7 @@
     "css-loader": "^6.7.1",
     "draft-js": "^0.11.7",
     "excel-parser": "^0.2.2",
-    "formidable": "^2.0.1",
+    "formidable": "^3.2.5",
     "jarn": "0.0.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
@@ -129,6 +129,6 @@
     "prettier": "^2.6.2",
     "redux-devtools-extension": "^2.13.9",
     "storybook-css-modules": "^1.0.7",
-    "typescript-plugin-css-modules": "^3.4.0"
+    "typescript-plugin-css-modules": "^4.1.1"
   }
 }

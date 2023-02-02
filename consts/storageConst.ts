@@ -453,6 +453,11 @@ export const SET_DATAS_SELEC_COURSES_TEACHER_CE = 'SelectCoursesTeacher_CE'
 // ** CONSTANTES DE SOLICITUD DE MODIFICACION DE NOTAS
 export const CLASS_SELECTED_SM = 'CLASS_SELECTED_SM'
 
+export const urlGestor = {
+  practicas: process.env.NEXT_PUBLIC_SERVER_PRACTICAS_CAMPO,
+  tesis: process.env.NEXT_PUBLIC_SERVER_GESTOR_TESIS,
+  consultas: process.env.NEXT_PUBLIC_SERVER_CONSULTAS_DOCUMENTO,
+}
 export const objecApi = {
   Teacher: {
     URL: process.env.BACKEND_URL_TEACHER,

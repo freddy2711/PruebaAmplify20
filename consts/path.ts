@@ -157,6 +157,18 @@ export const apiPath = {
     PATH_GetTeacher: (code: any) => `/teacher/teachers/${code}`,
     PATH_GetRateCampusCode: (raceCode: any, campusCode: any) =>
       `/teacher/rate/${raceCode}/campus/${campusCode}`,
+    PATH_PostUbookingToken: `/oauth2/token`,
+    PATH_PostUbookingClassrooms: (startDate: any, endDate: any) =>
+      `/api/booking-api/classrooms/classrooms-available?startDate=${startDate}&endDate=${endDate}`,
+    PATH_PostBooking: `/api/booking-api/booking-api/booking`,
+    PATH_PostUbookingClassroomsBookingCode: (
+      startDate: any,
+      endDate: any,
+      bookingCode: any
+    ) =>
+      `/api/booking-api/booking?startDate=${startDate}&endDate=${endDate}&bookingCode=${bookingCode}`,
+    PATH_PutBooking: `/api/booking-api/booking`,
+    PATH_PostDeleteBooking: `/api/booking-api/booking/deleteMultipleOcurrencesById`,
   },
   competence: {
     PATH_List: (teacherCode: string) =>

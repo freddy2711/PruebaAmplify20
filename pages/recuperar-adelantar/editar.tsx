@@ -16,6 +16,7 @@ import { get, remove } from 'local-storage'
 import {
   LST_RECOVERY_SELECTED,
   SET_DATA_DOCENTE,
+  USER_SESSION,
 } from '../../consts/storageConst'
 import { apiRecuperarAdelantar } from '../api'
 import moment from 'moment'
@@ -24,6 +25,7 @@ import Swal from 'sweetalert2'
 import ViewTexarea from '../../components/UI/molecules/recuperarAdelantarClases/viewTexarea/ViewTexarea'
 import { redirectRouter } from '../../helpers/routerRedirect'
 import { catchingErrorFront } from '../../helpers/helpers'
+import TextArea from '../../components/UI/atoms/TextArea/TextArea'
 
 type RecuperationSelected = {
   aulId: number
@@ -152,11 +154,13 @@ const EditarRecupera = () => {
   const [AulaInitial, setAulaInitial] = useState('0')
   const [DateValidate, setDateValidate] = useState(false)
   const [ValidateOnchageDate, setValidateOnchageDate] = useState(false)
+  const [Description, setDescription] = useState('')
   const COLUMNS_VIEWDATA = ['Clase', 'Curso', 'Semestre', 'Sede', 'Carrera']
   const COLUMNS_VIEW_ADELANTAR = ['Hora Inicio', 'Hora Fin', 'Horas']
   const lstSelected = JSON.parse(get(LST_RECOVERY_SELECTED))
   const DUENO: any = get(SET_DATA_DOCENTE)
   const User = DUENO?.userName
+  const UserCode = get(USER_SESSION)
   const current = new Date()
 
   const ApiGetClassRecuperation = async (id: any) => {
@@ -222,7 +226,6 @@ const EditarRecupera = () => {
         dataSchedule.date,
         dataSchedule.teacherCode
       )
-
       return ScheduleSessionsData
     } catch (error: any) {
       catchingErrorFront(error.message)
@@ -260,58 +263,37 @@ const EditarRecupera = () => {
     }
   }
 
-  const GetApiClasEnabled = async (
-    classroom: string,
-    sedeCode: string,
-    date: string,
-    hours: string,
-    quantity: string
-  ) => {
-    try {
-      const dataFormated = []
-      const ClasEnabledData: any = await apiRecuperarAdelantar.ClasEnabled(
-        classroom,
-        sedeCode,
-        date,
-        hours,
-        quantity
-      )
-      for (const element of ClasEnabledData) {
-        dataFormated.push(element.classCode)
-      }
-      setContenPanel(ClasEnabledData[0]?.description)
-      setAulaInitial(ClasEnabledData[0]?.classCode)
-      setClasEnabled(dataFormated)
-      setDLaula(ClasEnabledData)
-      return ClasEnabledData
-    } catch (error: any) {
-      catchingErrorFront(error.message)
-      setloading(false)
-    }
-  }
-
   const GetApiClasEnabledEdit = async (
     classroom: string,
     sedeCode: string,
-    date: string,
+    date: any,
     hours: string,
     quantity: string
   ) => {
     try {
+      setloading(true)
       const dataFormated = []
-      const ClasEnabledData: any = await apiRecuperarAdelantar.ClasEnabledEdit(
-        classroom,
-        sedeCode,
+      date = date.split('T')
+      date = date[0].replace('-', '').replace('-', '')
+
+      const ClasEnabledData: any = await apiRecuperarAdelantar.ClasEnabled(
         date,
-        hours,
-        quantity
+        date
       )
-      for (const element of ClasEnabledData) {
-        dataFormated.push(element.classCode)
+      const row = ClasEnabledData.filter((x: any) => x.campusCode === sedeCode)
+      for (const element of row) {
+        dataFormated.push(element.classroomCode)
       }
+      const description = `        * Capacidad : ${row[0]?.capacity} Personas
+      * Ubicación : ${row[0]?.classroomCode[1]} Piso, Pab "${row[0]?.classroomCode[0]}"
+      * Campus    : ${row[0]?.campusName}
+      * Lugar     : ${row[0]?.classroomName}`
+      setContenPanel(description)
+      setAulaInitial(row[0]?.classroomCode)
       setClasEnabled(dataFormated)
-      setDLaula(ClasEnabledData)
-      return ClasEnabledData
+      setDLaula(row)
+      setloading(false)
+      return row
     } catch (error: any) {
       catchingErrorFront(error.message)
       setloading(false)
@@ -452,9 +434,67 @@ const EditarRecupera = () => {
     }
   }
 
+  const PutClassroomReservation = async (
+    ocurrenceId: any,
+    classroomIntCode: any
+  ) => {
+    try {
+      const data = {
+        teacherIntCode: [UserCode],
+        responsibleIntCode: UserCode,
+        ocurrenceId,
+        userIntCode: UserCode,
+        classroomIntCode: [classroomIntCode],
+        stationIntCode: [''],
+      }
+      const ScheduleSessionsData: any =
+        await apiRecuperarAdelantar.UpdateClassroomReservation(data)
+      return ScheduleSessionsData
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+  }
+
+  const GetApiClasEnabledBookingCodeRooms = async (
+    date: any,
+    bookingCode: any
+  ) => {
+    try {
+      setloading(true)
+      const ClasEnabledData: any =
+        await apiRecuperarAdelantar.ClasEnabledBookingCodeRooms(
+          date,
+          date,
+          bookingCode
+        )
+      setloading(false)
+      return ClasEnabledData
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+  }
+
+  const DeleteBooking = async (OcurrencesId: any) => {
+    try {
+      const data = {
+        userIntCode: UserCode,
+        ocurrences: [OcurrencesId],
+      }
+      const response = await apiRecuperarAdelantar.DeleteBooking(data)
+      return response
+    } catch (error: any) {
+      catchingErrorFront(error.message)
+      setloading(false)
+    }
+  }
+
   // Fin de apis
 
-  const ValidationDateText = (_fecharecupera: Date, _fechaperdida: Date) => {
+  const ValidationDateText = (_fecharecupera: any, _fechaperdida: any) => {
+    _fecharecupera = moment(new Date(_fecharecupera)).format('DD/MM/yyyy')
+    _fechaperdida = moment(_fechaperdida).format('DD/MM/yyyy')
     if (_fecharecupera < _fechaperdida) {
       setControlText({
         viewtextDate: 'Fecha propuesta para adelanto:',
@@ -511,9 +551,15 @@ const EditarRecupera = () => {
     let caracteristicas: string = ''
     const codigoAula = e
     if (DLaula !== undefined) {
-      const filter: any = DLaula.find((x: any) => x.classCode === codigoAula)
+      const filter: any = DLaula.find(
+        (x: any) => x.classroomCode === codigoAula
+      )
       if (filter !== undefined) {
-        caracteristicas = filter?.description
+        const description = `        * Capacidad : ${filter?.capacity} Personas
+      * Ubicación : ${filter?.classroomCode[1]} Piso, Pab "${filter?.classroomCode[0]}"
+      * Campus    : ${filter?.campusName}
+      * Lugar     : ${filter?.classroomName}`
+        caracteristicas = description
       }
     }
 
@@ -562,7 +608,7 @@ const EditarRecupera = () => {
 
   const ValidatePanel = (Data: any) => {
     if (Data !== '') {
-      if (Data === 'RM') {
+      if (Data === 'RM' || Data === 'VT') {
         setViewPanel(false)
       } else {
         setViewPanel(true)
@@ -603,18 +649,50 @@ const EditarRecupera = () => {
   const ValidateCodAula = (dataValue: any, dataAula: any) => {
     let expression: string
     let foundRows: any
+
     if (dataValue !== undefined) {
       expression = dataValue.aula
 
-      foundRows = dataAula.find((x: any) => x.classCode === expression)
+      foundRows = dataAula.find((x: any) => x.classroomCode === expression)
 
       if (foundRows !== undefined) {
-        setAulaInitial(foundRows?.classCode)
-        setContenPanel(foundRows?.description)
+        const description = `        * Capacidad : ${foundRows?.capacity} Personas
+        * Ubicación : ${foundRows?.classroomCode[1]} Piso, Pab "${foundRows?.classroomCode[0]}"
+        * Campus    : ${foundRows?.campusName}
+        * Lugar     : ${foundRows?.classroomName}`
+        setAulaInitial(foundRows?.classroomCode)
+        setContenPanel(description)
       }
     }
   }
 
+  const validateUpdateClassroomReservation = (
+    res: any,
+    RecuperacionId: any,
+    fechaclase: any,
+    date: any,
+    hora: any,
+    nroHoras: any,
+    codAula: any,
+    UserName: any
+  ) => {
+    if (res.status === true) {
+      PostUpdateTeacherAttendanceRecoverys(
+        RecuperacionId,
+        fechaclase,
+        date,
+        hora,
+        nroHoras,
+        codAula,
+        UserName,
+        '',
+        '',
+        ''
+      )
+    } else {
+      ViewMessage(3, 'Error al actualizar el aula')
+    }
+  }
   // Validaciones
 
   const formatHour = (fecha: string) => {
@@ -731,29 +809,35 @@ const EditarRecupera = () => {
     LlenarDDlAula(DateSelected, TextSelected, 1)
   }
 
-  const btnEditar = () => {
+  const btnEditar = async () => {
     let aula: string = ' '
     let codAula: string = ' '
     let valor = 0
 
     if (lstSelected.ClaMetodoEducativo !== '') {
-      if (lstSelected.ClaMetodoEducativo === 'RM') {
+      if (
+        lstSelected.ClaMetodoEducativo === 'RM' ||
+        lstSelected.ClaMetodoEducativo === 'VT'
+      ) {
         aula = ''
         codAula = '0'
       } else {
         const response: any = DLaula.find(
-          (x: any) => x.classCode === AulaInitial
+          (x: any) => x.classroomCode === AulaInitial
         )
+
         if (response !== undefined) {
-          aula = response.classCode
-          codAula = response.resoursecode
+          aula = response.classroomCode
+          codAula = response.classroomId
         }
       }
     } else {
-      const response: any = DLaula.find((x: any) => x.classCode === AulaInitial)
+      const response: any = DLaula.find(
+        (x: any) => x.classroomCode === AulaInitial
+      )
       if (response !== undefined) {
-        aula = response.classCode
-        codAula = response.resoursecode
+        aula = response.classroomCode
+        codAula = response.classroomId
       }
     }
 
@@ -797,19 +881,43 @@ const EditarRecupera = () => {
 
     const UserName = User
 
-    if (valor === 0)
-      return PostUpdateTeacherAttendanceRecoverys(
-        lstSelected.RecuperacionId,
-        fechaclase,
-        DateSelected,
-        hora,
-        nroHoras,
-        codAula,
-        UserName,
-        '',
-        '',
-        ''
-      )
+    if (valor === 0) {
+      if (ViewPanel === true) {
+        let date: any = DateSelected.split('T')
+        date = date[0].replace('-', '').replace('-', '')
+
+        const response: any = DLaula.find(
+          (x: any) => x.classroomCode === AulaInitial
+        )
+        const res = await PutClassroomReservation(
+          lstSelected.OcurrenceId,
+          response.classroomIntCode
+        )
+        validateUpdateClassroomReservation(
+          res,
+          lstSelected.RecuperacionId,
+          fechaclase,
+          DateSelected,
+          hora,
+          nroHoras,
+          aula,
+          UserName
+        )
+      } else {
+        return PostUpdateTeacherAttendanceRecoverys(
+          lstSelected.RecuperacionId,
+          fechaclase,
+          DateSelected,
+          hora,
+          nroHoras,
+          aula,
+          UserName,
+          '',
+          '',
+          ''
+        )
+      }
+    }
   }
 
   const OnchangeAulaEdit = (e: any) => {
@@ -837,8 +945,8 @@ const EditarRecupera = () => {
           (x: any) => x.HorInicioDesc === itemHour
         )
 
-        GetApiClasEnabled(
-          '',
+        GetApiClasEnabledEdit(
+          'null',
           sede,
           value,
           HorCodigo.HorCodigo,
@@ -850,11 +958,25 @@ const EditarRecupera = () => {
 
   const CancelRequest = async () => {
     setloading(true)
-    await PostDeleteRecovery(IdUser)
-    await EnviaEmailAnulacion()
-    ViewMessage(5)
-    setloading(false)
-    redirectRouter('/recuperar-adelantar', setloading)
+
+    if (ViewPanel === true) {
+      const response = await DeleteBooking(lstSelected.OcurrenceId)
+      if (response.status === true) {
+        await PostDeleteRecovery(IdUser)
+        await EnviaEmailAnulacion()
+        ViewMessage(5)
+        setloading(false)
+        redirectRouter('/recuperar-adelantar', setloading)
+      } else {
+        ViewMessage(3, 'No se pudo anular la solicitud')
+      }
+    } else {
+      await PostDeleteRecovery(IdUser)
+      await EnviaEmailAnulacion()
+      ViewMessage(5)
+      setloading(false)
+      redirectRouter('/recuperar-adelantar', setloading)
+    }
   }
 
   // metodos
@@ -1095,7 +1217,10 @@ const EditarRecupera = () => {
 
       let msgEnd, msg2End
       if (lstSelected.ClaMetodoEducativo !== '') {
-        if (lstSelected.ClaMetodoEducativo === 'RM') {
+        if (
+          lstSelected.ClaMetodoEducativo === 'RM' ||
+          lstSelected.ClaMetodoEducativo === 'VT'
+        ) {
           msgEnd = `Aula: Remoto/Virtual`
           msg2End = `Aula: Remoto/Virtual`
         } else {
@@ -1242,22 +1367,41 @@ const EditarRecupera = () => {
           lstSelected.CodSol
         )
         const value = await GetValueHour(LaboratoriesData, ClassRecuperation)
-        if (ScheduleSessions.length > 0)
-          FillScheduleSessions(LaboratoriesData, ScheduleSessions, value)
+        if (ScheduleSessions.length > 0) {
+          const row = ScheduleSessions.filter(
+            (x: any) =>
+              x?.HoraIdInicio === ClassRecuperation?.hourIdProgramationIni
+          )
+          FillScheduleSessions(LaboratoriesData, row, value)
+        }
         await GetApiHolyday(sede)
         const response = await ValidateClassEnabled(ClassRecuperation)
-
         ValidateCodAula(ClassRecuperation, response)
         ValidateState(ClassRecuperation.state)
         ValidatePanel(lstSelected.ClaMetodoEducativo)
+
+        let date: any = ClassRecuperation.dateRecuperation
+        date = date.split('T')
+        date = date[0].replace('-', '').replace('-', '')
+
+        const result = await GetApiClasEnabledBookingCodeRooms(
+          date,
+          lstSelected.BookingId
+        )
+        if (result.length > 0)
+          setDescription(
+            result[0].description === null ||
+              result[0].description === undefined
+              ? ''
+              : result[0].description
+          )
       } catch (error: any) {
         catchingErrorFront(error.message)
         setloading(false)
       }
-
       setloading(false)
     }
-    const IdRecperation = lstSelected.RecuperacionId
+    const IdRecperation = lstSelected?.RecuperacionId
     if (lstSelected !== undefined) {
       Load()
     }
@@ -1399,6 +1543,19 @@ const EditarRecupera = () => {
                 disabled={true}
                 placeholder=" "
                 value={ContenPanel}
+                style={{ height: '3em', paddingTop: '7px' }}
+              />
+            </div>
+            <div className={styles.TexareaConten}>
+              <Label>Descripción</Label>
+              <TextArea
+                type={'textarea'}
+                placeholder={''}
+                controlId={''}
+                disabled={true}
+                classname={''}
+                value={Description}
+                style={{ paddingTop: '7px' }}
               />
             </div>
             <br />
