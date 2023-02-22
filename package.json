@@ -68,6 +68,9 @@
   "scripts": {
     "dev": "next dev -p 450",
     "build": "npm install && next build",
+    "dev:qa": "cross-env APP_ENV=qa env-cmd -f .env.qa next dev -p 450",
+    "build:qa": " npm install && cross-env APP_ENV=test env-cmd -f .env.qa next build",
+    "build:prod": " npm install && cross-env APP_ENV=production env-cmd -f .env.production next build",
     "start": "next start",
     "eject": "react-scripts eject",
     "format": "prettier --write .",
@@ -116,6 +119,8 @@
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "babel-loader": "^8.2.5",
+    "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.16.0",
     "eslint-config-next": "^13.1.1",
     "eslint-config-prettier": "^8.5.0",

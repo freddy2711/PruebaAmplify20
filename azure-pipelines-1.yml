@@ -1,0 +1,23 @@
+trigger:
+- QA
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    which npm
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '.next'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
