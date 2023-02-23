@@ -217,6 +217,7 @@ const Index = (props: any) => {
     }))
 
     setDatosByDay(rows)
+
     const rows2 = recoverTemp.map((item: any) => ({
       ...item,
       Iniciar: LinkButton(item, 2),
@@ -258,7 +259,7 @@ const Index = (props: any) => {
         return callApiLoginSeccion()
       } else if (codeteacher === null) {
         return callApiLoginSeccion()
-      } else {        
+      } else {
         return callApiLogin(codeteacher, day)
       }
     }, 2000)

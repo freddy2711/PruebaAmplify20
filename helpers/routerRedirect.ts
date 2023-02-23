@@ -90,15 +90,13 @@ export const ValidateSession = async (loadin: any) => {
     userCode: get(USER_SESSION),
     classCode: get(USER_SESSION),
   }
-  console.log("codeteacher", obj);
+
   const response = await apiTokens.ByTokenValidate(obj)
   if (response?.tokenId === undefined) {
     remove(TOKEN)
     remove(USER_SESSION)
     remove(TOKEN_IN)
     const codeteacher = get(USER_SESSION)
-    console.log("codeteacher", codeteacher);
-    
     if (
       codeteacher === null ||
       codeteacher === undefined ||

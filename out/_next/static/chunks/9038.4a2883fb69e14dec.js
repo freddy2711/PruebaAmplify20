@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9038],{89038:function(e,a,n){"use strict";n.r(a);var t=n(85893);n(67294);var r=n(79329),h=n.n(r),s=function(e){var a=e.children;return(0,t.jsx)("thead",{className:h().thead,children:(0,t.jsx)("tr",{children:a})})};a.default=s},79329:function(e){e.exports={thead:"Thead_thead__qsmQk"}}}]);

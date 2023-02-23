@@ -3,23 +3,15 @@ import styles from './../../components/templates/default/Default.module.scss'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
-import { apiLogin, apiTokens } from '../api'
-import {
-  convertStringToDate,
-  convertStringToDateTime,
-  urlGestor,
-} from '../../consts/storageConst'
+import { apiLogin } from '../api'
 const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
   ssr: false,
 })
-const Index = (props: any) => {
+const Index = () => {
   // eslint-disable-next-line no-unused-vars
   const [Loading, setloading] = useState(false)
-  const [userKetGestore, setUserKetGestore] = useState('')
-  const dateTimeNow = `${convertStringToDate(
-    new Date()
-  )} ${convertStringToDateTime(new Date())}`
-
+  // eslint-disable-next-line no-unused-vars
+  const [login, setLogin] = useState({})
   useEffect(() => {
     callToken()
     // if (props.data === null) {
@@ -55,38 +47,26 @@ const Index = (props: any) => {
   const callToken = async () => {
     setloading(true)
     const token: any = await apiLogin.logintokenValid()
-    const rs = await apiLogin.loginDataUser(token?.user)
+    console.log('token', token)
+    setLogin(token)
     setloading(false)
-    const req = {
-      userCode: rs[0].codeUser,
-      Periodo: '@Gestor_Tesis_Docente',
-      userName: token.user,
-      fechaHora: dateTimeNow,
-      state: true,
-    }
-    const result: any = await apiTokens.ByTokenAutentica(req)
-    setUserKetGestore(
-      `${urlGestor.tesis}${result.setupInfo.AccountSecretKey}`
-    )
   }
   return (
     <div className={styles.contenido}>
       <Loader loading={Loading} />
       <div className={styles.content}>
         <div className={styles.titulo}>
-          <Label classname="text-warning h5 mt-3 mb-3">Gestor de Tesis</Label>
+          <Label classname="text-warning h5 mt-3 mb-3">Página Permisos</Label>
         </div>
         <hr />
         <div className={styles.alertContent}>
-          <Alerta classname="w-100 h-100">
+          <Alerta classname="w-100">
             <p className="mb-0">
               <iframe
                 id="inlineFrameExample"
-                style={{ width: '100%', height: '500px' }}
-                width="100%"
-                height="500px"
+                style={{ width: '100%', height: '100%' }}
                 title="Inline Frame Example"
-                src={userKetGestore}
+                src="http://localhost:3000/#/admin/docentes"
               ></iframe>
             </p>
           </Alerta>
