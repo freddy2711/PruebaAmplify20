@@ -756,7 +756,7 @@ const Index = (props: any) => {
             <div className="mb-2">
               <p className="m-0">
                 ¿Ingresó TODAS sus notas y desea ENVIARLAS a Secretaría
-                Académica...?
+                Académica.....?
               </p>
               <Button
                 type="button"
