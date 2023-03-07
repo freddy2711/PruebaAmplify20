@@ -4,6 +4,7 @@ const axiosfetchPublic = axios.create({
   baseURL: `${'/api'}`,
   headers: {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache'
   },
   // timeout: 60000,
 })

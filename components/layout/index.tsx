@@ -13,14 +13,17 @@ import {
   options,
   SET_DATA_DOCENTE,
   DUENO_SESSION,
-  TITLE_EMERG,
-  MSM_NO_SECCION,
+  // TITLE_EMERG,
+  // MSM_NO_SECCION,
+  USER_SESSION,
+  // USER_SESSION,
 } from '../../consts/storageConst'
 
 import { get, set } from 'local-storage'
 // import { redirectRouter } from '../../helpers/routerRedirect'
 import UserContext from '../../Context/userContext'
-import getAlert from '../../hooks/jspdf/alertify'
+// import getAlert from '../../hooks/jspdf/alertify'
+// import { redirectRouter } from '../../helpers/routerRedirect'
 // import { useCookies } from 'react-cookie'
 
 const Header = dynamic(() => import('./../UI/organisms/header/Header'), {
@@ -69,38 +72,54 @@ const Index = ({ children }: Props) => {
     message: '',
   })
   const dateNow = convertStringToDate(new Date())
-  // const cookie = useCookies([''])
-  const callApiLogin = async () => {
+
+  const callApiLoginCookies = async () => {
     const token: any = await apiLogin.logintokenValid()
-    console.log('token', token.user)
-    if (token.user === null || token.user === undefined || token.user === '') {
-      if (get(DUENO_SESSION) !== '') {
-        set(DUENO_SESSION, '')
-        setloading(false)
-        window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL_REDIRECT}`
-      }
-      getAlert({
-        title: TITLE_EMERG,
-        text: MSM_NO_SECCION,
-        confirmButtonText: `Ok`,
-      })
-      setloading(false)
-    }
-    const rs = await apiLogin.loginDataUser(token.user)
-    // set(DUENO_SESSION, 'RVI')
-    // set(USER_SESSION, rs[0]?.codeUser)
+    // if (token.user === null || token.user === undefined || token.user === '') {
+    //   if (get(DUENO_SESSION) !== '') {
+    //     set(DUENO_SESSION, '')
+    //     setloading(false)
+    //     window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL_REDIRECT}`
+    //   }
+    //   getAlert({
+    //     title: TITLE_EMERG,
+    //     text: MSM_NO_SECCION,
+    //     confirmButtonText: `Ok`,
+    //   })
+    //   setloading(false)
+    // }
+    const rs = await apiLogin.loginDataUser(token?.user)
+    set(DUENO_SESSION, token?.user)
+    set(USER_SESSION, rs[0]?.codeUser)
     // codeteacher = rs[0]?.codeUser
     console.log('token codeUser :', rs)
     // token.user
     const semesterTemp: any = await apiLogin.TokenCoupling(rs[0]?.codeUser)
     if (semesterTemp.length !== 0) {
-      if (convertStringToDate(semesterTemp[0].date) === dateNow)
+      if (convertStringToDate(semesterTemp[0].date) === dateNow) {
+        setloading(false)
         return setobjNotificar({
           state: semesterTemp[0].state,
           message: eventToken(semesterTemp[0].date, options),
         })
+      }
     }
+    setloading(false)
   }
+
+  // const callApiLogin = async (codeUser: any) => {
+  //   const semesterTemp: any = await apiLogin.TokenCoupling(codeUser)
+  //   if (semesterTemp.length !== 0) {
+  //     if (convertStringToDate(semesterTemp[0].date) === dateNow) {
+  //       setloading(false)
+  //       return setobjNotificar({
+  //         state: semesterTemp[0].state,
+  //         message: eventToken(semesterTemp[0].date, options),
+  //       })
+  //     }
+  //   }
+  //   setloading(false)
+  // }
 
   // const validateUser = () => {
   //   const codeteacher = get(USER_SESSION)
@@ -135,13 +154,13 @@ const Index = ({ children }: Props) => {
 
   // const callApiLoginValid = async () => {
   //   let codeteacher = get(USER_SESSION)
-  //   if (codeteacher === null || codeteacher === "undefined") {
+  //   if (codeteacher === null || codeteacher === 'undefined') {
   //     // const token: any = await apiLogin.logintokenValid(cookie)
   //     const rs = await apiLogin.loginDataUser('RVI')
   //     // const rs = await apiLogin.loginDataUser(token?.user)
   //     set(DUENO_SESSION, 'RVI')
   //     set(USER_SESSION, rs[0]?.codeUser)
-  //     codeteacher = rs[0]?.codeUser
+  //     codeteacher = rs[0]?.codeUser 
   //   }
   //   return callApiLogin(codeteacher)
   // }
@@ -149,12 +168,12 @@ const Index = ({ children }: Props) => {
   const obj = { keyA: 0 }
 
   useEffect(() => {
-    // callApiLoginValid()
     // Router.push('default')
     // setTimeout(async () => {
     //   redirectRouter('', setloading)
     // }, 2000)
-    callApiLogin()
+    // callApiLoginValid()
+    callApiLoginCookies()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [obj.keyA])
 

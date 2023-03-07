@@ -3,14 +3,23 @@ import styles from './../../components/templates/default/Default.module.scss'
 import Loader from '../../components/UI/atoms/loader/Loader'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
-import { apiLogin } from '../api'
+import { apiLogin, apiTokens } from '../api'
+import {
+  convertStringToDate,
+  convertStringToDateTime,
+  urlGestor,
+} from '../../consts/storageConst'
 const Alerta = dynamic(() => import('../../components/UI/atoms/alert/Alerts'), {
   ssr: false,
 })
 const Index = (props: any) => {
   // eslint-disable-next-line no-unused-vars
   const [Loading, setloading] = useState(false)
-  const [login, setLogin] = useState('')
+  const [userKetGestore, setUserKetGestore] = useState('')
+  const dateTimeNow = `${convertStringToDate(
+    new Date()
+  )} ${convertStringToDateTime(new Date())}`
+
   useEffect(() => {
     callToken()
     // if (props.data === null) {
@@ -46,16 +55,28 @@ const Index = (props: any) => {
   const callToken = async () => {
     setloading(true)
     const token: any = await apiLogin.logintokenValid()
-    console.log('token', token.user)
-    setLogin(token.user)
+    const rs = await apiLogin.loginDataUser(token?.user)
     setloading(false)
+    const req = {
+      userCode: rs[0].codeUser,
+      Periodo: '@Practicas_Campo',
+      userName: token.user,
+      fechaHora: dateTimeNow,
+      state: true,
+    }
+    const result: any = await apiTokens.ByTokenAutentica(req)
+    setUserKetGestore(
+      `${urlGestor.practicas}${result.setupInfo.AccountSecretKey}`
+    )
   }
   return (
     <div className={styles.contenido}>
       <Loader loading={Loading} />
       <div className={styles.content}>
         <div className={styles.titulo}>
-          <Label classname="text-warning h5 mt-3 mb-3">Página Permisos</Label>
+          <Label classname="text-warning h5 mt-3 mb-3">
+            Practicas de Campo
+          </Label>
         </div>
         <hr />
         <div className={styles.alertContent}>
@@ -67,12 +88,11 @@ const Index = (props: any) => {
                 width="100%"
                 height="500px"
                 title="Inline Frame Example"
-                src="http://localhost:3000/#/admin/docentes"
+                src={userKetGestore}
               ></iframe>
             </p>
           </Alerta>
         </div>
-        <div>{login}</div>
       </div>
     </div>
   )

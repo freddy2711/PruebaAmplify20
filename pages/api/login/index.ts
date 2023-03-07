@@ -85,8 +85,12 @@ const API = {
     try {
       const config = {
         withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache'
+        }
       }
-      const URL: any = process.env.NEXT_PUBLIC_TOKEN_API
+      const URL: any = process.env.NEXT_PUBLIC_TOKEN_API_INTERNAL
       const result: any = await axios(URL, config)
       if (result.status !== 200) {
         console.log('status', result?.status)
